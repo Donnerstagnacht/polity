@@ -44,6 +44,7 @@ Thumbs.db
 # Supabase
 **/supabase/.branches
 **/supabase/.temp
+**/supabase/migrations/*
 
 # Supabase
 **/supabase/.branches

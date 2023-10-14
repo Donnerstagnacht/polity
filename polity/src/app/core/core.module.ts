@@ -20,7 +20,8 @@ import { RegisterComponent } from './register/register.component';
         RegisterComponent
     ],
     exports: [
-        LoginComponent
+        LoginComponent,
+        RegisterComponent
     ],
     imports: [
         CommonModule,
