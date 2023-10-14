@@ -19,6 +19,7 @@
     "@angular/platform-browser": "^15.2.0",
     "@angular/platform-browser-dynamic": "^15.2.0",
     "@angular/router": "^15.2.0",
+    "@supabase/supabase-js": "^2.38.1",
     "@taiga-ui/addon-charts": "^3.48.0",
     "@taiga-ui/addon-commerce": "^3.48.0",
     "@taiga-ui/addon-doc": "^3.48.0",
@@ -50,6 +51,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
+    "supabase": "^1.100.1",
     "typescript": "~4.9.4"
   }
 }
