@@ -1,10 +1,10 @@
-type Item = {
+export type Item = {
     badge?: number;
     icon: string;
     text: string;
 }
 
-const items: Item[] = [
+export const menuItems: Item[] = [
     {
         text: 'VOR ORT',
         icon: 'tuiIconUsers',
