@@ -9,6 +9,8 @@
             [icon]="item.icon"
             (click)="onClick(item)"
             tuiHint="{{item.text}}"
+            routerLinkActive
+            [routerLink]="item.link"
     >
     </button>
 </nav>
