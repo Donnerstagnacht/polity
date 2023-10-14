@@ -3,6 +3,9 @@ import {TUI_PASSWORD_TEXTS, TUI_VALIDATION_ERRORS, tuiInputPasswordOptionsProvid
 import {of} from "rxjs";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthentificationService} from "../authentification.service";
+// import {AuthRepository, authStore, authStore as AuthStore} from "../auth-store";
+import {AuthStoreService} from "../auth-store.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'polity-register',
@@ -37,19 +40,31 @@ export class RegisterComponent {
     password: new FormControl('password', [Validators.required, Validators.minLength(6)]),
   })
 
-  constructor(private readonly supabase: AuthentificationService) {}
+  constructor(
+      private readonly supabase: AuthentificationService,
+      public authRepository: AuthStoreService,
+      private router: Router
+  ) {}
 
   onSubmit() {
     console.log(this.registerForm.value);
-    this.supabase.signUp({
-      email: this.registerForm.value.email as string,
-      password: this.registerForm.value.password as string
-    }).then(
-      () => {
-        console.log('success');
-      }
-    ).catch((error) => {
-      console.log(error);
+    this.authRepository.updateUser({id: this.registerForm.value.email as string})
+    this.authRepository.user$.subscribe((user)=> {console.log(user)})
+    // this.supabase.signUp({
+    //   email: this.registerForm.value.email as string,
+    //   password: this.registerForm.value.password as string
+    // }).then(
+    //   () => {
+    //     console.log('success');
+    //   }
+    // ).catch((error) => {
+    //   console.log(error);
+    // })
+    this.authRepository.authStore.subscribe((state) => {
+      console.log(state);
     })
+    this.router.navigate(['/login'])
   }
+
+  // protected readonly authStore = authStore;
 }

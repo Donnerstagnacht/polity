@@ -1,5 +1,6 @@
 import {Component, Inject} from '@angular/core';
 import {TuiAlertService} from "@taiga-ui/core";
+import {menuItems, menuItemsSignedOut} from "../menu-itmes";
 
 interface Item {
   badge?: number;
@@ -13,36 +14,20 @@ interface Item {
   styleUrls: ['./main-bar-bottom.component.less']
 })
 export class MainBarBottomComponent {
-
   activeItemIndex = 1;
+  items = menuItems;
+  view: boolean = false;
 
-  readonly items = [
-    {
-      text: 'VOR ORT',
-      icon: 'tuiIconUsers',
-      badge: 3,
-    },
-    {
-      text: 'SUCHE',
-      icon: 'tuiIconSearch',
-      badge: 1234,
-    },
-    {
-      text: 'NEU',
-      icon: 'tuiIconPlus',
-    },
-    {
-      text: 'ORGA',
-      icon: 'tuiIconCalendar',
-      badge: 100,
-    },
-    {
-      text: 'HOME',
-      icon: 'tuiIconHome',
-    },
-  ];
 
   constructor(@Inject(TuiAlertService) private readonly alerts: TuiAlertService) {}
+
+  ngOnInit(): void {
+    if(this.view) {
+      this.items = menuItems
+    } else {
+      this.items = menuItemsSignedOut
+    }
+  }
 
   onClick(item: Item): void {
     item.badge = 0;

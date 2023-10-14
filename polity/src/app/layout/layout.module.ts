@@ -5,6 +5,7 @@ import { MainBarSideComponent } from './main-bar-side/main-bar-side.component';
 import {TuiAppBarModule, TuiTabBarModule} from "@taiga-ui/addon-mobile";
 import {TuiButtonModule, TuiHintModule, TuiTooltipModule} from "@taiga-ui/core";
 import {CdkTableModule} from "@angular/cdk/table";
+import {RouterLink, RouterLinkActive} from "@angular/router";
 
 
 
@@ -24,7 +25,9 @@ import {CdkTableModule} from "@angular/cdk/table";
         TuiTabBarModule,
         CdkTableModule,
         TuiTooltipModule,
-        TuiHintModule
+        TuiHintModule,
+        RouterLinkActive,
+        RouterLink
     ]
 })
 export class LayoutModule { }

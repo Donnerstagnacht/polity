@@ -2,6 +2,7 @@ export type Item = {
     badge?: number;
     icon: string;
     text: string;
+    link?: string;
 }
 
 export const menuItems: Item[] = [
@@ -28,4 +29,17 @@ export const menuItems: Item[] = [
         text: 'HOME',
         icon: 'tuiIconHome',
     },
+];
+
+export const menuItemsSignedOut: Item[] = [
+    {
+        text: 'REGISTER',
+        icon: 'tuiIconPlusCircle',
+        link: '/signup',
+    },
+    {
+        text: 'LOGIN',
+        icon: 'tuiIconLogIn',
+        link: '/login',
+    }
 ];
