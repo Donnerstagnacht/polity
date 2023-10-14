@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {TUI_PASSWORD_TEXTS, TUI_VALIDATION_ERRORS, tuiInputPasswordOptionsProvider} from "@taiga-ui/kit";
 import {of} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'polity-login',
@@ -31,13 +32,15 @@ import {of} from "rxjs";
   ]
 })
 export class LoginComponent {
+    loginForm = new FormGroup({
+        email: new FormControl('email', [Validators.required, Validators.email]),
+        password: new FormControl('password', [Validators.required, Validators.minLength(6)]),
+    })
 
-  loginForm = new FormGroup({
-    email: new FormControl('email', [Validators.required, Validators.email]),
-    password: new FormControl('password', [Validators.required, Validators.minLength(6)]),
-  })
+    constructor(private router: Router) {    }
 
-  onSubmit() {
-    console.log(this.loginForm.value);
-  }
+    onSubmit() {
+        console.log(this.loginForm.value);
+        this.router.navigate(['/profile']);
+    }
 }

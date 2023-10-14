@@ -13,9 +13,13 @@ const routes: Routes = [
     component: RegisterComponent
   },
   {
+    path: 'profile',
+    loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule)
+  },
+  {
     path: '**',
     component: LoginComponent
-  }
+  },
 ];
 
 @NgModule({
