@@ -4,6 +4,7 @@ import {TUI_PASSWORD_TEXTS, TUI_VALIDATION_ERRORS, tuiInputPasswordOptionsProvid
 import {of} from "rxjs";
 import {Router} from "@angular/router";
 import {AuthentificationService} from "../authentification.service";
+import {SessionStoreService} from "../session-store.service";
 
 @Component({
   selector: 'polity-login',
@@ -41,7 +42,7 @@ export class LoginComponent {
 
     constructor(
       private router: Router,
-      private authService: AuthentificationService
+      private authService: AuthentificationService,
     ) {    }
 
     async onSubmit() {
