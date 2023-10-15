@@ -16,7 +16,7 @@ interface Item {
 export class MainBarBottomComponent {
   activeItemIndex = 1;
   items = menuItems;
-@Input() view!: boolean;
+  @Input() view!: boolean;
 
 
   constructor(@Inject(TuiAlertService) private readonly alerts: TuiAlertService) {}
@@ -43,5 +43,4 @@ export class MainBarBottomComponent {
     item.badge = 0;
     this.alerts.open(this.activeItemIndex, {label: item.text}).subscribe();
   }
-
 }

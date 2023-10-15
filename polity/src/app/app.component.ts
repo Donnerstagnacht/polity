@@ -15,26 +15,15 @@ export class AppComponent {
   constructor(
       private readonly authService: AuthentificationService,
       private sessionStoreService: SessionStoreService
-
   ) {
     this.authService.authChanges((_, session) => {
       this.session = session
       this.sessionStoreService.updateSession(session);
-      console.log('appc component', session)
       if(session != null) {
-        console.log('true')
         this.signingIn = true;
       } else {
-        console.log('false')
         this.signingIn = false;
       }
-    })
-    this.sessionStoreService.selectSessionSlice().subscribe((session) => {
-      // if(session) {
-      //   this.signingIn = true;
-      // } else {
-      //   this.signingIn = false;
-      // }
     })
   }
 }

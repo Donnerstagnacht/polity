@@ -66,23 +66,5 @@ export class RegisterComponent {
       this.registerForm.reset();
       this.loading = false;
     }
-    console.log(this.registerForm.value);
-    this.authRepository.updateUser({id: this.registerForm.value.email as string})
-    this.authRepository.user$.subscribe((user)=> {console.log(user)})
-    // this.supabase.signUp({
-    //   email: this.registerForm.value.email as string,
-    //   password: this.registerForm.value.password as string
-    // }).then(
-    //   () => {
-    //     console.log('success');
-    //   }
-    // ).catch((error) => {
-    //   console.log(error);
-    // })
-    this.authRepository.authStore.subscribe((state) => {
-      console.log(state);
-    })
   }
-
-  // protected readonly authStore = authStore;
 }

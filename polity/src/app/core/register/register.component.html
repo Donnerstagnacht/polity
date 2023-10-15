@@ -6,6 +6,7 @@
 >
   <div class="tui-form__row">
     <tui-input
+      data-cy="email"
       formControlName="email"
       tuiHintContent="It will be used for sending documents"
       [tuiTextfieldCleaner]="true"
@@ -27,6 +28,7 @@
   </div>
   <div class="tui-form__row">
     <tui-input-password
+      data-cy="password"
       formControlName="password"
       [tuiTextfieldCleaner]="true"
       [tuiTextfieldCustomContent]="registerForm.controls.password.valid ? success : ''"
@@ -47,6 +49,7 @@
   </div>
   <div class="tui-form__buttons">
     <button
+      data-cy="register"
       size="l"
       tuiButton
       type="submit"
@@ -55,17 +58,6 @@
     >
       ERSTELLEN
     </button>
-    <!--        <button-->
-    <!--            appearance="flat"-->
-    <!--            size="l"-->
-    <!--            tuiButton-->
-    <!--            type="button"-->
-    <!--            class="tui-form__button"-->
-    <!--        >-->
-    <!--            ABBRECHEN-->
-    <!--        </button>-->
   </div>
-
-
   <h1>hello {{this.authRepository.authStore.state.user?.id}}</h1>
 </form>

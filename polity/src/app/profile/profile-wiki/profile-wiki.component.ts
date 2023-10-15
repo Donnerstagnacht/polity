@@ -1,5 +1,4 @@
 import {Component, Input} from '@angular/core';
-
 import {Profile} from "../profile";
 
 @Component({

@@ -41,5 +41,4 @@ export class MainBarSideComponent {
     item.badge = 0;
     this.alerts.open(this.activeItemIndex, {label: item.text}).subscribe();
   }
-
 }

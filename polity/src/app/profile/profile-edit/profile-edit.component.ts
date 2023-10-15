@@ -27,7 +27,6 @@ export class ProfileEditComponent {
   @Output() newProfileEditEvent = new EventEmitter<Profile>();
 
   onSubmit() {
-    // console.log(this.editProfileForm.value);
     this.newProfileEditEvent.emit(
       {
           id: this.profile.id,

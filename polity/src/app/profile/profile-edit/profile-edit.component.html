@@ -4,6 +4,7 @@
 >
     <div class="tui-form__row">
         <tui-input
+                data-cy="firstName"
                 formControlName="firstName"
                 tuiHintContent="Bitte gebe deinen Klarnamen ein"
                 [tuiTextfieldCleaner]="true"
@@ -19,6 +20,7 @@
     </div>
     <div class="tui-form__row">
         <tui-input
+                data-cy="lastName"
                 formControlName="lastName"
                 tuiHintContent="Bitte gebe deinen Klarnamen ein"
                 [tuiTextfieldCleaner]="true"
@@ -34,6 +36,7 @@
     </div>
     <div class="tui-form__buttons">
         <button
+                data-cy="update"
                 size="l"
                 tuiButton
                 type="submit"

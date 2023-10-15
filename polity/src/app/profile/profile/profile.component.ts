@@ -80,6 +80,7 @@ export class ProfileComponent {
         }
         if (profile) {
           this.profileSub = profile
+          this.profile.firstName = profile.username;
         }
       }
     } catch (error) {

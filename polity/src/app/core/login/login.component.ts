@@ -4,7 +4,6 @@ import {TUI_PASSWORD_TEXTS, TUI_VALIDATION_ERRORS, tuiInputPasswordOptionsProvid
 import {of} from "rxjs";
 import {Router} from "@angular/router";
 import {AuthentificationService} from "../authentification.service";
-import {SessionStoreService} from "../session-store.service";
 
 @Component({
   selector: 'polity-login',
@@ -46,12 +45,10 @@ export class LoginComponent {
     ) {    }
 
     async onSubmit() {
-      console.log(this.loginForm.value);
       try {
         this.loading = true;
         const email = this.loginForm.value.email as string;
         const password = this.loginForm.value.password as string;
-        console.log(email, password)
         const {error} = await this.authService.signIn({
           email,
           password
