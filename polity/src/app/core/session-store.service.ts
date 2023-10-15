@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {AuthSession} from "@supabase/supabase-js";
-import {createStore, withProps} from "@ngneat/elf";
+import {createStore, select, withProps} from "@ngneat/elf";
 
-interface  SessionProperties {
+type  SessionProperties = {
   session: AuthSession | null;
 }
 
@@ -15,9 +15,21 @@ export const sessionStore = createStore(
   providedIn: 'root'
 })
 export class SessionStoreService {
+
+
   selectSession() {
     return sessionStore.asObservable()
   }
+
+  session$ = sessionStore.pipe(select((state: SessionProperties) => {
+    return state.session
+  }))
+
+  selectSessionSlice() {
+    return this.session$;
+  }
+
+
 
   constructor() { }
 
@@ -31,5 +43,9 @@ export class SessionStoreService {
             }
         )
     )
+  }
+
+  clearStore(): void {
+    sessionStore.reset()
   }
 }

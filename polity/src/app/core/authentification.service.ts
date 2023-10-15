@@ -54,7 +54,7 @@ export class AuthentificationService {
   }
 
   signOut() {
-    return this.supabase.auth.signOut()
+    return this.supabase.auth.signOut();
   }
 
   updateProfile(profile: Profile) {

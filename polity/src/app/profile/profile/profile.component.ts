@@ -32,8 +32,12 @@ export class ProfileComponent {
     //   console.log(state)
     //   this.session = state.session;
     // })
-    this.sessionStoreService.selectSession().subscribe((session) => {
-      this.session = session.session
+    // this.sessionStoreService.selectSession().subscribe((session) => {
+    //   this.session = session.session
+    // })
+
+    this.sessionStoreService.selectSessionSlice().subscribe((session) => {
+      this.session = session;
     })
   }
 
