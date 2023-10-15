@@ -2,7 +2,9 @@
     <polity-main-bar-bottom></polity-main-bar-bottom>
     <polity-main-bar-side></polity-main-bar-side>
     <div class="polity-container">
-        <router-outlet></router-outlet>
+<!--        <router-outlet></router-outlet>-->
+        <polity-login></polity-login>
+        <polity-profile *ngIf="session" [session]="session"></polity-profile>
 
     </div>
 

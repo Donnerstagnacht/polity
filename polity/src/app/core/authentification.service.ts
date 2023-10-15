@@ -1,5 +1,12 @@
 import { Injectable } from '@angular/core';
-import {AuthSession, createClient, SignInWithPasswordCredentials, SupabaseClient, User} from "@supabase/supabase-js";
+import {
+  AuthChangeEvent,
+  AuthSession,
+  createClient, Session,
+  SignInWithPasswordCredentials,
+  SupabaseClient,
+  User
+} from "@supabase/supabase-js";
 import {environment} from "../../environments/environment";
 
 export interface Profile {
@@ -33,6 +40,10 @@ export class AuthentificationService {
       .select(`username, website, avatar_url`)
       .eq('id', user.id)
       .single();
+  }
+
+  authChanges(callback: (event: AuthChangeEvent, session: Session | null) => void) {
+    return this.supabase.auth.onAuthStateChange(callback)
   }
 
   signUp(credentials: SignInWithPasswordCredentials) {

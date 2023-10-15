@@ -35,6 +35,7 @@ import {Router} from "@angular/router";
   ]
 })
 export class RegisterComponent {
+  loading: boolean = false;
   registerForm = new FormGroup({
     email: new FormControl('email', [Validators.required, Validators.email]),
     password: new FormControl('password', [Validators.required, Validators.minLength(6)]),
@@ -46,7 +47,25 @@ export class RegisterComponent {
       private router: Router
   ) {}
 
-  onSubmit() {
+  async onSubmit() {
+    try {
+      this.loading = true;
+      const {error} = await this.supabase.signUp({
+        email: this.registerForm.value.email as string,
+        password: this.registerForm.value.password as string
+      })
+      if (error) {
+        throw error
+      }
+      this.router.navigate(['/login'])
+    } catch (error) {
+        if (error instanceof Error) {
+          alert(error.message)
+        }
+    } finally {
+      this.registerForm.reset();
+      this.loading = false;
+    }
     console.log(this.registerForm.value);
     this.authRepository.updateUser({id: this.registerForm.value.email as string})
     this.authRepository.user$.subscribe((user)=> {console.log(user)})
@@ -63,7 +82,6 @@ export class RegisterComponent {
     this.authRepository.authStore.subscribe((state) => {
       console.log(state);
     })
-    this.router.navigate(['/login'])
   }
 
   // protected readonly authStore = authStore;

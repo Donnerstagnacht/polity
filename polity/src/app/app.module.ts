@@ -8,21 +8,23 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {LayoutModule} from "./layout/layout.module";
 import {CoreModule} from "./core/core.module";
+import {ProfileModule} from "./profile/profile.module";
 
 @NgModule({
   declarations: [
     AppComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    LayoutModule,
-    CoreModule,
-    BrowserAnimationsModule,
-    TuiRootModule,
-    TuiDialogModule,
-    TuiAlertModule
-],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        LayoutModule,
+        CoreModule,
+        BrowserAnimationsModule,
+        TuiRootModule,
+        TuiDialogModule,
+        TuiAlertModule,
+        ProfileModule
+    ],
   providers: [{provide: TUI_SANITIZER, useClass: NgDompurifySanitizer}],
   bootstrap: [AppComponent]
 })
