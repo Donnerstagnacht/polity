@@ -1,1 +1,5 @@
-<p>profile works!</p>
+<polity-profile-wiki [profile]="profile"></polity-profile-wiki>
+<polity-profile-edit
+        [profile]="profile"
+        (newProfileEditEvent)="editProfile($event)"
+></polity-profile-edit>
