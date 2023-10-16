@@ -1,7 +1,7 @@
 {
   "name": "User 1",
-  "email": "user1@gmail.com",
-  "password": "12345678",
+  "email": "test1@gmail.com",
+  "password": "010893",
   "website": "www.user1.com",
   "about": "I am User 1 and I love to test this app.",
   "contactEmail": "user1@contactemail.com",
