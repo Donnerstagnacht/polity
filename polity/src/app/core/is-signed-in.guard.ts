@@ -1,5 +1,5 @@
 import {CanActivateFn, Router} from '@angular/router';
-import {SessionStoreService} from "./session-store.service";
+import {SessionStoreService} from "./services/session-store.service";
 import {inject} from "@angular/core";
 import { map} from "rxjs";
 

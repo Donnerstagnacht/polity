@@ -8,39 +8,29 @@ export type  SessionProperties = {
   session: AuthSession | null;
 }
 
-// export const sessionStore = createStore(
-//     {name: 'session'},
-//     withProps<SessionProperties>({session: null}),
-// )
-//
-// export const persist = persistState(sessionStore, {
-//   key: 'session',
-//   storage: localStorageStrategy,
-// });
-
 @Injectable({
   providedIn: 'root'
 })
 export class SessionStoreService {
-  sessionStore = createStore(
+  private sessionStore = createStore(
       {name: 'session'},
       withProps<SessionProperties>({session: null}),
   )
 
-  persist = persistState(this.sessionStore, {
+  private persist = persistState(this.sessionStore, {
     key: 'session',
     storage: localStorageStrategy,
   });
 
-  session$ = this.sessionStore.pipe(select((state: SessionProperties) => {
+  private session$ = this.sessionStore.pipe(select((state: SessionProperties) => {
     return state.session
   }))
 
-  selectSessionSlice(): Observable<AuthSession | null> {
+  public selectSessionSlice(): Observable<AuthSession | null> {
     return this.session$;
   }
 
-  updateSession(session: AuthSession | null) {
+  public updateSession(session: AuthSession | null) {
     console.log('readched sessionstore');
     this.sessionStore.update(
         (state: SessionProperties) => (

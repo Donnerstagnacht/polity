@@ -1,9 +1,11 @@
 import {Component} from '@angular/core';
 import {Profile} from "../profile";
-import {AuthentificationService, Profile as ProfileSub} from "../../core/authentification.service";
+import {AuthentificationService} from "../../core/services/authentification.service";
 import {AuthSession} from "@supabase/supabase-js";
-import {SessionStoreService, SessionProperties} from "../../core/session-store.service";
+import {SessionStoreService, SessionProperties} from "../../core/services/session-store.service";
 import {Store} from "@ngneat/elf";
+import {Profile as ProfileSub} from "../../core/types-and-interfaces/profile";
+import {UserService} from "../../core/services/user.service";
 
 @Component({
   selector: 'polity-profile',
@@ -22,13 +24,12 @@ export class ProfileComponent {
   };
 
   profileSub!: ProfileSub | null;
-  sessionStore: Store<{ name: string, state: SessionProperties, config: undefined }>  | null = null;
 
   constructor(
       private readonly authService: AuthentificationService,
       private readonly sessionStoreService: SessionStoreService,
+      private readonly userService: UserService
       ) {
-    this.sessionStore = this.sessionStoreService.sessionStore
     this.sessionStoreService.selectSessionSlice().subscribe((session) => {
       this.session = session;
       this.getprofile();
@@ -40,7 +41,7 @@ export class ProfileComponent {
     try {
       this.loading = true;
       if(this.session) {
-        const { error } = await this.authService.updateProfile({
+        const { error } = await this.userService.updateProfile({
           id: this.session.user.id,
           username: newProfileData.firstName!,
           website: 'website',
@@ -66,7 +67,7 @@ export class ProfileComponent {
       if (this.session ) {
         const user = this.session.user;
         let {data: profile, error, status} =
-            await this.authService.profile(user)
+            await this.userService.selectProfile(user)
         if (error && status !== 406) {
           throw error
         }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import {AuthentificationService} from "./core/authentification.service";
+import {AuthentificationService} from "./core/services/authentification.service";
 import {AuthSession} from "@supabase/supabase-js";
-import {SessionStoreService} from "./core/session-store.service";
+import {SessionStoreService} from "./core/services/session-store.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -11,7 +11,6 @@ import {Router} from "@angular/router";
 })
 export class AppComponent {
   title = 'polity';
-  session: AuthSession | null = this.authService.session;
   signingIn: boolean = true;
   constructor(
       private readonly authService: AuthentificationService,
@@ -19,7 +18,6 @@ export class AppComponent {
       private router: Router
   ) {
     this.authService.authChanges((_, session) => {
-      this.session = session
       this.sessionStoreService.updateSession(session);
       if(session != null) {
         this.signingIn = true;

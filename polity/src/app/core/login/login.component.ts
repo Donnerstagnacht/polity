@@ -3,7 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {TUI_PASSWORD_TEXTS, TUI_VALIDATION_ERRORS, tuiInputPasswordOptionsProvider} from "@taiga-ui/kit";
 import {of} from "rxjs";
 import {Router} from "@angular/router";
-import {AuthentificationService} from "../authentification.service";
+import {AuthentificationService} from "../services/authentification.service";
 
 @Component({
   selector: 'polity-login',

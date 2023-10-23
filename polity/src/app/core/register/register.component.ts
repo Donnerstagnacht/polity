@@ -2,9 +2,9 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {TUI_PASSWORD_TEXTS, TUI_VALIDATION_ERRORS, tuiInputPasswordOptionsProvider} from "@taiga-ui/kit";
 import {of} from "rxjs";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {AuthentificationService} from "../authentification.service";
+import {AuthentificationService} from "../services/authentification.service";
 // import {AuthRepository, authStore, authStore as AuthStore} from "../auth-store";
-import {AuthStoreService} from "../auth-store.service";
+import {UserStoreService} from "../services/user-store.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -43,7 +43,7 @@ export class RegisterComponent {
 
   constructor(
       private readonly supabase: AuthentificationService,
-      public authRepository: AuthStoreService,
+      public authRepository: UserStoreService,
       private router: Router
   ) {}
 
