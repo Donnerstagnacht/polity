@@ -8,4 +8,9 @@ import {Profile} from "../profile";
 })
 export class ProfileWikiComponent {
   @Input() profile: Profile | null = null;
+
+  // ngOnChanges(changes: any) {
+  //   console.log('childWiki', changes);
+  //   // this.profile = changes
+  // }
 }

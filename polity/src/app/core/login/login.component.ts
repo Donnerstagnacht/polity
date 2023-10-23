@@ -35,8 +35,8 @@ import {AuthentificationService} from "../authentification.service";
 export class LoginComponent {
   loading: boolean = false;
   loginForm = new FormGroup({
-      email: new FormControl('email', [Validators.required, Validators.email]),
-      password: new FormControl('password', [Validators.required, Validators.minLength(6)]),
+      email: new FormControl('test1@gmail.com', [Validators.required, Validators.email]),
+      password: new FormControl('010893', [Validators.required, Validators.minLength(6)]),
   })
 
     constructor(

@@ -14,7 +14,7 @@ export class AuthStoreService {
   )
 
   user$ = this.authStore.pipe(select((state: AuthProperties) => {
-    state.user
+    return state.user
   }))
 
   updateUser(user: AuthProperties['user']) {

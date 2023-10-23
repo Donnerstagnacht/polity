@@ -1,8 +1,9 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 import {Profile} from "../profile";
 import {AuthentificationService, Profile as ProfileSub} from "../../core/authentification.service";
 import {AuthSession} from "@supabase/supabase-js";
-import {SessionStoreService, sessionStore} from "../../core/session-store.service";
+import {SessionStoreService, SessionProperties} from "../../core/session-store.service";
+import {Store} from "@ngneat/elf";
 
 @Component({
   selector: 'polity-profile',
@@ -11,40 +12,29 @@ import {SessionStoreService, sessionStore} from "../../core/session-store.servic
 })
 export class ProfileComponent {
   // @Input() session!: AuthSession
-  session: AuthSession | null = null
+  session: AuthSession | null = null;
   loading: boolean = false;
-  profile: Profile = {
+  profile: Profile | null = {
     id: 'sefddf',
     firstName: 'Tobias',
     lastName: 'Hassebrock',
     profileImage: 'udsfdfdff'
-  }
+  };
 
-  profileSub!: ProfileSub
-  sessionStore = sessionStore
+  profileSub!: ProfileSub | null;
+  sessionStore: Store<{ name: string, state: SessionProperties, config: undefined }>  | null = null;
 
   constructor(
       private readonly authService: AuthentificationService,
       private readonly sessionStoreService: SessionStoreService,
       ) {
-    // this.sessionStore.subscribe((state) => {
-    //   console.log('state from session store')
-    //   console.log(state)
-    //   this.session = state.session;
-    // })
-    // this.sessionStoreService.selectSession().subscribe((session) => {
-    //   this.session = session.session
-    // })
-
+    this.sessionStore = this.sessionStoreService.sessionStore
     this.sessionStoreService.selectSessionSlice().subscribe((session) => {
       this.session = session;
+      this.getprofile();
     })
   }
 
-  async ngOnInit() {
-    await this.getprofile();
-    console.log(this.profileSub)
-  }
   async editProfile(newProfileData: Profile) {
     console.log(newProfileData);
     try {
@@ -52,7 +42,7 @@ export class ProfileComponent {
       if(this.session) {
         const { error } = await this.authService.updateProfile({
           id: this.session.user.id,
-          username: newProfileData.firstName,
+          username: newProfileData.firstName!,
           website: 'website',
           avatar_url: 'avatar_url',
         })
@@ -70,22 +60,28 @@ export class ProfileComponent {
   }
 
   async getprofile() {
+    console.log('called')
     try {
       this.loading = true;
-      if (this.session) {
-        const {user} = this.session;
-        let {data: profile, error, status} = await this.authService.profile(user)
+      if (this.session ) {
+        const user = this.session.user;
+        let {data: profile, error, status} =
+            await this.authService.profile(user)
         if (error && status !== 406) {
           throw error
         }
-        if (profile) {
-          this.profileSub = profile
-          this.profile.firstName = profile.username;
-        }
+        this.profileSub = profile
+        this.profile!.firstName = profile?.username;
+
+      } else {
+        this.profileSub = null;
+        this.profile!.firstName = null;
+        console.log('profile after change', this.profileSub, this.profile)
       }
     } catch (error) {
       if (error instanceof Error) {
-        alert(error.message)
+        this.profileSub = null;
+        this.profile!.firstName = null;
       }
     } finally {
       this.loading = false

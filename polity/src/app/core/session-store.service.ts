@@ -1,41 +1,48 @@
-import { Injectable } from '@angular/core';
+import { Injectable} from '@angular/core';
 import {AuthSession} from "@supabase/supabase-js";
 import {createStore, select, withProps} from "@ngneat/elf";
+import {Observable} from "rxjs";
+import {localStorageStrategy, persistState} from "@ngneat/elf-persist-state";
 
-type  SessionProperties = {
+export type  SessionProperties = {
   session: AuthSession | null;
 }
 
-export const sessionStore = createStore(
-    {name: 'session'},
-    withProps<SessionProperties>({session: null}),
-)
+// export const sessionStore = createStore(
+//     {name: 'session'},
+//     withProps<SessionProperties>({session: null}),
+// )
+//
+// export const persist = persistState(sessionStore, {
+//   key: 'session',
+//   storage: localStorageStrategy,
+// });
 
 @Injectable({
   providedIn: 'root'
 })
 export class SessionStoreService {
+  sessionStore = createStore(
+      {name: 'session'},
+      withProps<SessionProperties>({session: null}),
+  )
 
+  persist = persistState(this.sessionStore, {
+    key: 'session',
+    storage: localStorageStrategy,
+  });
 
-  selectSession() {
-    return sessionStore.asObservable()
-  }
-
-  session$ = sessionStore.pipe(select((state: SessionProperties) => {
+  session$ = this.sessionStore.pipe(select((state: SessionProperties) => {
     return state.session
   }))
 
-  selectSessionSlice() {
+  selectSessionSlice(): Observable<AuthSession | null> {
     return this.session$;
   }
 
-
-
-  constructor() { }
-
   updateSession(session: AuthSession | null) {
     console.log('readched sessionstore');
-    sessionStore.update(
+    this.sessionStore.update(
         (state: SessionProperties) => (
             {
               ...state,
@@ -43,9 +50,5 @@ export class SessionStoreService {
             }
         )
     )
-  }
-
-  clearStore(): void {
-    sessionStore.reset()
   }
 }
