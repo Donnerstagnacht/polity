@@ -3,8 +3,6 @@ import {TUI_PASSWORD_TEXTS, TUI_VALIDATION_ERRORS, tuiInputPasswordOptionsProvid
 import {of} from "rxjs";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthentificationService} from "../services/authentification.service";
-// import {AuthRepository, authStore, authStore as AuthStore} from "../auth-store";
-import {UserStoreService} from "../services/user-store.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -43,7 +41,6 @@ export class RegisterComponent {
 
   constructor(
       private readonly supabase: AuthentificationService,
-      public authRepository: UserStoreService,
       private router: Router
   ) {}
 

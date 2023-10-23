@@ -41,7 +41,7 @@ export class LoginComponent {
 
     constructor(
       private router: Router,
-      private authService: AuthentificationService,
+      private authService: AuthentificationService
     ) {    }
 
     async onSubmit() {

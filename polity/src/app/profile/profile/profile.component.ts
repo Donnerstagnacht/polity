@@ -13,7 +13,6 @@ import {UserService} from "../../core/services/user.service";
   styleUrls: ['./profile.component.less']
 })
 export class ProfileComponent {
-  // @Input() session!: AuthSession
   session: AuthSession | null = null;
   loading: boolean = false;
   profile: Profile | null = {
@@ -26,7 +25,6 @@ export class ProfileComponent {
   profileSub!: ProfileSub | null;
 
   constructor(
-      private readonly authService: AuthentificationService,
       private readonly sessionStoreService: SessionStoreService,
       private readonly userService: UserService
       ) {
