@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import {AuthentificationService} from "./core/services/authentification.service";
-import {AuthSession} from "@supabase/supabase-js";
+import {AuthenticationService} from "./core/services/authentication.service";
 import {SessionStoreService} from "./core/services/session-store.service";
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'polity-root',
@@ -13,9 +11,8 @@ export class AppComponent {
   title = 'polity';
   signingIn: boolean = true;
   constructor(
-      private readonly authService: AuthentificationService,
-      private sessionStoreService: SessionStoreService,
-      private router: Router
+      private readonly authService: AuthenticationService,
+      private sessionStoreService: SessionStoreService
   ) {
     this.authService.authChanges((_, session) => {
       this.sessionStoreService.updateSession(session);
@@ -23,7 +20,6 @@ export class AppComponent {
         this.signingIn = true;
       } else {
         this.signingIn = false;
-        // this.router.navigate(['/login']);
       }
     })
   }

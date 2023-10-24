@@ -6,7 +6,8 @@ create table profiles (
   full_name text,
   avatar_url text,
   website text,
-
+  first_name text,
+  last_name text,
   constraint username_length check (char_length(username) >= 3)
 );
 

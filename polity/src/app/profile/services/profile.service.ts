@@ -1,27 +1,28 @@
 import { Injectable } from '@angular/core';
-import {createClient, SupabaseClient, User} from "@supabase/supabase-js";
+import {createClient, SupabaseClient} from "@supabase/supabase-js";
 import {environment} from "../../../environments/environment";
 import {Profile} from "../types-and-interfaces/profile";
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class profileService {
   private supabase: SupabaseClient
 
   constructor() {
     this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
   }
 
-  selectProfile(user: User) {
+  selectProfile(profile: Profile) {
     return this.supabase
         .from('profiles')
-        .select(`username, website, avatar_url`)
-        .eq('id', user.id)
+        .select(`username, website, avatar_url, first_name, last_name`)
+        .eq('id', profile.id)
         .single();
   }
 
   updateProfile(profile: Profile) {
+    console.log('data to update', profile)
     const update = {
       ...profile,
       updated_at: new Date(),

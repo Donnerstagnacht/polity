@@ -25,7 +25,9 @@ import {ProfileModule} from "./profile/profile.module";
         TuiAlertModule,
         ProfileModule
     ],
-  providers: [{provide: TUI_SANITIZER, useClass: NgDompurifySanitizer}],
+  providers: [
+      {provide: TUI_SANITIZER, useClass: NgDompurifySanitizer}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

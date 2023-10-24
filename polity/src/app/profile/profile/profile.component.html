@@ -1,5 +1,2 @@
-<polity-profile-wiki [profile]="profile"></polity-profile-wiki>
-<polity-profile-edit
-        [profile]="profile!"
-        (newProfileEditEvent)="editProfile($event)"
-></polity-profile-edit>
+<polity-profile-wiki *ngIf="profile" [profile]="profile"></polity-profile-wiki>
+<polity-profile-edit></polity-profile-edit>

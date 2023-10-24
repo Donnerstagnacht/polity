@@ -1,11 +1,9 @@
 import {Component} from '@angular/core';
-import {Profile} from "../profile";
-import {AuthentificationService} from "../../core/services/authentification.service";
+import {Profile} from "../types-and-interfaces/profile";
 import {AuthSession} from "@supabase/supabase-js";
-import {SessionStoreService, SessionProperties} from "../../core/services/session-store.service";
-import {Store} from "@ngneat/elf";
-import {Profile as ProfileSub} from "../../core/types-and-interfaces/profile";
-import {UserService} from "../../core/services/user.service";
+import {SessionStoreService} from "../../core/services/session-store.service";
+import {profileService} from "../services/profile.service";
+import {profileStoreService} from "../services/profile-store.service";
 
 @Component({
   selector: 'polity-profile',
@@ -15,47 +13,16 @@ import {UserService} from "../../core/services/user.service";
 export class ProfileComponent {
   session: AuthSession | null = null;
   loading: boolean = false;
-  profile: Profile | null = {
-    id: 'sefddf',
-    firstName: 'Tobias',
-    lastName: 'Hassebrock',
-    profileImage: 'udsfdfdff'
-  };
-
-  profileSub!: ProfileSub | null;
-
+  profile: Profile | null = null;
   constructor(
       private readonly sessionStoreService: SessionStoreService,
-      private readonly userService: UserService
+      private readonly userStoreService: profileStoreService,
+      private readonly userService: profileService
       ) {
     this.sessionStoreService.selectSessionSlice().subscribe((session) => {
       this.session = session;
       this.getprofile();
     })
-  }
-
-  async editProfile(newProfileData: Profile) {
-    console.log(newProfileData);
-    try {
-      this.loading = true;
-      if(this.session) {
-        const { error } = await this.userService.updateProfile({
-          id: this.session.user.id,
-          username: newProfileData.firstName!,
-          website: 'website',
-          avatar_url: 'avatar_url',
-        })
-        if (error) throw error
-      } else {
-        throw new Error('no session')
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        alert(error.message)
-      }
-    } finally {
-      this.loading = false
-    }
   }
 
   async getprofile() {
@@ -69,23 +36,19 @@ export class ProfileComponent {
         if (error && status !== 406) {
           throw error
         }
-        this.profileSub = profile
-        this.profile!.firstName = profile?.username;
-
+        this.userStoreService.updateProfile(profile);
+        this.userStoreService.profile$.subscribe((profile) => {
+          this.profile = profile
+        })
       } else {
-        this.profileSub = null;
-        this.profile!.firstName = null;
-        console.log('profile after change', this.profileSub, this.profile)
+        // this.profile!.firstName = undefined;
       }
     } catch (error) {
       if (error instanceof Error) {
-        this.profileSub = null;
-        this.profile!.firstName = null;
+        // this.profile!.firstName = undefined;
       }
     } finally {
       this.loading = false
-      console.log('finally', this.profileSub)
     }
   }
-
 }

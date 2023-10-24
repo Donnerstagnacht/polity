@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {Profile} from "../profile";
+import {Profile} from "../types-and-interfaces/profile";
+import {SimpleChangeExtended} from "../../shared/types-and interfaces/SimpleChangeExtended";
 
 @Component({
   selector: 'polity-profile-wiki',
@@ -7,10 +8,10 @@ import {Profile} from "../profile";
   styleUrls: ['./profile-wiki.component.less']
 })
 export class ProfileWikiComponent {
-  @Input() profile: Profile | null = null;
+  @Input() profile!: Profile | null;
 
-  // ngOnChanges(changes: any) {
-  //   console.log('childWiki', changes);
-  //   // this.profile = changes
-  // }
+  ngOnChanges(changes: SimpleChangeExtended<'profile', Profile>) {
+    console.log(changes.profile)
+     this.profile = changes.profile.currentValue;
+  }
 }

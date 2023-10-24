@@ -11,7 +11,7 @@ import {environment} from "../../../environments/environment";
 @Injectable({
   providedIn: 'root'
 })
-export class AuthentificationService {
+export class AuthenticationService {
   private supabase: SupabaseClient
 
   constructor() {
