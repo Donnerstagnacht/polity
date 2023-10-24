@@ -2,6 +2,8 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {TUI_PASSWORD_TEXTS, TUI_VALIDATION_ERRORS, tuiInputPasswordOptionsProvider} from "@taiga-ui/kit";
 import {of} from "rxjs";
+import {Router} from "@angular/router";
+import {AuthenticationService} from "../services/authentication.service";
 
 @Component({
   selector: 'polity-login',
@@ -31,13 +33,52 @@ import {of} from "rxjs";
   ]
 })
 export class LoginComponent {
-
+  loading: boolean = false;
   loginForm = new FormGroup({
-    email: new FormControl('email', [Validators.required, Validators.email]),
-    password: new FormControl('password', [Validators.required, Validators.minLength(6)]),
+      email: new FormControl('test1@gmail.com', [Validators.required, Validators.email]),
+      password: new FormControl('010893', [Validators.required, Validators.minLength(6)]),
   })
 
-  onSubmit() {
-    console.log(this.loginForm.value);
-  }
+    constructor(
+      private router: Router,
+      private authService: AuthenticationService
+    ) {    }
+
+    async onSubmit() {
+      try {
+        this.loading = true;
+        const email = this.loginForm.value.email as string;
+        const password = this.loginForm.value.password as string;
+        const {error} = await this.authService.signIn({
+          email,
+          password
+        })
+        if (error) {
+          throw error
+        }
+        this.router.navigate(['/profile']);
+      } catch (error) {
+        if (error instanceof Error) {
+          alert(error.message)
+        }
+      } finally {
+        this.loginForm.reset();
+        this.loading = false;
+      }
+    }
+
+    async signOut() {
+      console.log('signout')
+        try {
+          const {error} = await this.authService.signOut();
+          if (error) {
+            throw error
+          }
+          this.router.navigate(['/login']);
+        } catch (error) {
+          if (error instanceof Error) {
+            alert(error.message)
+          }
+        }
+    }
 }

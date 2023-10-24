@@ -1,0 +1,55 @@
+<form
+    [formGroup]="editProfileForm"
+    (ngSubmit)="onSubmit()"
+>
+    <div class="tui-form__row">
+        <tui-input
+                data-cy="firstName"
+                formControlName="firstName"
+                tuiHintContent="Bitte gebe deinen Klarnamen ein"
+                [tuiTextfieldCleaner]="true"
+                [tuiTextfieldCustomContent]="editProfileForm.controls.firstName.valid ? success : ''"
+        >
+            Gebe deinen Vornamen ein
+        </tui-input>
+        <tui-error
+                formControlName="firstName"
+                [error]="[] | tuiFieldError | async"
+        >
+        </tui-error>
+    </div>
+    <div class="tui-form__row">
+        <tui-input
+                data-cy="lastName"
+                formControlName="lastName"
+                tuiHintContent="Bitte gebe deinen Klarnamen ein"
+                [tuiTextfieldCleaner]="true"
+                [tuiTextfieldCustomContent]="editProfileForm.controls.lastName.valid ? success : ''"
+        >
+            Gebe deinen Nachnamen ein
+        </tui-input>
+        <tui-error
+                formControlName="lastName"
+                [error]="[] | tuiFieldError | async"
+        >
+        </tui-error>
+    </div>
+    <div class="tui-form__buttons">
+        <button
+                data-cy="update"
+                size="l"
+                tuiButton
+                type="submit"
+                class="tui-form__button"
+                [disabled]="!editProfileForm.valid"
+        >
+            ÄNDERN
+        </button>
+    </div>
+    <ng-template #success>
+        <tui-svg
+                src="tuiIconCheck"
+                class="success tui-space_left-3"
+        ></tui-svg>
+    </ng-template>
+</form>

@@ -1,9 +1,7 @@
 <tui-root>
-    <polity-main-bar-bottom></polity-main-bar-bottom>
-    <polity-main-bar-side></polity-main-bar-side>
+    <polity-main-bar-bottom [view]="signingIn"></polity-main-bar-bottom>
+    <polity-main-bar-side [view]="signingIn"></polity-main-bar-side>
     <div class="polity-container">
         <router-outlet></router-outlet>
-
     </div>
-
 </tui-root>

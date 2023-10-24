@@ -2,9 +2,7 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {TUI_PASSWORD_TEXTS, TUI_VALIDATION_ERRORS, tuiInputPasswordOptionsProvider} from "@taiga-ui/kit";
 import {of} from "rxjs";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {AuthentificationService} from "../authentification.service";
-// import {AuthRepository, authStore, authStore as AuthStore} from "../auth-store";
-import {AuthStoreService} from "../auth-store.service";
+import {AuthenticationService} from "../services/authentication.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -35,36 +33,35 @@ import {Router} from "@angular/router";
   ]
 })
 export class RegisterComponent {
+  loading: boolean = false;
   registerForm = new FormGroup({
     email: new FormControl('email', [Validators.required, Validators.email]),
     password: new FormControl('password', [Validators.required, Validators.minLength(6)]),
   })
 
   constructor(
-      private readonly supabase: AuthentificationService,
-      public authRepository: AuthStoreService,
+      private readonly supabase: AuthenticationService,
       private router: Router
   ) {}
 
-  onSubmit() {
-    console.log(this.registerForm.value);
-    this.authRepository.updateUser({id: this.registerForm.value.email as string})
-    this.authRepository.user$.subscribe((user)=> {console.log(user)})
-    // this.supabase.signUp({
-    //   email: this.registerForm.value.email as string,
-    //   password: this.registerForm.value.password as string
-    // }).then(
-    //   () => {
-    //     console.log('success');
-    //   }
-    // ).catch((error) => {
-    //   console.log(error);
-    // })
-    this.authRepository.authStore.subscribe((state) => {
-      console.log(state);
-    })
-    this.router.navigate(['/login'])
+  async onSubmit() {
+    try {
+      this.loading = true;
+      const {error} = await this.supabase.signUp({
+        email: this.registerForm.value.email as string,
+        password: this.registerForm.value.password as string
+      })
+      if (error) {
+        throw error
+      }
+      this.router.navigate(['/login'])
+    } catch (error) {
+        if (error instanceof Error) {
+          alert(error.message)
+        }
+    } finally {
+      this.registerForm.reset();
+      this.loading = false;
+    }
   }
-
-  // protected readonly authStore = authStore;
 }

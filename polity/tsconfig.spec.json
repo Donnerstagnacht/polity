@@ -7,8 +7,9 @@
       "jasmine"
     ]
   },
-  "include": [
-    "src/**/*.spec.ts",
-    "src/**/*.d.ts"
-  ]
+//  "include": [
+//    "src/**/*.spec.ts",
+//    "src/**/*.d.ts"
+//  ]
+  "include": [ "src/polyfills.ts", "src/test.ts", "src/**/*.spec.ts", "src/**/*.d.ts" ], "exclude": [ "node_modules" ]
 }

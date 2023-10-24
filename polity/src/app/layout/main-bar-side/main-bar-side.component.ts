@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, Input} from '@angular/core';
 import {TuiAlertService} from "@taiga-ui/core";
 import {menuItems, menuItemsSignedOut} from "../menu-itmes";
 
@@ -16,7 +16,7 @@ interface Item {
 export class MainBarSideComponent {
   activeItemIndex = 1;
   items = menuItems;
-  view: boolean = false;
+  @Input()view: boolean = false;
 
   constructor(@Inject(TuiAlertService) private readonly alerts: TuiAlertService) {}
 
@@ -28,9 +28,17 @@ export class MainBarSideComponent {
       }
   }
 
+  ngOnChanges(): void {
+    console.log('change', this.view)
+    if(this.view) {
+      this.items = menuItems
+    } else {
+      this.items = menuItemsSignedOut
+    }
+  }
+
   onClick(item: Item): void {
     item.badge = 0;
     this.alerts.open(this.activeItemIndex, {label: item.text}).subscribe();
   }
-
 }
