@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {createStore, select, Store, withProps} from "@ngneat/elf";
+import {createStore, select, withProps} from "@ngneat/elf";
 import {Profile, ProfileProperties} from "../types-and-interfaces/profile";
 import {localStorageStrategy, persistState} from "@ngneat/elf-persist-state";
 

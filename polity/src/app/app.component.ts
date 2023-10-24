@@ -16,11 +16,7 @@ export class AppComponent {
   ) {
     this.authService.authChanges((_, session) => {
       this.sessionStoreService.updateSession(session);
-      if(session != null) {
-        this.signingIn = true;
-      } else {
-        this.signingIn = false;
-      }
+      this.signingIn = session != null;
     })
   }
 }
