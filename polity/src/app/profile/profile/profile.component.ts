@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Signal} from '@angular/core';
 import {Profile} from "../types-and-interfaces/profile";
 import {AuthSession} from "@supabase/supabase-js";
 import {SessionStoreService} from "../../core/services/session-store.service";
@@ -14,6 +14,7 @@ export class ProfileComponent {
   session: AuthSession | null = null;
   loading: boolean = false;
   profile: Profile | null = null;
+  profileAsSignal!: Signal<Profile | null | undefined>;
   constructor(
       private readonly sessionStoreService: SessionStoreService,
       private readonly userStoreService: profileStoreService,
@@ -37,9 +38,10 @@ export class ProfileComponent {
           throw error
         }
         this.userStoreService.updateProfile(profile);
-        this.userStoreService.profile$.subscribe((profile) => {
-          this.profile = profile
-        })
+        // this.userStoreService.profile$.subscribe((profile) => {
+        //   this.profile = profile
+        // })
+        this.profileAsSignal = this.userStoreService.profileAsSignal;
       } else {
         // this.profile!.firstName = undefined;
       }
