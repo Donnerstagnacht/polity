@@ -3,10 +3,6 @@ import {TUI_PASSWORD_TEXTS, TUI_VALIDATION_ERRORS, tuiInputPasswordOptionsProvid
 import {of} from "rxjs";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../services/authentication.service";
-import {Router} from "@angular/router";
-import {AuthResponse,} from "@supabase/supabase-js";
-import {NotificationsStoreService} from "../services/notifications-store.service";
-import {UiStoreService} from "../services/ui-store.service";
 
 @Component({
     selector: 'polity-sign-up',
@@ -51,31 +47,15 @@ export class SignUpComponent {
     })
 
     constructor(
-        private readonly supabase: AuthenticationService,
-        private readonly router: Router,
-        private readonly notificationService: NotificationsStoreService,
-        private readonly UIStoreService: UiStoreService
+        private readonly authService: AuthenticationService
     ) {
     }
 
     protected async onSignUp(): Promise<void> {
-        try {
-            this.UIStoreService.setLoading(true)
-            const authResponse: AuthResponse = await this.supabase.signUp({
-                email: this.signUpForm.value.email as string,
-                password: this.signUpForm.value.password as string
-            })
-            if (authResponse.error) {
-                throw authResponse.error
-            }
-            await this.router.navigate(['/landing/sign-in'])
-        } catch (error) {
-            if (error instanceof Error) {
-                this.notificationService.updateNotification(error.message, true)
-            }
-        } finally {
-            this.signUpForm.reset();
-            this.UIStoreService.setLoading(false)
-        }
+        await this.authService.signUp({
+            email: this.signUpForm.value.email as string,
+            password: this.signUpForm.value.password as string
+        })
+        this.signUpForm.reset();
     }
 }

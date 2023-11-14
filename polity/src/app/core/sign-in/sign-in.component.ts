@@ -2,12 +2,7 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {TUI_PASSWORD_TEXTS, TUI_VALIDATION_ERRORS, tuiInputPasswordOptionsProvider} from "@taiga-ui/kit";
 import {of} from "rxjs";
-import {Router} from "@angular/router";
 import {AuthenticationService} from "../services/authentication.service";
-import {SessionStoreService} from "../services/session-store.service";
-import {AuthTokenResponse} from "@supabase/supabase-js";
-import {NotificationsStoreService} from "../services/notifications-store.service";
-import {UiStoreService} from "../services/ui-store.service";
 
 @Component({
     selector: 'polity-sign-in',
@@ -52,33 +47,15 @@ export class SignInComponent {
     })
 
     constructor(
-        private readonly router: Router,
         private readonly authService: AuthenticationService,
-        private readonly sessionStoreService: SessionStoreService,
-        private readonly notificationService: NotificationsStoreService,
-        private readonly UIStoreService: UiStoreService
     ) {
     }
 
     protected async onSignIn(): Promise<void> {
-        try {
-            this.UIStoreService.setLoading(true)
-            const authResponse: AuthTokenResponse = await this.authService.signIn({
-                email: this.signInForm.value.email as string,
-                password: this.signInForm.value.password as string
-            })
-            if (authResponse.error) {
-                throw authResponse.error
-            }
-            await this.sessionStoreService.setAuthData(authResponse.data.session)
-            await this.router.navigate(['/profile', authResponse.data.session.user.id]);
-        } catch (error) {
-            if (error instanceof Error) {
-                this.notificationService.updateNotification(error.message, true);
-            }
-        } finally {
-            this.signInForm.reset();
-            this.UIStoreService.setLoading(false)
-        }
+        await this.authService.signIn({
+            email: this.signInForm.value.email as string,
+            password: this.signInForm.value.password as string
+        });
+        this.signInForm.reset();
     }
 }
