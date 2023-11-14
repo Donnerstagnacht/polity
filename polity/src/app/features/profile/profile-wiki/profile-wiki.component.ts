@@ -5,7 +5,6 @@ import {UiStoreService} from "../../../core/services/ui-store.service";
 import {ProfileStatisticsStoreService} from "../../profile-follow/services/profile-statistics-store.service";
 import {ProfileStatistics} from "../types-and-interfaces/profile-statistics";
 import {ProfileFollowService} from "../../profile-follow/services/profile-follow.service";
-import {NotificationsStoreService} from "../../../core/services/notifications-store.service";
 
 @Component({
     selector: 'polity-profile-wiki',
@@ -21,9 +20,7 @@ export class ProfileWikiComponent {
         private readonly profileStoreService: ProfileStoreService,
         private readonly globalUiStateService: UiStoreService,
         private readonly profileStatisticsStoreService: ProfileStatisticsStoreService,
-        private readonly profileFollowService: ProfileFollowService,
-        private readonly notificationService: NotificationsStoreService
-    ) {
+        private readonly profileFollowService: ProfileFollowService) {
         this.globalUiStateService.setLoading(true);
         this.isOwner = this.globalUiStateService.selectIsOwner();
         this.profile = this.profileStoreService.selectProfile()
