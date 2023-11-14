@@ -1,9 +1,7 @@
 import {ProfileTest} from "../../src/app/features/profile/types-and-interfaces/profile";
-import {seedReadUser2, seedReadUser3, seedWriteUser} from "../fixtures/user";
+import {seedReadUser3, seedWriteUser} from "../fixtures/user";
 import {Size, Sizes} from "../fixtures/size";
 
-const writeUser: ProfileTest = seedWriteUser;
-const seedUser: ProfileTest = seedReadUser2;
 const seedUser2: ProfileTest = seedReadUser3;
 
 Sizes.forEach((size: Size): void => {

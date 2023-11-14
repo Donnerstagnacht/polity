@@ -10,7 +10,7 @@ export class SearchStoreService {
     /**
      * Updates the search results with the given array of profiles.
      *
-     * @param {searchResults: Profile[]}  - The array of profiles to update the search results with.
+     * @param {searchResults: Profile[] | null}  - The array of profiles to update the search results with.
      * @return {void}
      */
     public updateProfileSearchResults(searchResults: Profile[] | null): void {

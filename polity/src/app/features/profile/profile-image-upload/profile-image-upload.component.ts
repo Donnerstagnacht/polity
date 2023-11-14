@@ -45,13 +45,13 @@ export class ProfileImageUploadComponent {
                     data: { publicUrl: string }
                 } = this.profileService.getPublicBucket(response.data.path)
                 this.avatarUrl = publicBucket.data.publicUrl;
-                this.profileService.updateProfileImage(this.avatarUrl).then((response: void): void => {
+                this.profileService.updateProfileImage(this.avatarUrl).then((): void => {
                     this.profileStoreService.mutateProfileImageURL(this.avatarUrl)
                 })
             }
             return file;
         })
-        .catch((error): null => {
+        .catch((): null => {
             this.rejectedFiles$.next(file);
             return null;
         })
