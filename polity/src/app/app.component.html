@@ -1,7 +1,14 @@
 <tui-root>
-    <polity-main-bar-bottom [view]="signingIn"></polity-main-bar-bottom>
-    <polity-main-bar-side [view]="signingIn"></polity-main-bar-side>
     <div class="polity-container">
+        <tui-notification
+            (close)="onClose()"
+            *ngIf="showErrorMessage()"
+            [icon]=""
+            class="tui-space_bottom-3"
+            status="error"
+        >
+            {{notification()}} {{showErrorMessage()}}
+        </tui-notification>
         <router-outlet></router-outlet>
     </div>
 </tui-root>

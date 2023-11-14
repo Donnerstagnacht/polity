@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { LoginComponent } from './login/login.component';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {SignInComponent} from './sign-in/sign-in.component';
 import {TuiFieldErrorPipeModule, TuiInputModule, TuiInputPasswordModule} from "@taiga-ui/kit";
 import {
     TuiButtonModule,
@@ -10,21 +10,31 @@ import {
     TuiTextfieldControllerModule
 } from "@taiga-ui/core";
 import {ReactiveFormsModule} from "@angular/forms";
-import { RegisterComponent } from './register/register.component';
-
+import {SignUpComponent} from './sign-up/sign-up.component';
+import {CoreRoutingModule} from "./core-routing.module";
+import {FeatureDescriptionComponent} from './feature-description/feature-description.component';
+import {LandingComponent} from './landing/landing.component';
+import {LayoutModule} from "../layout/layout.module";
+import {SignOutComponent} from './sign-out/sign-out.component';
+import {SharedModule} from "../shared/shared.module";
 
 
 @NgModule({
     declarations: [
-        LoginComponent,
-        RegisterComponent
+        SignInComponent,
+        SignUpComponent,
+        FeatureDescriptionComponent,
+        LandingComponent,
+        SignOutComponent
     ],
     exports: [
-        LoginComponent,
-        RegisterComponent
+        SignInComponent,
+        SignUpComponent,
+        SignOutComponent
     ],
     imports: [
         CommonModule,
+        CoreRoutingModule,
         TuiInputModule,
         TuiButtonModule,
         TuiInputPasswordModule,
@@ -33,7 +43,10 @@ import { RegisterComponent } from './register/register.component';
         TuiFieldErrorPipeModule,
         TuiHintModule,
         TuiSvgModule,
-        TuiTextfieldControllerModule
+        TuiTextfieldControllerModule,
+        LayoutModule,
+        SharedModule
     ]
 })
-export class CoreModule { }
+export class CoreModule {
+}

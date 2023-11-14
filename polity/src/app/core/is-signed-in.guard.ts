@@ -1,48 +1,22 @@
 import {CanActivateFn, Router} from '@angular/router';
 import {SessionStoreService} from "./services/session-store.service";
-import {inject} from "@angular/core";
-import { map} from "rxjs";
+import {inject, WritableSignal} from "@angular/core";
+import {Session} from "@supabase/supabase-js";
 
-export const isSignedInGuard: CanActivateFn = () => {
-    const sessionStoreService = inject(SessionStoreService);
-    const router = inject(Router);
-    let sessionAsObservable = sessionStoreService.selectSessionSlice();
+/**
+ * A guard that checks if the user is signed in.
+ *
+ * @return {boolean} Returns true if the user is signed in, false otherwise.
+ */
+export const isSignedInGuard: CanActivateFn = (): boolean => {
+    const sessionStoreService: SessionStoreService = inject(SessionStoreService);
+    const router: Router = inject(Router);
+    let sessionAsSignal: WritableSignal<Session | null> = sessionStoreService.selectSession();
 
-    sessionAsObservable.subscribe((session) => {
-            if (session?.user) {
-                console.log('sign in')
-                console.log(session)
-            } else {
-                console.log('sign out')
-                console.log(session)
-                router.navigate(['/login']);
-            }
-        }
-
-    )
-    return sessionAsObservable.pipe(
-        // filter((session: AuthSession | null) => session !== undefined),
-        map((session) => {
-            if(session?.user) {
-                console.log('Guard: sign in')
-                console.log(session)
-                return true;
-            } else {
-                console.log('Guard: sign out')
-                console.log(session)
-
-                router.navigate(['/login']);
-                return false;
-            }
-        })
-    )
-
-// if(sessionAsSignal()?.user) {
-//     console.log('sign in')
-//     return true;
-// } else {
-//     console.log('sign out')
-//     router.navigate(['/login'])
-//     return true;
-// }
+    if (sessionAsSignal()?.user) {
+        return true;
+    } else {
+        router.navigate(['/landing/sign-in'])
+        return false
+    }
 };

@@ -1,16 +1,17 @@
 <nav
-        tuiTabBar
-        [(activeItemIndex)]="activeItemIndex"
+    [(activeItemIndex)]="activeItemIndex"
+    tuiTabBar
 >
     <button
-            *ngFor="let item of items"
-            tuiTabBarItem
-            [badge]="item.badge"
-            [icon]="item.icon"
-            (click)="onClick(item)"
-            tuiHint="{{item.text}}"
-            routerLinkActive
-            [routerLink]="item.link"
+        (click)="onClick(item)"
+        *ngFor="let item of items"
+        [attr.data-cy]="item.dataCy"
+        [badge]="item.badge"
+        [icon]="item.icon"
+        [routerLink]="item.link"
+        routerLinkActive
+        tuiHint="{{item.text}}"
+        tuiTabBarItem
     >
     </button>
 </nav>

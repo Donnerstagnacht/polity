@@ -1,46 +1,22 @@
-import {Component, Inject, Input} from '@angular/core';
-import {TuiAlertService} from "@taiga-ui/core";
-import {menuItems, menuItemsSignedOut} from "../menu-itmes";
-
-interface Item {
-  badge?: number;
-  icon: string;
-  text: string;
-}
+import {Component, Input} from '@angular/core';
+import {menuItemsSignedOut} from "../menu-items";
+import {Item} from "../types-and-interfaces/item";
 
 @Component({
-  selector: 'polity-main-bar-bottom',
-  templateUrl: './main-bar-bottom.component.html',
-  styleUrls: ['./main-bar-bottom.component.less']
+    selector: 'polity-main-bar-bottom',
+    templateUrl: './main-bar-bottom.component.html',
+    styleUrls: ['./main-bar-bottom.component.less']
 })
 export class MainBarBottomComponent {
-  activeItemIndex = 1;
-  items = menuItems;
-  @Input() view!: boolean;
+    /**
+     * Takes an array of menuItems as input
+     *
+     * @Input items: Item[]. Default is signed out items.
+     */
+    @Input() public items: Item[] = menuItemsSignedOut;
+    protected activeItemIndex: number = 1;
 
-
-  constructor(@Inject(TuiAlertService) private readonly alerts: TuiAlertService) {}
-
-  ngOnInit(): void {
-    console.log(this.view)
-    if(this.view) {
-      this.items = menuItems
-    } else {
-      this.items = menuItemsSignedOut
+    protected onClick(item: Item): void {
+        item.badge = 0;
     }
-  }
-
-  ngOnChanges(): void {
-    console.log('change', this.view)
-    if(this.view) {
-      this.items = menuItems
-    } else {
-      this.items = menuItemsSignedOut
-    }
-  }
-
-  onClick(item: Item): void {
-    item.badge = 0;
-    this.alerts.open(this.activeItemIndex, {label: item.text}).subscribe();
-  }
 }
