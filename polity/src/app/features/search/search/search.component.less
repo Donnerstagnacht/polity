@@ -1,0 +1,33 @@
+@import '@taiga-ui/styles/taiga-ui-global.less';
+
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: stretch;
+}
+
+.grid-item {
+    @media @tui-mobile {
+        width: 100%;
+    }
+
+    @media @tui-tablet-min {
+        width: calc(50% - 2 * 1%);
+        margin: 1%
+    }
+
+    @media @tui-desktop-min {
+        width: calc(33% - 3 * 1%);
+        margin: 1%
+    }
+}
+
+.center-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    width: 100%;
+    height: 50vh;
+}

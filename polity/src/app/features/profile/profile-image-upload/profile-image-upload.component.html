@@ -1,0 +1,53 @@
+<tui-input-files
+		(reject)="onReject($event)"
+		*ngIf="!control.value"
+		[attr.data-cy]="'uploadImage'"
+		[formControl]="control"
+		accept="image/*"
+></tui-input-files>
+
+<tui-files [attr.data-cy]="'loading'" class="tui-space_top-1">
+	<tui-file
+			(removed)="removeFile()"
+			*ngIf="loadedFiles$ | async as file"
+			[attr.data-cy]="'test'"
+			[file]="file"
+			[showDelete]="control.enabled"
+	></tui-file>
+
+	<tui-file
+			(removed)="clearRejected()"
+			*ngIf="rejectedFiles$ | async as file"
+			[attr.data-cy]="'test'"
+			[file]="file"
+			[showDelete]="control.enabled"
+			state="error"
+	></tui-file>
+
+	<tui-file
+			*ngIf="loadingFiles$ | async as file"
+			[attr.data-cy]="'test'"
+			[file]="file"
+			[showDelete]="control.enabled"
+			state="loading"
+	></tui-file>
+</tui-files>
+
+<!--<div>-->
+<!--	<img-->
+<!--			*ngIf="_avatarUrl"-->
+<!--			[src]="_avatarUrl"-->
+<!--			alt="Avatar"-->
+<!--			class="avatar image"-->
+<!--			style="height: 150px; width: 150px"-->
+<!--	/>-->
+<!--</div>-->
+<div class="polity-center tui-space_top-5">
+	<img
+			[attr.data-cy]="'uploadedImage'"
+			alt="Italian Trulli"
+			src="{{profileWriteable()?.profile_image}}"
+			width="60%"
+	>
+</div>
+

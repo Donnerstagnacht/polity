@@ -1,0 +1,45 @@
+@import '@taiga-ui/core/styles/taiga-ui-local.less';
+
+tbody {
+  transition-property: background;
+  transition-duration: var(--tui-duration, 300ms);
+  transition-timing-function: ease-in-out;
+  outline: none;
+}
+
+[tuiTh] {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font: var(--tui-font-text-s);
+  padding: 0.5rem 1rem;
+  vertical-align: middle;
+  height: 2.5rem;
+  color: var(--tui-text-02);
+  background: inherit;
+  border: none;
+}
+
+[tuiTd] {
+  font: var(--tui-font-text-m);
+  padding: 1rem 1rem 0.875rem;
+  vertical-align: top;
+  word-wrap: break-word;
+  height: 3.4375rem;
+  color: var(--tui-text-01);
+  background: inherit;
+  border: none;
+}
+
+[tuiTr] {
+  transition-property: background;
+  transition-duration: var(--tui-duration, 300ms);
+  transition-timing-function: ease-in-out;
+  outline: none;
+  border: none;
+}
+
+tui-tabs {
+  display: flex;
+  justify-content: space-around;
+}

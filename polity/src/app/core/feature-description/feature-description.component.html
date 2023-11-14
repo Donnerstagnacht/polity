@@ -1,0 +1,32 @@
+<h1 class="tui-text_h1">
+	Willkommen
+</h1>
+<p
+		[attr.data-cy]="'welcome-instruction'"
+		class="tui-text_body-m">
+	Erstelle einen Account oder log dich ein.</p>
+<button
+		[attr.data-cy]="'sign-in'"
+		[routerLink]="['/landing/sign-in']"
+		class="tui-form__button"
+		size="l"
+		tuiButton
+>LOGIN
+</button>
+<button
+		[attr.data-cy]="'signup'"
+		[routerLink]="['/landing/signup']"
+		appearance="flat"
+		class="tui-form__button"
+		size="l"
+		tuiButton
+>
+	SIGNUP
+</button>
+<h1 class="tui-text_h1">Features</h1>
+
+<h2 class="tui-text_h2">Profil</h2>
+<p class="tui-text_body-m">
+	Auf Polity kannst du dein Profil erstellen, deine Arbeit bewerben und der politischen
+	Arbeit von anderen zu folgen.
+</p>
