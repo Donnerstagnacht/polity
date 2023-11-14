@@ -1,0 +1,9 @@
+<button
+		(click)="toggleFollow()"
+		*ngIf="!isOwner"
+		[attr.data-cy]="'followProfileButton'"
+		class="tui-form__button"
+		size="l"
+		tuiButton
+		type="button"
+>{{isFollowing ? 'UNFOLLOW' : 'FOLLOW'}}</button>

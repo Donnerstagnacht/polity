@@ -1,0 +1,61 @@
+<h1 [attr.data-cy]="'edit-instruction'">
+	Änder deine Profil Daten
+</h1>
+<form
+		(ngSubmit)="onEdit()"
+		[formGroup]="editProfileForm"
+>
+	<div class="tui-form__row">
+		<tui-input
+				[attr.data-cy]="'firstName'"
+				[tuiTextfieldCleaner]="true"
+				[tuiTextfieldCustomContent]="editProfileForm.controls.firstName.valid ? success : ''"
+				formControlName="firstName"
+				tuiHintContent="Bitte gebe deinen Klarnamen ein"
+		>
+			Gebe deinen Vornamen ein
+		</tui-input>
+		<tui-error
+				[error]="[] | tuiFieldError | async"
+				formControlName="firstName"
+		>
+		</tui-error>
+	</div>
+	<div class="tui-form__row">
+		<tui-input
+				[attr.data-cy]="'lastName'"
+				[tuiTextfieldCleaner]="true"
+				[tuiTextfieldCustomContent]="editProfileForm.controls.lastName.valid ? success : ''"
+				formControlName="lastName"
+				tuiHintContent="Bitte gebe deinen Klarnamen ein"
+		>
+			Gebe deinen Nachnamen ein
+		</tui-input>
+		<tui-error
+				[error]="[] | tuiFieldError | async"
+				formControlName="lastName"
+		>
+		</tui-error>
+	</div>
+	<div class="tui-form__buttons">
+		<button
+				[attr.data-cy]="'update'"
+				[disabled]="!editProfileForm.valid"
+				class="tui-form__button"
+				size="l"
+				tuiButton
+				type="submit"
+		>
+			ÄNDERN
+		</button>
+	</div>
+	<ng-template #success>
+		<tui-svg
+				class="polity-success tui-space_left-3"
+				src="tuiIconCheck"
+		></tui-svg>
+	</ng-template>
+</form>
+<polity-sign-out></polity-sign-out>
+
+<polity-profile-image-upload></polity-profile-image-upload>

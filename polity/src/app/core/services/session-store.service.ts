@@ -1,44 +1,69 @@
-import { Injectable} from '@angular/core';
+import {Injectable, signal, WritableSignal} from '@angular/core';
 import {AuthSession} from "@supabase/supabase-js";
-import {createStore, select, withProps} from "@ngneat/elf";
-import {Observable} from "rxjs";
-import {localStorageStrategy, persistState} from "@ngneat/elf-persist-state";
-
-export type  SessionProperties = {
-  session: AuthSession | null;
-}
+import {ProfileService} from "../../features/profile/services/profile.service";
+import {Router} from "@angular/router";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class SessionStoreService {
-  private sessionStore = createStore(
-      {name: 'session'},
-      withProps<SessionProperties>({session: null}),
-  )
+    private session: WritableSignal<AuthSession | null> = signal(null);
 
-  private persist = persistState(this.sessionStore, {
-    key: 'session',
-    storage: localStorageStrategy,
-  });
+    constructor(
+        private readonly profileService: ProfileService,
+        private readonly router: Router
+    ) {
+        this.setInitialSessionData();
+    }
 
-  private session$ = this.sessionStore.pipe(select((state: SessionProperties) => {
-    return state.session
-  }))
+    /**
+     * Returns the global session that notifies consumers of changes
+     *
+     * @return WritableSignal<AuthSession | null> - The session or null
+     */
+    public selectSession(): WritableSignal<AuthSession | null> {
+        return this.session
+    }
 
-  public selectSessionSlice(): Observable<AuthSession | null> {
-    return this.session$;
-  }
+    /**
+     * Sets a new session and fetches the associated profile data from the database.
+     *
+     * @param {AuthSession | null} session - The session object.
+     * @param {boolean} login - Set to true if app should navigate to the profile page after state is set.
+     * @return {Promise<void>}
+     */
+    public async setAuthData(session: AuthSession | null, login?: boolean): Promise<void> {
+        this.session.set(session)
 
-  public updateSession(session: AuthSession | null) {
-    console.log('readched sessionstore');
-    this.sessionStore.update(
-        (state: SessionProperties) => (
-            {
-              ...state,
-              session: session,
+        localStorage.setItem('session', JSON.stringify({
+            session: session
+        }))
+        if (login) {
+            await this.router.navigate(['/profile']);
+        }
+    }
+
+    private checkLocalStorageForSessionData(): {
+        session: AuthSession | null
+    } {
+        const sessionJson: string | null = localStorage.getItem('session');
+        if (sessionJson) {
+            return JSON.parse(sessionJson);
+        } else {
+            return {
+                session: null
             }
-        )
-    )
-  }
+        }
+    }
+
+    private setInitialSessionData(): void {
+        const sessionDataFromLocalStorage: {
+            session: AuthSession | null
+        } = this.checkLocalStorageForSessionData()
+        if (sessionDataFromLocalStorage) {
+            this.session = signal(sessionDataFromLocalStorage.session)
+        } else {
+            this.session = signal(null)
+        }
+    }
 }
