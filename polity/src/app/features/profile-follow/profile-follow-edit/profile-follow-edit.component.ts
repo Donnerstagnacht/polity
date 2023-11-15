@@ -44,8 +44,10 @@ export class ProfileFollowEditComponent {
         private readonly profileStatisticsStoreService: ProfileStatisticsStoreService
     ) {
         this.uiStoreService.setLoading(true);
+
         this.profileStatistics = this.profileStatisticsStoreService.selectProfileStatistics()
         this.profileFollowService.selectFollowersAndFollowings();
+
         this.uiStoreService.setLoading(false);
     }
 

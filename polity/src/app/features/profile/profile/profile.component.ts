@@ -1,5 +1,4 @@
-import {Component, WritableSignal} from '@angular/core';
-import {AuthSession} from "@supabase/supabase-js";
+import {Component} from '@angular/core';
 import {SessionStoreService} from "../../../core/services/session-store.service";
 import {ProfileService} from "../services/profile.service";
 import {ProfileStoreService} from "../services/profile-store.service";
@@ -20,7 +19,7 @@ export class ProfileComponent {
     constructor(
         private readonly sessionStoreService: SessionStoreService,
         private readonly profileStoreService: ProfileStoreService,
-        private readonly userService: ProfileService,
+        private readonly profileService: ProfileService,
         private route: ActivatedRoute,
         private readonly globalUiStateService: UiStoreService,
         private readonly profileFollowService: ProfileFollowService
@@ -33,9 +32,17 @@ export class ProfileComponent {
         this.globalUiStateService.setLoading(true);
 
         const urlId: string = this.route.snapshot.params['id'];
-        const session: WritableSignal<AuthSession | null> = this.sessionStoreService.selectSession();
+        const sessionId: string | null = this.sessionStoreService.sessionId();
+        this.checkIsOwner(urlId, sessionId)
 
-        if (urlId == session()?.user?.id) {
+        await this.profileService.selectProfile(urlId);
+        await this.profileFollowService.selectProfileStatistics(urlId);
+        await this.profileFollowService.checkIfFollowing();
+        this.globalUiStateService.setLoading(false);
+    }
+
+    private checkIsOwner(urlId: string, sessionId: string | null): void {
+        if (sessionId == urlId) {
             this.globalUiStateService.setIsOwner(true);
             this.menuItemsProfile = menuItemsProfileOwner;
             this.menuItemsProfile[0].link = '/profile/' + urlId
@@ -46,10 +53,5 @@ export class ProfileComponent {
             this.menuItemsProfile = menuItemsProfile;
             this.menuItemsProfile[0].link = '/profile/' + urlId
         }
-        this.globalUiStateService.setLoading(false);
-
-        await this.userService.selectProfile(urlId);
-        await this.profileFollowService.selectProfileStatistics(urlId);
-        await this.profileFollowService.checkIfFollowing();
     }
 }

@@ -20,11 +20,14 @@ export class ProfileWikiComponent {
         private readonly profileStoreService: ProfileStoreService,
         private readonly globalUiStateService: UiStoreService,
         private readonly profileStatisticsStoreService: ProfileStatisticsStoreService,
-        private readonly profileFollowService: ProfileFollowService) {
+        private readonly profileFollowService: ProfileFollowService
+    ) {
         this.globalUiStateService.setLoading(true);
+
         this.isOwner = this.globalUiStateService.selectIsOwner();
         this.profile = this.profileStoreService.selectProfile()
         this.keyFigure = this.profileStatisticsStoreService.selectProfileStatistics()
+        
         this.globalUiStateService.setLoading(false);
     }
 

@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, WritableSignal} from '@angular/core';
 import {createClient, PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {environment} from "../../../../environments/environment";
 import {ProfileStatisticsStoreService} from "./profile-statistics-store.service";
@@ -20,7 +20,13 @@ export class ProfileFollowService {
         this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey)
     }
 
-    public async selectProfileStatistics(userId: string) {
+    /**
+     * Retrieves the profile statistics for a given user.
+     *
+     * @param {string} userId - The ID of the user.
+     * @return {Promise<any>} A promise that resolves with the profile statistics.
+     */
+    public async selectProfileStatistics(userId: string): Promise<any> {
         try {
             // @ts-ignore
             const response: PostgrestSingleResponse<ProfileStatistics> = await this.supabase.rpc(
@@ -38,12 +44,15 @@ export class ProfileFollowService {
         }
     }
 
-    public async checkIfFollowing() {
-        const session = this.sessionStoreService.selectSession();
-        const followerId = session()?.user.id;
-
-        const profile = this.profileStatisticsStoreService.selectProfileStatistics()
-        const followingId = profile()?.profile_id;
+    /**
+     * Checks if the current user is following a profile.
+     *
+     * @return {Promise<any>} A promise that resolves to a boolean indicating whether the user is following the profile or not.
+     */
+    public async checkIfFollowing(): Promise<any> {
+        const followerId: string = this.sessionStoreService.sessionId() as string;
+        const profile: WritableSignal<ProfileStatistics> = this.profileStatisticsStoreService.selectProfileStatistics()
+        const followingId: string | undefined = profile()?.profile_id;
 
         try {
             const response: PostgrestSingleResponse<boolean | unknown> = await this.supabase.rpc(
@@ -58,10 +67,8 @@ export class ProfileFollowService {
 
             if (response.data) {
                 this.profileStatisticsStoreService.mutateIsFollowing(response.data as boolean)
-                // console.log('true', response.data)
                 return true
             } else {
-                // console.log('false', response.data)
                 this.profileStatisticsStoreService.mutateIsFollowing(response.data as boolean)
                 return false
             }
@@ -71,25 +78,24 @@ export class ProfileFollowService {
         }
     }
 
-    public async toggleFollow(isFollowing: boolean) {
-        const session = this.sessionStoreService.selectSession();
-        const followerId = session()?.user.id;
-
-        const profile = this.profileStatisticsStoreService.selectProfileStatistics()
-        const followingId = profile()?.profile_id;
-        console.log(isFollowing)
-        console.log(followerId)
-        console.log(followingId)
+    /**
+     * Toggles the follow status of a user.
+     *
+     * @param {boolean} isFollowing - Indicates whether the user is currently following or not.
+     * @return {Promise<any>}
+     */
+    public async toggleFollow(isFollowing: boolean): Promise<any> {
+        const followerId: string = this.sessionStoreService.sessionId() as string;
+        const profile: WritableSignal<ProfileStatistics> = this.profileStatisticsStoreService.selectProfileStatistics()
+        const followingId: string = profile()?.profile_id as string;
 
         try {
             let response;
             if (isFollowing && followingId) {
-                console.log('FOLLOW')
                 response = await this.followProfile(followerId, followingId)
                 this.profileStatisticsStoreService.mutateIsFollowing(true)
                 this.profileStatisticsStoreService.incrementFollowerCounter()
             } else if (followingId) {
-                console.log('UNFOLLOW')
                 response = await this.unFollowProfile(followerId, followingId)
                 this.profileStatisticsStoreService.mutateIsFollowing(false)
                 this.profileStatisticsStoreService.decrementFollowerCounter()
@@ -101,14 +107,19 @@ export class ProfileFollowService {
         }
     }
 
-    public async manageFollowers(userId: string, removeFollower: boolean) {
-        const session = this.sessionStoreService.selectSession();
-        const loggedInUserId = session()?.user.id;
+    /**
+     * Removes a follower if removeFollower is set to true. Else it removes a following
+     *
+     * @param {string} userId - The ID of the user.
+     * @param {boolean} removeFollower - Indicates whether to remove the follower. Else remove the follower
+     * @returns {Promise<any>}
+     */
+    public async manageFollowers(userId: string, removeFollower: boolean): Promise<any> {
+        const loggedInUserId = this.sessionStoreService.sessionId() as string;
 
         try {
             if (removeFollower) {
-                console.log('remove follower')
-                const response = await this.supabase.rpc(
+                const response: PostgrestSingleResponse<any> = await this.supabase.rpc(
                     'unfollow_transaction',
                     {
                         follower_id: userId,
@@ -119,8 +130,7 @@ export class ProfileFollowService {
                 .throwOnError()
                 this.profileStatisticsStoreService.decrementFollowerCounter()
             } else {
-                console.log('remove following', loggedInUserId, userId)
-                const response = await this.supabase.rpc(
+                const response: PostgrestSingleResponse<any> = await this.supabase.rpc(
                     'unfollow_transaction',
                     {
                         follower_id: loggedInUserId,
@@ -131,59 +141,42 @@ export class ProfileFollowService {
                 .throwOnError()
                 this.profileStatisticsStoreService.decrementFollowingCounter()
             }
-            console.log('success')
-
         } catch (error: any) {
             this.notificationService.updateNotification(error.message, true);
             return error;
         }
     }
 
-    public removeFollower() {
-        return this.supabase.rpc(
-            '',
-            {}
-        )
-    }
-
-    public removeFollowing() {
-        return this.supabase.rpc(
-            '',
-            {}
-        )
-    }
-
-    public async selectFollowersAndFollowings() {
-        const session = this.sessionStoreService.selectSession();
-        const loggedInUserId = session()?.user.id;
+    /**
+     * Retrieves the followers and followings of the logged-in user.
+     *
+     * @return {Promise<any>} A promise that resolves to the follower and following data.
+     */
+    public async selectFollowersAndFollowings(): Promise<any> {
+        const loggedInUserId: string = this.sessionStoreService.sessionId() as string;
 
         try {
-            const followerResponse = await this.supabase.rpc(
+            const followerResponse: PostgrestSingleResponse<any> = await this.supabase.rpc(
                 'select_follower_of_user',
                 {
                     following_id: loggedInUserId
                 }
             )
-            // .single()
             .throwOnError()
-            console.log('follower', followerResponse.data)
 
-            const followingResponse = await this.supabase.rpc(
+            const followingResponse: PostgrestSingleResponse<any> = await this.supabase.rpc(
                 'select_following_of_user',
                 {
                     follower_id: loggedInUserId
                 }
             )
-            // .single()
             .throwOnError()
-            console.log('following', followingResponse.data)
 
-            let test: ProfileStatistics = {
+            let followerAndFollowings: ProfileStatistics = {
                 follower: followerResponse.data,
                 following: followingResponse.data,
             };
-            this.profileStatisticsStoreService.setProfileStatistics(test)
-
+            this.profileStatisticsStoreService.setProfileStatistics(followerAndFollowings)
         } catch (error: any) {
             this.notificationService.updateNotification(error.message, true);
             return error;

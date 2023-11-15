@@ -5,6 +5,7 @@ import {Profile} from "../types-and-interfaces/profile";
 import {ProfileStoreService} from "./profile-store.service";
 import {NotificationsStoreService} from "../../../core/services/notifications-store.service";
 import {TuiFileLike} from "@taiga-ui/kit";
+import {SessionStoreService} from "../../../core/services/session-store.service";
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +15,8 @@ export class ProfileService {
 
     constructor(
         private readonly profileStoreService: ProfileStoreService,
-        private readonly notificationService: NotificationsStoreService
+        private readonly notificationService: NotificationsStoreService,
+        private readonly sessionStoreService: SessionStoreService
     ) {
         this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
     }
@@ -42,17 +44,39 @@ export class ProfileService {
     }
 
     /**
-     * Updates the profile information in the 'profiles' table.
+     * Updates the profile  of the authenticated user.
      *
      * @param {Profile} profile - The profile object containing the updated information.
-     * @return {Promise<Profile>} A promise that resolves to the updated profile object.
+     * @return {Promise<void>}
      */
-    public updateProfile(profile: Profile) {
-        const update: Profile = {
-            ...profile,
-            updated_at: new Date(),
+    public async updateProfile(profile: Profile): Promise<void> {
+        const sessionId: string | null = this.sessionStoreService.sessionId();
+
+        try {
+            if (sessionId) {
+                const update: Profile = {
+                    ...profile,
+                    updated_at: new Date(),
+                    id: sessionId
+                }
+                const databaseResponse: PostgrestSingleResponse<null> = await this.supabase.from('profiles').upsert(update)
+
+                if (databaseResponse.error) throw databaseResponse.error
+                this.profileStoreService.setProfile(profile);
+            } else {
+                throw new Error('no session')
+            }
+        } catch (error) {
+            if (error instanceof Error) {
+                this.notificationService.updateNotification(error.message, true);
+            }
         }
-        return this.supabase.from('profiles').upsert(update)
+
+        // const update: Profile = {
+        //     ...profile,
+        //     updated_at: new Date(),
+        // }
+        // return this.supabase.from('profiles').upsert(update)
     }
 
     /**
@@ -77,7 +101,11 @@ export class ProfileService {
      * @param {string} path - The path of the file.
      * @return {{data: {publicUrl: string}}} - The public URL of the file.
      */
-    getPublicBucket(path: string): { data: { publicUrl: string } } {
+    getPublicBucket(path: string): {
+        data: {
+            publicUrl: string
+        }
+    } {
         return this.supabase.storage.from('profile_images').getPublicUrl(path);
     }
 
@@ -88,7 +116,12 @@ export class ProfileService {
      * @param {TuiFileLike} file - The file to be uploaded.
      * @return {Promise<{data: {path: string}, error: null} | {data: null, error: any}>}
      */
-    public uploadImage(filePath: string, file: TuiFileLike): Promise<{ data: { path: string }, error: null } | {
+    public uploadImage(filePath: string, file: TuiFileLike): Promise<{
+        data: {
+            path: string
+        },
+        error: null
+    } | {
         data: null,
         error: Error
     }> {

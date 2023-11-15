@@ -1,6 +1,5 @@
 import {Injectable, signal, WritableSignal} from '@angular/core';
 import {AuthSession} from "@supabase/supabase-js";
-import {ProfileService} from "../../features/profile/services/profile.service";
 import {Router} from "@angular/router";
 
 @Injectable({
@@ -10,10 +9,22 @@ export class SessionStoreService {
     private session: WritableSignal<AuthSession | null> = signal(null);
 
     constructor(
-        private readonly profileService: ProfileService,
         private readonly router: Router
     ) {
         this.setInitialSessionData();
+    }
+
+    /**
+     * Returns the session ID of the authenticated user, if available.
+     *
+     * @return {string | null} The session ID of the user, or null if not available.
+     */
+    public sessionId(): string | null {
+        if (this.session()?.user.id) {
+            return this.session()?.user.id as string
+        } else {
+            return null
+        }
     }
 
     /**

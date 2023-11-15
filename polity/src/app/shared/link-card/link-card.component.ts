@@ -1,6 +1,5 @@
 import {Component, Input, signal, WritableSignal} from '@angular/core';
 import {Router} from "@angular/router";
-import {Session} from "@supabase/supabase-js";
 import {Profile} from "../../features/profile/types-and-interfaces/profile";
 
 @Component({
@@ -10,11 +9,11 @@ import {Profile} from "../../features/profile/types-and-interfaces/profile";
 })
 export class LinkCardComponent {
     /**
-     * Takes the auth object as input to display a profile link
+     * Takes the sesionId as input to display a profile link
      *
-     * @Input auth - WritableSignal<Session | null | undefined>.
+     * @Input sessionId - string |null.
      */
-    @Input() public auth: WritableSignal<Session | null | undefined> = signal(null)
+    @Input() public sessionId: string | null = null;
 
     @Input() public profile: WritableSignal<
         Profile | null | undefined
@@ -28,7 +27,7 @@ export class LinkCardComponent {
     }
 
     protected async onClick(): Promise<void> {
-        await this.router.navigate(['/profile/', this.auth()?.user.id]);
+        await this.router.navigate(['/profile/', this.sessionId]);
     }
 
 }
