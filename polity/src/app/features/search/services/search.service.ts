@@ -1,20 +1,19 @@
 import {Injectable} from '@angular/core';
-import {createClient, PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
-import {environment} from "../../../../environments/environment";
+import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {NotificationsStoreService} from "../../../core/services/notifications-store.service";
 import {SearchStoreService} from "./search-store.service";
+import supabaseClient from "../../../core/services/supabase-client";
 
 @Injectable({
     providedIn: 'root'
 })
 export class SearchService {
-    private supabaseClient: SupabaseClient
+    private supabaseClient: SupabaseClient = supabaseClient()
 
     constructor(
         private readonly notificationService: NotificationsStoreService,
         private readonly searchStoreService: SearchStoreService
     ) {
-        this.supabaseClient = createClient(environment.supabaseUrl, environment.supabaseKey);
     }
 
     //TODO: Define data and error type returned by rpc function

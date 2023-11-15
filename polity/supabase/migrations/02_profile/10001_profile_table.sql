@@ -3,13 +3,9 @@ CREATE TABLE IF NOT EXISTS profiles
 	id            uuid REFERENCES auth.users NOT NULL PRIMARY KEY,
 	updated_at    timestamp WITH TIME ZONE,
 	username      text UNIQUE,
-	full_name     text,
-	avatar_url    text,
-	website       text,
 	first_name    text,
 	last_name     text,
 	profile_image text,
-	test          text,
 	fts           tsvector GENERATED ALWAYS AS (
 		              TO_TSVECTOR(
 			              'german',

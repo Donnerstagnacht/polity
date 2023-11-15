@@ -8,7 +8,7 @@ import {ProfileStatistics} from "../../features/profile/types-and-interfaces/pro
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class KeyFigureList {
-    @Input() keyFigureList: WritableSignal<ProfileStatistics> = signal({
+    @Input() keyFigureList: WritableSignal<ProfileStatistics | null> = signal({
         follower_counter: 0,
         following_counter: 0,
         follower: [],

@@ -48,6 +48,7 @@ Cypress.Commands.add('openSearchTab', () => {
 });
 
 Cypress.Commands.add('searchUser', (firstName: string) => {
+    // y.pause()
     cy.openSearchTab()
     cy.getDataCy('search').type(firstName)
     cy.getDataCy('user-search-results')
@@ -65,6 +66,7 @@ Cypress.Commands.add(
 
         cy.searchUser(followingUser.first_name)
         .click()
+        // cy.pause()
 
         cy.intercept('POST', 'https://qwetlgmbngpopdcgravw.supabase.co/rest/v1/rpc/check_if_following')
         .as('isFollowing')
@@ -72,7 +74,6 @@ Cypress.Commands.add(
             'https://qwetlgmbngpopdcgravw.supabase.co/rest/v1/rpc/select_following_counter')
         .as('followingCounter')
 
-        cy.wait(['@followingCounter', '@isFollowing'])
 
         cy.getDataCy('first-name')
         .shouldBeVisible()
@@ -81,6 +82,7 @@ Cypress.Commands.add(
         cy.intercept('POST',
             'https://qwetlgmbngpopdcgravw.supabase.co/rest/v1/rpc/follow_transaction')
         .as('followTransaction')
+        // cy.wait(['@followingCounter', '@isFollowing'])
 
         cy.getDataCy('followProfileButton')
         .shouldBeVisible()

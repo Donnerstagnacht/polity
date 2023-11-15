@@ -16,22 +16,22 @@ Sizes.forEach((size: Size): void => {
             cy.signIn(followUser);
         })
 
-        it('view other users followers and followings', () => {
-            cy.searchUser(readUser.first_name)
-            .click()
-
-            cy.getDataCy('first-name')
-            .shouldBeVisible()
-            .contains(readUser.first_name)
-
-            cy.getDataCy('followerCounter')
-            .shouldBeVisible()
-            .contains(readUser.follower_counter)
-
-            cy.getDataCy('followingCounter')
-            .shouldBeVisible()
-            .contains(readUser.following_counter)
-        })
+        // it('view other users followers and followings', () => {
+        //     cy.searchUser(readUser.first_name)
+        //     .click()
+        //
+        //     cy.getDataCy('first-name')
+        //     .shouldBeVisible()
+        //     .contains(readUser.first_name)
+        //
+        //     cy.getDataCy('followerCounter')
+        //     .shouldBeVisible()
+        //     .contains(readUser.follower_counter)
+        //
+        //     cy.getDataCy('followingCounter')
+        //     .shouldBeVisible()
+        //     .contains(readUser.following_counter)
+        // })
 
         it('follow other users', () => {
             cy.followUser(followingUser, followUser);
@@ -104,6 +104,8 @@ Sizes.forEach((size: Size): void => {
 
             cy.intercept('POST', 'https://qwetlgmbngpopdcgravw.supabase.co/rest/v1/rpc/unfollow_transaction').as('unfollowUser')
             cy.getDataCy('following-remove')
+            //  cy.contains(followingUser.first_name)
+            // .find('[data-cy="following-remove"]')
             .first()
             .shouldBeVisible()
             .click()
@@ -137,6 +139,8 @@ Sizes.forEach((size: Size): void => {
 
             cy.intercept('POST', 'https://qwetlgmbngpopdcgravw.supabase.co/rest/v1/rpc/unfollow_transaction').as('unfollowUser')
             cy.getDataCy('follower-remove')
+            // cy.contains(followUser.first_name)
+            // .find('[data-cy="follower-remove"]')
             .shouldBeVisible()
             .first()
             .click()

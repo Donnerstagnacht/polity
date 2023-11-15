@@ -4,23 +4,22 @@ import {
     AuthError,
     AuthResponse,
     AuthTokenResponse,
-    createClient,
     Session,
     SignInWithPasswordCredentials,
     Subscription,
     SupabaseClient
 } from "@supabase/supabase-js";
-import {environment} from "../../../environments/environment";
 import {UiStoreService} from "./ui-store.service";
 import {NotificationsStoreService} from "./notifications-store.service";
 import {SessionStoreService} from "./session-store.service";
 import {Router} from "@angular/router";
+import supabaseClient from "./supabase-client";
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthenticationService {
-    private readonly supabaseClient: SupabaseClient
+    private readonly supabaseClient: SupabaseClient = supabaseClient();
 
     constructor(
         private readonly UIStoreService: UiStoreService,
@@ -28,7 +27,6 @@ export class AuthenticationService {
         private readonly sessionStoreService: SessionStoreService,
         private readonly router: Router
     ) {
-        this.supabaseClient = createClient(environment.supabaseUrl, environment.supabaseKey);
     }
 
     /**

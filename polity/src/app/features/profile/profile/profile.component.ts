@@ -7,6 +7,7 @@ import {menuItemsProfile, menuItemsProfileOwner} from "../../../layout/menu-item
 import {Item} from "../../../layout/types-and-interfaces/item";
 import {UiStoreService} from "../../../core/services/ui-store.service";
 import {ProfileFollowService} from "../../profile-follow/services/profile-follow.service";
+import {ProfileStatisticsStoreService} from "../../profile-follow/services/profile-statistics-store.service";
 
 @Component({
     selector: 'polity-profile',
@@ -22,9 +23,9 @@ export class ProfileComponent {
         private readonly profileService: ProfileService,
         private route: ActivatedRoute,
         private readonly globalUiStateService: UiStoreService,
-        private readonly profileFollowService: ProfileFollowService
+        private readonly profileFollowService: ProfileFollowService,
+        private readonly profileStatisticsService: ProfileStatisticsStoreService
     ) {
-        this.profileStoreService.setProfile(null);
     }
 
 
@@ -37,8 +38,14 @@ export class ProfileComponent {
 
         await this.profileService.selectProfile(urlId);
         await this.profileFollowService.selectProfileStatistics(urlId);
-        await this.profileFollowService.checkIfFollowing();
+        await this.profileFollowService.checkIfFollowing()
+
         this.globalUiStateService.setLoading(false);
+    }
+
+    ngOnDestroy(): void {
+        this.profileStoreService.resetProfile();
+        this.profileStatisticsService.resetProfileStatistics()
     }
 
     private checkIsOwner(urlId: string, sessionId: string | null): void {

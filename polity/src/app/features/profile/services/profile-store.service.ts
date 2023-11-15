@@ -31,6 +31,15 @@ export class ProfileStoreService {
         this.profile.set(mergeUpdatesWithStoreData);
     }
 
+    /**
+     * Resets the profile state.
+     *
+     * @return {void}
+     */
+    public resetProfile(): void {
+        this.profile.set(null);
+    }
+
 
     /**
      * Mutates the profile by updating the profile image URL.

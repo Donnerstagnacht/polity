@@ -8,10 +8,12 @@
 
 	<polity-key-figure [keyFigureList]="keyFigure"></polity-key-figure>
 
-	<div class="tui-space_bottom-4">
+	<div class="tui-space_bottom-4"
+	>
 		<polity-profile-follow
 				(toggledFollowing)="toggleFollow($event)"
 				[isFollowing]="keyFigure()?.is_following"
+				[isLoading]="this.isLoading"
 				[isOwner]="isOwner()"
 		></polity-profile-follow>
 

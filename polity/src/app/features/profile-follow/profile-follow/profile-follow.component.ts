@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output, signal, WritableSignal} from '@angular/core';
 
 @Component({
     selector: 'polity-profile-follow',
@@ -9,11 +9,15 @@ export class ProfileFollowComponent {
     /**
      * If true, a follow button is displayed.
      */
-    @Input() public isFollowing: boolean | null | undefined = false;
+    @Input() public isFollowing: boolean | null | undefined;
     /**
      * If true, the follow button is not displayed.
      */
     @Input() public isOwner: boolean = false;
+    /**
+     * If true, the follow button is not displayed.
+     */
+    @Input() public isLoading: WritableSignal<boolean> = signal(true);
     @Output() protected toggledFollowing: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     protected toggleFollow(): void {

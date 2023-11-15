@@ -3,8 +3,6 @@ export type Profile = {
     username?: string,
     first_name: string,
     last_name: string,
-    website?: string,
-    avatar_url?: string,
     profile_image?: string,
     updated_at?: Date
 }

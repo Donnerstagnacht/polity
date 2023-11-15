@@ -1,4 +1,4 @@
-import {Component, Signal, WritableSignal} from '@angular/core';
+import {Component, signal, Signal, WritableSignal} from '@angular/core';
 import {Profile} from "../types-and-interfaces/profile";
 import {ProfileStoreService} from "../services/profile-store.service";
 import {UiStoreService} from "../../../core/services/ui-store.service";
@@ -12,8 +12,9 @@ import {ProfileFollowService} from "../../profile-follow/services/profile-follow
     styleUrls: ['./profile-wiki.component.less']
 })
 export class ProfileWikiComponent {
+    protected isLoading: WritableSignal<boolean> = signal(true);
     protected profile: Signal<Profile | null>;
-    protected keyFigure: WritableSignal<ProfileStatistics>;
+    protected keyFigure: WritableSignal<ProfileStatistics | null>;
     protected isOwner: Signal<boolean>;
 
     constructor(
@@ -22,16 +23,17 @@ export class ProfileWikiComponent {
         private readonly profileStatisticsStoreService: ProfileStatisticsStoreService,
         private readonly profileFollowService: ProfileFollowService
     ) {
-        this.globalUiStateService.setLoading(true);
-
+        this.isLoading = this.globalUiStateService.selectLoading();
         this.isOwner = this.globalUiStateService.selectIsOwner();
         this.profile = this.profileStoreService.selectProfile()
         this.keyFigure = this.profileStatisticsStoreService.selectProfileStatistics()
-        
-        this.globalUiStateService.setLoading(false);
     }
 
-    async toggleFollow(isFollowing: boolean) {
-        this.profileFollowService.toggleFollow(isFollowing);
+    async toggleFollow(newIsFollowing: boolean): Promise<void> {
+        if (newIsFollowing) {
+            await this.profileFollowService.followProfile();
+        } else {
+            await this.profileFollowService.unFollowProfile();
+        }
     }
 }

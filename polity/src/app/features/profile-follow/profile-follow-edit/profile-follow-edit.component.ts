@@ -45,7 +45,7 @@ export class ProfileFollowEditComponent {
     ) {
         this.uiStoreService.setLoading(true);
 
-        this.profileStatistics = this.profileStatisticsStoreService.selectProfileStatistics()
+        this.profileStatistics = this.profileStatisticsStoreService.selectProfileStatistics() as WritableSignal<ProfileStatistics>
         this.profileFollowService.selectFollowersAndFollowings();
 
         this.uiStoreService.setLoading(false);
@@ -60,21 +60,18 @@ export class ProfileFollowEditComponent {
     }
 
     protected removeFollower(id: string): void {
-        console.log('remove follower')
         this.profileFollowService.manageFollowers(id, true)
         const follower: ProfileStatistics = {
-            follower: this.profileStatistics().follower?.filter(follower => follower.id !== id)
+            follower: this.profileStatistics()?.follower?.filter(follower => follower.id !== id)
         };
         this.profileStatisticsStoreService.setProfileStatistics(follower)
     }
 
     protected removeFollowing(id: string): void {
-        console.log('remove following')
         this.profileFollowService.manageFollowers(id, false)
         const following: ProfileStatistics = {
-            following: this.profileStatistics().following?.filter(following => following.id !== id)
+            following: this.profileStatistics()?.following?.filter(following => following.id !== id)
         };
-        console.log('after filter', following)
         this.profileStatisticsStoreService.setProfileStatistics(following)
     }
 }

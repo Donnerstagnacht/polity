@@ -29,4 +29,8 @@ export class HomeComponent {
     ngOnInit(): void {
         this.profile = this.profileStoreService.selectProfile();
     }
+
+    onDestroy(): void {
+        this.profileStoreService.resetProfile();
+    }
 }

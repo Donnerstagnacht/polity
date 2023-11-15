@@ -5,7 +5,7 @@ import {ProfileStatistics} from "../../profile/types-and-interfaces/profile-stat
     providedIn: 'root'
 })
 export class ProfileStatisticsStoreService {
-    private profileStatistics: WritableSignal<ProfileStatistics> = signal({
+    private profileStatistics: WritableSignal<ProfileStatistics | null> = signal({
         follower_counter: 0,
         following_counter: 0,
         follower: [],
@@ -19,7 +19,7 @@ export class ProfileStatisticsStoreService {
      *
      * @return WritableSignal<ProfileStatistics>.
      */
-    public selectProfileStatistics(): WritableSignal<ProfileStatistics> {
+    public selectProfileStatistics(): WritableSignal<ProfileStatistics | null> {
         return this.profileStatistics;
     }
 
@@ -37,6 +37,15 @@ export class ProfileStatisticsStoreService {
             ...profileStatistics
         } as ProfileStatistics
         this.profileStatistics.set(mergeUpdatesWithStoreData);
+    }
+
+    /**
+     * Resets the profile statistics state.
+     *
+     * @return {void}
+     */
+    public resetProfileStatistics(): void {
+        this.profileStatistics.set(null);
     }
 
     /**
@@ -61,8 +70,10 @@ export class ProfileStatisticsStoreService {
      */
     public incrementFollowerCounter(): void {
         this.profileStatistics.mutate(
-            (profileStatistics: ProfileStatistics): void => {
-                profileStatistics.follower_counter!++;
+            (profileStatistics: ProfileStatistics | null): void => {
+                if (profileStatistics?.following_counter) {
+                    profileStatistics.follower_counter!++;
+                }
             }
         )
     }
@@ -72,8 +83,10 @@ export class ProfileStatisticsStoreService {
      */
     public decrementFollowerCounter(): void {
         this.profileStatistics.mutate(
-            (profileStatistics: ProfileStatistics): void => {
-                profileStatistics.follower_counter!--;
+            (profileStatistics: ProfileStatistics | null): void => {
+                if (profileStatistics?.following_counter) {
+                    profileStatistics.follower_counter!--;
+                }
             }
         )
     }

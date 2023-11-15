@@ -1,24 +1,23 @@
 import {Injectable, WritableSignal} from '@angular/core';
-import {createClient, PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
-import {environment} from "../../../../environments/environment";
+import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {Profile} from "../types-and-interfaces/profile";
 import {ProfileStoreService} from "./profile-store.service";
 import {NotificationsStoreService} from "../../../core/services/notifications-store.service";
 import {TuiFileLike} from "@taiga-ui/kit";
 import {SessionStoreService} from "../../../core/services/session-store.service";
+import supabaseClient from "../../../core/services/supabase-client";
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProfileService {
-    private supabase: SupabaseClient
+    private supabase: SupabaseClient = supabaseClient()
 
     constructor(
         private readonly profileStoreService: ProfileStoreService,
         private readonly notificationService: NotificationsStoreService,
         private readonly sessionStoreService: SessionStoreService
     ) {
-        this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
     }
 
     /**
@@ -31,7 +30,7 @@ export class ProfileService {
         try {
             const response: PostgrestSingleResponse<Profile> = await this.supabase
             .from('profiles')
-            .select(`id, username, website, avatar_url, first_name, last_name, profile_image`)
+            .select(`id, username, first_name, last_name, profile_image`)
             .eq('id', id)
             .single()
             .throwOnError();
@@ -71,12 +70,6 @@ export class ProfileService {
                 this.notificationService.updateNotification(error.message, true);
             }
         }
-
-        // const update: Profile = {
-        //     ...profile,
-        //     updated_at: new Date(),
-        // }
-        // return this.supabase.from('profiles').upsert(update)
     }
 
     /**
@@ -152,5 +145,4 @@ export class ProfileService {
             return error;
         }
     }
-
 }
