@@ -12,4 +12,4 @@ Sizes.forEach((size: Size): void => {
             cy.signIn(profile1);
         })
     })
-})
+});

@@ -1,8 +1,9 @@
-import {createClient} from '@supabase/supabase-js';
+import {createClient, PostgrestError} from '@supabase/supabase-js';
 import {environment} from "../../../environments/environment";
+import {Database} from "../../../../supabase/types/types";
 
-const client = createClient(environment.supabaseUrl, environment.supabaseKey);
+export const supabaseClient = createClient<Database>(environment.supabaseUrl, environment.supabaseKey);
 
-const supabaseClient = () => client;
-
-export default supabaseClient;
+export type DbResult<T> = T extends PromiseLike<infer U> ? U : never
+export type DbResultOk<T> = T extends PromiseLike<{ data: infer U }> ? Exclude<U, null> : never
+export type DbResultErr = PostgrestError

@@ -13,13 +13,14 @@ import {UiStoreService} from "./ui-store.service";
 import {NotificationsStoreService} from "./notifications-store.service";
 import {SessionStoreService} from "./session-store.service";
 import {Router} from "@angular/router";
-import supabaseClient from "./supabase-client";
+import {supabaseClient} from "./supabase-client";
+import {Database} from "../../../../supabase/types/types";
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthenticationService {
-    private readonly supabaseClient: SupabaseClient = supabaseClient();
+    private readonly supabaseClient: SupabaseClient<Database> = supabaseClient;
 
     constructor(
         private readonly UIStoreService: UiStoreService,

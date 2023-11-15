@@ -1,10 +1,10 @@
 export type Profile = {
     id: string,
-    username?: string,
-    first_name: string,
-    last_name: string,
-    profile_image?: string,
-    updated_at?: Date
+    username?: string | null,
+    first_name: string | null,
+    last_name: string | null,
+    profile_image?: string | null,
+    updated_at?: Date | null
 }
 
 export interface ProfileTest extends Profile {
