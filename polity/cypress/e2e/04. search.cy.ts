@@ -14,11 +14,11 @@ Sizes.forEach((size: Size): void => {
         })
 
         it('search other users by their first name.', (): void => {
-            cy.searchUser(searchedUser.first_name);
+            cy.searchUser(searchedUser.first_name as string);
         })
 
         it('search other users by their last name.', (): void => {
-            cy.searchUser(searchedUser.last_name);
+            cy.searchUser(searchedUser.last_name as string);
         })
 
         it('search other users by their first and last name.', (): void => {

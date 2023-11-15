@@ -13,3 +13,6 @@ Sizes.forEach((size: Size): void => {
         })
     })
 })
+
+
+npx supabase gen types typescript --project-id "qwetlgmbngpopdcgravw" --schema public > types/supabase.ts

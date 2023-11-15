@@ -64,7 +64,7 @@ Cypress.Commands.add(
         followUser: ProfileTest
     ) => {
 
-        cy.searchUser(followingUser.first_name)
+        cy.searchUser(followingUser.first_name as string)
         .click()
         // cy.pause()
 
@@ -77,7 +77,7 @@ Cypress.Commands.add(
 
         cy.getDataCy('first-name')
         .shouldBeVisible()
-        .contains(followingUser.first_name)
+        .contains(followingUser.first_name as string)
 
         cy.intercept('POST',
             'https://qwetlgmbngpopdcgravw.supabase.co/rest/v1/rpc/follow_transaction')
@@ -99,12 +99,12 @@ Cypress.Commands.add(
         .shouldBeVisible()
         .contains(followingUser.follower_counter + 1)
 
-        cy.searchUser(followUser.first_name)
+        cy.searchUser(followUser.first_name as string)
         .click()
 
         cy.getDataCy('first-name')
         .shouldBeVisible()
-        .contains(followUser.first_name)
+        .contains(followUser.first_name as string)
 
         cy.getDataCy('followingCounter')
         .shouldBeVisible()

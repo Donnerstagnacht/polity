@@ -5,13 +5,14 @@ import {ProfileStoreService} from "./profile-store.service";
 import {NotificationsStoreService} from "../../../core/services/notifications-store.service";
 import {TuiFileLike} from "@taiga-ui/kit";
 import {SessionStoreService} from "../../../core/services/session-store.service";
-import supabaseClient from "../../../core/services/supabase-client";
+import {supabaseClient} from "../../../core/services/supabase-client";
+import {Database} from "../../../../../supabase/types/types";
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProfileService {
-    private supabase: SupabaseClient = supabaseClient()
+    private supabase: SupabaseClient<Database> = supabaseClient
 
     constructor(
         private readonly profileStoreService: ProfileStoreService,
@@ -80,12 +81,12 @@ export class ProfileService {
      */
     async updateProfileImage(imageUrl: string): Promise<void> {
         const profileToUpdate: WritableSignal<Profile | null> = this.profileStoreService.selectProfile();
-        const id: string | undefined = profileToUpdate()?.id;
+        const id: string | null | undefined = profileToUpdate()?.id;
 
         await this.supabase
         .from('profiles')
         .update({profile_image: imageUrl})
-        .eq('id', id);
+        .eq('id', id as string);
     }
 
     /**
@@ -123,26 +124,5 @@ export class ProfileService {
         .storage
         .from('profile_images')
         .upload(filePath, fileIn)
-    }
-
-    /**
-     * Retrieves a profile from the database without updating the local store.
-     *
-     * @param {string} id - The ID of the profile to retrieve.
-     * @return {Promise<PostgrestSingleResponse<Profile>>} A promise that resolves to the retrieved profile.
-     */
-    public async returnProfileNoStoreUpdate(id: string): Promise<PostgrestSingleResponse<Profile>> {
-        try {
-            const response: PostgrestSingleResponse<Profile> = await this.supabase
-            .from('profiles')
-            .select(`id, username, website, avatar_url, first_name, last_name, profile_image`)
-            .eq('id', id)
-            .single()
-            .throwOnError();
-            return response;
-        } catch (error: any) {
-            this.notificationService.updateNotification(error.message, true);
-            return error;
-        }
     }
 }

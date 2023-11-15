@@ -4,13 +4,14 @@ import {ProfileStatisticsStoreService} from "./profile-statistics-store.service"
 import {ProfileStatistics} from "../../profile/types-and-interfaces/profile-statistics";
 import {NotificationsStoreService} from "../../../core/services/notifications-store.service";
 import {SessionStoreService} from "../../../core/services/session-store.service";
-import supabaseClient from "../../../core/services/supabase-client";
+import {supabaseClient} from "../../../core/services/supabase-client";
+import {Database} from "../../../../../supabase/types/types";
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProfileFollowService {
-    private readonly supabaseClient: SupabaseClient = supabaseClient();
+    private readonly supabaseClient: SupabaseClient<Database> = supabaseClient;
 
     constructor(
         private readonly profileStatisticsStoreService: ProfileStatisticsStoreService,
@@ -57,7 +58,7 @@ export class ProfileFollowService {
                 'check_if_following',
                 {
                     follower_id: followerId,
-                    following_id: followingId
+                    following_id: followingId as string
                 }
             )
             .single()

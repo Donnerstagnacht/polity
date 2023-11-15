@@ -12,8 +12,8 @@ Sizes.forEach((size: Size): void => {
             cy.signIn(seedWriteUser);
         })
 
-        const newFirstName = seedWriteUser.first_name + Math.random();
-        const newLastName = seedWriteUser.last_name + Math.random();
+        const newFirstName = seedWriteUser.first_name as string + Math.random();
+        const newLastName = seedWriteUser.last_name as string + Math.random();
 
         it('edit its own profile data.', () => {
             cy.getDataCy('nav-profile-edit', 'nav-profile-edit-desktop')
@@ -69,27 +69,27 @@ Sizes.forEach((size: Size): void => {
 
         it('view other user profiles', (): void => {
             cy.openSearchTab()
-            cy.getDataCy('search').type(seedUser2.first_name)
+            cy.getDataCy('search').type(seedUser2.first_name as string)
             cy.getDataCy('user-search-results')
             .find('polity-profile-card')
             .shouldBeVisible()
-            .contains(seedUser2.first_name)
+            .contains(seedUser2.first_name as string)
             .click()
             cy.getDataCy('first-name')
             .shouldBeVisible()
-            .contains(seedUser2.first_name)
+            .contains(seedUser2.first_name as string)
             cy.getDataCy('first-name')
             .shouldBeVisible()
-            .contains(seedUser2.last_name)
+            .contains(seedUser2.last_name as string)
         })
 
         it('not edit other users profiles', (): void => {
             cy.openSearchTab()
-            cy.getDataCy('search').type(seedUser2.first_name)
+            cy.getDataCy('search').type(seedUser2.first_name as string)
             cy.getDataCy('user-search-results')
             .find('polity-profile-card')
             .shouldBeVisible()
-            .contains(seedUser2.first_name)
+            .contains(seedUser2.first_name as string)
             .click()
             cy.getDataCy('nav-profile-edit', 'nav-profile-edit-desktop')
             .should('not.exist')
