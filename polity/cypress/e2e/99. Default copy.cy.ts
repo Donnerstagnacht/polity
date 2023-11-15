@@ -12,7 +12,4 @@ Sizes.forEach((size: Size): void => {
             cy.signIn(profile1);
         })
     })
-})
-
-
-npx supabase gen types typescript --project-id "qwetlgmbngpopdcgravw" --schema public > types/supabase.ts
+});
