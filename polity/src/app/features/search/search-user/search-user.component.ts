@@ -29,16 +29,15 @@ export class SearchUserComponent {
         this.searchResults = this.searchStoreService.selectProfileSearchResults();
         this.searchForm.get('search')?.valueChanges.pipe(
             debounceTime(1000)).subscribe(
-            () => this.keyUp()
+            () => this.onKeyUp()
         )
     }
 
     public focused(): void {
-        console.log('touched form')
         this.searchStoreService.updateProfileSearchResults(null)
     };
 
-    private async keyUp(): Promise<void> {
+    private async onKeyUp(): Promise<void> {
         this.globalUiStateService.setLoading(true)
         let searchTerm: string | null = this.searchForm.controls.search.value
         if (searchTerm) {

@@ -1,5 +1,4 @@
 import {Component, signal, WritableSignal} from '@angular/core';
-import {Session} from "@supabase/supabase-js";
 import {SessionStoreService} from "../../../core/services/session-store.service";
 import {UiStoreService} from "../../../core/services/ui-store.service";
 import {Profile} from "../../profile/types-and-interfaces/profile";
@@ -12,7 +11,7 @@ import {ProfileStoreService} from "../../profile/services/profile-store.service"
     styleUrls: ['./home.component.less']
 })
 export class HomeComponent {
-    protected auth: WritableSignal<Session | null> = signal(null)
+    protected sessionId: string | null;
     protected profile: WritableSignal<Profile | null> = signal(null)
 
     constructor(
@@ -21,9 +20,9 @@ export class HomeComponent {
         private readonly profileService: ProfileService,
         private readonly profileStoreService: ProfileStoreService
     ) {
-        this.UIStoreService.setLoading(true)
-        this.auth = this.sessionStoreService.selectSession();
-        this.profileService.selectProfile(this.auth()?.user?.id as string);
+        this.UIStoreService.setLoading(true);
+        this.sessionId = this.sessionStoreService.sessionId();
+        this.profileService.selectProfile(this.sessionId as string)
         this.UIStoreService.setLoading(false)
     }
 
