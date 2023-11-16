@@ -14,7 +14,7 @@ import {NotificationsStoreService} from "./notifications-store.service";
 import {SessionStoreService} from "./session-store.service";
 import {Router} from "@angular/router";
 import {supabaseClient} from "./supabase-client";
-import {Database} from "../../../../supabase/types/types";
+import {Database} from "../../../../supabase/types/supabase.modified";
 
 @Injectable({
     providedIn: 'root'

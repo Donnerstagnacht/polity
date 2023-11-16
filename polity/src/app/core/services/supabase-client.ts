@@ -1,6 +1,6 @@
 import {createClient, PostgrestError} from '@supabase/supabase-js';
 import {environment} from "../../../environments/environment";
-import {Database} from "../../../../supabase/types/types";
+import {Database} from "../../../../supabase/types/supabase.modified";
 
 export const supabaseClient = createClient<Database>(environment.supabaseUrl, environment.supabaseKey);
 

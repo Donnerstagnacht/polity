@@ -6,7 +6,7 @@ import {NotificationsStoreService} from "../../../core/services/notifications-st
 import {TuiFileLike} from "@taiga-ui/kit";
 import {SessionStoreService} from "../../../core/services/session-store.service";
 import {supabaseClient} from "../../../core/services/supabase-client";
-import {Database} from "../../../../../supabase/types/types";
+import {Database} from "../../../../../supabase/types/supabase.modified";
 
 @Injectable({
     providedIn: 'root'
