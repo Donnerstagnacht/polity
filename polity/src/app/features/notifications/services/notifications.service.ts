@@ -28,6 +28,7 @@ export class NotificationsService {
             .rpc('select_notifications_of_users', {user_id: sessionId})
             .throwOnError()
 
+            this.notificationStoreService.mutateNotifications(response.data);
         } catch (error: any) {
             this.errorStoreService.updateError(error.message, true);
         }
@@ -39,14 +40,13 @@ export class NotificationsService {
     ): Promise<void> {
         try {
             const sessionId: string = this.sessionStoreService.sessionId() as string;
-            const response: PostgrestSingleResponse<Tables<'notifications_by_user'>> = await this.supabaseClient
+            const response: PostgrestSingleResponse<undefined> = await this.supabaseClient
             .rpc('create_notification_from_user_transaction', {
                 sender: sessionId,
                 receiver: receiver,
                 type_of_notification: type_of_notification,
                 read_by_receiver: false
             })
-            .single()
             .throwOnError()
         } catch (error: any) {
             this.errorStoreService.updateError(error.message, true);
