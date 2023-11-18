@@ -1,0 +1,75 @@
+<table
+    [columns]="columns"
+    class="tui-table"
+    tuiTable
+>
+    <tbody
+
+        *tuiLet="notifications()! | tuiTableSort as sortedNotifications"
+        [data]="sortedNotifications"
+        tuiTbody
+    >
+    <tr class="tui-table__tr tui-table__tr_border_none"
+        tuiThGroup>
+        <th
+            *tuiHead="'fist_name'"
+            class="tui-table__th"
+            tuiTh
+        >
+            Vorname
+        </th>
+        <th
+            *tuiHead="'last_name'"
+            class="tui-table__th"
+            tuiTh
+        >
+            Nachname
+        </th>
+        <th
+            *tuiHead="'actions'"
+            [sorter]="null"
+            class="tui-table__th"
+            tuiTh
+        ></th>
+    </tr>
+    <tr
+        *ngFor="let follower of sortedNotifications; let index = index"
+        class="tui-table__tr tui-table__tr_border_none"
+        tuiTr
+    >
+        <td
+            *tuiCell="'first_name'"
+            [attr.data-cy]="'follower-first-name'"
+            class="tui-table__td"
+            tuiTd
+        >
+            <!--            {{  }}-->
+        </td>
+        <td
+            *tuiCell="'last_name'"
+            [attr.data-cy]="'follower-last-name'"
+            class="tui-table__td"
+            tuiTd
+        >
+            <!--            {{  }}-->
+        </td>
+        <td
+            *tuiCell="'actions'"
+            class="tui-table__td"
+            tuiTd
+        >
+            <button
+                [attr.data-cy]="'follower-remove'"
+                appearance="flat"
+                class="remove"
+                icon="tuiIconTrash"
+                shape="rounded"
+                size="s"
+                title="Remove"
+                tuiIconButton
+                type="button"
+            ></button>
+        </td>
+    </tr>
+    </tbody>
+</table>
