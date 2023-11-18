@@ -5,6 +5,7 @@ import {FeaturesRoutingModule} from "./features-routing.module";
 import {LayoutModule} from "../layout/layout.module";
 import {TuiLoaderModule} from "@taiga-ui/core";
 import {SharedModule} from "../shared/shared.module";
+import {AssistantModule} from "./assistant/assistant.module";
 
 @NgModule({
     declarations: [
@@ -16,6 +17,7 @@ import {SharedModule} from "../shared/shared.module";
         LayoutModule,
         TuiLoaderModule,
         SharedModule,
+        AssistantModule,
     ]
 })
 export class FeaturesModule {

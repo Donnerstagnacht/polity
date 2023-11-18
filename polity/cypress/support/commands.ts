@@ -13,6 +13,7 @@
 // -- This is a parent command --
 
 import {ProfileTest} from "../../src/app/features/profile/types-and-interfaces/profile";
+import Chainable = Cypress.Chainable;
 
 /**
  * Adds custom command "cy.dataCy" to the global "cy" object
@@ -132,7 +133,26 @@ Cypress.Commands.add('signOut', (signedInUser: ProfileTest) => {
     .first()
     .click()
     cy.getDataCy('sign-out')
+    .scrollIntoView()
     .click()
     cy.url().should('contain', 'sign-in')
+})
+
+Cypress.Commands.add('signUp', (newUser: ProfileTest): Chainable<string> => {
+    const randomNumber: number = Math.floor(Math.random() * 10000000);
+    newUser.email = 'test' + randomNumber + '@gmail.com';
+    cy.visit('landing/signup');
+    cy.get('input')
+    .clear()
+    cy.getDataCy('email')
+    .type(newUser.email)
+    cy.getDataCy('password')
+    .clear()
+    cy.getDataCy('password')
+    .type(newUser.password)
+    cy.getDataCy('signup')
+    .click()
+    cy.url().should('contain', 'sign-in')
+    return cy.wrap(newUser.email);
 })
 

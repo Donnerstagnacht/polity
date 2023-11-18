@@ -13,6 +13,7 @@ copy "%~dp0polity\supabase\migrations\01_core\*" "%destination_folder%"
 copy "%~dp0polity\supabase\migrations\02_profile\*" "%destination_folder%"
 copy "%~dp0polity\supabase\migrations\03_profile-follow\*" "%destination_folder%"
 copy "%~dp0polity\supabase\migrations\04_search\*" "%destination_folder%"
+copy "%~dp0polity\supabase\migrations\05_assistant\*" "%destination_folder%"
 
 copy "%~dp0polity\supabase\migrations\99_seed\*" "%destination_folder%"
 
@@ -28,6 +29,7 @@ if errorlevel 1 (
     supabase db reset
     echo Y | npx supabase db reset --linked
     supabase db push --include-all
+    supabase gen types typescript --project-id "qwetlgmbngpopdcgravw" --schema public > polity/supabase/types/supabase.ts
 @REM     pause
 @REM     ng serve
     npx cypress run --spec "cypress/e2e/all.cy.ts" --record false

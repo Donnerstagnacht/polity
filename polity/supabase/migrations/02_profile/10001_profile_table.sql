@@ -10,8 +10,8 @@ CREATE TABLE IF NOT EXISTS profiles
 		              TO_TSVECTOR(
 			              'german',
 			              (first_name || ' ' || last_name))
-		              ) STORED,
-	CONSTRAINT username_length CHECK (CHAR_LENGTH(username) >= 3)
+		              ) STORED
+		CONSTRAINT username_length CHECK (CHAR_LENGTH(username) >= 3)
 );
 
 CREATE INDEX profiles_fts ON profiles USING gin (fts); -- generate the index

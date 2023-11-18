@@ -3,13 +3,13 @@ import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {NotificationsStoreService} from "../../../core/services/notifications-store.service";
 import {SearchStoreService} from "./search-store.service";
 import {supabaseClient} from "../../../core/services/supabase-client";
-import {Database} from "../../../../../supabase/types/types";
+import {DatabaseModified} from "../../../../../supabase/types/supabase.modified";
 
 @Injectable({
     providedIn: 'root'
 })
 export class SearchService {
-    private supabaseClient: SupabaseClient<Database> = supabaseClient
+    private supabaseClient: SupabaseClient<DatabaseModified> = supabaseClient
 
     constructor(
         private readonly notificationService: NotificationsStoreService,

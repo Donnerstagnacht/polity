@@ -49,3 +49,21 @@ polity-second-bar-side {
     display: none;
   }
 }
+
+
+img {
+  border-radius: var(--tui-radius-m);
+}
+
+.polity-container {
+  padding: 10%;
+
+  @media @tui-mobile {
+    margin-top: 30px;
+  }
+
+  @media @tui-desktop-min {
+    padding-left: calc(80px + 12%);
+    padding-right: calc(80px + 12%);
+  }
+}

@@ -65,6 +65,13 @@ declare global {
              * @param {ProfileTest} signedInUser - The signed-in user.
              */
             signOut(signedInUser: ProfileTest): Chainable<Element>
+
+            /**
+             * Signs up a new user.
+             *
+             * @param {ProfileTest} newUser - The new user.
+             */
+            signUp(newUser: ProfileTest): Chainable<string>
         }
     }
 }

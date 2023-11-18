@@ -20,6 +20,7 @@ import {ProfileImageUploadComponent} from './profile-image-upload/profile-image-
 import {CoreModule} from "../../core/core.module";
 import {SharedModule} from "../../shared/shared.module";
 import {ProfileFollowModule} from "../profile-follow/profile-follow.module";
+import {AssistantModule} from "../assistant/assistant.module";
 
 @NgModule({
     declarations: [
@@ -49,7 +50,8 @@ import {ProfileFollowModule} from "../profile-follow/profile-follow.module";
         CoreModule,
         TuiLoaderModule,
         SharedModule,
-        ProfileFollowModule
+        ProfileFollowModule,
+        AssistantModule
     ]
 })
 export class ProfileModule {

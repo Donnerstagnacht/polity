@@ -1,0 +1,17 @@
+<button
+		(click)="showDialog()"
+		[attr.data-cy]="this.activatedTutorial.dataCy"
+		tuiAction
+		type="button"
+
+>
+	<tui-marker-icon
+			class="tui-island__marker positive"
+			size="s"
+			src="assets/assistants/aria.svg"
+	></tui-marker-icon>
+	<section>
+		<h3 class="header tui-text_body-s">{{activatedTutorial.title}}</h3>
+		<p class="description tui-text_body-xs">{{activatedTutorial.description}}</p>
+	</section>
+</button>

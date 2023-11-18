@@ -5,13 +5,13 @@ import {ProfileStatistics} from "../../profile/types-and-interfaces/profile-stat
 import {NotificationsStoreService} from "../../../core/services/notifications-store.service";
 import {SessionStoreService} from "../../../core/services/session-store.service";
 import {supabaseClient} from "../../../core/services/supabase-client";
-import {Database} from "../../../../../supabase/types/types";
+import {DatabaseModified} from "../../../../../supabase/types/supabase.modified";
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProfileFollowService {
-    private readonly supabaseClient: SupabaseClient<Database> = supabaseClient;
+    private readonly supabaseClient: SupabaseClient<DatabaseModified> = supabaseClient;
 
     constructor(
         private readonly profileStatisticsStoreService: ProfileStatisticsStoreService,
