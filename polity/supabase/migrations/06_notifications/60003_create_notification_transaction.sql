@@ -15,9 +15,23 @@ CREATE OR REPLACE FUNCTION public.create_notification_from_user_transaction(
     SECURITY DEFINER
 AS
 $$
+DECLARE
+    is_notification_enabled boolean;
 BEGIN
-    PERFORM hidden_functions.delete_following_follower_relationship(follower_id, following_id);
-    PERFORM hidden_functions.decrement_follower_counter(following_id);
-    PERFORM hidden_functions.decrement_following_counter(follower_id);
+    is_notification_enabled := hidden_functions.check_if_user_receives_follow_notifications(
+        receiver
+        );
+
+    IF is_notification_enabled THEN
+        PERFORM hidden_functions.insert_notification_by_user(
+            sender,
+            receiver,
+            type_of_notification,
+            read_by_receiver
+            );
+        PERFORM hidden_functions.increment_notification_counter(
+            receiver
+            );
+    END IF;
 END;
 $$;

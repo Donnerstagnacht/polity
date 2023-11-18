@@ -12,8 +12,15 @@ CREATE OR REPLACE FUNCTION public.unfollow_transaction(
 AS
 $$
 BEGIN
-    PERFORM hidden_functions.delete_following_follower_relationship(follower_id, following_id);
-    PERFORM hidden_functions.decrement_follower_counter(following_id);
-    PERFORM hidden_functions.decrement_following_counter(follower_id);
+    PERFORM hidden_functions.delete_following_follower_relationship(
+        follower_id,
+        following_id
+        );
+    PERFORM hidden_functions.decrement_follower_counter(
+        following_id
+        );
+    PERFORM hidden_functions.decrement_following_counter(
+        follower_id
+        );
 END;
 $$;

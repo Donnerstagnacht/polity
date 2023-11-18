@@ -12,8 +12,15 @@ CREATE OR REPLACE FUNCTION public.follow_transaction(
 AS
 $$
 BEGIN
-    PERFORM hidden_functions.insert_following_follower_relationship(follower_id, following_id);
-    PERFORM hidden_functions.increment_follower_counter(following_id);
-    PERFORM hidden_functions.increment_following_counter(follower_id);
+    PERFORM hidden_functions.insert_following_follower_relationship(
+        follower_id,
+        following_id
+        );
+    PERFORM hidden_functions.increment_follower_counter(
+        following_id
+        );
+    PERFORM hidden_functions.increment_following_counter(
+        follower_id
+        );
 END;
 $$;
