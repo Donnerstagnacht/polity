@@ -10,7 +10,7 @@ import {
     SupabaseClient
 } from "@supabase/supabase-js";
 import {UiStoreService} from "./ui-store.service";
-import {NotificationsStoreService} from "./notifications-store.service";
+import {ErrorStoreService} from "./error-store.service";
 import {SessionStoreService} from "./session-store.service";
 import {Router} from "@angular/router";
 import {supabaseClient} from "./supabase-client";
@@ -24,7 +24,7 @@ export class AuthenticationService {
 
     constructor(
         private readonly UIStoreService: UiStoreService,
-        private readonly notificationService: NotificationsStoreService,
+        private readonly notificationService: ErrorStoreService,
         private readonly sessionStoreService: SessionStoreService,
         private readonly router: Router
     ) {
@@ -59,7 +59,7 @@ export class AuthenticationService {
             return authResponse;
         } catch (error) {
             if (error instanceof Error) {
-                this.notificationService.updateNotification(error.message, true)
+                this.notificationService.updateError(error.message, true)
             }
             return error
         } finally {
@@ -87,7 +87,7 @@ export class AuthenticationService {
             return authResponse;
         } catch (error) {
             if (error instanceof Error) {
-                this.notificationService.updateNotification(error.message, true);
+                this.notificationService.updateError(error.message, true);
                 return error
             }
             return error
@@ -113,7 +113,7 @@ export class AuthenticationService {
             return authResponse
         } catch (error) {
             if (error instanceof Error) {
-                this.notificationService.updateNotification(error.message, true);
+                this.notificationService.updateError(error.message, true);
             }
             return error
         } finally {

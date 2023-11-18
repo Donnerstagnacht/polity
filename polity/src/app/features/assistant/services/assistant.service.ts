@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {DatabaseModified} from "../../../../../supabase/types/supabase.modified";
 import {supabaseClient} from "../../../core/services/supabase-client";
-import {NotificationsStoreService} from "../../../core/services/notifications-store.service";
+import {ErrorStoreService} from "../../../core/services/error-store.service";
 import {Tables} from "../../../../../supabase/types/supabase.shorthand-types";
 import {SessionStoreService} from "../../../core/services/session-store.service";
 import {AssistantStoreService} from "./assistant-store.service";
@@ -14,7 +14,7 @@ export class AssistantService {
     private readonly supabaseClient: SupabaseClient<DatabaseModified> = supabaseClient;
 
     constructor(
-        private readonly notificationService: NotificationsStoreService,
+        private readonly notificationService: ErrorStoreService,
         private readonly sessionStoreService: SessionStoreService,
         private readonly assistantStoreService: AssistantStoreService
     ) {
@@ -35,7 +35,7 @@ export class AssistantService {
 
             this.assistantStoreService.mutateAssistant(response.data);
         } catch (error: any) {
-            this.notificationService.updateNotification(error.message, true);
+            this.notificationService.updateError(error.message, true);
         }
     }
 
@@ -57,7 +57,7 @@ export class AssistantService {
             } as Tables<'assistants'>
             this.assistantStoreService.mutateAssistant(updatedAssistant)
         } catch (error: any) {
-            this.notificationService.updateNotification(error.message, true);
+            this.notificationService.updateError(error.message, true);
         }
     }
 
@@ -79,7 +79,7 @@ export class AssistantService {
             } as Tables<'assistants'>
             this.assistantStoreService.mutateAssistant(updatedAssistant)
         } catch (error: any) {
-            this.notificationService.updateNotification(error.message, true);
+            this.notificationService.updateError(error.message, true);
         }
     }
 
@@ -101,7 +101,7 @@ export class AssistantService {
             } as Tables<'assistants'>
             this.assistantStoreService.mutateAssistant(updatedAssistant)
         } catch (error: any) {
-            this.notificationService.updateNotification(error.message, true);
+            this.notificationService.updateError(error.message, true);
         }
     }
 }

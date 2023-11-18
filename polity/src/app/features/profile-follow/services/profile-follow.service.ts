@@ -2,7 +2,7 @@ import {Injectable, WritableSignal} from '@angular/core';
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {ProfileStatisticsStoreService} from "./profile-statistics-store.service";
 import {ProfileStatistics} from "../../profile/types-and-interfaces/profile-statistics";
-import {NotificationsStoreService} from "../../../core/services/notifications-store.service";
+import {ErrorStoreService} from "../../../core/services/error-store.service";
 import {SessionStoreService} from "../../../core/services/session-store.service";
 import {supabaseClient} from "../../../core/services/supabase-client";
 import {DatabaseModified} from "../../../../../supabase/types/supabase.modified";
@@ -15,7 +15,7 @@ export class ProfileFollowService {
 
     constructor(
         private readonly profileStatisticsStoreService: ProfileStatisticsStoreService,
-        private readonly notificationService: NotificationsStoreService,
+        private readonly notificationService: ErrorStoreService,
         private readonly sessionStoreService: SessionStoreService
     ) {
     }
@@ -38,7 +38,7 @@ export class ProfileFollowService {
             this.profileStatisticsStoreService.setProfileStatistics(response.data);
             return response;
         } catch (error: any) {
-            this.notificationService.updateNotification(error.message, true);
+            this.notificationService.updateError(error.message, true);
             return error;
         }
     }
@@ -72,7 +72,7 @@ export class ProfileFollowService {
                 return false
             }
         } catch (error: any) {
-            this.notificationService.updateNotification(error.message, true);
+            this.notificationService.updateError(error.message, true);
             return error;
         }
     }
@@ -112,7 +112,7 @@ export class ProfileFollowService {
                 this.profileStatisticsStoreService.decrementFollowingCounter()
             }
         } catch (error: any) {
-            this.notificationService.updateNotification(error.message, true);
+            this.notificationService.updateError(error.message, true);
             return error;
         }
     }
@@ -148,7 +148,7 @@ export class ProfileFollowService {
             };
             this.profileStatisticsStoreService.setProfileStatistics(followerAndFollowings)
         } catch (error: any) {
-            this.notificationService.updateNotification(error.message, true);
+            this.notificationService.updateError(error.message, true);
             return error;
         }
     }
@@ -169,7 +169,7 @@ export class ProfileFollowService {
             this.profileStatisticsStoreService.incrementFollowerCounter()
             return response
         } catch (error: any) {
-            this.notificationService.updateNotification(error.message, true);
+            this.notificationService.updateError(error.message, true);
             return error;
         }
     }
@@ -191,7 +191,7 @@ export class ProfileFollowService {
             this.profileStatisticsStoreService.decrementFollowerCounter()
             return response
         } catch (error: any) {
-            this.notificationService.updateNotification(error.message, true);
+            this.notificationService.updateError(error.message, true);
             return error;
         }
     }

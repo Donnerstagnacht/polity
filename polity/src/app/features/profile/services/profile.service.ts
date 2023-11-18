@@ -2,7 +2,7 @@ import {Injectable, WritableSignal} from '@angular/core';
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {Profile} from "../types-and-interfaces/profile";
 import {ProfileStoreService} from "./profile-store.service";
-import {NotificationsStoreService} from "../../../core/services/notifications-store.service";
+import {ErrorStoreService} from "../../../core/services/error-store.service";
 import {TuiFileLike} from "@taiga-ui/kit";
 import {SessionStoreService} from "../../../core/services/session-store.service";
 import {supabaseClient} from "../../../core/services/supabase-client";
@@ -16,7 +16,7 @@ export class ProfileService {
 
     constructor(
         private readonly profileStoreService: ProfileStoreService,
-        private readonly notificationService: NotificationsStoreService,
+        private readonly notificationService: ErrorStoreService,
         private readonly sessionStoreService: SessionStoreService
     ) {
     }
@@ -38,7 +38,7 @@ export class ProfileService {
             this.profileStoreService.setProfile(response.data);
             return response;
         } catch (error: any) {
-            this.notificationService.updateNotification(error.message, true);
+            this.notificationService.updateError(error.message, true);
             return error
         }
     }
@@ -70,7 +70,7 @@ export class ProfileService {
             }
         } catch (error) {
             if (error instanceof Error) {
-                this.notificationService.updateNotification(error.message, true);
+                this.notificationService.updateError(error.message, true);
             }
         }
     }

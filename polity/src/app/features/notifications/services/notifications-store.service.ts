@@ -1,9 +1,13 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
+import {SessionStoreService} from "../../../core/services/session-store.service";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class NotificationsStoreService {
 
-  constructor() { }
+    constructor(
+        private readonly sessionStoreService: SessionStoreService
+    ) {
+    }
 }

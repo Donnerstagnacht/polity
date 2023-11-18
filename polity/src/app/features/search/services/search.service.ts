@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
-import {NotificationsStoreService} from "../../../core/services/notifications-store.service";
+import {ErrorStoreService} from "../../../core/services/error-store.service";
 import {SearchStoreService} from "./search-store.service";
 import {supabaseClient} from "../../../core/services/supabase-client";
 import {DatabaseModified} from "../../../../../supabase/types/supabase.modified";
@@ -12,7 +12,7 @@ export class SearchService {
     private supabaseClient: SupabaseClient<DatabaseModified> = supabaseClient
 
     constructor(
-        private readonly notificationService: NotificationsStoreService,
+        private readonly notificationService: ErrorStoreService,
         private readonly searchStoreService: SearchStoreService
     ) {
     }
@@ -34,7 +34,7 @@ export class SearchService {
             this.searchStoreService.updateProfileSearchResults(response.data);
             return false;
         } catch (error: any) {
-            this.notificationService.updateNotification(error.message, true);
+            this.notificationService.updateError(error.message, true);
             return false;
         }
     }
