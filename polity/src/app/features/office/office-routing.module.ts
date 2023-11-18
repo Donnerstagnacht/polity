@@ -1,11 +1,11 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {OfficeComponent} from "./office/office.component";
+import {NotificationsComponent} from "../notifications/notifications/notifications.component";
 
 const routes: Routes = [
     {
         path: '',
-        component: OfficeComponent
+        component: NotificationsComponent
     }
 ];
 

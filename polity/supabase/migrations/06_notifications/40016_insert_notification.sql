@@ -1,13 +1,13 @@
 DROP FUNCTION IF EXISTS hidden_functions.insert_notification_by_user(
     sender uuid,
     receiver uuid,
-    type_of_notification text,
+    type_of_notification notifications_enum,
     read_by_receiver boolean
 );
 CREATE OR REPLACE FUNCTION hidden_functions.insert_notification_by_user(
     sender uuid,
     receiver uuid,
-    type_of_notification text,
+    type_of_notification notifications_enum,
     read_by_receiver boolean
 )
     RETURNS void

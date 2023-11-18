@@ -89,3 +89,13 @@ export const menuItemsProfile: Item[] = [
         dataCyDesktop: 'nav-profile-wiki-desktop'
     }
 ]
+
+export const menuItemsOffice: Item[] = [
+    {
+        text: 'NEWS',
+        icon: 'tuiIconUser',
+        link: '/office',
+        dataCy: 'nav-office-news',
+        dataCyDesktop: 'nav-office-news-desktop'
+    }
+]

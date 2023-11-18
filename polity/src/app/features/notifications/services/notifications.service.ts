@@ -28,6 +28,8 @@ export class NotificationsService {
             .rpc('select_notifications_of_users', {user_id: sessionId})
             .throwOnError()
 
+            console.log('data', response.data)
+
             this.notificationStoreService.mutateNotifications(response.data);
         } catch (error: any) {
             this.errorStoreService.updateError(error.message, true);

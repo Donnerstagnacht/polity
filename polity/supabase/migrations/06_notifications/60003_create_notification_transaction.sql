@@ -1,13 +1,13 @@
 DROP FUNCTION IF EXISTS public.create_notification_from_user_transaction(
     sender uuid,
     receiver uuid,
-    type_of_notification text,
+    type_of_notification notifications_enum,
     read_by_receiver boolean
 );
 CREATE OR REPLACE FUNCTION public.create_notification_from_user_transaction(
     sender uuid,
     receiver uuid,
-    type_of_notification text,
+    type_of_notification notifications_enum,
     read_by_receiver boolean
 )
     RETURNS void

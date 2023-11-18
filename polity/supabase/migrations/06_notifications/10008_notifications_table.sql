@@ -9,7 +9,6 @@ CREATE TABLE IF NOT EXISTS public.notifications_by_user
     CONSTRAINT notifications_by_user_pkey PRIMARY KEY (id),
     CONSTRAINT notifications_by_user_sender_fkey FOREIGN KEY (sender) REFERENCES auth.users (id) MATCH SIMPLE,
     CONSTRAINT notifications_by_user_receiver_fkey FOREIGN KEY (receiver) REFERENCES auth.users (id) MATCH SIMPLE
-
 );
 
 ALTER TABLE notifications_by_user

@@ -1,5 +1,7 @@
 import {Component} from '@angular/core';
 import {UiStoreService} from "../../../core/services/ui-store.service";
+import {Item} from "../../../layout/types-and-interfaces/item";
+import {menuItemsOffice} from "../../../layout/menu-items";
 
 @Component({
     selector: 'polity-office',
@@ -7,6 +9,8 @@ import {UiStoreService} from "../../../core/services/ui-store.service";
     styleUrls: ['./office.component.less']
 })
 export class OfficeComponent {
+    protected menuItemsProfile: Item[] = menuItemsOffice;
+
 
     constructor(private readonly UIStoreService: UiStoreService) {
         this.UIStoreService.setLoading(true);
