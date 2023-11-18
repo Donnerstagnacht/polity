@@ -270,6 +270,19 @@ export interface Database {
           last_name: string
         }[]
       }
+      select_notifications_of_users: {
+        Args: {
+          user_id: string
+        }
+        Returns: {
+          id: string
+          sender: string
+          receiver: string
+          type_of_notification: Database["public"]["Enums"]["notifications_enum"]
+          read_by_receiver: boolean
+          created_at: string
+        }[]
+      }
       unfollow_transaction: {
         Args: {
           follower_id: string

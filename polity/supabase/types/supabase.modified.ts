@@ -17,8 +17,18 @@ export type DatabaseModified = MergeDeep<
                     Update: {
                         updated_at?: Date | null
                     }
-
-                }
+                },
+                // notifications_by_user: {
+                //     Row: {
+                //         created_at: Date
+                //     }
+                //     Insert: {
+                //         created_at?: Date
+                //     }
+                //     Update: {
+                //         created_at?: Date
+                //     }
+                // }
             }
         }
     }
