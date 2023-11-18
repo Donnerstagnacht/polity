@@ -15,8 +15,14 @@ export class ProfileFollowEditComponent {
     protected readonly columns: string[] = ['first_name', 'last_name', 'actions'];
     protected activeItemIndex: number = 0;
     protected profileStatistics: WritableSignal<ProfileStatistics> = signal({
-        follower_counter: 0,
-        following_counter: 0,
+        counters: {
+            follower_counter: 0,
+            unread_notifications_counter: 0,
+            following_counter: 0,
+            profile_id: ''
+        },
+        // follower_counter: 0,
+        // following_counter: 0,
         follower: [
             {
                 id: '',

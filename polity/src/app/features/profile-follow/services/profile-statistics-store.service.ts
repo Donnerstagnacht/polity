@@ -6,13 +6,23 @@ import {ProfileStatistics} from "../../profile/types-and-interfaces/profile-stat
 })
 export class ProfileStatisticsStoreService {
     private profileStatistics: WritableSignal<ProfileStatistics | null> = signal({
-        follower_counter: 0,
-        following_counter: 0,
+        counters: {
+            follower_counter: 0,
+            following_counter: 0,
+            profile_id: '',
+            unread_notifications_counter: 0
+        },
+        // follower_counter: 0,
+        // following_counter: 0,
         follower: [],
         following: [],
         is_following: false,
         profile_id: ''
     });
+
+    // private profileStatistc: WritableSignal<{
+    //     counters: Tables<'profiles_counters'>
+    // } | null> = signal(null)
 
     /**
      * Returns the global profile statistics object that notifies consumers of changes
@@ -71,8 +81,8 @@ export class ProfileStatisticsStoreService {
     public incrementFollowerCounter(): void {
         this.profileStatistics.mutate(
             (profileStatistics: ProfileStatistics | null): void => {
-                if (profileStatistics?.following_counter) {
-                    profileStatistics.follower_counter!++;
+                if (profileStatistics?.counters?.following_counter) {
+                    profileStatistics.counters.follower_counter!++;
                 }
             }
         )
@@ -84,8 +94,8 @@ export class ProfileStatisticsStoreService {
     public decrementFollowerCounter(): void {
         this.profileStatistics.mutate(
             (profileStatistics: ProfileStatistics | null): void => {
-                if (profileStatistics?.following_counter) {
-                    profileStatistics.follower_counter!--;
+                if (profileStatistics?.counters?.following_counter) {
+                    profileStatistics.counters.follower_counter!--;
                 }
             }
         )
@@ -97,8 +107,8 @@ export class ProfileStatisticsStoreService {
     public decrementFollowingCounter(): void {
         this.profileStatistics.mutate(
             (profileStatistics: ProfileStatistics | null): void => {
-                if (profileStatistics?.following_counter) {
-                    profileStatistics.following_counter--;
+                if (profileStatistics?.counters?.following_counter) {
+                    profileStatistics.counters.following_counter--;
                 }
             }
         )

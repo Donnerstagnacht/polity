@@ -6,6 +6,7 @@ import {ErrorStoreService} from "../../../core/services/error-store.service";
 import {SessionStoreService} from "../../../core/services/session-store.service";
 import {supabaseClient} from "../../../core/services/supabase-client";
 import {DatabaseModified} from "../../../../../supabase/types/supabase.modified";
+import {Tables} from "../../../../../supabase/types/supabase.shorthand-types";
 
 @Injectable({
     providedIn: 'root'
@@ -28,14 +29,20 @@ export class ProfileFollowService {
      */
     public async selectProfileStatistics(userId: string): Promise<any> {
         try {
-            // @ts-ignore
-            const response: PostgrestSingleResponse<ProfileStatistics> = await this.supabaseClient.rpc(
+            const response: PostgrestSingleResponse<Tables<'profiles_counters'>> = await this.supabaseClient.rpc(
                 'select_following_counter',
                 {user_id: userId}
             )
             .single()
             .throwOnError();
-            this.profileStatisticsStoreService.setProfileStatistics(response.data);
+
+            if (response.data) {
+                const updateData: ProfileStatistics = {
+                    counters: response.data,
+                }
+                console.log(response.data)
+                this.profileStatisticsStoreService.setProfileStatistics(updateData);
+            }
             return response;
         } catch (error: any) {
             this.notificationService.updateError(error.message, true);
@@ -51,7 +58,7 @@ export class ProfileFollowService {
     public async checkIfFollowing(): Promise<any> {
         const followerId: string = this.sessionStoreService.sessionId() as string;
         const profile: WritableSignal<ProfileStatistics | null> = this.profileStatisticsStoreService.selectProfileStatistics()
-        const followingId: string | undefined = profile()?.profile_id;
+        const followingId: string | undefined = profile()?.counters?.profile_id as string;
 
         try {
             const response: PostgrestSingleResponse<boolean | unknown> = await this.supabaseClient.rpc(
@@ -156,7 +163,7 @@ export class ProfileFollowService {
     public async followProfile() {
         const followerId: string = this.sessionStoreService.sessionId() as string;
         const profile: WritableSignal<ProfileStatistics | null> = this.profileStatisticsStoreService.selectProfileStatistics()
-        const followingId: string = profile()?.profile_id as string;
+        const followingId: string = profile()?.counters?.profile_id as string;
         try {
             const response: PostgrestSingleResponse<any> = await this.supabaseClient.rpc(
                 'follow_transaction',
@@ -177,7 +184,7 @@ export class ProfileFollowService {
     public async unFollowProfile() {
         const followerId: string = this.sessionStoreService.sessionId() as string;
         const profile: WritableSignal<ProfileStatistics | null> = this.profileStatisticsStoreService.selectProfileStatistics()
-        const followingId: string = profile()?.profile_id as string;
+        const followingId: string = profile()?.counters?.profile_id as string;
 
         try {
             const response: PostgrestSingleResponse<any> = await this.supabaseClient.rpc(

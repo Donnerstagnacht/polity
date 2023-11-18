@@ -258,6 +258,7 @@ export interface Database {
           profile_id: string
           follower_counter: number
           following_counter: number
+          unread_notifications_counter: number
         }[]
       }
       select_following_of_user: {

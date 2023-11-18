@@ -18,6 +18,20 @@ export type DatabaseModified = MergeDeep<
                         updated_at?: Date | null
                     }
                 },
+                profiles_counters: {
+                    Row: {
+                        id?: string
+                        profile_id: string
+                    }
+                    Insert: {
+                        id?: string
+                        profile_id: string
+                    }
+                    Update: {
+                        id?: string
+                        profile_id?: string
+                    }
+                }
                 // notifications_by_user: {
                 //     Row: {
                 //         created_at: Date
