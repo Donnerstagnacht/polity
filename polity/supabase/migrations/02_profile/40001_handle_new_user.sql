@@ -12,7 +12,7 @@ END;
 $$ LANGUAGE plpgsql
 	SECURITY DEFINER;
 
-CREATE TRIGGER on_auth_user_created_add_profile
+CREATE OR REPLACE TRIGGER on_auth_user_created_add_profile
 	AFTER INSERT
 	ON auth.users
 	FOR EACH ROW

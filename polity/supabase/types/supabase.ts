@@ -9,6 +9,35 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      assistants: {
+        Row: {
+          first_sign_in: boolean
+          id: string
+          last_tutorial: Database["public"]["Enums"]["tutorial_enum"]
+          skip_tutorial: boolean
+        }
+        Insert: {
+          first_sign_in?: boolean
+          id: string
+          last_tutorial?: Database["public"]["Enums"]["tutorial_enum"]
+          skip_tutorial?: boolean
+        }
+        Update: {
+          first_sign_in?: boolean
+          id?: string
+          last_tutorial?: Database["public"]["Enums"]["tutorial_enum"]
+          skip_tutorial?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assistants_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       following_profiles: {
         Row: {
           follower: string
@@ -42,37 +71,28 @@ export interface Database {
       profiles: {
         Row: {
           first_name: string | null
-          firstSignIn: boolean | null
           fts: unknown | null
           id: string
           last_name: string | null
-          lastTutorial: Database["public"]["Enums"]["tutorial_enum"] | null
           profile_image: string | null
-          skipTutorial: boolean | null
           updated_at: string | null
           username: string | null
         }
         Insert: {
           first_name?: string | null
-          firstSignIn?: boolean | null
           fts?: unknown | null
           id: string
           last_name?: string | null
-          lastTutorial?: Database["public"]["Enums"]["tutorial_enum"] | null
           profile_image?: string | null
-          skipTutorial?: boolean | null
           updated_at?: string | null
           username?: string | null
         }
         Update: {
           first_name?: string | null
-          firstSignIn?: boolean | null
           fts?: unknown | null
           id?: string
           last_name?: string | null
-          lastTutorial?: Database["public"]["Enums"]["tutorial_enum"] | null
           profile_image?: string | null
-          skipTutorial?: boolean | null
           updated_at?: string | null
           username?: string | null
         }
@@ -88,21 +108,29 @@ export interface Database {
       }
       profiles_counters: {
         Row: {
-          follower_counter: number | null
-          following_counter: number | null
+          follower_counter: number
+          following_counter: number
           id: string
         }
         Insert: {
-          follower_counter?: number | null
-          following_counter?: number | null
+          follower_counter?: number
+          following_counter?: number
           id: string
         }
         Update: {
-          follower_counter?: number | null
-          following_counter?: number | null
+          follower_counter?: number
+          following_counter?: number
           id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profiles_counters_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
       }
     }
     Views: {
@@ -129,15 +157,23 @@ export interface Database {
         }
         Returns: {
           first_name: string | null
-          firstSignIn: boolean | null
           fts: unknown | null
           id: string
           last_name: string | null
-          lastTutorial: Database["public"]["Enums"]["tutorial_enum"] | null
           profile_image: string | null
-          skipTutorial: boolean | null
           updated_at: string | null
           username: string | null
+        }[]
+      }
+      select_assistant: {
+        Args: {
+          user_id: string
+        }
+        Returns: {
+          id: string
+          first_sign_in: boolean
+          skip_tutorial: boolean
+          last_tutorial: Database["public"]["Enums"]["tutorial_enum"]
         }[]
       }
       select_follower_of_user: {
@@ -177,9 +213,30 @@ export interface Database {
         }
         Returns: undefined
       }
+      update_first_sign_in: {
+        Args: {
+          user_id: string
+          new_status: boolean
+        }
+        Returns: undefined
+      }
+      update_last_tutorial: {
+        Args: {
+          user_id: string
+          new_status: Database["public"]["Enums"]["tutorial_enum"]
+        }
+        Returns: undefined
+      }
+      update_skip_tutorial: {
+        Args: {
+          user_id: string
+          new_status: boolean
+        }
+        Returns: undefined
+      }
     }
     Enums: {
-      tutorial_enum: "profile" | "search"
+      tutorial_enum: "welcome" | "profile" | "search"
     }
     CompositeTypes: {
       [_ in never]: never

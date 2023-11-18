@@ -1,11 +1,14 @@
-<button
-		(click)="signOut()"
-		[attr.data-cy]="'sign-out'"
-		appearance="flat"
-		class="tui-form__button"
-		size="l"
-		tuiButton
-		type="button"
->
-	SIGNOUT
-</button>
+<div class="tui-form__row">
+	<div class="tui-form__buttons">
+		<button
+				(click)="signOut()"
+				[attr.data-cy]="'sign-out'"
+				class="tui-form__button"
+				size="l"
+				tuiButton
+				type="submit"
+		>
+			SIGNOUT
+		</button>
+	</div>
+</div>

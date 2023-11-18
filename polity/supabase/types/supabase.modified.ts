@@ -2,7 +2,7 @@ import {MergeDeep} from "type-fest";
 import {Database as DatabaseGenerated} from './supabase'
 
 export {Json} from './supabase'
-export type Database = MergeDeep<
+export type DatabaseModified = MergeDeep<
     DatabaseGenerated,
     {
         public: {

@@ -1,0 +1,164 @@
+<div class="polity-container">
+	<div
+			(touchstart.passive.stop)="(0)"
+			class="wrapper"
+			tuiCarouselButtons
+	>
+		<tui-carousel [(index)]="index">
+			<div
+					*tuiItem
+					class="search-content">
+				<h3 class="tui-text_h3">Hey, Willkommen bei Polity!</h3>
+				<div class="center-grid">
+					<img alt="test" class="grid-item" src="assets/assistants/aria.svg">
+					<img alt="test" class="grid-item" src="assets/assistants/kai.svg">
+				</div>
+				<div>
+					<P class="tui-text_body-m">Wir sind Vidhi und Tobi - deine persönlichen Assistenten.</P>
+
+					<p class="tui-text_body-m">Wer bist du?</p>
+				</div>
+
+				<form
+						[formGroup]="welcomeForm">
+
+					<div class="tui-form__row">
+						<tui-input
+								[attr.data-cy]="'welcome-first-name'"
+								[tuiTextfieldCleaner]="true"
+								[tuiTextfieldCustomContent]="welcomeForm.controls.firstName.valid ? success : ''"
+								formControlName="firstName"
+						>
+							Wie ist dein Vorname?
+						</tui-input>
+					</div>
+					<tui-error
+							[error]="[] | tuiFieldError | async"
+							formControlName="firstName"
+					>
+					</tui-error>
+
+					<div class="tui-form__row">
+						<tui-input
+								[attr.data-cy]="'welcome-last-name'"
+								[tuiTextfieldCleaner]="true"
+								[tuiTextfieldCustomContent]="welcomeForm.controls.lastName.valid ? success : ''"
+								formControlName="lastName"
+						>
+							Wie ist dein Nachname?
+						</tui-input>
+					</div>
+					<tui-error
+							[error]="[] | tuiFieldError | async"
+							formControlName="lastName"
+					>
+					</tui-error>
+
+					<ng-template #success>
+						<tui-svg
+								class="polity-success tui-space_left-3"
+								src="tuiIconCheck"
+						></tui-svg>
+					</ng-template>
+
+					<P class="tui-text_body-m">Können wir dir eine Tour geben?</P>
+
+					<div class="tui-form__row">
+						<button
+								(click)="step1navigateToProfileStep(1)"
+								[attr.data-cy]="'step1navigateToProfileStep'"
+								[disabled]="!welcomeForm.valid"
+								appearance="primary"
+								class="tui-space_right-3 tui-space_bottom-3"
+								tuiButton
+								type="button"
+						>
+							Gib mir eine Tour.
+						</button>
+						<button
+								(click)="step1closeTutorial()"
+								[attr.data-cy]="'step1closeTutorial'"
+								[disabled]="!welcomeForm.valid"
+								appearance="flat"
+								class="tui-space_right-3 tui-space_bottom-3"
+								tuiButton
+								type="button"
+						>
+							Ich schaue mich selbst um.
+						</button>
+					</div>
+
+				</form>
+			</div>
+
+			<div *tuiItem>
+				<h3
+						[attr.data-cy]="'welcome-name-headline'"
+						class="tui-text_h3">Schön dich kennen zu lernen {{this.name}}.</h3>
+				<p class="tui-text_body-m">Bei Polity kannst du in Echtzeit politische Entscheidungen weltweit
+					verfolgen, beeinflussen und gestalten. Von Sendling bis Washington!</p>
+				<p class="tui-text_body-m">Fülle dein Profil aus damit andere erkennen, dass du vertrauenswürdig
+					bist.</p>
+
+				<div class="tui-form__row">
+					<button
+							(click)="step2navigateToProfilePage()"
+							[attr.data-cy]="'step2navigateToProfilePage'"
+							appearance="primary"
+							class="tui-space_right-3 tui-space_bottom-3"
+							tuiButton
+							type="button"
+					>
+						Zeig mir mein Profil.
+					</button>
+					<button
+							(click)="step2closeAndSkipTutorial()"
+							[attr.data-cy]="'step2closeAndSkipTutorial'"
+							appearance="flat"
+							class="tui-space_right-3 tui-space_bottom-3"
+							tuiButton
+							type="button"
+					>
+						Skip Tutorial
+					</button>
+				</div>
+			</div>
+
+			<div *tuiItem>
+				<h3
+						[attr.data-cy]="'tutorial-search-headline'"
+						class="tui-text_h3">Politische Informationen in Echtzeit.</h3>
+				<p class="tui-text_body-m">Finde die Informationen, die du für deine politische Arbeit brauchst.</p>
+				<p class="tui-text_body-m">Egal ob über Menschen, Themen, Veranstaltungen oder Organisationen.</p>
+
+				<div class="tui-form__row">
+					<button
+							(click)="step3navigateToSearchPage()"
+							[attr.data-cy]="'step3navigateToSearchPage'"
+							appearance="primary"
+							class="tui-space_right-3 tui-space_bottom-3"
+							tuiButton
+							type="button"
+					>
+						Zeig mir die Suche.
+					</button>
+					<button
+							(click)="step3closeAndSkipTutorial()"
+							[attr.data-cy]="'step3closeAndSkipTutorial'"
+
+							appearance="flat"
+							class="tui-space_right-3 tui-space_bottom-3"
+							tuiButton
+							type="button"
+					>
+						Skip Tutorial
+					</button>
+				</div>
+			</div>
+
+		</tui-carousel>
+
+	</div>
+</div>
+
+

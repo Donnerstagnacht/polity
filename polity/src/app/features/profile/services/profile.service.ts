@@ -6,13 +6,13 @@ import {NotificationsStoreService} from "../../../core/services/notifications-st
 import {TuiFileLike} from "@taiga-ui/kit";
 import {SessionStoreService} from "../../../core/services/session-store.service";
 import {supabaseClient} from "../../../core/services/supabase-client";
-import {Database} from "../../../../../supabase/types/supabase.modified";
+import {DatabaseModified} from "../../../../../supabase/types/supabase.modified";
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProfileService {
-    private supabase: SupabaseClient<Database> = supabaseClient
+    private supabase: SupabaseClient<DatabaseModified> = supabaseClient
 
     constructor(
         private readonly profileStoreService: ProfileStoreService,
@@ -58,6 +58,8 @@ export class ProfileService {
                     ...profile,
                     updated_at: new Date(),
                     id: sessionId
+                }
+                if (update.id) {
                 }
                 const databaseResponse: PostgrestSingleResponse<null> = await this.supabase.from('profiles').upsert(update)
 
