@@ -1,8 +1,12 @@
 -- Set up Storage!
 INSERT INTO
-    storage.buckets (id, name, public)
+    storage.buckets (id,
+                     name,
+                     public)
 VALUES
-    ('profile_images', 'profile_images', TRUE);
+    ('profile_images',
+     'profile_images',
+     TRUE);
 
 -- Set up access controls for storage.
 -- See https://supabase.com/docs/guides/storage/security/access-control#policy-examples for more details.

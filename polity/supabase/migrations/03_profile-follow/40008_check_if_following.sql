@@ -1,6 +1,12 @@
 -- 1. Increment Following counter
-DROP FUNCTION IF EXISTS public.check_if_following(follower_id uuid, following_id uuid);
-CREATE OR REPLACE FUNCTION public.check_if_following(follower_id uuid, following_id uuid)
+DROP FUNCTION IF EXISTS public.check_if_following(
+    follower_id uuid,
+    following_id uuid
+);
+CREATE OR REPLACE FUNCTION public.check_if_following(
+    follower_id uuid,
+    following_id uuid
+)
     RETURNS boolean
     LANGUAGE plpgsql
     SECURITY INVOKER

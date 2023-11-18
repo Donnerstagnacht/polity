@@ -1,13 +1,23 @@
-DROP FUNCTION IF EXISTS hidden_functions.insert_following_follower_relationship(follower uuid, following uuid);
-CREATE OR REPLACE FUNCTION hidden_functions.insert_following_follower_relationship(follower uuid, following uuid)
+DROP FUNCTION IF EXISTS hidden_functions.insert_following_follower_relationship(
+    follower uuid,
+    following uuid
+);
+CREATE OR REPLACE FUNCTION hidden_functions.insert_following_follower_relationship(
+    follower uuid,
+    following uuid
+)
     RETURNS void
     LANGUAGE plpgsql
     SECURITY INVOKER
 AS
 $$
 BEGIN
-    INSERT INTO following_profiles (follower, following)
-    VALUES (follower, following);
+    INSERT INTO
+        following_profiles (follower,
+                            following)
+    VALUES
+        (follower,
+         following);
 END;
 $$;
 
