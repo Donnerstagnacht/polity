@@ -38,7 +38,6 @@ export class ProfileService {
             if (response.data) {
                 this.profileStoreService.profile.mutateEntity(response.data);
             }
-            // this.profileStoreService.setProfile(response.data);
             return response;
         } catch (error: any) {
             this.notificationService.updateError(error.message, true);
@@ -69,7 +68,6 @@ export class ProfileService {
                 if (databaseResponse.error) throw databaseResponse.error
 
                 this.profileStoreService.profile.mutateEntity(profile)
-                // this.profileStoreService.setProfile(profile);
             } else {
                 throw new Error('no session')
             }

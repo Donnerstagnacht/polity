@@ -37,9 +37,6 @@ export class ProfileEditComponent {
     ) {
         this.globalUiStateService.setLoading(true);
         this.profile = this.userStoreService.profile.selectEntity()
-
-        // this.profile = this.userStoreService.selectProfile();
-
         this.globalUiStateService.setLoading(false);
 
         effect(() => {

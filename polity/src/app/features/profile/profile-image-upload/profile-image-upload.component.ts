@@ -53,8 +53,6 @@ export class ProfileImageUploadComponent {
                         profile_image: this.avatarUrl
                     } as Profile
                     this.profileStoreService.profile.mutateEntity(profile)
-
-                    // this.profileStoreService.mutateProfileImageURL(this.avatarUrl)
                 })
             }
             return file;
