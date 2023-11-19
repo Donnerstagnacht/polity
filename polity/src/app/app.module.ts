@@ -6,8 +6,8 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {LayoutModule} from "./layout/layout.module";
-import {CoreModule} from "./core/core.module";
 import {ProfileModule} from "./features/profile/profile.module";
+import {LandingModule} from "./landing/landing.module";
 
 @NgModule({
     declarations: [
@@ -17,7 +17,7 @@ import {ProfileModule} from "./features/profile/profile.module";
         BrowserModule,
         AppRoutingModule,
         LayoutModule,
-        CoreModule,
+        LandingModule,
         BrowserAnimationsModule,
         TuiRootModule,
         TuiDialogModule,

@@ -6,6 +6,7 @@ import {SessionStoreService} from "../../../core/services/session-store.service"
 import {AssistantStoreService} from "./assistant-store.service";
 import {supabaseClient} from "../../../shared/services/supabase-client";
 import {ErrorStoreService} from "../../../shared/services/error-store.service";
+import {WrapperCodeService} from "../../../shared/services/wrapper-code.service";
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +17,8 @@ export class AssistantService {
     constructor(
         private readonly notificationService: ErrorStoreService,
         private readonly sessionStoreService: SessionStoreService,
-        private readonly assistantStoreService: AssistantStoreService
+        private readonly assistantStoreService: AssistantStoreService,
+        private readonly wrapperService: WrapperCodeService
     ) {
     }
 
@@ -27,7 +29,7 @@ export class AssistantService {
      * @return {Promise<void>}
      */
     public async selectAssistant(userId: string): Promise<void> {
-        try {
+        await this.wrapperService.wrapFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<Tables<'assistants'>> = await this.supabaseClient
             .rpc('select_assistant', {user_id: userId})
             .single()
@@ -35,9 +37,7 @@ export class AssistantService {
             if (response.data) {
                 this.assistantStoreService.assistant.mutateEntity(response.data);
             }
-        } catch (error: any) {
-            this.notificationService.updateError(error.message, true);
-        }
+        })
     }
 
     /**
@@ -47,7 +47,7 @@ export class AssistantService {
      * @return {Promise<void>}
      */
     public async updateFirstSignIn(newStatus: boolean): Promise<void> {
-        try {
+        await this.wrapperService.wrapFunction(async (): Promise<void> => {
             const sessionId: string = this.sessionStoreService.sessionId() as string;
             const response: PostgrestSingleResponse<undefined> = await this.supabaseClient
             .rpc('update_first_sign_in', {user_id: sessionId, new_status: newStatus})
@@ -57,9 +57,7 @@ export class AssistantService {
                 first_sign_in: newStatus,
             } as Tables<'assistants'>
             this.assistantStoreService.assistant.mutateEntity(updatedAssistant)
-        } catch (error: any) {
-            this.notificationService.updateError(error.message, true);
-        }
+        })
     }
 
     /**
@@ -69,7 +67,7 @@ export class AssistantService {
      * @return {Promise<void>}
      */
     public async skipTutorial(newStatus: boolean): Promise<void> {
-        try {
+        await this.wrapperService.wrapFunction(async (): Promise<void> => {
             const sessionId: string = this.sessionStoreService.sessionId() as string;
             const response: PostgrestSingleResponse<undefined> = await this.supabaseClient
             .rpc('update_skip_tutorial', {user_id: sessionId, new_status: newStatus})
@@ -79,9 +77,7 @@ export class AssistantService {
                 skip_tutorial: newStatus,
             } as Tables<'assistants'>
             this.assistantStoreService.assistant.mutateEntity(updatedAssistant)
-        } catch (error: any) {
-            this.notificationService.updateError(error.message, true);
-        }
+        })
     }
 
     /**
@@ -91,7 +87,7 @@ export class AssistantService {
      * @return {Promise<void>}
      */
     public async updateLastTutorial(last_tutorial: DatabaseModified["public"]["Enums"]["tutorial_enum"]): Promise<void> {
-        try {
+        await this.wrapperService.wrapFunction(async (): Promise<void> => {
             const sessionId: string = this.sessionStoreService.sessionId() as string;
             const response: PostgrestSingleResponse<undefined> = await this.supabaseClient
             .rpc('update_last_tutorial', {user_id: sessionId, new_status: last_tutorial})
@@ -101,8 +97,6 @@ export class AssistantService {
                 last_tutorial: last_tutorial,
             } as Tables<'assistants'>
             this.assistantStoreService.assistant.mutateEntity(updatedAssistant)
-        } catch (error: any) {
-            this.notificationService.updateError(error.message, true);
-        }
+        })
     }
 }

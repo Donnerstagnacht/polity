@@ -4,7 +4,7 @@ import {ErrorStoreService} from "./error-store.service";
 @Injectable({
     providedIn: 'root'
 })
-export class WrapperCodeServiceService {
+export class WrapperCodeService {
 
     constructor(private readonly errorStoreService: ErrorStoreService) {
     }

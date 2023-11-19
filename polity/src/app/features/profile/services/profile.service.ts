@@ -1,4 +1,4 @@
-import {Injectable, WritableSignal} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {Profile} from "../types-and-interfaces/profile";
 import {ProfileStoreService} from "./profile-store.service";
@@ -7,6 +7,7 @@ import {SessionStoreService} from "../../../core/services/session-store.service"
 import {DatabaseModified} from "../../../../../supabase/types/supabase.modified";
 import {ErrorStoreService} from "../../../shared/services/error-store.service";
 import {supabaseClient} from "../../../shared/services/supabase-client";
+import {WrapperCodeService} from "../../../shared/services/wrapper-code.service";
 
 @Injectable({
     providedIn: 'root'
@@ -17,7 +18,8 @@ export class ProfileService {
     constructor(
         private readonly profileStoreService: ProfileStoreService,
         private readonly notificationService: ErrorStoreService,
-        private readonly sessionStoreService: SessionStoreService
+        private readonly sessionStoreService: SessionStoreService,
+        private readonly wrapperCodeService: WrapperCodeService
     ) {
     }
 
@@ -27,8 +29,8 @@ export class ProfileService {
      * @param {string} id - The ID of the profile to retrieve.
      * @return {Promise<void>}
      */
-    public async selectProfile(id: string): Promise<PostgrestSingleResponse<Profile>> {
-        try {
+    public async selectProfile(id: string): Promise<void> {
+        await this.wrapperCodeService.wrapFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<Profile> = await this.supabase
             .from('profiles')
             .select(`id, username, first_name, last_name, profile_image`)
@@ -38,11 +40,7 @@ export class ProfileService {
             if (response.data) {
                 this.profileStoreService.profile.mutateEntity(response.data);
             }
-            return response;
-        } catch (error: any) {
-            this.notificationService.updateError(error.message, true);
-            return error
-        }
+        })
     }
 
     /**
@@ -54,28 +52,20 @@ export class ProfileService {
     public async updateProfile(profile: Profile): Promise<void> {
         const sessionId: string | null = this.sessionStoreService.sessionId();
 
-        try {
+        await this.wrapperCodeService.wrapFunction(async (): Promise<void> => {
             if (sessionId) {
                 const update: Profile = {
                     ...profile,
                     updated_at: new Date(),
                     id: sessionId
                 }
-                if (update.id) {
-                }
                 const databaseResponse: PostgrestSingleResponse<null> = await this.supabase.from('profiles').upsert(update)
-
                 if (databaseResponse.error) throw databaseResponse.error
-
                 this.profileStoreService.profile.mutateEntity(profile)
             } else {
                 throw new Error('no session')
             }
-        } catch (error) {
-            if (error instanceof Error) {
-                this.notificationService.updateError(error.message, true);
-            }
-        }
+        })
     }
 
     /**
@@ -85,10 +75,7 @@ export class ProfileService {
      * @return {Promise<void>}
      */
     async updateProfileImage(imageUrl: string): Promise<void> {
-        const profileToUpdate: WritableSignal<Profile | null> = this.profileStoreService.profile.selectEntity();
-        // const profileToUpdate: WritableSignal<Profile | null> = this.profileStoreService.selectProfile();
-        const id: string | null | undefined = profileToUpdate()?.id;
-
+        const id = this.profileStoreService.profile.getValueByKey('id')
         await this.supabase
         .from('profiles')
         .update({profile_image: imageUrl})

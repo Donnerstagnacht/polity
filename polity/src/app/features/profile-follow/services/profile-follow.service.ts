@@ -6,7 +6,7 @@ import {SessionStoreService} from "../../../core/services/session-store.service"
 import {DatabaseModified} from "../../../../../supabase/types/supabase.modified";
 import {Functions, Tables} from "../../../../../supabase/types/supabase.shorthand-types";
 import {supabaseClient} from "../../../shared/services/supabase-client";
-import {WrapperCodeServiceService} from "../../../shared/services/wrapper-code-service.service";
+import {WrapperCodeService} from "../../../shared/services/wrapper-code.service";
 
 @Injectable({
     providedIn: 'root'
@@ -17,7 +17,7 @@ export class ProfileFollowService {
     constructor(
         private readonly profileStatisticsStoreService: ProfileStatisticsStoreService,
         private readonly sessionStoreService: SessionStoreService,
-        private readonly wrapperCodeService: WrapperCodeServiceService
+        private readonly wrapperCodeService: WrapperCodeService
     ) {
     }
 
