@@ -3,6 +3,7 @@ import {ProfileStatistics} from "../../profile/types-and-interfaces/profile-stat
 import {ProfileFollowService} from "../services/profile-follow.service";
 import {UiStoreService} from "../../../core/services/ui-store.service";
 import {ProfileStatisticsStoreService} from "../services/profile-statistics-store.service";
+import {ProfileMin} from "../../profile/types-and-interfaces/profile";
 
 @Component({
     selector: 'polity-profile-follow-edit',
@@ -12,9 +13,10 @@ import {ProfileStatisticsStoreService} from "../services/profile-statistics-stor
 
 })
 export class ProfileFollowEditComponent {
+    protected readonly loading: WritableSignal<boolean> = signal(false);
     protected readonly columns: string[] = ['first_name', 'last_name', 'actions'];
     protected activeItemIndex: number = 0;
-    protected profileStatistics: WritableSignal<ProfileStatistics> = signal({
+    protected profileStatistics: WritableSignal<ProfileStatistics | null> = signal({
         counters: {
             follower_counter: 0,
             unread_notifications_counter: 0,
@@ -40,8 +42,8 @@ export class ProfileFollowEditComponent {
             }
         ],
         is_following: false,
-        profile_id: ''
     });
+
     protected showFollowers: boolean = true;
 
     constructor(
@@ -50,9 +52,12 @@ export class ProfileFollowEditComponent {
         private readonly profileStatisticsStoreService: ProfileStatisticsStoreService
     ) {
         this.uiStoreService.setLoading(true);
-
-        this.profileStatistics = this.profileStatisticsStoreService.selectProfileStatistics() as WritableSignal<ProfileStatistics>
+        this.loading = this.profileStatisticsStoreService.loading.selectLoading()
+        this.profileStatistics = this.profileStatisticsStoreService.profileStatistics.selectEntity()
+        // this.profileStatistics = this.profileStatisticsStoreService.selectProfileStatistics() as WritableSignal<ProfileStatistics>
+        this.profileStatisticsStoreService.loading.startLoading()
         this.profileFollowService.selectFollowersAndFollowings();
+        this.profileStatisticsStoreService.loading.stopLoading()
 
         this.uiStoreService.setLoading(false);
     }
@@ -69,15 +74,17 @@ export class ProfileFollowEditComponent {
         this.profileFollowService.manageFollowers(id, true)
         const follower: ProfileStatistics = {
             follower: this.profileStatistics()?.follower?.filter(follower => follower.id !== id)
-        };
-        this.profileStatisticsStoreService.setProfileStatistics(follower)
+        }
+        this.profileStatisticsStoreService.profileStatistics.mutateEntity(follower)
+        // this.profileStatisticsStoreService.setProfileStatistics(follower)
     }
 
     protected removeFollowing(id: string): void {
         this.profileFollowService.manageFollowers(id, false)
         const following: ProfileStatistics = {
-            following: this.profileStatistics()?.following?.filter(following => following.id !== id)
-        };
-        this.profileStatisticsStoreService.setProfileStatistics(following)
+            following: this.profileStatistics()?.following?.filter(following => following.id !== id) as ProfileMin[]
+        } as ProfileStatistics;
+        this.profileStatisticsStoreService.profileStatistics.mutateEntity(following)
+        // this.profileStatisticsStoreService.setProfileStatistics(following)
     }
 }

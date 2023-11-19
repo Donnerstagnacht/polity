@@ -25,13 +25,15 @@ export class SearchService {
      * @return {Promise<boolean>} Returns true if the search was successful.
      */
     public async searchUser(searchTerm: string): Promise<boolean> {
-        this.searchStoreService.updateProfileSearchResults(null);
+        this.searchStoreService.profilSearchResults.resetEntities()
+        // this.searchStoreService.updateProfileSearchResults(null);
         try {
             const response: PostgrestSingleResponse<any> = await this.supabaseClient.rpc(
                 'search_user',
                 {search_term: searchTerm}
             ).throwOnError()
-            this.searchStoreService.updateProfileSearchResults(response.data);
+            this.searchStoreService.profilSearchResults.mutateEntities(response.data)
+            // this.searchStoreService.updateProfileSearchResults(response.data);
             return false;
         } catch (error: any) {
             this.notificationService.updateError(error.message, true);

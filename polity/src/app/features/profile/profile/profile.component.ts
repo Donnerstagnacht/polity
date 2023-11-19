@@ -24,7 +24,8 @@ export class ProfileComponent {
         private route: ActivatedRoute,
         private readonly globalUiStateService: UiStoreService,
         private readonly profileFollowService: ProfileFollowService,
-        private readonly profileStatisticsService: ProfileStatisticsStoreService
+        private readonly profileStatisticsService: ProfileStatisticsStoreService,
+        private readonly profileStatisticsStoreService: ProfileStatisticsStoreService
     ) {
     }
 
@@ -37,15 +38,18 @@ export class ProfileComponent {
         this.checkIsOwner(urlId, sessionId)
 
         await this.profileService.selectProfile(urlId);
+        this.profileStatisticsStoreService.loading.startLoading()
         await this.profileFollowService.selectProfileStatistics(urlId);
         await this.profileFollowService.checkIfFollowing()
+        this.profileStatisticsStoreService.loading.stopLoading()
 
         this.globalUiStateService.setLoading(false);
     }
 
     ngOnDestroy(): void {
         this.profileStoreService.profile.resetEntity();
-        this.profileStatisticsService.resetProfileStatistics()
+        this.profileStatisticsService.profileStatistics.resetEntity()
+        // this.profileStatisticsService.resetProfileStatistics()
     }
 
     private checkIsOwner(urlId: string, sessionId: string | null): void {

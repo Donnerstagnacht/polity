@@ -18,13 +18,15 @@
 <div *ngIf="showFollowers">
 
 	<table
+			*ngIf="!loading()"
+			[class.tui-skeleton]="loading()"
 			[columns]="columns"
 			class="tui-table"
 			tuiTable
 	>
 		<tbody
 
-				*tuiLet="this.profileStatistics().follower! | tuiTableSort as sortedFollower"
+				*tuiLet="this.profileStatistics()?.follower! | tuiTableSort as sortedFollower"
 				[data]="sortedFollower"
 				tuiTbody
 		>
@@ -99,13 +101,15 @@
 <div *ngIf="!showFollowers">
 	<p>Following</p>
 	<table
+			*ngIf="!loading()"
+			[class.tui-skeleton]="loading()"
 			[columns]="columns"
 			class="tui-table"
 			tuiTable
 	>
 		<tbody
 
-				*tuiLet="profileStatistics().following! | tuiTableSort as sortedFollowing"
+				*tuiLet="profileStatistics()?.following! | tuiTableSort as sortedFollowing"
 				[data]="sortedFollowing"
 				tuiTbody
 		>

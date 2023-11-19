@@ -26,7 +26,8 @@ export class SearchUserComponent {
         private readonly searchStoreService: SearchStoreService,
         private readonly globalUiStateService: UiStoreService
     ) {
-        this.searchResults = this.searchStoreService.selectProfileSearchResults();
+        this.searchResults = this.searchStoreService.profilSearchResults.selectEntities();
+        // this.searchResults = this.searchStoreService.selectProfileSearchResults();
         this.searchForm.get('search')?.valueChanges.pipe(
             debounceTime(1000)).subscribe(
             () => this.onKeyUp()
@@ -34,7 +35,8 @@ export class SearchUserComponent {
     }
 
     public focused(): void {
-        this.searchStoreService.updateProfileSearchResults(null)
+        this.searchStoreService.profilSearchResults.resetEntities()
+        // this.searchStoreService.updateProfileSearchResults(null)
     };
 
     private async onKeyUp(): Promise<void> {

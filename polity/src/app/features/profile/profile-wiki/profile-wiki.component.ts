@@ -26,13 +26,16 @@ export class ProfileWikiComponent {
         this.isLoading = this.globalUiStateService.selectLoading();
         this.isOwner = this.globalUiStateService.selectIsOwner();
         this.profile = this.profileStoreService.profile.selectEntity()
-        this.keyFigure = this.profileStatisticsStoreService.selectProfileStatistics()
+        this.keyFigure = this.profileStatisticsStoreService.profileStatistics.selectEntity()
+        // this.keyFigure = this.profileStatisticsStoreService.selectProfileStatistics()
     }
 
     async toggleFollow(newIsFollowing: boolean): Promise<void> {
         if (newIsFollowing) {
+            console.log('follow')
             await this.profileFollowService.followProfile();
         } else {
+            console.log('unfollow')
             await this.profileFollowService.unFollowProfile();
         }
     }

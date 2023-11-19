@@ -39,9 +39,10 @@ export class ProfileFollowService {
             if (response.data) {
                 const updateData: ProfileStatistics = {
                     counters: response.data,
-                }
+                } as ProfileStatistics;
                 console.log(response.data)
-                this.profileStatisticsStoreService.setProfileStatistics(updateData);
+                this.profileStatisticsStoreService.profileStatistics.mutateEntity(updateData);
+                // this.profileStatisticsStoreService.setProfileStatistics(updateData);
             }
             return response;
         } catch (error: any) {
@@ -57,7 +58,8 @@ export class ProfileFollowService {
      */
     public async checkIfFollowing(): Promise<any> {
         const followerId: string = this.sessionStoreService.sessionId() as string;
-        const profile: WritableSignal<ProfileStatistics | null> = this.profileStatisticsStoreService.selectProfileStatistics()
+        const profile: WritableSignal<ProfileStatistics | null> = this.profileStatisticsStoreService.profileStatistics.selectEntity()
+        // const profile: WritableSignal<ProfileStatistics | null> = this.profileStatisticsStoreService.selectProfileStatistics()
         const followingId: string | undefined = profile()?.counters?.profile_id as string;
 
         try {
@@ -69,13 +71,22 @@ export class ProfileFollowService {
                 }
             )
             .single()
-            .throwOnError()
+            .throwOnError();
 
+            const update: ProfileStatistics = {
+                is_following: response.data as boolean,
+            } as ProfileStatistics
             if (response.data) {
-                this.profileStatisticsStoreService.mutateIsFollowing(response.data as boolean)
+                this.profileStatisticsStoreService.profileStatistics.mutateEntity(update)
+
+                // this.profileStatisticsStoreService.mutateIsFollowing(response.data as boolean)
+
+                // this.profileStatisticsStoreService.mutateIsFollowing(response.data as boolean)
                 return true
             } else {
-                this.profileStatisticsStoreService.mutateIsFollowing(response.data as boolean)
+                this.profileStatisticsStoreService.profileStatistics.mutateEntity(update)
+
+                // this.profileStatisticsStoreService.mutateIsFollowing(response.data as boolean)
                 return false
             }
         } catch (error: any) {
@@ -105,7 +116,9 @@ export class ProfileFollowService {
                 )
                 .single()
                 .throwOnError()
-                this.profileStatisticsStoreService.decrementFollowerCounter()
+                //TODO:
+                this.profileStatisticsStoreService.profileStatistics.decrementKey('follower_counter')
+                // this.profileStatisticsStoreService.decrementFollowerCounter()
             } else {
                 const response: PostgrestSingleResponse<any> = await this.supabaseClient.rpc(
                     'unfollow_transaction',
@@ -116,7 +129,9 @@ export class ProfileFollowService {
                 )
                 .single()
                 .throwOnError()
-                this.profileStatisticsStoreService.decrementFollowingCounter()
+                // TODO
+                this.profileStatisticsStoreService.profileStatistics.decrementKey('following_counter')
+                // this.profileStatisticsStoreService.decrementFollowingCounter()
             }
         } catch (error: any) {
             this.notificationService.updateError(error.message, true);
@@ -153,7 +168,8 @@ export class ProfileFollowService {
                 follower: followerResponse.data,
                 following: followingResponse.data,
             };
-            this.profileStatisticsStoreService.setProfileStatistics(followerAndFollowings)
+            this.profileStatisticsStoreService.profileStatistics.mutateEntity(followerAndFollowings)
+            // this.profileStatisticsStoreService.setProfileStatistics(followerAndFollowings)
         } catch (error: any) {
             this.notificationService.updateError(error.message, true);
             return error;
@@ -162,7 +178,9 @@ export class ProfileFollowService {
 
     public async followProfile() {
         const followerId: string = this.sessionStoreService.sessionId() as string;
-        const profile: WritableSignal<ProfileStatistics | null> = this.profileStatisticsStoreService.selectProfileStatistics()
+        const profile: WritableSignal<ProfileStatistics | null> = this.profileStatisticsStoreService.profileStatistics.selectEntity()
+
+        // const profile: WritableSignal<ProfileStatistics | null> = this.profileStatisticsStoreService.selectProfileStatistics()
         const followingId: string = profile()?.counters?.profile_id as string;
         try {
             const response: PostgrestSingleResponse<any> = await this.supabaseClient.rpc(
@@ -172,8 +190,17 @@ export class ProfileFollowService {
                     following_id: followingId
                 }
             ).throwOnError()
-            this.profileStatisticsStoreService.mutateIsFollowing(true)
-            this.profileStatisticsStoreService.incrementFollowerCounter()
+            const update: ProfileStatistics = {
+                is_following: true,
+            } as ProfileStatistics
+            this.profileStatisticsStoreService.profileStatistics.mutateEntity(update)
+            // this.profileStatisticsStoreService.mutateIsFollowing(true)
+            //TODO
+            console.log('update', update)
+            console.log('before increment')
+            this.profileStatisticsStoreService.profileStatistics.incrementKey('follower_counter')
+            // this.profileStatisticsStoreService.profileStatistics.incrementNumberProperty('counter.follower')
+            // this.profileStatisticsStoreService.incrementFollowerCounter()
             return response
         } catch (error: any) {
             this.notificationService.updateError(error.message, true);
@@ -183,7 +210,9 @@ export class ProfileFollowService {
 
     public async unFollowProfile() {
         const followerId: string = this.sessionStoreService.sessionId() as string;
-        const profile: WritableSignal<ProfileStatistics | null> = this.profileStatisticsStoreService.selectProfileStatistics()
+        const profile: WritableSignal<ProfileStatistics | null> = this.profileStatisticsStoreService.profileStatistics.selectEntity()
+
+        // const profile: WritableSignal<ProfileStatistics | null> = this.profileStatisticsStoreService.selectProfileStatistics()
         const followingId: string = profile()?.counters?.profile_id as string;
 
         try {
@@ -194,8 +223,19 @@ export class ProfileFollowService {
                     following_id: followingId
                 }
             ).throwOnError()
-            this.profileStatisticsStoreService.mutateIsFollowing(false)
-            this.profileStatisticsStoreService.decrementFollowerCounter()
+
+            const update: ProfileStatistics = {
+                is_following: false,
+            } as ProfileStatistics
+            console.log('update', update)
+            // TODO: uncomment this line
+            this.profileStatisticsStoreService.profileStatistics.mutateEntity(update)
+
+            // this.profileStatisticsStoreService.mutateIsFollowing(false)
+            console.log('before decrement')
+
+            this.profileStatisticsStoreService.profileStatistics.decrementKey('follower_counter')
+            // this.profileStatisticsStoreService.decrementFollowerCounter()
             return response
         } catch (error: any) {
             this.notificationService.updateError(error.message, true);

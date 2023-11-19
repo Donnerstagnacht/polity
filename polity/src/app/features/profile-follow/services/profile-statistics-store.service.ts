@@ -1,24 +1,34 @@
-import {Injectable, signal, WritableSignal} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {ProfileStatistics} from "../../profile/types-and-interfaces/profile-statistics";
+import {EntityStoreService} from "../../../core/services/entity-store.service";
+import {LoadingStoreService} from "../../../core/services/loading-store.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProfileStatisticsStoreService {
-    private profileStatistics: WritableSignal<ProfileStatistics | null> = signal({
-        counters: {
-            follower_counter: 0,
-            following_counter: 0,
-            profile_id: '',
-            unread_notifications_counter: 0
-        },
-        // follower_counter: 0,
-        // following_counter: 0,
-        follower: [],
-        following: [],
-        is_following: false,
-        profile_id: ''
-    });
+    public profileStatistics: EntityStoreService<ProfileStatistics>;
+    public loading: LoadingStoreService;
+    // private profileStatistics: WritableSignal<ProfileStatistics | null> = signal({
+    //     counters: {
+    //         follower_counter: 0,
+    //         following_counter: 0,
+    //         profile_id: '',
+    //         unread_notifications_counter: 0
+    //     },
+    //     // follower_counter: 0,
+    //     // following_counter: 0,
+    //     follower: [],
+    //     following: [],
+    //     is_following: false,
+    //     profile_id: ''
+    // });
+
+    constructor() {
+        this.profileStatistics = new EntityStoreService<ProfileStatistics>();
+        this.loading = new LoadingStoreService();
+    }
+
 
     // private profileStatistc: WritableSignal<{
     //     counters: Tables<'profiles_counters'>
@@ -29,9 +39,9 @@ export class ProfileStatisticsStoreService {
      *
      * @return WritableSignal<ProfileStatistics>.
      */
-    public selectProfileStatistics(): WritableSignal<ProfileStatistics | null> {
-        return this.profileStatistics;
-    }
+    // public selectProfileStatistics(): WritableSignal<ProfileStatistics | null> {
+    //     return this.profileStatistics;
+    // }
 
     /**
      * Sets the profile statistics with the provided statistics.
@@ -40,23 +50,23 @@ export class ProfileStatisticsStoreService {
      * statistics will be cleared.
      * @return {void}
      */
-    public setProfileStatistics(profileStatistics: ProfileStatistics | null): void {
-        // TODO: Understanding why this works
-        const mergeUpdatesWithStoreData: ProfileStatistics = {
-            ...this.profileStatistics(),
-            ...profileStatistics
-        } as ProfileStatistics
-        this.profileStatistics.set(mergeUpdatesWithStoreData);
-    }
+    // public setProfileStatistics(profileStatistics: ProfileStatistics | null): void {
+    //     // TODO: Understanding why this works
+    //     const mergeUpdatesWithStoreData: ProfileStatistics = {
+    //         ...this.profileStatistics(),
+    //         ...profileStatistics
+    //     } as ProfileStatistics
+    //     this.profileStatistics.set(mergeUpdatesWithStoreData);
+    // }
 
     /**
      * Resets the profile statistics state.
      *
      * @return {void}
      */
-    public resetProfileStatistics(): void {
-        this.profileStatistics.set(null);
-    }
+    // public resetProfileStatistics(): void {
+    //     this.profileStatistics.set(null);
+    // }
 
     /**
      * Mutates the 'isFollowing' status of a profile.
@@ -65,52 +75,52 @@ export class ProfileStatisticsStoreService {
      * the displayed user.
      * @return {void}
      */
-    public mutateIsFollowing(isFollowing: boolean | null): void {
-        this.profileStatistics.mutate(
-            (profileStatistics: ProfileStatistics | null): void => {
-                if (profileStatistics) {
-                    profileStatistics.is_following = isFollowing as boolean;
-                }
-            }
-        )
-    }
+    // public mutateIsFollowing(isFollowing: boolean | null): void {
+    //     this.profileStatistics.mutate(
+    //         (profileStatistics: ProfileStatistics | null): void => {
+    //             if (profileStatistics) {
+    //                 profileStatistics.is_following = isFollowing as boolean;
+    //             }
+    //         }
+    //     )
+    // }
 
     /**
      * Increments the follower counter by 1.
      */
-    public incrementFollowerCounter(): void {
-        this.profileStatistics.mutate(
-            (profileStatistics: ProfileStatistics | null): void => {
-                if (profileStatistics?.counters?.following_counter) {
-                    profileStatistics.counters.follower_counter!++;
-                }
-            }
-        )
-    }
+    // public incrementFollowerCounter(): void {
+    //     this.profileStatistics.mutate(
+    //         (profileStatistics: ProfileStatistics | null): void => {
+    //             if (profileStatistics?.counters?.following_counter) {
+    //                 profileStatistics.counters.follower_counter!++;
+    //             }
+    //         }
+    //     )
+    // }
 
     /**
      * Decrements the follower counter by 1.
      */
-    public decrementFollowerCounter(): void {
-        this.profileStatistics.mutate(
-            (profileStatistics: ProfileStatistics | null): void => {
-                if (profileStatistics?.counters?.following_counter) {
-                    profileStatistics.counters.follower_counter!--;
-                }
-            }
-        )
-    }
-
-    /**
-     * Increments the following counter by 1.
-     */
-    public decrementFollowingCounter(): void {
-        this.profileStatistics.mutate(
-            (profileStatistics: ProfileStatistics | null): void => {
-                if (profileStatistics?.counters?.following_counter) {
-                    profileStatistics.counters.following_counter--;
-                }
-            }
-        )
-    }
+    // public decrementFollowerCounter(): void {
+    //     this.profileStatistics.mutate(
+    //         (profileStatistics: ProfileStatistics | null): void => {
+    //             if (profileStatistics?.counters?.following_counter) {
+    //                 profileStatistics.counters.follower_counter!--;
+    //             }
+    //         }
+    //     )
+    // }
+    //
+    // /**
+    //  * Increments the following counter by 1.
+    //  */
+    // public decrementFollowingCounter(): void {
+    //     this.profileStatistics.mutate(
+    //         (profileStatistics: ProfileStatistics | null): void => {
+    //             if (profileStatistics?.counters?.following_counter) {
+    //                 profileStatistics.counters.following_counter--;
+    //             }
+    //         }
+    //     )
+    // }
 }
