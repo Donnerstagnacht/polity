@@ -57,7 +57,7 @@ export class NotificationComponent {
     constructor(
         private readonly notificationStoreService: NotificationsStoreService
     ) {
-        this.loading = this.notificationStoreService.loading.selectLoading()
+        this.loading = this.notificationStoreService.notifications.loading.selectLoading()
         // const notifications = this.notificationStoreService.selectNotifications()
         // // WritableSignal<Tables<'notifications_by_user'>[]>;
         // console.log(notifications())

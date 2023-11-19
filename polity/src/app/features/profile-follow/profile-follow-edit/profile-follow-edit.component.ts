@@ -52,12 +52,12 @@ export class ProfileFollowEditComponent {
         private readonly profileStatisticsStoreService: ProfileStatisticsStoreService
     ) {
         this.uiStoreService.setLoading(true);
-        this.loading = this.profileStatisticsStoreService.loading.selectLoading()
+        this.loading = this.profileStatisticsStoreService.profileStatistics.loading.selectLoading()
         this.profileStatistics = this.profileStatisticsStoreService.profileStatistics.selectEntity()
         // this.profileStatistics = this.profileStatisticsStoreService.selectProfileStatistics() as WritableSignal<ProfileStatistics>
-        this.profileStatisticsStoreService.loading.startLoading()
+        this.profileStatisticsStoreService.profileStatistics.loading.startLoading()
         this.profileFollowService.selectFollowersAndFollowings();
-        this.profileStatisticsStoreService.loading.stopLoading()
+        this.profileStatisticsStoreService.profileStatistics.loading.stopLoading()
 
         this.uiStoreService.setLoading(false);
     }

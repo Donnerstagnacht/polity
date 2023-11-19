@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {DatabaseModified} from "../../../../../supabase/types/supabase.modified";
-import {supabaseClient} from "../../../core/services/supabase-client";
-import {ErrorStoreService} from "../../../core/services/error-store.service";
 import {Tables} from "../../../../../supabase/types/supabase.shorthand-types";
 import {SessionStoreService} from "../../../core/services/session-store.service";
 import {AssistantStoreService} from "./assistant-store.service";
+import {supabaseClient} from "../../../shared/services/supabase-client";
+import {ErrorStoreService} from "../../../shared/services/error-store.service";
 
 @Injectable({
     providedIn: 'root'
@@ -32,8 +32,9 @@ export class AssistantService {
             .rpc('select_assistant', {user_id: userId})
             .single()
             .throwOnError();
-
-            this.assistantStoreService.mutateAssistant(response.data);
+            if (response.data) {
+                this.assistantStoreService.assistant.mutateEntity(response.data);
+            }
         } catch (error: any) {
             this.notificationService.updateError(error.message, true);
         }
@@ -55,7 +56,7 @@ export class AssistantService {
             const updatedAssistant: Tables<'assistants'> = {
                 first_sign_in: newStatus,
             } as Tables<'assistants'>
-            this.assistantStoreService.mutateAssistant(updatedAssistant)
+            this.assistantStoreService.assistant.mutateEntity(updatedAssistant)
         } catch (error: any) {
             this.notificationService.updateError(error.message, true);
         }
@@ -77,7 +78,7 @@ export class AssistantService {
             const updatedAssistant: Tables<'assistants'> = {
                 skip_tutorial: newStatus,
             } as Tables<'assistants'>
-            this.assistantStoreService.mutateAssistant(updatedAssistant)
+            this.assistantStoreService.assistant.mutateEntity(updatedAssistant)
         } catch (error: any) {
             this.notificationService.updateError(error.message, true);
         }
@@ -99,7 +100,7 @@ export class AssistantService {
             const updatedAssistant: Tables<'assistants'> = {
                 last_tutorial: last_tutorial,
             } as Tables<'assistants'>
-            this.assistantStoreService.mutateAssistant(updatedAssistant)
+            this.assistantStoreService.assistant.mutateEntity(updatedAssistant)
         } catch (error: any) {
             this.notificationService.updateError(error.message, true);
         }

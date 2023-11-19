@@ -44,7 +44,7 @@ export class AssisstantIconComponent {
         @Inject(Injector) private readonly injector: Injector,
         private readonly assistantStoreService: AssistantStoreService
     ) {
-        this.assistant = this.assistantStoreService.selectAssistant()
+        this.assistant = this.assistantStoreService.assistant.selectEntity()
 
         effect((): void => {
             if (this.assistant()?.last_tutorial === 'welcome') {

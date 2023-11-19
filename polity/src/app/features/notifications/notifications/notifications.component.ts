@@ -18,10 +18,10 @@ export class NotificationsComponent {
     }
 
     async ngOnInit(): Promise<void> {
-        this.notificationsStoreService.loading.startLoading()
+        this.notificationsStoreService.notifications.loading.startLoading()
         console.log('started')
         await this.notificationsService.selectNotifications()
-        this.notificationsStoreService.loading.stopLoading()
+        this.notificationsStoreService.notifications.loading.stopLoading()
         console.log('finished')
     }
 

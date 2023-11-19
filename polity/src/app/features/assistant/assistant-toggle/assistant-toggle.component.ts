@@ -21,7 +21,7 @@ export class AssistantToggleComponent {
         private readonly assistantService: AssistantService,
         private readonly assistantStoreService: AssistantStoreService
     ) {
-        this.assistant = this.assistantStoreService.selectAssistant()
+        this.assistant = this.assistantStoreService.assistant.selectEntity()
 
         effect((): void => {
             this.toggleAssistantForm.patchValue({

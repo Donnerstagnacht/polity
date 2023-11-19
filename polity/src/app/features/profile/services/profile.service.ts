@@ -2,11 +2,11 @@ import {Injectable, WritableSignal} from '@angular/core';
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {Profile} from "../types-and-interfaces/profile";
 import {ProfileStoreService} from "./profile-store.service";
-import {ErrorStoreService} from "../../../core/services/error-store.service";
 import {TuiFileLike} from "@taiga-ui/kit";
 import {SessionStoreService} from "../../../core/services/session-store.service";
-import {supabaseClient} from "../../../core/services/supabase-client";
 import {DatabaseModified} from "../../../../../supabase/types/supabase.modified";
+import {ErrorStoreService} from "../../../shared/services/error-store.service";
+import {supabaseClient} from "../../../shared/services/supabase-client";
 
 @Injectable({
     providedIn: 'root'

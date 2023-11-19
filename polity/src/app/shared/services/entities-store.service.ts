@@ -1,12 +1,15 @@
 import {Injectable, signal, WritableSignal} from '@angular/core';
+import {LoadingStoreService} from "./loading-store.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class EntitiesStoreService<T> {
+    public loading: LoadingStoreService;
     private entities: WritableSignal<T[]> = signal([]);
 
     constructor() {
+        this.loading = new LoadingStoreService();
     }
 
     selectEntities(): WritableSignal<T[]> {

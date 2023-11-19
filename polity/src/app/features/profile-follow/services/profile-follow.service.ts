@@ -1,12 +1,12 @@
-import {Injectable, WritableSignal} from '@angular/core';
-import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
+import {Injectable} from '@angular/core';
+import {PostgrestError, PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {ProfileStatisticsStoreService} from "./profile-statistics-store.service";
 import {ProfileStatistics} from "../../profile/types-and-interfaces/profile-statistics";
-import {ErrorStoreService} from "../../../core/services/error-store.service";
 import {SessionStoreService} from "../../../core/services/session-store.service";
-import {supabaseClient} from "../../../core/services/supabase-client";
 import {DatabaseModified} from "../../../../../supabase/types/supabase.modified";
-import {Tables} from "../../../../../supabase/types/supabase.shorthand-types";
+import {Functions, Tables} from "../../../../../supabase/types/supabase.shorthand-types";
+import {supabaseClient} from "../../../shared/services/supabase-client";
+import {WrapperCodeServiceService} from "../../../shared/services/wrapper-code-service.service";
 
 @Injectable({
     providedIn: 'root'
@@ -16,8 +16,8 @@ export class ProfileFollowService {
 
     constructor(
         private readonly profileStatisticsStoreService: ProfileStatisticsStoreService,
-        private readonly notificationService: ErrorStoreService,
-        private readonly sessionStoreService: SessionStoreService
+        private readonly sessionStoreService: SessionStoreService,
+        private readonly wrapperCodeService: WrapperCodeServiceService
     ) {
     }
 
@@ -27,8 +27,8 @@ export class ProfileFollowService {
      * @param {string} userId - The ID of the user.
      * @return {Promise<any>} A promise that resolves with the profile statistics.
      */
-    public async selectProfileStatistics(userId: string): Promise<any> {
-        try {
+    public async selectProfileStatistics(userId: string): Promise<void> {
+        await this.wrapperCodeService.wrapFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<Tables<'profiles_counters'>> = await this.supabaseClient.rpc(
                 'select_following_counter',
                 {user_id: userId}
@@ -40,15 +40,9 @@ export class ProfileFollowService {
                 const updateData: ProfileStatistics = {
                     counters: response.data,
                 } as ProfileStatistics;
-                console.log(response.data)
                 this.profileStatisticsStoreService.profileStatistics.mutateEntity(updateData);
-                // this.profileStatisticsStoreService.setProfileStatistics(updateData);
             }
-            return response;
-        } catch (error: any) {
-            this.notificationService.updateError(error.message, true);
-            return error;
-        }
+        })
     }
 
     /**
@@ -56,14 +50,12 @@ export class ProfileFollowService {
      *
      * @return {Promise<any>} A promise that resolves to a boolean indicating whether the user is following the profile or not.
      */
-    public async checkIfFollowing(): Promise<any> {
+    public async checkIfFollowing(): Promise<void> {
         const followerId: string = this.sessionStoreService.sessionId() as string;
-        const profile: WritableSignal<ProfileStatistics | null> = this.profileStatisticsStoreService.profileStatistics.selectEntity()
-        // const profile: WritableSignal<ProfileStatistics | null> = this.profileStatisticsStoreService.selectProfileStatistics()
-        const followingId: string | undefined = profile()?.counters?.profile_id as string;
+        const followingId = this.profileStatisticsStoreService.profileStatistics.getValueByKey('counters.profile_id');
 
-        try {
-            const response: PostgrestSingleResponse<boolean | unknown> = await this.supabaseClient.rpc(
+        await this.wrapperCodeService.wrapFunction(async (): Promise<void> => {
+            const response: PostgrestSingleResponse<boolean | PostgrestError> = await this.supabaseClient.rpc(
                 'check_if_following',
                 {
                     follower_id: followerId,
@@ -76,23 +68,8 @@ export class ProfileFollowService {
             const update: ProfileStatistics = {
                 is_following: response.data as boolean,
             } as ProfileStatistics
-            if (response.data) {
-                this.profileStatisticsStoreService.profileStatistics.mutateEntity(update)
-
-                // this.profileStatisticsStoreService.mutateIsFollowing(response.data as boolean)
-
-                // this.profileStatisticsStoreService.mutateIsFollowing(response.data as boolean)
-                return true
-            } else {
-                this.profileStatisticsStoreService.profileStatistics.mutateEntity(update)
-
-                // this.profileStatisticsStoreService.mutateIsFollowing(response.data as boolean)
-                return false
-            }
-        } catch (error: any) {
-            this.notificationService.updateError(error.message, true);
-            return error;
-        }
+            this.profileStatisticsStoreService.profileStatistics.mutateEntity(update)
+        })
     }
 
     /**
@@ -103,11 +80,11 @@ export class ProfileFollowService {
      * @returns {Promise<any>}
      */
     public async manageFollowers(userId: string, removeFollower: boolean): Promise<any> {
-        const loggedInUserId = this.sessionStoreService.sessionId() as string;
+        const loggedInUserId: string = this.sessionStoreService.sessionId() as string;
 
-        try {
+        this.wrapperCodeService.wrapFunction(async (): Promise<void> => {
             if (removeFollower) {
-                const response: PostgrestSingleResponse<any> = await this.supabaseClient.rpc(
+                const response: PostgrestSingleResponse<void | PostgrestError> = await this.supabaseClient.rpc(
                     'unfollow_transaction',
                     {
                         follower_id: userId,
@@ -116,11 +93,9 @@ export class ProfileFollowService {
                 )
                 .single()
                 .throwOnError()
-                //TODO:
                 this.profileStatisticsStoreService.profileStatistics.decrementKey('follower_counter')
-                // this.profileStatisticsStoreService.decrementFollowerCounter()
             } else {
-                const response: PostgrestSingleResponse<any> = await this.supabaseClient.rpc(
+                const response: PostgrestSingleResponse<void | PostgrestError> = await this.supabaseClient.rpc(
                     'unfollow_transaction',
                     {
                         follower_id: loggedInUserId,
@@ -129,14 +104,10 @@ export class ProfileFollowService {
                 )
                 .single()
                 .throwOnError()
-                // TODO
+
                 this.profileStatisticsStoreService.profileStatistics.decrementKey('following_counter')
-                // this.profileStatisticsStoreService.decrementFollowingCounter()
             }
-        } catch (error: any) {
-            this.notificationService.updateError(error.message, true);
-            return error;
-        }
+        })
     }
 
     /**
@@ -147,8 +118,8 @@ export class ProfileFollowService {
     public async selectFollowersAndFollowings(): Promise<any> {
         const loggedInUserId: string = this.sessionStoreService.sessionId() as string;
 
-        try {
-            const followerResponse: PostgrestSingleResponse<any> = await this.supabaseClient.rpc(
+        await this.wrapperCodeService.wrapFunction(async (): Promise<void> => {
+            const followerResponse: PostgrestSingleResponse<Functions<'select_follower_of_user'>> = await this.supabaseClient.rpc(
                 'select_follower_of_user',
                 {
                     following_id: loggedInUserId
@@ -156,7 +127,7 @@ export class ProfileFollowService {
             )
             .throwOnError()
 
-            const followingResponse: PostgrestSingleResponse<any> = await this.supabaseClient.rpc(
+            const followingResponse: PostgrestSingleResponse<Functions<'select_following_of_user'>> = await this.supabaseClient.rpc(
                 'select_following_of_user',
                 {
                     follower_id: loggedInUserId
@@ -169,54 +140,35 @@ export class ProfileFollowService {
                 following: followingResponse.data,
             };
             this.profileStatisticsStoreService.profileStatistics.mutateEntity(followerAndFollowings)
-            // this.profileStatisticsStoreService.setProfileStatistics(followerAndFollowings)
-        } catch (error: any) {
-            this.notificationService.updateError(error.message, true);
-            return error;
-        }
+        })
+
     }
 
     public async followProfile() {
         const followerId: string = this.sessionStoreService.sessionId() as string;
-        const profile: WritableSignal<ProfileStatistics | null> = this.profileStatisticsStoreService.profileStatistics.selectEntity()
-
-        // const profile: WritableSignal<ProfileStatistics | null> = this.profileStatisticsStoreService.selectProfileStatistics()
-        const followingId: string = profile()?.counters?.profile_id as string;
-        try {
-            const response: PostgrestSingleResponse<any> = await this.supabaseClient.rpc(
+        const followingId: string = this.profileStatisticsStoreService.profileStatistics.getValueByKey('counters.profile_id');
+        await this.wrapperCodeService.wrapFunction(async (): Promise<void> => {
+            const response: PostgrestSingleResponse<Functions<'follow_transaction'>> = await this.supabaseClient.rpc(
                 'follow_transaction',
                 {
                     follower_id: followerId,
                     following_id: followingId
                 }
             ).throwOnError()
+
             const update: ProfileStatistics = {
                 is_following: true,
             } as ProfileStatistics
             this.profileStatisticsStoreService.profileStatistics.mutateEntity(update)
-            // this.profileStatisticsStoreService.mutateIsFollowing(true)
-            //TODO
-            console.log('update', update)
-            console.log('before increment')
             this.profileStatisticsStoreService.profileStatistics.incrementKey('follower_counter')
-            // this.profileStatisticsStoreService.profileStatistics.incrementNumberProperty('counter.follower')
-            // this.profileStatisticsStoreService.incrementFollowerCounter()
-            return response
-        } catch (error: any) {
-            this.notificationService.updateError(error.message, true);
-            return error;
-        }
+        })
     }
 
     public async unFollowProfile() {
         const followerId: string = this.sessionStoreService.sessionId() as string;
-        const profile: WritableSignal<ProfileStatistics | null> = this.profileStatisticsStoreService.profileStatistics.selectEntity()
-
-        // const profile: WritableSignal<ProfileStatistics | null> = this.profileStatisticsStoreService.selectProfileStatistics()
-        const followingId: string = profile()?.counters?.profile_id as string;
-
-        try {
-            const response: PostgrestSingleResponse<any> = await this.supabaseClient.rpc(
+        const followingId: string = this.profileStatisticsStoreService.profileStatistics.getValueByKey('counters.profile_id');
+        await this.wrapperCodeService.wrapFunction(async (): Promise<void> => {
+            const response: PostgrestSingleResponse<Functions<'unfollow_transaction'>> = await this.supabaseClient.rpc(
                 'unfollow_transaction',
                 {
                     follower_id: followerId,
@@ -227,19 +179,8 @@ export class ProfileFollowService {
             const update: ProfileStatistics = {
                 is_following: false,
             } as ProfileStatistics
-            console.log('update', update)
-            // TODO: uncomment this line
             this.profileStatisticsStoreService.profileStatistics.mutateEntity(update)
-
-            // this.profileStatisticsStoreService.mutateIsFollowing(false)
-            console.log('before decrement')
-
             this.profileStatisticsStoreService.profileStatistics.decrementKey('follower_counter')
-            // this.profileStatisticsStoreService.decrementFollowerCounter()
-            return response
-        } catch (error: any) {
-            this.notificationService.updateError(error.message, true);
-            return error;
-        }
+        })
     }
 }

@@ -38,10 +38,10 @@ export class ProfileComponent {
         this.checkIsOwner(urlId, sessionId)
 
         await this.profileService.selectProfile(urlId);
-        this.profileStatisticsStoreService.loading.startLoading()
+        this.profileStatisticsStoreService.profileStatistics.loading.startLoading()
         await this.profileFollowService.selectProfileStatistics(urlId);
         await this.profileFollowService.checkIfFollowing()
-        this.profileStatisticsStoreService.loading.stopLoading()
+        this.profileStatisticsStoreService.profileStatistics.loading.stopLoading()
 
         this.globalUiStateService.setLoading(false);
     }

@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {DatabaseModified} from "../../../../../supabase/types/supabase.modified";
-import {supabaseClient} from "../../../core/services/supabase-client";
 import {SessionStoreService} from "../../../core/services/session-store.service";
 import {NotificationsStoreService} from "./notifications-store.service";
-import {ErrorStoreService} from "../../../core/services/error-store.service";
 import {Tables} from "../../../../../supabase/types/supabase.shorthand-types";
+import {ErrorStoreService} from "../../../shared/services/error-store.service";
+import {supabaseClient} from "../../../shared/services/supabase-client";
 
 @Injectable({
     providedIn: 'root'

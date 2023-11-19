@@ -10,11 +10,11 @@ import {
     SupabaseClient
 } from "@supabase/supabase-js";
 import {UiStoreService} from "./ui-store.service";
-import {ErrorStoreService} from "./error-store.service";
 import {SessionStoreService} from "./session-store.service";
 import {Router} from "@angular/router";
-import {supabaseClient} from "./supabase-client";
 import {DatabaseModified} from "../../../../supabase/types/supabase.modified";
+import {ErrorStoreService} from "../../shared/services/error-store.service";
+import {supabaseClient} from "../../shared/services/supabase-client";
 
 @Injectable({
     providedIn: 'root'

@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
-import {ErrorStoreService} from "../../../core/services/error-store.service";
 import {SearchStoreService} from "./search-store.service";
-import {supabaseClient} from "../../../core/services/supabase-client";
 import {DatabaseModified} from "../../../../../supabase/types/supabase.modified";
+import {supabaseClient} from "../../../shared/services/supabase-client";
+import {ErrorStoreService} from "../../../shared/services/error-store.service";
 
 @Injectable({
     providedIn: 'root'
