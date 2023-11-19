@@ -27,10 +27,12 @@ export class HomeComponent {
     }
 
     ngOnInit(): void {
-        this.profile = this.profileStoreService.selectProfile();
+        this.profile = this.profileStoreService.profile.selectEntity()
+        // this.profile = this.profileStoreService.selectProfile();
     }
 
     onDestroy(): void {
-        this.profileStoreService.resetProfile();
+        this.profileStoreService.profile.resetEntity()
+        // this.profileStoreService.resetProfile();
     }
 }

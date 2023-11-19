@@ -44,7 +44,8 @@ export class ProfileComponent {
     }
 
     ngOnDestroy(): void {
-        this.profileStoreService.resetProfile();
+        this.profileStoreService.profile.resetEntity();
+        // this.profileStoreService.resetProfile();
         this.profileStatisticsService.resetProfileStatistics()
     }
 

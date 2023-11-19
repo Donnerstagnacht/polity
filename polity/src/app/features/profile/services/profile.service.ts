@@ -35,7 +35,10 @@ export class ProfileService {
             .eq('id', id)
             .single()
             .throwOnError();
-            this.profileStoreService.setProfile(response.data);
+            if (response.data) {
+                this.profileStoreService.profile.mutateEntity(response.data);
+            }
+            // this.profileStoreService.setProfile(response.data);
             return response;
         } catch (error: any) {
             this.notificationService.updateError(error.message, true);
@@ -64,7 +67,9 @@ export class ProfileService {
                 const databaseResponse: PostgrestSingleResponse<null> = await this.supabase.from('profiles').upsert(update)
 
                 if (databaseResponse.error) throw databaseResponse.error
-                this.profileStoreService.setProfile(profile);
+
+                this.profileStoreService.profile.mutateEntity(profile)
+                // this.profileStoreService.setProfile(profile);
             } else {
                 throw new Error('no session')
             }
@@ -82,7 +87,8 @@ export class ProfileService {
      * @return {Promise<void>}
      */
     async updateProfileImage(imageUrl: string): Promise<void> {
-        const profileToUpdate: WritableSignal<Profile | null> = this.profileStoreService.selectProfile();
+        const profileToUpdate: WritableSignal<Profile | null> = this.profileStoreService.profile.selectEntity();
+        // const profileToUpdate: WritableSignal<Profile | null> = this.profileStoreService.selectProfile();
         const id: string | null | undefined = profileToUpdate()?.id;
 
         await this.supabase

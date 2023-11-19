@@ -27,7 +27,9 @@ export class ProfileImageUploadComponent {
         private readonly profileService: ProfileService,
         private readonly UIStoreService: UiStoreService
     ) {
-        this.profileWriteable = this.profileStoreService.selectProfile()
+        this.profileWriteable = this.profileStoreService.profile.selectEntity()
+
+        // this.profileWriteable = this.profileStoreService.selectProfile()
     }
 
     protected makeRequest(file: TuiFileLike): Observable<TuiFileLike | null> {
@@ -46,7 +48,13 @@ export class ProfileImageUploadComponent {
                 } = this.profileService.getPublicBucket(response.data.path)
                 this.avatarUrl = publicBucket.data.publicUrl;
                 this.profileService.updateProfileImage(this.avatarUrl).then((): void => {
-                    this.profileStoreService.mutateProfileImageURL(this.avatarUrl)
+                    //TODO double check
+                    const profile = {
+                        profile_image: this.avatarUrl
+                    } as Profile
+                    this.profileStoreService.profile.mutateEntity(profile)
+
+                    // this.profileStoreService.mutateProfileImageURL(this.avatarUrl)
                 })
             }
             return file;

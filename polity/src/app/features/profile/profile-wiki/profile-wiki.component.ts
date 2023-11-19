@@ -25,7 +25,8 @@ export class ProfileWikiComponent {
     ) {
         this.isLoading = this.globalUiStateService.selectLoading();
         this.isOwner = this.globalUiStateService.selectIsOwner();
-        this.profile = this.profileStoreService.selectProfile()
+        this.profile = this.profileStoreService.profile.selectEntity()
+        // this.profile = this.profileStoreService.selectProfile()
         this.keyFigure = this.profileStatisticsStoreService.selectProfileStatistics()
     }
 

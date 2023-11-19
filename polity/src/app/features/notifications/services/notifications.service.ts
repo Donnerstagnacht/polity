@@ -13,7 +13,6 @@ import {Tables} from "../../../../../supabase/types/supabase.shorthand-types";
 export class NotificationsService {
     private readonly supabaseClient: SupabaseClient<DatabaseModified> = supabaseClient;
 
-
     constructor(
         private readonly sessionStoreService: SessionStoreService,
         private readonly notificationStoreService: NotificationsStoreService,
@@ -24,13 +23,16 @@ export class NotificationsService {
     public async selectNotifications(): Promise<void> {
         try {
             const sessionId: string = this.sessionStoreService.sessionId() as string;
+            console.log(sessionId)
             const response: PostgrestSingleResponse<Tables<'notifications_by_user'>[]> = await this.supabaseClient
             .rpc('select_notifications_of_users', {user_id: sessionId})
             .throwOnError()
 
-            console.log('data', response.data)
-
-            this.notificationStoreService.mutateNotifications(response.data);
+            console.log('data', Array.isArray(response.data), response.data)
+            if (response.data) {
+                // this.notificationStoreService.mutateNotifications(response.data);
+                this.notificationStoreService.notifications.mutateEntities(response.data);
+            }
         } catch (error: any) {
             this.errorStoreService.updateError(error.message, true);
         }

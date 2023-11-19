@@ -1,74 +1,78 @@
+<div *ngIf="notificationsSignal()[0]?.id">
+    <div *ngFor="let notification of notifications">
+        <p>{{notification.id}} {{notification.read_by_receiver}}</p>
+    </div>
+</div>
+
+<button (click)="toggleBoolean()">Toggle</button>
+<p *ngIf="loading()">show if loading = false</p>
 <table
+    [class.tui-skeleton]="loading()"
     [columns]="columns"
     class="tui-table"
     tuiTable
+
 >
     <tbody
 
-        *tuiLet="notifications()! | tuiTableSort as sortedNotifications"
+        *tuiLet="notifications | tuiTableSort as sortedNotifications"
         [data]="sortedNotifications"
         tuiTbody
+
     >
     <tr class="tui-table__tr tui-table__tr_border_none"
         tuiThGroup>
         <th
-            *tuiHead="'fist_name'"
+            *tuiHead="'profile_image'"
             class="tui-table__th"
             tuiTh
         >
             Vorname
         </th>
         <th
-            *tuiHead="'last_name'"
+            *tuiHead="'name'"
             class="tui-table__th"
             tuiTh
         >
-            Nachname
+            Vorname
         </th>
         <th
-            *tuiHead="'actions'"
-            [sorter]="null"
+            *tuiHead="'time'"
             class="tui-table__th"
             tuiTh
-        ></th>
+        >
+            Time
+        </th>
     </tr>
     <tr
-        *ngFor="let follower of sortedNotifications; let index = index"
+        *ngFor="let notification of sortedNotifications; let index = index"
         class="tui-table__tr tui-table__tr_border_none"
         tuiTr
     >
         <td
-            *tuiCell="'first_name'"
-            [attr.data-cy]="'follower-first-name'"
+            *tuiCell="'profile_image'"
+            [attr.data-cy]="'notification-profile-image'"
             class="tui-table__td"
             tuiTd
+
         >
-            <!--            {{  }}-->
+            {{ notification.id }}
         </td>
         <td
-            *tuiCell="'last_name'"
-            [attr.data-cy]="'follower-last-name'"
+            *tuiCell="'name'"
+            [attr.data-cy]="'notification-name'"
             class="tui-table__td"
             tuiTd
         >
-            <!--            {{  }}-->
+            {{ notification.id }} {{notification.sender  }}
         </td>
         <td
-            *tuiCell="'actions'"
+            *tuiCell="'time'"
+            [attr.data-cy]="'notification-time'"
             class="tui-table__td"
             tuiTd
         >
-            <button
-                [attr.data-cy]="'follower-remove'"
-                appearance="flat"
-                class="remove"
-                icon="tuiIconTrash"
-                shape="rounded"
-                size="s"
-                title="Remove"
-                tuiIconButton
-                type="button"
-            ></button>
+            {{notification.sender  }}
         </td>
     </tr>
     </tbody>

@@ -1,31 +1,54 @@
-import {Injectable, signal, WritableSignal} from '@angular/core';
-import {SessionStoreService} from "../../../core/services/session-store.service";
+import {Injectable} from '@angular/core';
 import {Tables} from "../../../../../supabase/types/supabase.shorthand-types";
+import {LoadingStoreService} from "../../../core/services/loading-store.service";
+import {EntitiesStoreService} from "../../../core/services/entities-store.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class NotificationsStoreService {
-    private notifications: WritableSignal<Tables<'notifications_by_user'>[] | null> = signal(null);
+    public loading: LoadingStoreService;
+    public notifications: EntitiesStoreService<Tables<'notifications_by_user'>>;
+    // private notifications: WritableSignal<Tables<'notifications_by_user'>[]> = signal([]);
 
-    constructor(
-        private readonly sessionStoreService: SessionStoreService
-    ) {
+    // private readonly loading: WritableSignal<boolean> = signal(true);
+
+    constructor() {
+        this.loading = new LoadingStoreService();
+        this.notifications = new EntitiesStoreService<Tables<'notifications_by_user'>>();
     }
 
-    public selectNotifications(): WritableSignal<Tables<'notifications_by_user'>[] | null> {
-        return this.notifications;
-    }
+    // public selectNotifications(): WritableSignal<Tables<'notifications_by_user'>[]> {
+    //     return this.notifications;
+    // }
+    //
+    // public resetNotifications(): void {
+    //     this.notifications.set([])
+    // }
 
-    public resetNotifications(): void {
-        this.notifications.set(null)
-    }
+    // public mutateNotifications(notifications: Tables<'notifications_by_user'>[]): void {
+    //     // const mergeUpdatesWithStoreData: Tables<'notifications_by_user'>[] = {
+    //     //     ...this.notifications(),
+    //     //     ...notifications
+    //     // } as Tables<'notifications_by_user'>[]
+    //     console.log('object here?', Array.isArray(notifications), notifications)
+    //     const mergeUpdatesWithStoreData: Tables<'notifications_by_user'>[] = [
+    //         ...this.notifications(),
+    //         ...notifications
+    //     ]
+    //     console.log('array here?', Array.isArray(mergeUpdatesWithStoreData), mergeUpdatesWithStoreData)
+    //     this.notifications.set(mergeUpdatesWithStoreData);
+    // }
 
-    public mutateNotifications(notifications: Tables<'notifications_by_user'>[] | null): void {
-        const mergeUpdatesWithStoreData: Tables<'notifications_by_user'>[] = {
-            ...this.notifications(),
-            ...notifications
-        } as Tables<'notifications_by_user'>[]
-        this.notifications.set(mergeUpdatesWithStoreData);
-    }
+    // selectLoading(): WritableSignal<boolean> {
+    //     return this.loading;
+    // }
+    //
+    // startLoading(): void {
+    //     this.loading.set(true);
+    // }
+    //
+    // stopLoading(): void {
+    //     this.loading.set(false);
+    // }
 }
