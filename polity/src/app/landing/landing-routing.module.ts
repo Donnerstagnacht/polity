@@ -27,5 +27,5 @@ const routes: Routes = [
         RouterModule
     ]
 })
-export class CoreRoutingModule {
+export class LandingRoutingModule {
 }

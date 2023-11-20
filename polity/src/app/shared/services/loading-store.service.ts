@@ -4,12 +4,12 @@ import {Injectable, signal, WritableSignal} from '@angular/core';
     providedIn: 'root'
 })
 export class LoadingStoreService {
-    private loading: WritableSignal<boolean> = signal(false);
+    private loading: WritableSignal<boolean> = signal(true);
 
     constructor() {
     }
 
-    public selectLoading(): WritableSignal<boolean> {
+    public getLoading(): WritableSignal<boolean> {
         return this.loading;
     }
 

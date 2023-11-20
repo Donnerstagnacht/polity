@@ -15,21 +15,10 @@ export class KeyFigureList {
             profile_id: '',
             unread_notifications_counter: 0
         },
-        // follower_counter: 0,
-        // following_counter: 0,
         follower: [],
         following: [],
         is_following: false,
         profile_id: ''
     });
-
-    ngOnInit() {
-        console.log('init');
-        console.log(this.keyFigureList());
-    }
-
-    ngCha() {
-        console.log('on change detection');
-        console.log(this.keyFigureList());
-    }
+    @Input() isLoading: WritableSignal<boolean> = signal(true);
 }

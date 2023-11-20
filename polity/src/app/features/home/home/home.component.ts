@@ -1,6 +1,5 @@
 import {Component, signal, WritableSignal} from '@angular/core';
 import {SessionStoreService} from "../../../core/services/session-store.service";
-import {UiStoreService} from "../../../core/services/ui-store.service";
 import {Profile} from "../../profile/types-and-interfaces/profile";
 import {ProfileService} from "../../profile/services/profile.service";
 import {ProfileStoreService} from "../../profile/services/profile-store.service";
@@ -13,21 +12,20 @@ import {ProfileStoreService} from "../../profile/services/profile-store.service"
 export class HomeComponent {
     protected sessionId: string | null;
     protected profile: WritableSignal<Profile | null> = signal(null)
+    protected isProfileLoading: WritableSignal<boolean> = signal(true)
 
     constructor(
         private readonly sessionStoreService: SessionStoreService,
-        private readonly UIStoreService: UiStoreService,
         private readonly profileService: ProfileService,
         private readonly profileStoreService: ProfileStoreService
     ) {
-        this.UIStoreService.setLoading(true);
-        this.sessionId = this.sessionStoreService.sessionId();
-        this.profileService.selectProfile(this.sessionId as string)
-        this.UIStoreService.setLoading(false)
+        this.isProfileLoading = this.profileStoreService.profile.loading.getLoading();
+        this.sessionId = this.sessionStoreService.getSessionId();
     }
 
-    ngOnInit(): void {
-        this.profile = this.profileStoreService.profile.selectEntity()
+    async ngOnInit(): Promise<void> {
+        await this.profileService.selectProfile(this.sessionId as string)
+        this.profile = this.profileStoreService.profile.getEntity()
     }
 
     onDestroy(): void {

@@ -57,7 +57,7 @@ export class NotificationComponent {
     constructor(
         private readonly notificationStoreService: NotificationsStoreService
     ) {
-        this.loading = this.notificationStoreService.notifications.loading.selectLoading()
+        this.loading = this.notificationStoreService.notifications.loading.getLoading()
         // const notifications = this.notificationStoreService.selectNotifications()
         // // WritableSignal<Tables<'notifications_by_user'>[]>;
         // console.log(notifications())
@@ -89,7 +89,7 @@ export class NotificationComponent {
 
     toggleBoolean(): void {
         // this.notificationsSignal = this.notificationStoreService.selectNotifications();
-        this.notificationsSignal = this.notificationStoreService.notifications.selectEntities();
+        this.notificationsSignal = this.notificationStoreService.notifications.getEntities();
 
         this.notifications = this.notificationsSignal()
         console.log('after update', this.notifications)

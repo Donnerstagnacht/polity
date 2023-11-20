@@ -1,10 +1,17 @@
 <div class="center-grid">
-	<div class="polity-center tui-space_right-4 tui-space_left-4">
+	<div
+			[class.tui-skeleton]="isLoading()"
+			class="polity-center tui-space_right-4 tui-space_left-4">
 		<p [attr.data-cy]="'followerCounter'"
+		   [class.tui-skeleton]="isLoading()"
 		   class="tui-text_h6">{{this.keyFigureList()?.counters?.follower_counter | number}}</p>
-		<h5 class="tui-text_body-m">Follower</h5>
+		<h5
+				[class.tui-skeleton]="isLoading()"
+				class="tui-text_body-m">Follower</h5>
 	</div>
-	<div class="polity-center tui-space_right-4 tui-space_left-4">
+	<div
+			[class.tui-skeleton]="isLoading()"
+			class="polity-center tui-space_right-4 tui-space_left-4">
 		<p [attr.data-cy]="'followingCounter'"
 		   class="tui-text_h6">{{this.keyFigureList()?.counters?.following_counter | number}}</p>
 		<h5 class="tui-text_body-m">Following</h5>

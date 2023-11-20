@@ -12,7 +12,7 @@ export class EntitiesStoreService<T> {
         this.loading = new LoadingStoreService();
     }
 
-    selectEntities(): WritableSignal<T[]> {
+    getEntities(): WritableSignal<T[]> {
         return this.entities;
     }
 

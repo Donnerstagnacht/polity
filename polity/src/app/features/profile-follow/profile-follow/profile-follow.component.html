@@ -1,7 +1,8 @@
 <button
 		(click)="toggleFollow()"
-		*ngIf="!isOwner && !isLoading()"
+		*ngIf="!isOwner"
 		[attr.data-cy]="'followProfileButton'"
+		[class.tui-skeleton]="isLoading()"
 		class="tui-form__button"
 		size="l"
 		tuiButton

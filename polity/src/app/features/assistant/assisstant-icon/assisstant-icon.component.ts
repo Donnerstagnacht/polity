@@ -13,6 +13,7 @@ import {Tutorial} from "../types-and-interfaces/tutorial";
     styleUrls: ['./assisstant-icon.component.less']
 })
 export class AssisstantIconComponent {
+    protected isAssistantLoading: WritableSignal<boolean> = signal(true)
     private assistant: WritableSignal<Tables<'assistants'> | null> = signal(null)
     private tutorials: Tutorial[] = [
         {
@@ -36,7 +37,6 @@ export class AssisstantIconComponent {
             dataCy: 'assistant-follow-dialog',
         }
     ]
-
     protected activatedTutorial: Tutorial = this.tutorials[0]
 
     constructor(
@@ -44,7 +44,8 @@ export class AssisstantIconComponent {
         @Inject(Injector) private readonly injector: Injector,
         private readonly assistantStoreService: AssistantStoreService
     ) {
-        this.assistant = this.assistantStoreService.assistant.selectEntity()
+        this.isAssistantLoading = this.assistantStoreService.assistant.loading.getLoading();
+        this.assistant = this.assistantStoreService.assistant.getEntity()
 
         effect((): void => {
             if (this.assistant()?.last_tutorial === 'welcome') {

@@ -14,7 +14,7 @@ export class LinkCardComponent {
      * @Input sessionId - string |null.
      */
     @Input() public sessionId: string | null = null;
-
+    @Input() public isLoading: WritableSignal<boolean> = signal(true);
     @Input() public profile: WritableSignal<
         Profile | null | undefined
     > = signal(

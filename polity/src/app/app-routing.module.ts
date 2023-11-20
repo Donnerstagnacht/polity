@@ -11,7 +11,7 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                loadChildren: () => import('./core/core.module').then(m => m.CoreModule)
+                loadChildren: () => import('./landing/landing.module').then(m => m.LandingModule)
             }
         ]
     },

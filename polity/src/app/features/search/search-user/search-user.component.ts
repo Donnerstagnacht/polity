@@ -4,7 +4,6 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {SearchService} from "../services/search.service";
 import {SearchStoreService} from "../services/search-store.service";
 import {debounceTime} from "rxjs";
-import {UiStoreService} from "../../../core/services/ui-store.service";
 
 @Component({
     selector: 'polity-search-user',
@@ -12,6 +11,7 @@ import {UiStoreService} from "../../../core/services/ui-store.service";
     styleUrls: ['./search-user.component.less']
 })
 export class SearchUserComponent {
+    loading: WritableSignal<boolean> = signal(false);
     protected searchResults: WritableSignal<Profile[] | null> = signal([]);
     protected searchForm: FormGroup<{
         search: FormControl<string | null>
@@ -24,9 +24,9 @@ export class SearchUserComponent {
     constructor(
         private readonly searchService: SearchService,
         private readonly searchStoreService: SearchStoreService,
-        private readonly globalUiStateService: UiStoreService
     ) {
-        this.searchResults = this.searchStoreService.profilSearchResults.selectEntities();
+        this.loading = this.searchStoreService.profilSearchResults.loading.getLoading()
+        this.searchResults = this.searchStoreService.profilSearchResults.getEntities();
         // this.searchResults = this.searchStoreService.selectProfileSearchResults();
         this.searchForm.get('search')?.valueChanges.pipe(
             debounceTime(1000)).subscribe(
@@ -40,7 +40,7 @@ export class SearchUserComponent {
     };
 
     private async onKeyUp(): Promise<void> {
-        this.globalUiStateService.setLoading(true)
+        this.searchStoreService.profilSearchResults.loading.startLoading()
         let searchTerm: string | null = this.searchForm.controls.search.value
         if (searchTerm) {
             if (searchTerm.endsWith(' ')) {
@@ -49,7 +49,7 @@ export class SearchUserComponent {
             searchTerm = searchTerm.replace(/ /g, '|')
 
             await this.searchService.searchUser(searchTerm);
-            this.globalUiStateService.setLoading(false)
+            this.searchStoreService.profilSearchResults.loading.stopLoading()
         }
     }
 }

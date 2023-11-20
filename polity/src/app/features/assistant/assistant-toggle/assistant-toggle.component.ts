@@ -10,6 +10,7 @@ import {Tables} from "../../../../../supabase/types/supabase.shorthand-types";
     styleUrls: ['./assistant-toggle.component.less']
 })
 export class AssistantToggleComponent {
+    isAssistantLoading: WritableSignal<boolean> = signal(true);
     protected toggleAssistantForm: FormGroup<{
         showAssistant: FormControl<boolean | null>
     }> = new FormGroup({
@@ -21,7 +22,8 @@ export class AssistantToggleComponent {
         private readonly assistantService: AssistantService,
         private readonly assistantStoreService: AssistantStoreService
     ) {
-        this.assistant = this.assistantStoreService.assistant.selectEntity()
+        this.assistant = this.assistantStoreService.assistant.getEntity()
+        this.isAssistantLoading = this.assistantStoreService.assistant.loading.getLoading()
 
         effect((): void => {
             this.toggleAssistantForm.patchValue({

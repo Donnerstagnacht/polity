@@ -29,6 +29,7 @@ export class AssistantService {
      * @return {Promise<void>}
      */
     public async selectAssistant(userId: string): Promise<void> {
+        this.assistantStoreService.assistant.loading.startLoading();
         await this.wrapperService.wrapFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<Tables<'assistants'>> = await this.supabaseClient
             .rpc('select_assistant', {user_id: userId})
@@ -38,6 +39,7 @@ export class AssistantService {
                 this.assistantStoreService.assistant.mutateEntity(response.data);
             }
         })
+        this.assistantStoreService.assistant.loading.stopLoading()
     }
 
     /**
@@ -48,7 +50,7 @@ export class AssistantService {
      */
     public async updateFirstSignIn(newStatus: boolean): Promise<void> {
         await this.wrapperService.wrapFunction(async (): Promise<void> => {
-            const sessionId: string = this.sessionStoreService.sessionId() as string;
+            const sessionId: string = this.sessionStoreService.getSessionId() as string;
             const response: PostgrestSingleResponse<undefined> = await this.supabaseClient
             .rpc('update_first_sign_in', {user_id: sessionId, new_status: newStatus})
             .throwOnError()
@@ -68,7 +70,7 @@ export class AssistantService {
      */
     public async skipTutorial(newStatus: boolean): Promise<void> {
         await this.wrapperService.wrapFunction(async (): Promise<void> => {
-            const sessionId: string = this.sessionStoreService.sessionId() as string;
+            const sessionId: string = this.sessionStoreService.getSessionId() as string;
             const response: PostgrestSingleResponse<undefined> = await this.supabaseClient
             .rpc('update_skip_tutorial', {user_id: sessionId, new_status: newStatus})
             .throwOnError()
@@ -88,7 +90,7 @@ export class AssistantService {
      */
     public async updateLastTutorial(last_tutorial: DatabaseModified["public"]["Enums"]["tutorial_enum"]): Promise<void> {
         await this.wrapperService.wrapFunction(async (): Promise<void> => {
-            const sessionId: string = this.sessionStoreService.sessionId() as string;
+            const sessionId: string = this.sessionStoreService.getSessionId() as string;
             const response: PostgrestSingleResponse<undefined> = await this.supabaseClient
             .rpc('update_last_tutorial', {user_id: sessionId, new_status: last_tutorial})
             .throwOnError()

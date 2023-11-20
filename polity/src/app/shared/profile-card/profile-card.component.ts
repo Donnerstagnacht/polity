@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, signal, WritableSignal} from '@angular/core';
 import {Profile} from "../../features/profile/types-and-interfaces/profile";
 import {Router} from "@angular/router";
 
@@ -14,6 +14,7 @@ export class ProfileCardComponent {
      * @Input profile: Profile | null.
      */
     @Input() public profile: Profile | null = null;
+    @Input() public isLoading: WritableSignal<boolean> = signal(true);
 
     constructor(private readonly router: Router) {
     }

@@ -31,6 +31,7 @@ export class ProfileService {
      */
     public async selectProfile(id: string): Promise<void> {
         await this.wrapperCodeService.wrapFunction(async (): Promise<void> => {
+            this.profileStoreService.profile.loading.startLoading();
             const response: PostgrestSingleResponse<Profile> = await this.supabase
             .from('profiles')
             .select(`id, username, first_name, last_name, profile_image`)
@@ -40,6 +41,7 @@ export class ProfileService {
             if (response.data) {
                 this.profileStoreService.profile.mutateEntity(response.data);
             }
+            this.profileStoreService.profile.loading.stopLoading();
         })
     }
 
@@ -50,7 +52,7 @@ export class ProfileService {
      * @return {Promise<void>}
      */
     public async updateProfile(profile: Profile): Promise<void> {
-        const sessionId: string | null = this.sessionStoreService.sessionId();
+        const sessionId: string | null = this.sessionStoreService.getSessionId();
 
         await this.wrapperCodeService.wrapFunction(async (): Promise<void> => {
             if (sessionId) {

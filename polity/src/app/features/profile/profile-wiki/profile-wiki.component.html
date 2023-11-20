@@ -1,19 +1,24 @@
 <div class="polity-center">
 	<h1
 			[attr.data-cy]="'first-name'"
+			[class.tui-skeleton]="isProfileLoading()"
 			class="tui-text_h1"
 	>
 		{{profile()?.first_name}} {{profile()?.last_name}}
 	</h1>
 
-	<polity-key-figure [keyFigureList]="keyFigure"></polity-key-figure>
+	<polity-key-figure
+			[isLoading]="isProfileStatisticsLoading"
+			[keyFigureList]="keyFigure">
+	</polity-key-figure>
 
-	<div class="tui-space_bottom-4"
+	<div
+			class="tui-space_bottom-4"
 	>
 		<polity-profile-follow
 				(toggledFollowing)="toggleFollow($event)"
 				[isFollowing]="keyFigure()?.is_following"
-				[isLoading]="this.isLoading"
+				[isLoading]="this.isFollowingCheckLoading"
 				[isOwner]="isOwner()"
 		></polity-profile-follow>
 
@@ -22,6 +27,7 @@
 
 	<img
 			[attr.data-cy]="'profileImage'"
+			[class.tui-skeleton]="isProfileLoading()"
 			alt="Italian Trulli"
 			class="tui-"
 			src="{{profile()?.profile_image}}"

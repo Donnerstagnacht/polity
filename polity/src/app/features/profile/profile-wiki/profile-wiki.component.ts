@@ -1,7 +1,6 @@
 import {Component, signal, Signal, WritableSignal} from '@angular/core';
 import {Profile} from "../types-and-interfaces/profile";
 import {ProfileStoreService} from "../services/profile-store.service";
-import {UiStoreService} from "../../../core/services/ui-store.service";
 import {ProfileStatisticsStoreService} from "../../profile-follow/services/profile-statistics-store.service";
 import {ProfileStatistics} from "../types-and-interfaces/profile-statistics";
 import {ProfileFollowService} from "../../profile-follow/services/profile-follow.service";
@@ -12,30 +11,31 @@ import {ProfileFollowService} from "../../profile-follow/services/profile-follow
     styleUrls: ['./profile-wiki.component.less']
 })
 export class ProfileWikiComponent {
-    protected isLoading: WritableSignal<boolean> = signal(true);
+    protected isProfileLoading: WritableSignal<boolean> = signal(true);
+    protected isProfileStatisticsLoading: WritableSignal<boolean> = signal(true);
+    protected isFollowingCheckLoading: WritableSignal<boolean> = signal(true);
     protected profile: Signal<Profile | null>;
-    protected keyFigure: WritableSignal<ProfileStatistics | null>;
+    protected keyFigure: WritableSignal<ProfileStatistics | null> = signal(null);
     protected isOwner: Signal<boolean>;
 
     constructor(
         private readonly profileStoreService: ProfileStoreService,
-        private readonly globalUiStateService: UiStoreService,
         private readonly profileStatisticsStoreService: ProfileStatisticsStoreService,
         private readonly profileFollowService: ProfileFollowService
     ) {
-        this.isLoading = this.globalUiStateService.selectLoading();
-        this.isOwner = this.globalUiStateService.selectIsOwner();
-        this.profile = this.profileStoreService.profile.selectEntity()
-        this.keyFigure = this.profileStatisticsStoreService.profileStatistics.selectEntity()
-        // this.keyFigure = this.profileStatisticsStoreService.selectProfileStatistics()
+        this.isFollowingCheckLoading = this.profileFollowService.loadingCheckFollowing.getLoading()
+        this.isProfileLoading = this.profileStoreService.profile.loading.getLoading()
+        this.isProfileStatisticsLoading = this.profileStatisticsStoreService.profileStatistics.loading.getLoading()
+
+        this.keyFigure = this.profileStatisticsStoreService.profileStatistics.getEntity()
+        this.profile = this.profileStoreService.profile.getEntity()
+        this.isOwner = this.profileStoreService.selectOwner()
     }
 
     async toggleFollow(newIsFollowing: boolean): Promise<void> {
         if (newIsFollowing) {
-            console.log('follow')
             await this.profileFollowService.followProfile();
         } else {
-            console.log('unfollow')
             await this.profileFollowService.unFollowProfile();
         }
     }

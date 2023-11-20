@@ -1,6 +1,19 @@
 import {Injectable, signal, WritableSignal} from '@angular/core';
 import {LoadingStoreService} from "./loading-store.service";
 
+// type NestedKeyOf<T, K = keyof T> = K extends keyof T & (string | number)
+//     ? `${K}` | (T[K] extends object ? `${K}.${NestedKeyOf<T[K]>}` : never)
+//     : never
+
+// type NestedKeyOf<ObjectType extends object> =
+//     {
+//         [Key in keyof ObjectType & (string | number)]: ObjectType[Key] extends object
+//         ? `${Key}` | `${Key}.${NestedKeyOf<ObjectType[Key]>}`
+//         : `${Key}`
+//     }[keyof ObjectType & (string | number)];
+
+// ATTENTION: Type support only for non nested objects
+// couldnt solve the type support for returned nested supabase types e.g. see GeneratedDatabase
 @Injectable({
     providedIn: 'root'
 })
@@ -12,7 +25,7 @@ export class EntityStoreService<T> {
         this.loading = new LoadingStoreService();
     }
 
-    public selectEntity(): WritableSignal<T | null> {
+    public getEntity(): WritableSignal<T | null> {
         return this.entity;
     }
 
@@ -35,7 +48,6 @@ export class EntityStoreService<T> {
     }
 
     public decrementKey(key: keyof T | string): void {
-        console.log('key', key);
         if (this.entity()) {
             this.decrementKeyRecursive(this.entity(), key);
         }
@@ -46,8 +58,17 @@ export class EntityStoreService<T> {
         return this.getValueRecursive(this.entity(), keyAsString.split('.'));
     }
 
+    private getValueRecursive(obj: T | any, keys: string[]): any {
+        const currentKey = keys.shift();
+
+        if (obj && currentKey !== undefined) {
+            return this.getValueRecursive(obj[currentKey], keys);
+        }
+
+        return obj;
+    }
+
     private incrementKeyRecursive(obj: any, key: keyof T | string): void {
-        console.log('increment1');
         if (obj && typeof obj === 'object') {
             for (const prop in obj) {
                 if (obj.hasOwnProperty(prop)) {
@@ -62,7 +83,6 @@ export class EntityStoreService<T> {
     }
 
     private decrementKeyRecursive(obj: any, key: keyof T | string): void {
-        console.log('decrement1');
         if (obj && typeof obj === 'object') {
             for (const prop in obj) {
                 if (obj.hasOwnProperty(prop)) {
@@ -74,16 +94,6 @@ export class EntityStoreService<T> {
                 }
             }
         }
-    }
-
-    private getValueRecursive(obj: any, keys: string[]): any {
-        const currentKey = keys.shift();
-
-        if (obj && currentKey) {
-            return this.getValueRecursive(obj[currentKey], keys);
-        }
-
-        return obj;
     }
 
 }

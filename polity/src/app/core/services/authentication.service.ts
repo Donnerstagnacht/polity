@@ -9,7 +9,6 @@ import {
     Subscription,
     SupabaseClient
 } from "@supabase/supabase-js";
-import {UiStoreService} from "./ui-store.service";
 import {SessionStoreService} from "./session-store.service";
 import {Router} from "@angular/router";
 import {DatabaseModified} from "../../../../supabase/types/supabase.modified";
@@ -23,7 +22,6 @@ export class AuthenticationService {
     private readonly supabaseClient: SupabaseClient<DatabaseModified> = supabaseClient;
 
     constructor(
-        private readonly UIStoreService: UiStoreService,
         private readonly notificationService: ErrorStoreService,
         private readonly sessionStoreService: SessionStoreService,
         private readonly router: Router
@@ -50,7 +48,7 @@ export class AuthenticationService {
      */
     public async signUp(credentials: SignInWithPasswordCredentials): Promise<AuthResponse | Error | unknown> {
         try {
-            this.UIStoreService.setLoading(true)
+            this.sessionStoreService.loading.startLoading()
             const authResponse: AuthResponse = await this.supabaseClient.auth.signUp(credentials);
             if (authResponse.error) {
                 throw authResponse.error
@@ -63,7 +61,7 @@ export class AuthenticationService {
             }
             return error
         } finally {
-            this.UIStoreService.setLoading(false)
+            this.sessionStoreService.loading.stopLoading()
         }
     }
 
@@ -76,7 +74,7 @@ export class AuthenticationService {
      */
     public async signIn(credentials: SignInWithPasswordCredentials): Promise<AuthTokenResponse | Error | unknown> {
         try {
-            this.UIStoreService.setLoading(true)
+            this.sessionStoreService.loading.startLoading()
             const authResponse: AuthTokenResponse = await this.supabaseClient.auth.signInWithPassword(credentials);
 
             if (authResponse.error) {
@@ -92,7 +90,7 @@ export class AuthenticationService {
             }
             return error
         } finally {
-            this.UIStoreService.setLoading(false)
+            this.sessionStoreService.loading.stopLoading()
         }
     }
 
@@ -104,7 +102,7 @@ export class AuthenticationService {
      */
     public async signOut(): Promise<{ error: AuthError | null } | unknown> {
         try {
-            this.UIStoreService.setLoading(true)
+            this.sessionStoreService.loading.startLoading()
             const authResponse: { error: AuthError | null } = await this.supabaseClient.auth.signOut();
             if (authResponse.error) {
                 throw authResponse.error;
@@ -117,7 +115,7 @@ export class AuthenticationService {
             }
             return error
         } finally {
-            this.UIStoreService.setLoading(false)
+            this.sessionStoreService.loading.stopLoading()
         }
     }
 }

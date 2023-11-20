@@ -22,7 +22,7 @@ export class NotificationsService {
 
     public async selectNotifications(): Promise<void> {
         await this.wrapperCodeService.wrapFunction(async (): Promise<void> => {
-            const sessionId: string = this.sessionStoreService.sessionId() as string;
+            const sessionId: string = this.sessionStoreService.getSessionId() as string;
             const response: PostgrestSingleResponse<Tables<'notifications_by_user'>[]> = await this.supabaseClient
             .rpc('select_notifications_of_users', {user_id: sessionId})
             .throwOnError()
@@ -38,7 +38,7 @@ export class NotificationsService {
         type_of_notification: DatabaseModified["public"]["Enums"]["notifications_enum"]
     ): Promise<void> {
         await this.wrapperCodeService.wrapFunction(async (): Promise<void> => {
-            const sessionId: string = this.sessionStoreService.sessionId() as string;
+            const sessionId: string = this.sessionStoreService.getSessionId() as string;
             const response: PostgrestSingleResponse<undefined> = await this.supabaseClient
             .rpc('create_notification_from_user_transaction', {
                 sender: sessionId,
@@ -52,7 +52,7 @@ export class NotificationsService {
 
     public async resetNotificationCounter(): Promise<void> {
         await this.wrapperCodeService.wrapFunction(async (): Promise<void> => {
-            const sessionId: string = this.sessionStoreService.sessionId() as string;
+            const sessionId: string = this.sessionStoreService.getSessionId() as string;
             const response: PostgrestSingleResponse<Tables<'notifications_by_user'>> = await this.supabaseClient
             .rpc('reset_notification_counter', {user_id: sessionId})
             .single()
@@ -62,7 +62,7 @@ export class NotificationsService {
 
     public async updateReceiveFollowNotificationStatus(): Promise<void> {
         await this.wrapperCodeService.wrapFunction(async (): Promise<void> => {
-            const sessionId: string = this.sessionStoreService.sessionId() as string;
+            const sessionId: string = this.sessionStoreService.getSessionId() as string;
             const response: PostgrestSingleResponse<Tables<'notifications_by_user'>> = await this.supabaseClient
             .rpc('update_receive_notifications_from_follow', {
                 user_id: sessionId,
