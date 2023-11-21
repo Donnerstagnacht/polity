@@ -4,7 +4,9 @@ import {NotificationsComponent} from './notifications/notifications.component';
 import {NotificationComponent} from './notification/notification.component';
 import {TuiButtonModule} from "@taiga-ui/core";
 import {TuiLetModule} from "@taiga-ui/cdk";
-import {TuiTableModule} from "@taiga-ui/addon-table";
+import {TuiTableFiltersModule, TuiTableModule} from "@taiga-ui/addon-table";
+import {TuiAvatarModule, TuiInputModule, TuiTagModule} from "@taiga-ui/kit";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -16,7 +18,12 @@ import {TuiTableModule} from "@taiga-ui/addon-table";
         CommonModule,
         TuiButtonModule,
         TuiLetModule,
-        TuiTableModule
+        TuiTableModule,
+        TuiAvatarModule,
+        TuiTagModule,
+        ReactiveFormsModule,
+        TuiInputModule,
+        TuiTableFiltersModule
     ],
     exports: []
 })

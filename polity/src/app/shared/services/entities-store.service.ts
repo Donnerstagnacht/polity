@@ -4,7 +4,7 @@ import {LoadingStoreService} from "./loading-store.service";
 @Injectable({
     providedIn: 'root'
 })
-export class EntitiesStoreService<T> {
+export class EntitiesStoreService<T extends T[]> {
     public loading: LoadingStoreService;
     private entities: WritableSignal<T[]> = signal([]);
 
@@ -12,15 +12,15 @@ export class EntitiesStoreService<T> {
         this.loading = new LoadingStoreService();
     }
 
-    getEntities(): WritableSignal<T[]> {
-        return this.entities;
+    getEntities(): WritableSignal<T> {
+        return this.entities as WritableSignal<T>;
     }
 
     resetEntities(): void {
         this.entities.set([]);
     }
 
-    mutateEntities(entities: T[]): void {
+    mutateEntities(entities: T): void {
         const mergeUpdatesWithStoreData: T[] = [
             ...this.entities(),
             ...entities

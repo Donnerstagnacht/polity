@@ -71,8 +71,8 @@ export class ProfileService {
      * @return {Promise<void>}
      */
     async updateProfileImage(imageUrl: string): Promise<void> {
+        const id = this.profileStoreService.profile.getValueByKey('id')
         this.profileStoreService.profile.wrapUpdateFunction(async (): Promise<void> => {
-            const id = this.profileStoreService.profile.getValueByKey('id')
             await this.supabase
             .from('profiles')
             .update({profile_image: imageUrl})

@@ -192,15 +192,25 @@ export interface Database {
         }
         Returns: boolean
       }
-      create_notification_from_user_transaction: {
-        Args: {
-          sender: string
-          receiver: string
-          type_of_notification: string
-          read_by_receiver: boolean
-        }
-        Returns: undefined
-      }
+      create_notification_from_user_transaction:
+        | {
+            Args: {
+              sender: string
+              receiver: string
+              type_of_notification: Database["public"]["Enums"]["notifications_enum"]
+              read_by_receiver: boolean
+            }
+            Returns: undefined
+          }
+        | {
+            Args: {
+              sender: string
+              receiver: string
+              type_of_notification: string
+              read_by_receiver: boolean
+            }
+            Returns: undefined
+          }
       follow_transaction: {
         Args: {
           follower_id: string
@@ -276,12 +286,25 @@ export interface Database {
           user_id: string
         }
         Returns: {
-          id: string
-          sender: string
-          receiver: string
           type_of_notification: Database["public"]["Enums"]["notifications_enum"]
           read_by_receiver: boolean
           created_at: string
+          first_name: string
+          last_name: string
+          profile_image: string
+        }[]
+      }
+      select_notifications_of_users2: {
+        Args: {
+          user_id: string
+        }
+        Returns: {
+          created_at: string
+          id: string
+          read_by_receiver: boolean
+          receiver: string
+          sender: string
+          type_of_notification: Database["public"]["Enums"]["notifications_enum"]
         }[]
       }
       unfollow_transaction: {

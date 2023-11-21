@@ -6,7 +6,7 @@ import {ErrorStoreService} from "./error-store.service";
 @Injectable({
     providedIn: 'root'
 })
-export class EntitiesWrapperStoreService<T> extends EntitiesStoreService<T> {
+export class EntitiesWrapperStoreService<T extends any[]> extends EntitiesStoreService<T> {
     private readonly tuiAlertService: TuiAlertService = inject(TuiAlertService);
     private readonly errorStoreService: ErrorStoreService = inject(ErrorStoreService);
 

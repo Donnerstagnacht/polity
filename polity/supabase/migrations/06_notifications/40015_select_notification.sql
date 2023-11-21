@@ -4,16 +4,32 @@ DROP FUNCTION IF EXISTS public.select_notifications_of_users(
 CREATE OR REPLACE FUNCTION public.select_notifications_of_users(
     user_id uuid
 )
-    RETURNS setof public.notifications_by_user
+    RETURNS table (
+	    type_of_notification notifications_enum,
+	    read_by_receiver     boolean,
+	    created_at           timestamp WITH TIME ZONE
+	    first_name           text,
+	    last_name            text,
+	    profile_image        text
+    )
     LANGUAGE plpgsql
     SECURITY INVOKER
 AS
 $$
 BEGIN
     RETURN QUERY (
-        SELECT *
+        SELECT
+	        notifications_by_user.type_of_notification,
+	        notifications_by_user.read_by_receiver,
+	        notifications_by_user.created_at,
+	        profiles.first_name,
+	        profiles.last_name,
+	        profiles.profile_image
         FROM
             public.notifications_by_user
+        JOIN public.profiles
+		On public.profiles.id = public.notifications_by_user.sender
+
         WHERE
             receiver = user_id
     );

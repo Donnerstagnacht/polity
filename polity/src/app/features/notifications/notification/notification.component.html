@@ -1,79 +1,100 @@
-<div *ngIf="notificationsSignal()[0]?.id">
-    <div *ngFor="let notification of notifications">
-        <p>{{notification.id}} {{notification.read_by_receiver}}</p>
-    </div>
-</div>
-
-<button (click)="toggleBoolean()">Toggle</button>
-<p *ngIf="loading()">show if loading = false</p>
+<form [formGroup]="filterForm">
+	<tui-input
+			[tuiGenericFilter]="filter"
+			formControlName="notifications"
+	>
+		Minimal balance
+	</tui-input>
+</form>
 <table
-    [class.tui-skeleton]="loading()"
-    [columns]="columns"
-    class="tui-table"
-    tuiTable
+		[class.tui-skeleton]="isNotificationsLoading()"
+		[columns]="columns"
+		class="tui-table"
+		tuiTable
 
 >
-    <tbody
+	<tbody
 
-        *tuiLet="notifications | tuiTableSort as sortedNotifications"
-        [data]="sortedNotifications"
-        tuiTbody
+			*tuiLet="notificationsStatic() | tuiTableSort as sortedNotifications"
+			[data]="sortedNotifications"
+			tuiTbody
 
-    >
-    <tr class="tui-table__tr tui-table__tr_border_none"
-        tuiThGroup>
-        <th
-            *tuiHead="'profile_image'"
-            class="tui-table__th"
-            tuiTh
-        >
-            Vorname
-        </th>
-        <th
-            *tuiHead="'name'"
-            class="tui-table__th"
-            tuiTh
-        >
-            Vorname
-        </th>
-        <th
-            *tuiHead="'time'"
-            class="tui-table__th"
-            tuiTh
-        >
-            Time
-        </th>
-    </tr>
-    <tr
-        *ngFor="let notification of sortedNotifications; let index = index"
-        class="tui-table__tr tui-table__tr_border_none"
-        tuiTr
-    >
-        <td
-            *tuiCell="'profile_image'"
-            [attr.data-cy]="'notification-profile-image'"
-            class="tui-table__td"
-            tuiTd
+	>
+	<tr class="tui-table__tr tui-table__tr_border_none"
+	    tuiThGroup>
+		<th
+				*tuiHead="'profile_image'"
+				class="tui-table__th"
+				tuiTh
+		>
 
-        >
-            {{ notification.id }}
-        </td>
-        <td
-            *tuiCell="'name'"
-            [attr.data-cy]="'notification-name'"
-            class="tui-table__td"
-            tuiTd
-        >
-            {{ notification.id }} {{notification.sender  }}
-        </td>
-        <td
-            *tuiCell="'time'"
-            [attr.data-cy]="'notification-time'"
-            class="tui-table__td"
-            tuiTd
-        >
-            {{notification.sender  }}
-        </td>
-    </tr>
-    </tbody>
+		</th>
+		<th
+				*tuiHead="'name'"
+				class="tui-table__th"
+				tuiTh
+		>
+			Name
+		</th>
+		<th
+				*tuiHead="'type'"
+				class="tui-table__th"
+				tuiTh
+		>
+			Typ
+		<th
+				*tuiHead="'time'"
+				class="tui-table__th"
+				tuiTh
+		>
+			Zeit
+		</th>
+	</tr>
+	<tr
+			*ngFor="let notification of sortedNotifications; let index = index"
+			class="tui-table__tr tui-table__tr_border_none"
+			tuiTr
+	>
+		<td
+				*tuiCell="'profile_image'"
+				[attr.data-cy]="'notification-profile-image'"
+				class="tui-table__td"
+				tuiTd
+		>
+			<tui-avatar
+					avatarUrl="{{notification.profile_image}}"
+					size="s"
+					text="{{notification.first_name}} {{notification.last_name}}"
+			></tui-avatar>
+		</td>
+		<td
+				*tuiCell="'name'"
+				[attr.data-cy]="'notification-name'"
+				class="tui-table__td"
+				tuiTd
+		>
+			{{ notification.first_name }} {{notification.last_name  }}
+		</td>
+		<td
+				*tuiCell="'type'"
+				[attr.data-cy]="'notification-name'"
+				class="tui-table__td"
+				tuiTd
+		>
+			<tui-tag *ngIf="notification.type_of_notification === 'follow_from_user'"
+			         [class.follow_from_user]="notification.type_of_notification === 'follow_from_user'"
+			         [value]="notification.type_of_notification"
+			         status="custom"
+			></tui-tag>
+		</td>
+		<td
+				*tuiCell="'time'"
+				[attr.data-cy]="'notification-time'"
+				class="tui-table__td"
+				tuiTd
+		>
+			{{notification.created_at | date:'short' }}
+		</td>
+	</tr>
+	</tbody>
 </table>

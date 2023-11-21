@@ -6,10 +6,10 @@ import {EntitiesWrapperStoreService} from "../../../shared/services/entities-wra
     providedIn: 'root'
 })
 export class SearchStoreService {
-    public profilSearchResults: EntitiesWrapperStoreService<Profile>;
+    public profilSearchResults: EntitiesWrapperStoreService<Profile[]>;
     private profileSearchResults: WritableSignal<Profile[] | null> = signal(null);
 
     constructor() {
-        this.profilSearchResults = new EntitiesWrapperStoreService<Profile>();
+        this.profilSearchResults = new EntitiesWrapperStoreService<Profile[]>();
     }
 }

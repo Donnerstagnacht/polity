@@ -1,6 +1,8 @@
 import {ChangeDetectionStrategy, Component, signal, WritableSignal} from '@angular/core';
 import {NotificationsStoreService} from "../services/notifications-store.service";
-import {Tables} from "../../../../../supabase/types/supabase.shorthand-types";
+import {Functions} from "../../../../../supabase/types/supabase.shorthand-types";
+import {NotificationsService} from "../services/notifications.service";
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
     selector: 'polity-notification',
@@ -9,101 +11,30 @@ import {Tables} from "../../../../../supabase/types/supabase.shorthand-types";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NotificationComponent {
-    protected readonly columns: string[] = ['profile_image', 'name', 'time'];
-    // protected activeItemIndex: number = 0;
-    protected loading: WritableSignal<boolean> = signal(false);
-    protected notificationsSignal: WritableSignal<Tables<'notifications_by_user'>[]> = signal([]);// = signal(
-    // [
-    // {
-    //     created_at: 'string',
-    //     id: 'string',
-    //     read_by_receiver: true,
-    //     receiver: 'string',
-    //     sender: 'string',
-    //     type_of_notification: 'follow_from_user'
-    // },
-    // {
-    //     created_at: 'string',
-    //     id: 'string',
-    //     read_by_receiver: true,
-    //     receiver: 'string',
-    //     sender: 'string',
-    //     type_of_notification: 'follow_from_user'
-    // }
-    // ]
-    // );
-    protected notifications: Tables<'notifications_by_user'>[] =
-        [
-            {
-                created_at: 'string',
-                id: 'string',
-                read_by_receiver: true,
-                receiver: 'string',
-                sender: 'string',
-                type_of_notification: 'follow_from_user'
-            },
-            {
-                created_at: 'string',
-                id: 'string',
-                read_by_receiver: true,
-                receiver: 'string',
-                sender: 'string',
-                type_of_notification: 'follow_from_user'
-            }
-        ]
-
-    // ;
+    protected readonly filterForm = new FormGroup({
+        notifications: new FormControl(''),
+    });
+    protected readonly columns: string[] = ['profile_image', 'name', 'type', 'time'];
+    protected isNotificationsLoading: WritableSignal<boolean> = signal(false);
+    protected notificationsStatic: WritableSignal<Functions<'select_notifications_of_users'>> = signal([]);
 
     constructor(
+        private readonly notificationsService: NotificationsService,
         private readonly notificationStoreService: NotificationsStoreService
     ) {
-        this.loading = this.notificationStoreService.notifications.loading.getLoading()
-        // const notifications = this.notificationStoreService.selectNotifications()
-        // // WritableSignal<Tables<'notifications_by_user'>[]>;
-        // console.log(notifications())
-
-        // effect(() => {
-        //     console.log(notifications())
-        //     console.log('before', this.notificationsSignal())
-        //     // this.notificationsSignal = notifications as WritableSignal<Tables<'notifications_by_user'>[]>
-        //     this.loading = this.notificationStoreService.selectLoading();
-        //
-        //     // if (notifications()) {
-        //     //     // this.notifications = this.notificationsSignal()
-        //     //     console.log('before', this.notificationsSignal())
-        //     //     console.log('before', notifications())
-        //     //
-        //     //     this.notifications = notifications() as Tables<'notifications_by_user'>[]
-        //     //     this.notificationsSignal = notifications as WritableSignal<Tables<'notifications_by_user'>[]>
-        //     //     console.log('after', this.notificationsSignal())
-        //     //     console.log('after', this.notifications)
-        //     //
-        //     // }
-        //
-        // })
     }
 
-    nGOnInit(): void {
+    readonly filter = (item: string, value: string): boolean => {
+        console.log('called')
+        return item == value
+    };
 
-    }
 
-    toggleBoolean(): void {
-        // this.notificationsSignal = this.notificationStoreService.selectNotifications();
-        this.notificationsSignal = this.notificationStoreService.notifications.getEntities();
+    async ngOnInit(): Promise<void> {
+        this.isNotificationsLoading = this.notificationStoreService.notifications.loading.getLoading();
+        await this.notificationsService.selectNotifications()
 
-        this.notifications = this.notificationsSignal()
-        console.log('after update', this.notifications)
-        this.notifications = this.notificationsSignal()
-        console.log(this.loading())
-        const update = !this.loading()
-        console.log('before', update)
-        console.log('notifications', this.notificationsSignal()[0]),
-            console.log('notifications2', this.notifications[0])
-
-        console.log('signal', Array.isArray(this.notificationsSignal()), this.notificationsSignal())
-        console.log('flat', Array.isArray(this.notifications), this.notifications)
-
-        const test = [1, 2, 3, 5]
-        console.log('test', typeof test, Array.isArray(test))
+        this.notificationsStatic = this.notificationStoreService.notifications.getEntities();
+        console.log('static', this.notificationsStatic())
     }
 }

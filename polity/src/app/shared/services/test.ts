@@ -581,3 +581,13 @@
 // }
 //
 //
+
+import {Injectable, signal, WritableSignal} from '@angular/core';
+import {LoadingStoreService} from "./loading-store.service";
+
+@Injectable({
+    providedIn: 'root'
+})
+export class EntitiesStoreService<T[]> {
+
+}
