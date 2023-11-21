@@ -1,19 +1,16 @@
 import {Injectable, signal, WritableSignal} from '@angular/core';
 import {LoadingStoreService} from "./loading-store.service";
 
-// type NestedKeyOf<T, K = keyof T> = K extends keyof T & (string | number)
-//     ? `${K}` | (T[K] extends object ? `${K}.${NestedKeyOf<T[K]>}` : never)
-//     : never
-
-// type NestedKeyOf<ObjectType extends object> =
-//     {
-//         [Key in keyof ObjectType & (string | number)]: ObjectType[Key] extends object
-//         ? `${Key}` | `${Key}.${NestedKeyOf<ObjectType[Key]>}`
-//         : `${Key}`
-//     }[keyof ObjectType & (string | number)];
 
 // ATTENTION: Type support only for non nested objects
-// couldnt solve the type support for returned nested supabase types e.g. see GeneratedDatabase
+// could not figure out how solve the type support for returned nested supabase types e.g. see GeneratedDatabase or
+// how to hide array methods
+type pathsToValues<T> = T extends Record<string, unknown>
+    ? {
+        [K in keyof T & string]: K | `${K}.${pathsToValues<T[K]>}`;
+    }[keyof T & string]
+    : never;
+
 @Injectable({
     providedIn: 'root'
 })
@@ -28,6 +25,7 @@ export class EntityStoreService<T> {
     public getEntity(): WritableSignal<T | null> {
         return this.entity;
     }
+
 
     public resetEntity(): void {
         this.entity.set(null);
@@ -53,7 +51,8 @@ export class EntityStoreService<T> {
         }
     }
 
-    public getValueByKey(key: keyof T | string): any {
+//       public getValueByKey(key: keyof T | string): any {
+    public getValueByKey(key: keyof T | pathsToValues<T>): any {
         const keyAsString = key.toString()
         return this.getValueRecursive(this.entity(), keyAsString.split('.'));
     }

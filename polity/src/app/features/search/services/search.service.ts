@@ -3,8 +3,6 @@ import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {SearchStoreService} from "./search-store.service";
 import {DatabaseModified} from "../../../../../supabase/types/supabase.modified";
 import {supabaseClient} from "../../../shared/services/supabase-client";
-import {ErrorStoreService} from "../../../shared/services/error-store.service";
-import {WrapperCodeService} from "../../../shared/services/wrapper-code.service";
 
 @Injectable({
     providedIn: 'root'
@@ -13,9 +11,7 @@ export class SearchService {
     private supabaseClient: SupabaseClient<DatabaseModified> = supabaseClient
 
     constructor(
-        private readonly notificationService: ErrorStoreService,
-        private readonly searchStoreService: SearchStoreService,
-        private readonly wrapperCodeService: WrapperCodeService
+        private readonly searchStoreService: SearchStoreService
     ) {
     }
 
@@ -27,7 +23,7 @@ export class SearchService {
      */
     public async searchUser(searchTerm: string): Promise<void> {
         this.searchStoreService.profilSearchResults.resetEntities()
-        await this.wrapperCodeService.wrapFunction(async (): Promise<void> => {
+        await this.searchStoreService.profilSearchResults.wrapSelectFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<any> = await this.supabaseClient.rpc(
                 'search_user',
                 {search_term: searchTerm}

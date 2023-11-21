@@ -5,9 +5,7 @@ import {ProfileStoreService} from "./profile-store.service";
 import {TuiFileLike} from "@taiga-ui/kit";
 import {SessionStoreService} from "../../../core/services/session-store.service";
 import {DatabaseModified} from "../../../../../supabase/types/supabase.modified";
-import {ErrorStoreService} from "../../../shared/services/error-store.service";
 import {supabaseClient} from "../../../shared/services/supabase-client";
-import {WrapperCodeService} from "../../../shared/services/wrapper-code.service";
 
 @Injectable({
     providedIn: 'root'
@@ -17,9 +15,7 @@ export class ProfileService {
 
     constructor(
         private readonly profileStoreService: ProfileStoreService,
-        private readonly notificationService: ErrorStoreService,
-        private readonly sessionStoreService: SessionStoreService,
-        private readonly wrapperCodeService: WrapperCodeService
+        private readonly sessionStoreService: SessionStoreService
     ) {
     }
 
@@ -30,8 +26,7 @@ export class ProfileService {
      * @return {Promise<void>}
      */
     public async selectProfile(id: string): Promise<void> {
-        await this.wrapperCodeService.wrapFunction(async (): Promise<void> => {
-            this.profileStoreService.profile.loading.startLoading();
+        await this.profileStoreService.profile.wrapSelectFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<Profile> = await this.supabase
             .from('profiles')
             .select(`id, username, first_name, last_name, profile_image`)
@@ -41,7 +36,6 @@ export class ProfileService {
             if (response.data) {
                 this.profileStoreService.profile.mutateEntity(response.data);
             }
-            this.profileStoreService.profile.loading.stopLoading();
         })
     }
 
@@ -54,7 +48,7 @@ export class ProfileService {
     public async updateProfile(profile: Profile): Promise<void> {
         const sessionId: string | null = this.sessionStoreService.getSessionId();
 
-        await this.wrapperCodeService.wrapFunction(async (): Promise<void> => {
+        await this.profileStoreService.profile.wrapUpdateFunction(async (): Promise<void> => {
             if (sessionId) {
                 const update: Profile = {
                     ...profile,
@@ -77,11 +71,13 @@ export class ProfileService {
      * @return {Promise<void>}
      */
     async updateProfileImage(imageUrl: string): Promise<void> {
-        const id = this.profileStoreService.profile.getValueByKey('id')
-        await this.supabase
-        .from('profiles')
-        .update({profile_image: imageUrl})
-        .eq('id', id as string);
+        this.profileStoreService.profile.wrapUpdateFunction(async (): Promise<void> => {
+            const id = this.profileStoreService.profile.getValueByKey('id')
+            await this.supabase
+            .from('profiles')
+            .update({profile_image: imageUrl})
+            .eq('id', id as string);
+        })
     }
 
     /**
@@ -114,6 +110,7 @@ export class ProfileService {
         data: null,
         error: Error
     }> {
+        this.profileStoreService.profile
         const fileIn: File = file as File;
         return this.supabase
         .storage

@@ -1,15 +1,15 @@
 import {Injectable, signal, WritableSignal} from '@angular/core';
 import {Profile} from "../../profile/types-and-interfaces/profile";
-import {EntitiesStoreService} from "../../../shared/services/entities-store.service";
+import {EntitiesWrapperStoreService} from "../../../shared/services/entities-wrapper-store.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class SearchStoreService {
-    public profilSearchResults: EntitiesStoreService<Profile>;
+    public profilSearchResults: EntitiesWrapperStoreService<Profile>;
     private profileSearchResults: WritableSignal<Profile[] | null> = signal(null);
 
     constructor() {
-        this.profilSearchResults = new EntitiesStoreService<Profile>();
+        this.profilSearchResults = new EntitiesWrapperStoreService<Profile>();
     }
 }

@@ -6,7 +6,6 @@ import {SessionStoreService} from "../../../core/services/session-store.service"
 import {DatabaseModified} from "../../../../../supabase/types/supabase.modified";
 import {Functions, Tables} from "../../../../../supabase/types/supabase.shorthand-types";
 import {supabaseClient} from "../../../shared/services/supabase-client";
-import {WrapperCodeService} from "../../../shared/services/wrapper-code.service";
 import {LoadingStoreService} from "../../../shared/services/loading-store.service";
 
 @Injectable({
@@ -18,8 +17,7 @@ export class ProfileFollowService {
 
     constructor(
         private readonly profileStatisticsStoreService: ProfileStatisticsStoreService,
-        private readonly sessionStoreService: SessionStoreService,
-        private readonly wrapperCodeService: WrapperCodeService
+        private readonly sessionStoreService: SessionStoreService
     ) {
         this.loadingCheckFollowing = new LoadingStoreService();
 
@@ -32,8 +30,7 @@ export class ProfileFollowService {
      * @return {Promise<any>} A promise that resolves with the profile statistics.
      */
     public async selectProfileStatistics(userId: string): Promise<void> {
-        await this.wrapperCodeService.wrapFunction(async (): Promise<void> => {
-            this.profileStatisticsStoreService.profileStatistics.loading.startLoading();
+        await this.profileStatisticsStoreService.profileStatistics.wrapSelectFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<Tables<'profiles_counters'>> = await this.supabaseClient.rpc(
                 'select_following_counter',
                 {user_id: userId}
@@ -47,7 +44,6 @@ export class ProfileFollowService {
                 } as ProfileStatistics;
                 this.profileStatisticsStoreService.profileStatistics.mutateEntity(updateData);
             }
-            this.profileStatisticsStoreService.profileStatistics.loading.stopLoading();
         })
     }
 
@@ -58,9 +54,9 @@ export class ProfileFollowService {
      */
     public async checkIfFollowing(): Promise<void> {
         const followerId: string = this.sessionStoreService.getSessionId() as string;
-        const followingId: string = this.profileStatisticsStoreService.profileStatistics.getValueByKey('counters.profile_id');
+        const followingId: string = this.profileStatisticsStoreService.profileStatistics.getValueByKey('counters.profile_id')
 
-        await this.wrapperCodeService.wrapFunction(async (): Promise<void> => {
+        await this.profileStatisticsStoreService.profileStatistics.wrapSelectFunction(async (): Promise<void> => {
             this.loadingCheckFollowing.startLoading()
             const response: PostgrestSingleResponse<boolean | PostgrestError> = await this.supabaseClient.rpc(
                 'check_if_following',
@@ -90,7 +86,7 @@ export class ProfileFollowService {
     public async manageFollowers(userId: string, removeFollower: boolean): Promise<any> {
         const loggedInUserId: string = this.sessionStoreService.getSessionId() as string;
 
-        this.wrapperCodeService.wrapFunction(async (): Promise<void> => {
+        this.profileStatisticsStoreService.profileStatistics.wrapUpdateFunction(async (): Promise<void> => {
             if (removeFollower) {
                 const response: PostgrestSingleResponse<void | PostgrestError> = await this.supabaseClient.rpc(
                     'unfollow_transaction',
@@ -125,8 +121,7 @@ export class ProfileFollowService {
      */
     public async selectFollowersAndFollowings(): Promise<any> {
         const loggedInUserId: string = this.sessionStoreService.getSessionId() as string;
-
-        await this.wrapperCodeService.wrapFunction(async (): Promise<void> => {
+        await this.profileStatisticsStoreService.profileStatistics.wrapSelectFunction(async (): Promise<void> => {
             const followerResponse: PostgrestSingleResponse<Functions<'select_follower_of_user'>> = await this.supabaseClient.rpc(
                 'select_follower_of_user',
                 {
@@ -155,7 +150,7 @@ export class ProfileFollowService {
     public async followProfile() {
         const followerId: string = this.sessionStoreService.getSessionId() as string;
         const followingId: string = this.profileStatisticsStoreService.profileStatistics.getValueByKey('counters.profile_id');
-        await this.wrapperCodeService.wrapFunction(async (): Promise<void> => {
+        await this.profileStatisticsStoreService.profileStatistics.wrapUpdateFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<Functions<'follow_transaction'>> = await this.supabaseClient.rpc(
                 'follow_transaction',
                 {
@@ -174,9 +169,8 @@ export class ProfileFollowService {
 
     public async unFollowProfile() {
         const followerId: string = this.sessionStoreService.getSessionId() as string;
-
         const followingId = this.profileStatisticsStoreService.profileStatistics.getValueByKey('counters.profile_id');
-        await this.wrapperCodeService.wrapFunction(async (): Promise<void> => {
+        await this.profileStatisticsStoreService.profileStatistics.wrapUpdateFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<Functions<'unfollow_transaction'>> = await this.supabaseClient.rpc(
                 'unfollow_transaction',
                 {

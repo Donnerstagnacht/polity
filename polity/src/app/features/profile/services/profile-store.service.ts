@@ -1,17 +1,17 @@
 import {Injectable, signal, WritableSignal} from '@angular/core';
 import {Profile} from "../types-and-interfaces/profile";
-import {EntityStoreService} from "../../../shared/services/entity-store.service";
+import {EntityWrapperStoreService} from "../../../shared/services/entity-wrapper-store.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProfileStoreService {
-    public profile: EntityStoreService<Profile>;
+    public profile: EntityWrapperStoreService<Profile>;
     private isOwner: WritableSignal<boolean> = signal(false);
 
 
     constructor() {
-        this.profile = new EntityStoreService<Profile>();
+        this.profile = new EntityWrapperStoreService<Profile>();
     }
 
     public selectOwner(): WritableSignal<boolean> {

@@ -5,8 +5,6 @@ import {Tables} from "../../../../../supabase/types/supabase.shorthand-types";
 import {SessionStoreService} from "../../../core/services/session-store.service";
 import {AssistantStoreService} from "./assistant-store.service";
 import {supabaseClient} from "../../../shared/services/supabase-client";
-import {ErrorStoreService} from "../../../shared/services/error-store.service";
-import {WrapperCodeService} from "../../../shared/services/wrapper-code.service";
 
 @Injectable({
     providedIn: 'root'
@@ -15,10 +13,8 @@ export class AssistantService {
     private readonly supabaseClient: SupabaseClient<DatabaseModified> = supabaseClient;
 
     constructor(
-        private readonly notificationService: ErrorStoreService,
         private readonly sessionStoreService: SessionStoreService,
         private readonly assistantStoreService: AssistantStoreService,
-        private readonly wrapperService: WrapperCodeService
     ) {
     }
 
@@ -29,8 +25,7 @@ export class AssistantService {
      * @return {Promise<void>}
      */
     public async selectAssistant(userId: string): Promise<void> {
-        this.assistantStoreService.assistant.loading.startLoading();
-        await this.wrapperService.wrapFunction(async (): Promise<void> => {
+        await this.assistantStoreService.assistant.wrapSelectFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<Tables<'assistants'>> = await this.supabaseClient
             .rpc('select_assistant', {user_id: userId})
             .single()
@@ -39,7 +34,6 @@ export class AssistantService {
                 this.assistantStoreService.assistant.mutateEntity(response.data);
             }
         })
-        this.assistantStoreService.assistant.loading.stopLoading()
     }
 
     /**
@@ -49,7 +43,7 @@ export class AssistantService {
      * @return {Promise<void>}
      */
     public async updateFirstSignIn(newStatus: boolean): Promise<void> {
-        await this.wrapperService.wrapFunction(async (): Promise<void> => {
+        await this.assistantStoreService.assistant.wrapUpdateFunction(async (): Promise<void> => {
             const sessionId: string = this.sessionStoreService.getSessionId() as string;
             const response: PostgrestSingleResponse<undefined> = await this.supabaseClient
             .rpc('update_first_sign_in', {user_id: sessionId, new_status: newStatus})
@@ -69,7 +63,7 @@ export class AssistantService {
      * @return {Promise<void>}
      */
     public async skipTutorial(newStatus: boolean): Promise<void> {
-        await this.wrapperService.wrapFunction(async (): Promise<void> => {
+        await this.assistantStoreService.assistant.wrapUpdateFunction(async (): Promise<void> => {
             const sessionId: string = this.sessionStoreService.getSessionId() as string;
             const response: PostgrestSingleResponse<undefined> = await this.supabaseClient
             .rpc('update_skip_tutorial', {user_id: sessionId, new_status: newStatus})
@@ -89,7 +83,7 @@ export class AssistantService {
      * @return {Promise<void>}
      */
     public async updateLastTutorial(last_tutorial: DatabaseModified["public"]["Enums"]["tutorial_enum"]): Promise<void> {
-        await this.wrapperService.wrapFunction(async (): Promise<void> => {
+        await this.assistantStoreService.assistant.wrapUpdateFunction(async (): Promise<void> => {
             const sessionId: string = this.sessionStoreService.getSessionId() as string;
             const response: PostgrestSingleResponse<undefined> = await this.supabaseClient
             .rpc('update_last_tutorial', {user_id: sessionId, new_status: last_tutorial})

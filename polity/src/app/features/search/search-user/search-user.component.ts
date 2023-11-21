@@ -40,7 +40,6 @@ export class SearchUserComponent {
     };
 
     private async onKeyUp(): Promise<void> {
-        this.searchStoreService.profilSearchResults.loading.startLoading()
         let searchTerm: string | null = this.searchForm.controls.search.value
         if (searchTerm) {
             if (searchTerm.endsWith(' ')) {
@@ -49,7 +48,6 @@ export class SearchUserComponent {
             searchTerm = searchTerm.replace(/ /g, '|')
 
             await this.searchService.searchUser(searchTerm);
-            this.searchStoreService.profilSearchResults.loading.stopLoading()
         }
     }
 }

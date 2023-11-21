@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
 import {Tables} from "../../../../../supabase/types/supabase.shorthand-types";
-import {EntitiesStoreService} from "../../../shared/services/entities-store.service";
+import {EntitiesWrapperStoreService} from "../../../shared/services/entities-wrapper-store.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class NotificationsStoreService {
-    public notifications: EntitiesStoreService<Tables<'notifications_by_user'>>;
+    public notifications: EntitiesWrapperStoreService<Tables<'notifications_by_user'>>;
 
     constructor() {
-        this.notifications = new EntitiesStoreService<Tables<'notifications_by_user'>>();
+        this.notifications = new EntitiesWrapperStoreService<Tables<"notifications_by_user">>();
     }
 }

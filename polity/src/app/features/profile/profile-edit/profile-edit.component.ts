@@ -47,7 +47,6 @@ export class ProfileEditComponent {
 
 
     protected async onEdit(): Promise<void> {
-        this.profileStoreService.profile.loading.startLoading();
         const profile: Profile =
             {
                 id: '',
@@ -55,6 +54,5 @@ export class ProfileEditComponent {
                 last_name: this.editProfileForm.value.lastName as string
             }
         await this.profileService.updateProfile(profile);
-        this.profileStoreService.profile.loading.stopLoading();
     }
 }

@@ -16,9 +16,7 @@ export class NotificationsComponent {
     }
 
     async ngOnInit(): Promise<void> {
-        this.notificationsStoreService.notifications.loading.startLoading()
         await this.notificationsService.selectNotifications()
-        this.notificationsStoreService.notifications.loading.stopLoading()
     }
 
 }
