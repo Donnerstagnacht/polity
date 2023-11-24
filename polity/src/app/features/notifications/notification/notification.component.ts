@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, signal, WritableSignal} from '@angular/core';
+import {Component, signal, WritableSignal} from '@angular/core';
 import {NotificationsStoreService} from "../services/notifications-store.service";
 import {NotificationsService} from "../services/notifications.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
@@ -11,7 +11,6 @@ type filterTag = { text: string, value: string }
     selector: 'polity-notification',
     templateUrl: './notification.component.html',
     styleUrls: ['./notification.component.less'],
-    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NotificationComponent {
     protected notifications: WritableSignal<Functions<'select_notifications_of_users'>> = signal([]);

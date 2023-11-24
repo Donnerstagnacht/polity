@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {TUI_PASSWORD_TEXTS, TUI_VALIDATION_ERRORS, tuiInputPasswordOptionsProvider} from "@taiga-ui/kit";
 import {of} from "rxjs";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
@@ -8,7 +8,6 @@ import {AuthenticationService} from "../services/authentication.service";
     selector: 'polity-sign-up',
     templateUrl: './sign-up.component.html',
     styleUrls: ['./sign-up.component.less'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
         tuiInputPasswordOptionsProvider({
             icons: {
