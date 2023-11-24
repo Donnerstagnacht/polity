@@ -1,15 +1,15 @@
-import {Injectable, signal, WritableSignal} from '@angular/core';
-import {Profile} from "../../profile/types-and-interfaces/profile";
-import {EntitiesWrapperStoreService} from "../../../shared/services/entities-wrapper-store.service";
+import {Injectable} from '@angular/core';
+import {PlainFunctions} from "../../../../../supabase/types/supabase.shorthand-types";
+import {ArrayStoreService} from "../../../shared/signal-store/array-store.service";
+
 
 @Injectable({
     providedIn: 'root'
 })
 export class SearchStoreService {
-    public profilSearchResults: EntitiesWrapperStoreService<Profile[]>;
-    private profileSearchResults: WritableSignal<Profile[] | null> = signal(null);
+    public profilSearchResults: ArrayStoreService<PlainFunctions<'search_user'>, {}>;
 
     constructor() {
-        this.profilSearchResults = new EntitiesWrapperStoreService<Profile[]>();
+        this.profilSearchResults = new ArrayStoreService<PlainFunctions<'search_user'>, {}>;
     }
 }

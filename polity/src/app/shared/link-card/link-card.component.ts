@@ -20,6 +20,7 @@ export class LinkCardComponent {
     > = signal(
         null
     )
+    @Input() public dataCyTag: string = 'link-card';
 
     constructor(
         private readonly router: Router,

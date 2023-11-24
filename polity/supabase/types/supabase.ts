@@ -256,6 +256,7 @@ export interface Database {
         }
         Returns: {
           id: string
+          profile_image: string
           first_name: string
           last_name: string
         }[]
@@ -277,6 +278,7 @@ export interface Database {
         }
         Returns: {
           id: string
+          profile_image: string
           first_name: string
           last_name: string
         }[]

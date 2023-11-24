@@ -1,18 +1,20 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {SearchRoutingModule} from './search-routing.module';
-import {SearchComponent} from './search/search.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {TuiErrorModule, TuiHintModule, TuiLoaderModule} from "@taiga-ui/core";
-import {TuiFieldErrorPipeModule, TuiInputModule} from "@taiga-ui/kit";
+import {TuiFieldErrorPipeModule, TuiInputModule, TuiIslandModule} from "@taiga-ui/kit";
 import {TuiForModule} from "@taiga-ui/cdk";
 import {SharedModule} from "../../shared/shared.module";
 import {SearchUserComponent} from './search-user/search-user.component';
+import {SearchProfileResult} from "./search-profile-result/search-profile-result.component";
+import {SearchComponent} from "./search/search.component";
 
 @NgModule({
     declarations: [
         SearchComponent,
-        SearchUserComponent
+        SearchUserComponent,
+        SearchProfileResult
     ],
     imports: [
         CommonModule,
@@ -24,7 +26,8 @@ import {SearchUserComponent} from './search-user/search-user.component';
         TuiInputModule,
         TuiLoaderModule,
         TuiForModule,
-        SharedModule
+        SharedModule,
+        TuiIslandModule
     ]
 })
 export class SearchModule {

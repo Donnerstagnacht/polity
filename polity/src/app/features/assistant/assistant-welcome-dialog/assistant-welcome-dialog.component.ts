@@ -7,7 +7,7 @@ import {Profile} from "../../profile/types-and-interfaces/profile";
 import {SessionStoreService} from "../../../core/services/session-store.service";
 import {Router} from "@angular/router";
 import {AssistantService} from "../services/assistant.service";
-import {DatabaseModified} from "../../../../../supabase/types/supabase.modified";
+import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
 import {Tables} from "../../../../../supabase/types/supabase.shorthand-types";
 import {AssistantStoreService} from "../services/assistant-store.service";
 
@@ -93,7 +93,7 @@ export class AssistantWelcomeDialogComponent {
         this.dialogContext.completeWith(false);
     }
 
-    private setLastTutorial(newStatus: DatabaseModified["public"]["Enums"]["tutorial_enum"]): void {
+    private setLastTutorial(newStatus: DatabaseOverwritten["public"]["Enums"]["tutorial_enum"]): void {
         this.assistantService.updateLastTutorial(newStatus)
     }
 

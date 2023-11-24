@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
-import {DatabaseModified} from "../../../../../supabase/types/supabase.modified";
+import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
 import {SessionStoreService} from "../../../core/services/session-store.service";
 import {NotificationsStoreService} from "./notifications-store.service";
 import {Functions, Tables} from "../../../../../supabase/types/supabase.shorthand-types";
@@ -10,7 +10,7 @@ import {supabaseClient} from "../../../shared/services/supabase-client";
     providedIn: 'root'
 })
 export class NotificationsService {
-    private readonly supabaseClient: SupabaseClient<DatabaseModified> = supabaseClient;
+    private readonly supabaseClient: SupabaseClient<DatabaseOverwritten> = supabaseClient;
 
     constructor(
         private readonly sessionStoreService: SessionStoreService,
@@ -24,21 +24,15 @@ export class NotificationsService {
             const response: PostgrestSingleResponse<Functions<'select_notifications_of_users'>> = await this.supabaseClient
             .rpc('select_notifications_of_users', {user_id: sessionId})
             .throwOnError()
-            console.log('notifiactions', response.data)
             if (response.data) {
-                this.notificationStoreService.notifications.mutateEntities(response.data);
+                this.notificationStoreService.notifications.setEntities(response.data);
             }
-
-            const test = this.notificationStoreService.notifications.getEntities();
-            console.log('SAVED RESULT', test());
-
-
         })
     }
 
     public async insertNotification(
         receiver: string,
-        type_of_notification: DatabaseModified["public"]["Enums"]["notifications_enum"]
+        type_of_notification: DatabaseOverwritten["public"]["Enums"]["notifications_enum"]
     ): Promise<void> {
         await this.notificationStoreService.notifications.wrapUpdateFunction(async (): Promise<void> => {
             const sessionId: string = this.sessionStoreService.getSessionId() as string;

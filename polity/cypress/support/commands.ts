@@ -53,7 +53,7 @@ Cypress.Commands.add('searchUser', (firstName: string) => {
     cy.openSearchTab()
     cy.getDataCy('search').type(firstName)
     cy.getDataCy('user-search-results')
-    .find('polity-profile-card')
+    .find('polity-search-profile-result')
     .shouldBeVisible()
     .contains(firstName)
 });
@@ -85,14 +85,17 @@ Cypress.Commands.add(
         .as('followTransaction')
         // cy.wait(['@followingCounter', '@isFollowing'])
 
-        cy.getDataCy('followProfileButton')
+        cy.getDataCy('followButton')
         .shouldBeVisible()
         .should('have.text', 'FOLLOW')
         .click()
 
-        cy.wait('@followTransaction')
+        cy.contains('Successful Update')
+        .should('be.visible')
 
-        cy.getDataCy('followProfileButton')
+        // cy.wait('@followTransaction')
+
+        cy.getDataCy('followButton')
         .shouldBeVisible()
         .should('have.text', 'UNFOLLOW')
 

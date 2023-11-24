@@ -1,14 +1,15 @@
 import {Injectable} from '@angular/core';
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {SearchStoreService} from "./search-store.service";
-import {DatabaseModified} from "../../../../../supabase/types/supabase.modified";
+import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
 import {supabaseClient} from "../../../shared/services/supabase-client";
+import {Functions} from "../../../../../supabase/types/supabase.shorthand-types";
 
 @Injectable({
     providedIn: 'root'
 })
 export class SearchService {
-    private supabaseClient: SupabaseClient<DatabaseModified> = supabaseClient
+    private supabaseClient: SupabaseClient<DatabaseOverwritten> = supabaseClient
 
     constructor(
         private readonly searchStoreService: SearchStoreService
@@ -24,11 +25,14 @@ export class SearchService {
     public async searchUser(searchTerm: string): Promise<void> {
         this.searchStoreService.profilSearchResults.resetEntities()
         await this.searchStoreService.profilSearchResults.wrapSelectFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<any> = await this.supabaseClient.rpc(
+            const response: PostgrestSingleResponse<Functions<'search_user'>> = await this.supabaseClient.rpc(
+                // const response: PostgrestSingleResponse<any> = await this.supabaseClient.rpc(
                 'search_user',
                 {search_term: searchTerm}
             ).throwOnError()
-            this.searchStoreService.profilSearchResults.mutateEntities(response.data)
+            if (response.data) {
+                this.searchStoreService.profilSearchResults.setEntities(response.data)
+            }
         })
     }
 }

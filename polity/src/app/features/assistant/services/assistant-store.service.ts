@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
 import {Tables} from "../../../../../supabase/types/supabase.shorthand-types";
-import {EntityWrapperStoreService} from "../../../shared/services/entity-wrapper-store.service";
+import {ObjectStoreService} from "../../../shared/signal-store/object-store.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class AssistantStoreService {
-    public assistant: EntityWrapperStoreService<Tables<'assistants'>>
+    public assistant: ObjectStoreService<Tables<'assistants'>, {}>
 
     constructor() {
-        this.assistant = new EntityWrapperStoreService<Tables<'assistants'>>();
+        this.assistant = new ObjectStoreService<Tables<'assistants'>, {}>();
     }
 }

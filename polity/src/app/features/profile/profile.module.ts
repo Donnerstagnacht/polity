@@ -21,6 +21,10 @@ import {CoreModule} from "../../core/core.module";
 import {SharedModule} from "../../shared/shared.module";
 import {ProfileFollowModule} from "../profile-follow/profile-follow.module";
 import {AssistantModule} from "../assistant/assistant.module";
+import {FollowButton} from "../../shared/polity-wiki/follow-button/follow-button.component";
+import {CounterComponent} from "../../shared/polity-wiki/counter/counter.component";
+import {WikiHeadlineComponent} from "../../shared/polity-wiki/wiki-headline/wiki-headline.component";
+import {WikiImageComponent} from "../../shared/polity-wiki/wiki-image/wiki-image.component";
 
 @NgModule({
     declarations: [
@@ -51,7 +55,11 @@ import {AssistantModule} from "../assistant/assistant.module";
         TuiLoaderModule,
         SharedModule,
         ProfileFollowModule,
-        AssistantModule
+        AssistantModule,
+        FollowButton,
+        CounterComponent,
+        WikiHeadlineComponent,
+        WikiImageComponent
     ]
 })
 export class ProfileModule {

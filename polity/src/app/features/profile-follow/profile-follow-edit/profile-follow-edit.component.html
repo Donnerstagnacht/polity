@@ -1,181 +1,216 @@
-<div
-		[class.tui-skeleton]="isProfileFollowerLoading()"
->
-	<tui-tabs [(activeItemIndex)]="activeItemIndex">
-		<button
-				(click)="showFollowerList()"
-				[attr.data-cy]="'show-follower'"
-				tuiTab
-		>
-			Followers
-		</button>
-		<button
-				(click)="showFollowingList()"
-				[attr.data-cy]="'show-followings'"
-				tuiTab
-		>
-			Following
-		</button>
-	</tui-tabs>
-
-	<div *ngIf="showFollowers">
-
-		<table
-				[columns]="columns"
-				class="tui-table"
-				tuiTable
-		>
-			<tbody
-
-					*tuiLet="this.profileStatistics()?.follower! | tuiTableSort as sortedFollower"
-					[data]="sortedFollower"
-					tuiTbody
-			>
-			<tr class="tui-table__tr tui-table__tr_border_none"
-			    tuiThGroup>
-				<th
-						*tuiHead="'fist_name'"
-						class="tui-table__th"
-						tuiTh
-				>
-					Vorname
-				</th>
-				<th
-						*tuiHead="'last_name'"
-						class="tui-table__th"
-						tuiTh
-				>
-					Nachname
-				</th>
-				<th
-						*tuiHead="'actions'"
-						[sorter]="null"
-						class="tui-table__th"
-						tuiTh
-				></th>
-			</tr>
-			<tr
-					*ngFor="let follower of sortedFollower; let index = index"
-					class="tui-table__tr tui-table__tr_border_none"
-					tuiTr
-			>
-				<td
-						*tuiCell="'first_name'"
-						[attr.data-cy]="'follower-first-name'"
-						class="tui-table__td"
-						tuiTd
-				>
-					{{ follower.first_name }}
-				</td>
-				<td
-						*tuiCell="'last_name'"
-						[attr.data-cy]="'follower-last-name'"
-						class="tui-table__td"
-						tuiTd
-				>
-					{{ follower.last_name }}
-				</td>
-				<td
-						*tuiCell="'actions'"
-						class="tui-table__td"
-						tuiTd
-				>
-					<button
-							(click)="removeFollower(follower.id)"
-							[attr.data-cy]="'follower-remove'"
-							appearance="flat"
-							class="remove"
-							icon="tuiIconTrash"
-							shape="rounded"
-							size="s"
-							title="Remove"
-							tuiIconButton
-							type="button"
-					></button>
-				</td>
-			</tr>
-			</tbody>
-		</table>
-
+<div>
+	<polity-filter-headline
+			(showFilter)="toggleShowFilter()"
+			[dataCyTag]="'edit-follower-and-followings'"
+			[headline]="'Deine Follower & Followings'"></polity-filter-headline>
+	<div *ngIf="showFilter">
+		<ng-container [formGroup]="combinedForm">
+			<polity-filter-string formGroupName="filterStringForm">
+			</polity-filter-string>
+		</ng-container>
 	</div>
 
-	<div *ngIf="!showFollowers">
-		<p>Following</p>
-		<table
-				[columns]="columns"
-				class="tui-table"
-				tuiTable
-		>
-			<tbody
-					*tuiLet="profileStatistics()?.following! | tuiTableSort as sortedFollowing"
-					[data]="sortedFollowing"
-					tuiTbody
-			>
-			<tr class="tui-table__tr tui-table__tr_border_none"
-			    tuiThGroup>
-				<th
-						*tuiHead="'first_name'"
-						class="tui-table__th"
-						tuiTh
-				>
-					Vorname
-				</th>
-				<th
-						*tuiHead="'last_name'"
-						class="tui-table__th"
-						tuiTh
-				>
-					Nachname
-				</th>
-				<th
-						*tuiHead="'actions'"
-						[sorter]="null"
-						class="tui-table__th"
-						tuiTh
-				></th>
-			</tr>
-			<tr
-					*ngFor="let following of sortedFollowing; let index = index"
-					class="tui-table__tr tui-table__tr_border_none"
-					tuiTr
-			>
-				<td
-						*tuiCell="'first_name'"
-						[attr.data-cy]="'following-first-name'"
-						class="tui-table__td"
-						tuiTd
-				>
-					{{ following.first_name }}
-				</td>
-				<td
-						*tuiCell="'last_name'"
-						[attr.data-cy]="'following-last-name'"
-						class="tui-table__td"
-						tuiTd
-				>
-					{{ following.last_name }}
-				</td>
-				<td
-						*tuiCell="'actions'"
-						class="tui-table__td"
-						tuiTd
-				>
-					<button
-							(click)="removeFollowing(following.id)"
-							[attr.data-cy]="'following-remove'"
-							appearance="flat"
-							class="remove"
-							icon="tuiIconTrash"
-							shape="rounded"
-							size="s"
-							title="Remove"
-							tuiIconButton
-							type="button"
-					></button>
-				</td>
-			</tr>
-			</tbody>
-		</table>
+	<polity-filter-clear (clearFilter)="clearFilter()">
+	</polity-filter-clear>
 
-	</div>
+</div>
+
+<tui-tabs [(activeItemIndex)]="activeItemIndex">
+	<button
+			(click)="showFollowerList()"
+			[attr.data-cy]="'show-follower'"
+			tuiTab
+	>
+		Followers
+	</button>
+	<button
+			(click)="showFollowingList()"
+			[attr.data-cy]="'show-followings'"
+			tuiTab
+	>
+		Following
+	</button>
+</tui-tabs>
+
+<div *ngIf="showFollowers">
+	<polity-table-three-icon-text-delete
+			(remove)="removeFollower($event)"
+
+			[bonusKeys]="['last_name']"
+			[dataCyTags]="['follower_profile_image', 'follower_first_name', 'follower_remove']"
+			[dataKeysForColumns]="['profile_image', 'first_name', 'id']"
+			[data]="followersOfUser"
+			[headings]="['Foto', 'test', 'Entfernen']"
+			[isLoading]="isFollowersLoading"
+	>
+	</polity-table-three-icon-text-delete>
+
+	<!--		<table-->
+	<!--				[columns]="columns"-->
+	<!--				class="tui-table"-->
+	<!--				tuiTable-->
+	<!--		>-->
+	<!--			<tbody-->
+
+	<!--					*tuiLet="this.profileStatistics()?.follower! | tuiTableSort as sortedFollower"-->
+	<!--					[data]="sortedFollower"-->
+	<!--					tuiTbody-->
+	<!--			>-->
+	<!--			<tr class="tui-table__tr tui-table__tr_border_none"-->
+	<!--			    tuiThGroup>-->
+	<!--				<th-->
+	<!--						*tuiHead="'fist_name'"-->
+	<!--						class="tui-table__th"-->
+	<!--						tuiTh-->
+	<!--				>-->
+	<!--					Vorname-->
+	<!--				</th>-->
+	<!--				<th-->
+	<!--						*tuiHead="'last_name'"-->
+	<!--						class="tui-table__th"-->
+	<!--						tuiTh-->
+	<!--				>-->
+	<!--					Nachname-->
+	<!--				</th>-->
+	<!--				<th-->
+	<!--						*tuiHead="'actions'"-->
+	<!--						[sorter]="null"-->
+	<!--						class="tui-table__th"-->
+	<!--						tuiTh-->
+	<!--				></th>-->
+	<!--			</tr>-->
+	<!--			<tr-->
+	<!--					*ngFor="let follower of sortedFollower; let index = index"-->
+	<!--					class="tui-table__tr tui-table__tr_border_none"-->
+	<!--					tuiTr-->
+	<!--			>-->
+	<!--				<td-->
+	<!--						*tuiCell="'first_name'"-->
+	<!--						[attr.data-cy]="'follower-first-name'"-->
+	<!--						class="tui-table__td"-->
+	<!--						tuiTd-->
+	<!--				>-->
+	<!--					{{ follower.first_name }}-->
+	<!--				</td>-->
+	<!--				<td-->
+	<!--						*tuiCell="'last_name'"-->
+	<!--						[attr.data-cy]="'follower-last-name'"-->
+	<!--						class="tui-table__td"-->
+	<!--						tuiTd-->
+	<!--				>-->
+	<!--					{{ follower.last_name }}-->
+	<!--				</td>-->
+	<!--				<td-->
+	<!--						*tuiCell="'actions'"-->
+	<!--						class="tui-table__td"-->
+	<!--						tuiTd-->
+	<!--				>-->
+	<!--					<button-->
+	<!--							(click)="removeFollower(follower.id)"-->
+	<!--							[attr.data-cy]="'follower-remove'"-->
+	<!--							appearance="flat"-->
+	<!--							class="remove"-->
+	<!--							icon="tuiIconTrash"-->
+	<!--							shape="rounded"-->
+	<!--							size="s"-->
+	<!--							title="Remove"-->
+	<!--							tuiIconButton-->
+	<!--							type="button"-->
+	<!--					></button>-->
+	<!--				</td>-->
+	<!--			</tr>-->
+	<!--			</tbody>-->
+	<!--		</table>-->
+
+</div>
+
+<div *ngIf="!showFollowers">
+	<polity-table-three-icon-text-delete
+			(remove)="removeFollowing($event)"
+			[bonusKeys]="['last_name']"
+			[dataCyTags]="['following_profile_image', 'following_first_name', 'following_remove']"
+			[dataKeysForColumns]="['profile_image', 'first_name', 'id']"
+			[data]="followingsOfUser"
+			[headings]="['Foto', 'test', 'Entfernen']"
+			[isLoading]="isFollowingLoading"
+	>
+	</polity-table-three-icon-text-delete>
+	<!--	<p>Following</p>-->
+
+	<!--	<table-->
+	<!--			[columns]="columns"-->
+	<!--			class="tui-table"-->
+	<!--			tuiTable-->
+	<!--	>-->
+	<!--		<tbody-->
+	<!--				*tuiLet="followersOfUser() | tuiTableSort as sortedFollowing"-->
+	<!--				[data]="sortedFollowing"-->
+	<!--				tuiTbody-->
+	<!--		>-->
+	<!--		<tr class="tui-table__tr tui-table__tr_border_none"-->
+	<!--		    tuiThGroup>-->
+	<!--			<th-->
+	<!--					*tuiHead="'first_name'"-->
+	<!--					class="tui-table__th"-->
+	<!--					tuiTh-->
+	<!--			>-->
+	<!--				Vorname-->
+	<!--			</th>-->
+	<!--			<th-->
+	<!--					*tuiHead="'last_name'"-->
+	<!--					class="tui-table__th"-->
+	<!--					tuiTh-->
+	<!--			>-->
+	<!--				Nachname-->
+	<!--			</th>-->
+	<!--			<th-->
+	<!--					*tuiHead="'actions'"-->
+	<!--					[sorter]="null"-->
+	<!--					class="tui-table__th"-->
+	<!--					tuiTh-->
+	<!--			></th>-->
+	<!--		</tr>-->
+	<!--		<tr-->
+	<!--				*ngFor="let following of sortedFollowing; let index = index"-->
+	<!--				class="tui-table__tr tui-table__tr_border_none"-->
+	<!--				tuiTr-->
+	<!--		>-->
+	<!--			<td-->
+	<!--					*tuiCell="'first_name'"-->
+	<!--					[attr.data-cy]="'following-first-name'"-->
+	<!--					class="tui-table__td"-->
+	<!--					tuiTd-->
+	<!--			>-->
+	<!--				{{ following.first_name }}-->
+	<!--			</td>-->
+	<!--			<td-->
+	<!--					*tuiCell="'last_name'"-->
+	<!--					[attr.data-cy]="'following-last-name'"-->
+	<!--					class="tui-table__td"-->
+	<!--					tuiTd-->
+	<!--			>-->
+	<!--				{{ following.last_name }}-->
+	<!--			</td>-->
+	<!--			<td-->
+	<!--					*tuiCell="'actions'"-->
+	<!--					class="tui-table__td"-->
+	<!--					tuiTd-->
+	<!--			>-->
+	<!--				<button-->
+	<!--						(click)="removeFollowing(following.id)"-->
+	<!--						[attr.data-cy]="'following-remove'"-->
+	<!--						appearance="flat"-->
+	<!--						class="remove"-->
+	<!--						icon="tuiIconTrash"-->
+	<!--						shape="rounded"-->
+	<!--						size="s"-->
+	<!--						title="Remove"-->
+	<!--						tuiIconButton-->
+	<!--						type="button"-->
+	<!--				></button>-->
+	<!--			</td>-->
+	<!--		</tr>-->
+	<!--		</tbody>-->
+	<!--	</table>-->
+
 </div>

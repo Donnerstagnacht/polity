@@ -6,9 +6,10 @@ CREATE OR REPLACE FUNCTION public.select_follower_of_user(
 )
 	RETURNS table
 	        (
-		        id         uuid,
-		        first_name text,
-		        last_name  text
+		        id            uuid,
+		        profile_image text,
+		        first_name    text,
+		        last_name     text
 	        )
 	LANGUAGE plpgsql
 	SECURITY INVOKER
@@ -18,6 +19,7 @@ BEGIN
 	RETURN QUERY (
 		SELECT
 			profiles.id,
+			public.profiles.profile_image,
 			profiles.first_name,
 			profiles.last_name
 		FROM
@@ -38,9 +40,10 @@ CREATE OR REPLACE FUNCTION public.select_following_of_user(
 )
 	RETURNS table
 	        (
-		        id         uuid,
-		        first_name text,
-		        last_name  text
+		        id            uuid,
+		        profile_image text,
+		        first_name    text,
+		        last_name     text
 	        )
 	LANGUAGE plpgsql
 	SECURITY INVOKER
@@ -51,6 +54,7 @@ BEGIN
 		(
 			SELECT
 				profiles.id,
+				public.profiles.profile_image,
 				profiles.first_name,
 				profiles.last_name
 			FROM

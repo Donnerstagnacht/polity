@@ -2,7 +2,17 @@ import {MergeDeep} from "type-fest";
 import {Database as DatabaseGenerated} from './supabase'
 
 export {Json} from './supabase'
-export type DatabaseModified = MergeDeep<
+
+/*
+Supabase automatically generates types which are stored in the file supabase.ts.
+Occasionally, these types are not equal to the database schema or the return of functions/database queries.
+In these cases, the types can be overwritten in the type DatabaseOverwritten.
+See: https://supabase.com/docs/reference/javascript/typescript-support
+
+Currently, overwritten types:
+public - tables - profiles - row - updated_at
+ */
+export type DatabaseOverwritten = MergeDeep<
     DatabaseGenerated,
     {
         public: {
@@ -44,6 +54,23 @@ export type DatabaseModified = MergeDeep<
                 //     }
                 // }
             }
+            // Functions: {
+            //     select_notifications_of_users: {
+            //         Args: {
+            //             user_id: string
+            //         }
+            //         Returns: {
+            //             type_of_notification: DatabaseGenerated["public"]["Enums"]["notifications_enum"]
+            //             read_by_receiver: boolean
+            //             created_at: string
+            //             first_name: string
+            //             last_name: string
+            //             profile_image: string
+            //         }[]
+            //     }
+            // }
         }
     }
 >
+
+

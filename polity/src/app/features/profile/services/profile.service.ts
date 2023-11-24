@@ -4,14 +4,14 @@ import {Profile} from "../types-and-interfaces/profile";
 import {ProfileStoreService} from "./profile-store.service";
 import {TuiFileLike} from "@taiga-ui/kit";
 import {SessionStoreService} from "../../../core/services/session-store.service";
-import {DatabaseModified} from "../../../../../supabase/types/supabase.modified";
+import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
 import {supabaseClient} from "../../../shared/services/supabase-client";
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProfileService {
-    private supabase: SupabaseClient<DatabaseModified> = supabaseClient
+    private supabase: SupabaseClient<DatabaseOverwritten> = supabaseClient
 
     constructor(
         private readonly profileStoreService: ProfileStoreService,
@@ -34,7 +34,7 @@ export class ProfileService {
             .single()
             .throwOnError();
             if (response.data) {
-                this.profileStoreService.profile.mutateEntity(response.data);
+                this.profileStoreService.profile.setEntity(response.data);
             }
         })
     }

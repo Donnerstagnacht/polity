@@ -5,6 +5,8 @@
 </h1>
 <polity-link-card
 		[attr.data-cy]="'home-to-profile'"
+		[class.tui-skeleton]="isProfileLoading()"
+		[dataCyTag]="'home-first-name'"
 		[isLoading]="this.isProfileLoading"
 		[profile]="profile"
 		[sessionId]="this.sessionId"

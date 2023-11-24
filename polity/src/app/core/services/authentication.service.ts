@@ -11,15 +11,15 @@ import {
 } from "@supabase/supabase-js";
 import {SessionStoreService} from "./session-store.service";
 import {Router} from "@angular/router";
-import {DatabaseModified} from "../../../../supabase/types/supabase.modified";
-import {ErrorStoreService} from "../../shared/services/error-store.service";
+import {DatabaseOverwritten} from "../../../../supabase/types/supabase.modified";
 import {supabaseClient} from "../../shared/services/supabase-client";
+import {ErrorStoreService} from "../../shared/signal-store/error-store.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthenticationService {
-    private readonly supabaseClient: SupabaseClient<DatabaseModified> = supabaseClient;
+    private readonly supabaseClient: SupabaseClient<DatabaseOverwritten> = supabaseClient;
 
     constructor(
         private readonly notificationService: ErrorStoreService,

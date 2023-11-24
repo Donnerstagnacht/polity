@@ -1,9 +1,9 @@
 import {Component, signal, WritableSignal} from '@angular/core';
-import {Profile} from "../../profile/types-and-interfaces/profile";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {SearchService} from "../services/search.service";
 import {SearchStoreService} from "../services/search-store.service";
 import {debounceTime} from "rxjs";
+import {Functions} from "../../../../../supabase/types/supabase.shorthand-types";
 
 @Component({
     selector: 'polity-search-user',
@@ -12,7 +12,7 @@ import {debounceTime} from "rxjs";
 })
 export class SearchUserComponent {
     loading: WritableSignal<boolean> = signal(false);
-    protected searchResults: WritableSignal<Profile[] | null> = signal([]);
+    protected searchResults: WritableSignal<Functions<'search_user'>> = signal([]);
     protected searchForm: FormGroup<{
         search: FormControl<string | null>
     }> = new FormGroup({
