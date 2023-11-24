@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, signal, WritableSignal} from '@angular/core';
+import {Component, signal, WritableSignal} from '@angular/core';
 import {ProfileFollowService} from "../services/profile-follow.service";
 import {FollowersOfUserService} from "../services/followers-of-user.service";
 import {Functions} from "../../../../../supabase/types/supabase.shorthand-types";
@@ -11,7 +11,6 @@ import {FormBuilder, FormGroup} from "@angular/forms";
     selector: 'polity-follow-button-edit',
     templateUrl: './profile-follow-edit.component.html',
     styleUrls: ['./profile-follow-edit.component.less'],
-    changeDetection: ChangeDetectionStrategy.OnPush
 
 })
 export class ProfileFollowEditComponent {

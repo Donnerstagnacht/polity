@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, effect, signal, WritableSignal} from '@angular/core';
+import {Component, effect, signal, WritableSignal} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {TUI_VALIDATION_ERRORS} from "@taiga-ui/kit";
 import {Profile} from "../types-and-interfaces/profile";
@@ -9,7 +9,6 @@ import {ProfileStoreService} from "../services/profile-store.service";
     selector: 'polity-profile-edit',
     templateUrl: './profile-edit.component.html',
     styleUrls: ['./profile-edit.component.less'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
         {
             provide: TUI_VALIDATION_ERRORS,

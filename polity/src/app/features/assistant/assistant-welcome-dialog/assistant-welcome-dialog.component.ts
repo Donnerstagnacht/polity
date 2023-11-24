@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Inject, signal, WritableSignal} from '@angular/core';
+import {Component, Inject, signal, WritableSignal} from '@angular/core';
 import {TuiDialogContext} from "@taiga-ui/core";
 import {POLYMORPHEUS_CONTEXT} from "@tinkoff/ng-polymorpheus";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
@@ -15,7 +15,6 @@ import {AssistantStoreService} from "../services/assistant-store.service";
     selector: 'polity-assistant-welcome-dialog',
     templateUrl: './assistant-welcome-dialog.component.html',
     styleUrls: ['./assistant-welcome-dialog.component.less'],
-    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AssistantWelcomeDialogComponent {
     protected welcomeForm: FormGroup<{
