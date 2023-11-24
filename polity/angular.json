@@ -77,10 +77,10 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "browserTarget": "polity:build:production"
+                          "buildTarget": "polity:build:production"
                         },
                         "development": {
-                            "browserTarget": "polity:build:development"
+                          "buildTarget": "polity:build:development"
                         }
                     },
                     "defaultConfiguration": "development"
@@ -88,7 +88,7 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "polity:build"
+                      "buildTarget": "polity:build"
                     }
                 },
                 "test": {
