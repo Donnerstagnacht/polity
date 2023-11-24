@@ -31,10 +31,14 @@ Sizes.forEach((size: Size): void => {
 
             cy.getDataCy('welcome-first-name')
             .scrollIntoView()
+
+            cy.getDataCy('welcome-first-name')
             .type(newUser.first_name as string)
 
             cy.getDataCy('welcome-last-name')
             .scrollIntoView()
+
+            cy.getDataCy('welcome-last-name')
             .type(newUser.last_name as string)
 
             cy.getDataCy('step1navigateToProfileStep')

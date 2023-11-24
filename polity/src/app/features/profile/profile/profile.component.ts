@@ -5,9 +5,9 @@ import {ProfileStoreService} from "../services/profile-store.service";
 import {ActivatedRoute} from "@angular/router";
 import {menuItemsProfile, menuItemsProfileOwner} from "../../../layout/menu-items";
 import {Item} from "../../../layout/types-and-interfaces/item";
-import {UiStoreService} from "../../../core/services/ui-store.service";
 import {ProfileFollowService} from "../../profile-follow/services/profile-follow.service";
-import {ProfileStatisticsStoreService} from "../../profile-follow/services/profile-statistics-store.service";
+import {ProfileCountersStoreService} from "../../profile-follow/services/profile-counters-store.service";
+import {ProfileCountersService} from "../../profile-follow/services/profile-counters.service";
 
 @Component({
     selector: 'polity-profile',
@@ -22,41 +22,45 @@ export class ProfileComponent {
         private readonly profileStoreService: ProfileStoreService,
         private readonly profileService: ProfileService,
         private route: ActivatedRoute,
-        private readonly globalUiStateService: UiStoreService,
         private readonly profileFollowService: ProfileFollowService,
-        private readonly profileStatisticsService: ProfileStatisticsStoreService
+        // private readonly profileStatisticsStoreService: ProfileStatisticsStoreService,
+        private readonly profileCounterService: ProfileCountersService,
+        private readonly profileCountersStoreService: ProfileCountersStoreService
     ) {
     }
 
 
     async ngOnInit(): Promise<void> {
-        this.globalUiStateService.setLoading(true);
-
         const urlId: string = this.route.snapshot.params['id'];
-        const sessionId: string | null = this.sessionStoreService.sessionId();
+        const sessionId: string | null = this.sessionStoreService.getSessionId();
         this.checkIsOwner(urlId, sessionId)
 
-        await this.profileService.selectProfile(urlId);
-        await this.profileFollowService.selectProfileStatistics(urlId);
-        await this.profileFollowService.checkIfFollowing()
-
-        this.globalUiStateService.setLoading(false);
+        await Promise.all([
+            this.profileService.selectProfile(urlId),
+            this.profileCounterService.selectProfileCounter(urlId)
+            // this.profileFollowService.selectProfileStatistics(urlId),
+        ])
+        await this.profileCounterService.checkIfFollowing();
     }
 
     ngOnDestroy(): void {
-        this.profileStoreService.resetProfile();
-        this.profileStatisticsService.resetProfileStatistics()
+        this.profileStoreService.profile.resetEntity();
+        // this.profileStatisticsStoreService.profileStatistics.resetEntity()
+        this.profileCountersStoreService.profileCounters.resetEntity()
     }
 
     private checkIsOwner(urlId: string, sessionId: string | null): void {
         if (sessionId == urlId) {
-            this.globalUiStateService.setIsOwner(true);
+            this.profileStoreService.profile.uiFlagStore.setUiFlagTrue('isOwner')
+
+            // this.profileStoreService.setAsOwner()
             this.menuItemsProfile = menuItemsProfileOwner;
             this.menuItemsProfile[0].link = '/profile/' + urlId
             this.menuItemsProfile[1].link = '/profile/' + urlId + '/edit'
             this.menuItemsProfile[2].link = '/profile/' + urlId + '/follower/edit'
         } else {
-            this.globalUiStateService.setIsOwner(false);
+            this.profileStoreService.profile.uiFlagStore.setUiFlagFalse('isOwner')
+            // this.profileStoreService.setNotAsOwner()
             this.menuItemsProfile = menuItemsProfile;
             this.menuItemsProfile[0].link = '/profile/' + urlId
         }

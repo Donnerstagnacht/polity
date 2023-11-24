@@ -1,0 +1,18 @@
+<form [formGroup]="filterTagsForm" class="tui-space_top-3">
+    <div class="polity-flex-container">
+        <div class="polity-flex-item-centered">
+            <tui-filter
+                [content]="content"
+                [items]="filterTypes"
+                formControlName="filters"
+                size="l"
+            ></tui-filter>
+            <ng-template
+                #content
+                let-item
+            >
+                {{ item.text }}
+            </ng-template>
+        </div>
+    </div>
+</form>

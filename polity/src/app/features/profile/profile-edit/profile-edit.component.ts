@@ -4,7 +4,6 @@ import {TUI_VALIDATION_ERRORS} from "@taiga-ui/kit";
 import {Profile} from "../types-and-interfaces/profile";
 import {ProfileService} from "../services/profile.service";
 import {ProfileStoreService} from "../services/profile-store.service";
-import {UiStoreService} from "../../../core/services/ui-store.service";
 
 @Component({
     selector: 'polity-profile-edit',
@@ -29,17 +28,14 @@ export class ProfileEditComponent {
         firstName: new FormControl('', Validators.required),
         lastName: new FormControl('', Validators.required)
     })
+    protected isProfileLoading: WritableSignal<boolean> = signal(true);
 
     constructor(
-        private readonly userService: ProfileService,
-        private readonly userStoreService: ProfileStoreService,
-        private readonly globalUiStateService: UiStoreService
+        private readonly profileService: ProfileService,
+        private readonly profileStoreService: ProfileStoreService,
     ) {
-        this.globalUiStateService.setLoading(true);
-
-        this.profile = this.userStoreService.selectProfile();
-
-        this.globalUiStateService.setLoading(false);
+        this.isProfileLoading = this.profileStoreService.profile.loading.getLoading()
+        this.profile = this.profileStoreService.profile.getEntity()
 
         effect(() => {
             this.editProfileForm.patchValue({
@@ -51,14 +47,12 @@ export class ProfileEditComponent {
 
 
     protected async onEdit(): Promise<void> {
-        this.globalUiStateService.setLoading(true);
         const profile: Profile =
             {
                 id: '',
                 first_name: this.editProfileForm.value.firstName as string,
                 last_name: this.editProfileForm.value.lastName as string
             }
-        await this.userService.updateProfile(profile);
-        this.globalUiStateService.setLoading(false);
+        await this.profileService.updateProfile(profile);
     }
 }

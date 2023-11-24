@@ -1,41 +1,38 @@
 import {Injectable} from '@angular/core';
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
-import {NotificationsStoreService} from "../../../core/services/notifications-store.service";
 import {SearchStoreService} from "./search-store.service";
-import {supabaseClient} from "../../../core/services/supabase-client";
-import {DatabaseModified} from "../../../../../supabase/types/supabase.modified";
+import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
+import {supabaseClient} from "../../../shared/services/supabase-client";
+import {Functions} from "../../../../../supabase/types/supabase.shorthand-types";
 
 @Injectable({
     providedIn: 'root'
 })
 export class SearchService {
-    private supabaseClient: SupabaseClient<DatabaseModified> = supabaseClient
+    private supabaseClient: SupabaseClient<DatabaseOverwritten> = supabaseClient
 
     constructor(
-        private readonly notificationService: NotificationsStoreService,
         private readonly searchStoreService: SearchStoreService
     ) {
     }
 
-    //TODO: Define data and error type returned by rpc function
     /**
      * Searches for usernames based on the provided search term.
      *
      * @param {string} searchTerm - The search term to use.
      * @return {Promise<boolean>} Returns true if the search was successful.
      */
-    public async searchUser(searchTerm: string): Promise<boolean> {
-        this.searchStoreService.updateProfileSearchResults(null);
-        try {
-            const response: PostgrestSingleResponse<any> = await this.supabaseClient.rpc(
+    public async searchUser(searchTerm: string): Promise<void> {
+        this.searchStoreService.profilSearchResults.resetEntities()
+        await this.searchStoreService.profilSearchResults.wrapSelectFunction(async (): Promise<void> => {
+            const response: PostgrestSingleResponse<Functions<'search_user'>> = await this.supabaseClient.rpc(
+                // const response: PostgrestSingleResponse<any> = await this.supabaseClient.rpc(
                 'search_user',
                 {search_term: searchTerm}
             ).throwOnError()
-            this.searchStoreService.updateProfileSearchResults(response.data);
-            return false;
-        } catch (error: any) {
-            this.notificationService.updateNotification(error.message, true);
-            return false;
-        }
+            if (response.data) {
+                this.searchStoreService.profilSearchResults.setEntities(response.data)
+            }
+        })
     }
 }

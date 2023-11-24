@@ -2,12 +2,14 @@
 	<div class="tui-form__row flex-box">
 		<p
 				[attr.data-cy]="'toggle-assistant-headline'"
+				[class.tui-skeleton]="isAssistantLoading()"
 				class="tui-text_body-m"
 		>Zeige Tutorials</p>
 
 		<tui-toggle
 				(click)="toggleAssistant()"
 				[attr.data-cy]="'toggle-assistant'"
+				[class.tui-skeleton]="isAssistantLoading()"
 				[showIcons]="true"
 				formControlName="showAssistant"
 		></tui-toggle>

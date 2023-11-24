@@ -1,10 +1,9 @@
 import {Component, signal, Signal, WritableSignal} from '@angular/core';
 import {Profile} from "../types-and-interfaces/profile";
 import {ProfileStoreService} from "../services/profile-store.service";
-import {UiStoreService} from "../../../core/services/ui-store.service";
-import {ProfileStatisticsStoreService} from "../../profile-follow/services/profile-statistics-store.service";
-import {ProfileStatistics} from "../types-and-interfaces/profile-statistics";
-import {ProfileFollowService} from "../../profile-follow/services/profile-follow.service";
+import {ProfileCountersStoreService} from "../../profile-follow/services/profile-counters-store.service";
+import {PlainFunctions} from "../../../../../supabase/types/supabase.shorthand-types";
+import {ProfileCountersService} from "../../profile-follow/services/profile-counters.service";
 
 @Component({
     selector: 'polity-profile-wiki',
@@ -12,28 +11,33 @@ import {ProfileFollowService} from "../../profile-follow/services/profile-follow
     styleUrls: ['./profile-wiki.component.less']
 })
 export class ProfileWikiComponent {
-    protected isLoading: WritableSignal<boolean> = signal(true);
+    protected isProfileLoading: WritableSignal<boolean> = signal(true);
+    protected isProfileCounterLoading: WritableSignal<boolean> = signal(true);
+    protected isFollowingCheckLoading: WritableSignal<boolean> = signal(true);
     protected profile: Signal<Profile | null>;
-    protected keyFigure: WritableSignal<ProfileStatistics | null>;
-    protected isOwner: Signal<boolean>;
+    protected profileCounter: WritableSignal<PlainFunctions<'select_following_counter'> | null> = signal(null);
+    protected isOwner: WritableSignal<boolean>;
+    protected isFollowing: WritableSignal<boolean>;
 
     constructor(
         private readonly profileStoreService: ProfileStoreService,
-        private readonly globalUiStateService: UiStoreService,
-        private readonly profileStatisticsStoreService: ProfileStatisticsStoreService,
-        private readonly profileFollowService: ProfileFollowService
+        private readonly profileCounterService: ProfileCountersService,
+        private readonly profileCountersStoreService: ProfileCountersStoreService
     ) {
-        this.isLoading = this.globalUiStateService.selectLoading();
-        this.isOwner = this.globalUiStateService.selectIsOwner();
-        this.profile = this.profileStoreService.selectProfile()
-        this.keyFigure = this.profileStatisticsStoreService.selectProfileStatistics()
+        this.isFollowingCheckLoading = this.profileStoreService.profile.uiFlagStore.getUiFlag('isFollowingCheckLoading')
+        this.isProfileLoading = this.profileStoreService.profile.loading.getLoading()
+        this.isProfileCounterLoading = this.profileCountersStoreService.profileCounters.loading.getLoading()
+        this.profileCounter = this.profileCountersStoreService.profileCounters.getEntity()
+        this.profile = this.profileStoreService.profile.getEntity()
+        this.isOwner = this.profileStoreService.profile.uiFlagStore.getUiFlag('isOwner')
+        this.isFollowing = this.profileStoreService.profile.uiFlagStore.getUiFlag('isFollowing')
     }
 
     async toggleFollow(newIsFollowing: boolean): Promise<void> {
         if (newIsFollowing) {
-            await this.profileFollowService.followProfile();
+            await this.profileCounterService.followProfile();
         } else {
-            await this.profileFollowService.unFollowProfile();
+            await this.profileCounterService.unFollowProfile();
         }
     }
 }

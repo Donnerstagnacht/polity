@@ -5,12 +5,14 @@
 	>
 		<h3
 				[attr.data-cy]="'edit-instruction'"
+				[class.tui-skeleton]="isProfileLoading()"
 				class="tui-form__header"
 		>Ändere deine Profil Daten</h3>
 
 		<div class="tui-form__row">
 			<tui-input
 					[attr.data-cy]="'firstName'"
+					[class.tui-skeleton]="isProfileLoading()"
 					[tuiTextfieldCleaner]="true"
 					[tuiTextfieldCustomContent]="editProfileForm.controls.firstName.valid ? success : ''"
 					formControlName="firstName"
@@ -27,6 +29,7 @@
 		<div class="tui-form__row">
 			<tui-input
 					[attr.data-cy]="'lastName'"
+					[class.tui-skeleton]="isProfileLoading()"
 					[tuiTextfieldCleaner]="true"
 					[tuiTextfieldCustomContent]="editProfileForm.controls.lastName.valid ? success : ''"
 					formControlName="lastName"
@@ -43,6 +46,7 @@
 		<div class="tui-form__buttons">
 			<button
 					[attr.data-cy]="'update'"
+					[class.tui-skeleton]="isProfileLoading()"
 					[disabled]="!editProfileForm.valid"
 					class="tui-form__button"
 					size="l"
@@ -63,6 +67,7 @@
 
 <div class="">
 	<h3
+			[class.tui-skeleton]="isProfileLoading()"
 			class="tui-form__header"
 	>Ändere deine Profil Bild</h3>
 	<polity-profile-image-upload></polity-profile-image-upload>
@@ -71,6 +76,7 @@
 
 <div class="polity-space_bottom-15">
 	<h3
+			[class.tui-skeleton]="isProfileLoading()"
 			class="tui-form__header"
 	>Tutorial</h3>
 	<polity-assistant-toggle></polity-assistant-toggle>
@@ -78,6 +84,7 @@
 
 <div class="polity-space_bottom-15 extra-margin">
 	<h3
+			[class.tui-skeleton]="isProfileLoading()"
 			class="tui-form__header"
 	>Logout</h3>
 	<polity-sign-out></polity-sign-out>

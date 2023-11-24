@@ -1,8 +1,12 @@
-DROP FUNCTION IF EXISTS public.select_assistant(user_id uuid);
-CREATE OR REPLACE FUNCTION public.select_assistant(user_id uuid)
+DROP FUNCTION IF EXISTS public.select_assistant(
+	user_id uuid
+);
+CREATE OR REPLACE FUNCTION public.select_assistant(
+	user_id uuid
+)
 	RETURNS table
 	        (
-		        profile_id    uuid,
+		        id            uuid,
 		        first_sign_in boolean,
 		        skip_tutorial boolean,
 		        last_tutorial tutorial_enum
@@ -17,7 +21,7 @@ BEGIN
 		FROM
 			public.assistants
 		WHERE
-			id = user_id
+			public.assistants.id = user_id
 	);
 END
 $$;

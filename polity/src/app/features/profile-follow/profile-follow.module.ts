@@ -1,27 +1,29 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ProfileFollowComponent} from "./profile-follow/profile-follow.component";
 import {TuiButtonModule} from "@taiga-ui/core";
 import {ProfileFollowEditComponent} from './profile-follow-edit/profile-follow-edit.component';
 import {TuiTableModule} from "@taiga-ui/addon-table";
 import {TuiLetModule} from "@taiga-ui/cdk";
 import {TuiTabsModule} from "@taiga-ui/kit";
+import {PolityTableModule} from "../../shared/polity-table/polity-table.module";
+import {PolityFilterModule} from "../../shared/polity-filter/polity-filter.module";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
     declarations: [
-        ProfileFollowComponent,
         ProfileFollowEditComponent
     ],
-    exports: [
-        ProfileFollowComponent
-    ],
+    exports: [],
     imports: [
         CommonModule,
         TuiButtonModule,
         TuiTableModule,
         TuiLetModule,
-        TuiTabsModule
+        TuiTabsModule,
+        PolityTableModule,
+        PolityFilterModule,
+        ReactiveFormsModule
     ]
 })
 export class ProfileFollowModule {

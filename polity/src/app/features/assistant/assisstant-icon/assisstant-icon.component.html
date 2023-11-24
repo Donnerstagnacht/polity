@@ -6,12 +6,17 @@
 
 >
 	<tui-marker-icon
+			[class.tui-skeleton]="isAssistantLoading()"
 			class="tui-island__marker positive"
 			size="s"
 			src="assets/assistants/aria.svg"
 	></tui-marker-icon>
 	<section>
-		<h3 class="header tui-text_body-s">{{activatedTutorial.title}}</h3>
-		<p class="description tui-text_body-xs">{{activatedTutorial.description}}</p>
+		<h3
+				[class.tui-skeleton]="isAssistantLoading()"
+				class="header tui-text_body-s">{{activatedTutorial.title}}</h3>
+		<p
+				[class.tui-skeleton]="isAssistantLoading()"
+				class="description tui-text_body-xs">{{activatedTutorial.description}}</p>
 	</section>
 </button>

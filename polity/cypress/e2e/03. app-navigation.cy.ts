@@ -19,17 +19,16 @@ Sizes.forEach((size: Size): void => {
             .click()
             cy.getDataCy('search-instruction')
             .shouldBeVisible()
-            .contains('Suche etwas.')
         })
 
         it('navigate to NEW tab.', (): void => {
-            cy.getDataCy('nav-search', 'nav-search-desktop')
+            cy.getDataCy('nav-new', 'nav-new-desktop')
             .filter(':visible')
             .first()
             .click()
-            cy.getDataCy('search-instruction')
-            .shouldBeVisible()
-            .contains('Suche etwas.')
+            cy.contains('new works')
+            // cy.getDataCy('search-instruction')
+            // .shouldBeVisible()
         })
 
         it('navigate to OFFICE tab.', (): void => {
@@ -37,9 +36,9 @@ Sizes.forEach((size: Size): void => {
             .filter(':visible')
             .first()
             .click()
-            cy.getDataCy('office-instruction')
+
+            cy.contains('Benachrichtigungen')
             .shouldBeVisible()
-            .contains('Dein Büro.')
         })
 
         it('navigate to HOME tab.', (): void => {

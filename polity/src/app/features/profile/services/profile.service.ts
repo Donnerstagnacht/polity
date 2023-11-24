@@ -1,22 +1,20 @@
-import {Injectable, WritableSignal} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {Profile} from "../types-and-interfaces/profile";
 import {ProfileStoreService} from "./profile-store.service";
-import {NotificationsStoreService} from "../../../core/services/notifications-store.service";
 import {TuiFileLike} from "@taiga-ui/kit";
 import {SessionStoreService} from "../../../core/services/session-store.service";
-import {supabaseClient} from "../../../core/services/supabase-client";
-import {DatabaseModified} from "../../../../../supabase/types/supabase.modified";
+import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
+import {supabaseClient} from "../../../shared/services/supabase-client";
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProfileService {
-    private supabase: SupabaseClient<DatabaseModified> = supabaseClient
+    private supabase: SupabaseClient<DatabaseOverwritten> = supabaseClient
 
     constructor(
         private readonly profileStoreService: ProfileStoreService,
-        private readonly notificationService: NotificationsStoreService,
         private readonly sessionStoreService: SessionStoreService
     ) {
     }
@@ -27,20 +25,18 @@ export class ProfileService {
      * @param {string} id - The ID of the profile to retrieve.
      * @return {Promise<void>}
      */
-    public async selectProfile(id: string): Promise<PostgrestSingleResponse<Profile>> {
-        try {
+    public async selectProfile(id: string): Promise<void> {
+        await this.profileStoreService.profile.wrapSelectFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<Profile> = await this.supabase
             .from('profiles')
             .select(`id, username, first_name, last_name, profile_image`)
             .eq('id', id)
             .single()
             .throwOnError();
-            this.profileStoreService.setProfile(response.data);
-            return response;
-        } catch (error: any) {
-            this.notificationService.updateNotification(error.message, true);
-            return error
-        }
+            if (response.data) {
+                this.profileStoreService.profile.setEntity(response.data);
+            }
+        })
     }
 
     /**
@@ -50,29 +46,22 @@ export class ProfileService {
      * @return {Promise<void>}
      */
     public async updateProfile(profile: Profile): Promise<void> {
-        const sessionId: string | null = this.sessionStoreService.sessionId();
+        const sessionId: string | null = this.sessionStoreService.getSessionId();
 
-        try {
+        await this.profileStoreService.profile.wrapUpdateFunction(async (): Promise<void> => {
             if (sessionId) {
                 const update: Profile = {
                     ...profile,
                     updated_at: new Date(),
                     id: sessionId
                 }
-                if (update.id) {
-                }
                 const databaseResponse: PostgrestSingleResponse<null> = await this.supabase.from('profiles').upsert(update)
-
                 if (databaseResponse.error) throw databaseResponse.error
-                this.profileStoreService.setProfile(profile);
+                this.profileStoreService.profile.mutateEntity(profile)
             } else {
                 throw new Error('no session')
             }
-        } catch (error) {
-            if (error instanceof Error) {
-                this.notificationService.updateNotification(error.message, true);
-            }
-        }
+        })
     }
 
     /**
@@ -82,13 +71,13 @@ export class ProfileService {
      * @return {Promise<void>}
      */
     async updateProfileImage(imageUrl: string): Promise<void> {
-        const profileToUpdate: WritableSignal<Profile | null> = this.profileStoreService.selectProfile();
-        const id: string | null | undefined = profileToUpdate()?.id;
-
-        await this.supabase
-        .from('profiles')
-        .update({profile_image: imageUrl})
-        .eq('id', id as string);
+        const id = this.profileStoreService.profile.getValueByKey('id')
+        this.profileStoreService.profile.wrapUpdateFunction(async (): Promise<void> => {
+            await this.supabase
+            .from('profiles')
+            .update({profile_image: imageUrl})
+            .eq('id', id as string);
+        })
     }
 
     /**
@@ -121,6 +110,7 @@ export class ProfileService {
         data: null,
         error: Error
     }> {
+        this.profileStoreService.profile
         const fileIn: File = file as File;
         return this.supabase
         .storage

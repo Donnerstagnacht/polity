@@ -1,10 +1,9 @@
 import {Component, signal, WritableSignal} from '@angular/core';
-import {Profile} from "../../profile/types-and-interfaces/profile";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {SearchService} from "../services/search.service";
 import {SearchStoreService} from "../services/search-store.service";
 import {debounceTime} from "rxjs";
-import {UiStoreService} from "../../../core/services/ui-store.service";
+import {Functions} from "../../../../../supabase/types/supabase.shorthand-types";
 
 @Component({
     selector: 'polity-search-user',
@@ -12,7 +11,8 @@ import {UiStoreService} from "../../../core/services/ui-store.service";
     styleUrls: ['./search-user.component.less']
 })
 export class SearchUserComponent {
-    protected searchResults: WritableSignal<Profile[] | null> = signal([]);
+    loading: WritableSignal<boolean> = signal(false);
+    protected searchResults: WritableSignal<Functions<'search_user'>> = signal([]);
     protected searchForm: FormGroup<{
         search: FormControl<string | null>
     }> = new FormGroup({
@@ -24,9 +24,10 @@ export class SearchUserComponent {
     constructor(
         private readonly searchService: SearchService,
         private readonly searchStoreService: SearchStoreService,
-        private readonly globalUiStateService: UiStoreService
     ) {
-        this.searchResults = this.searchStoreService.selectProfileSearchResults();
+        this.loading = this.searchStoreService.profilSearchResults.loading.getLoading()
+        this.searchResults = this.searchStoreService.profilSearchResults.getEntities();
+        // this.searchResults = this.searchStoreService.selectProfileSearchResults();
         this.searchForm.get('search')?.valueChanges.pipe(
             debounceTime(1000)).subscribe(
             () => this.onKeyUp()
@@ -34,11 +35,11 @@ export class SearchUserComponent {
     }
 
     public focused(): void {
-        this.searchStoreService.updateProfileSearchResults(null)
+        this.searchStoreService.profilSearchResults.resetEntities()
+        // this.searchStoreService.updateProfileSearchResults(null)
     };
 
     private async onKeyUp(): Promise<void> {
-        this.globalUiStateService.setLoading(true)
         let searchTerm: string | null = this.searchForm.controls.search.value
         if (searchTerm) {
             if (searchTerm.endsWith(' ')) {
@@ -47,7 +48,6 @@ export class SearchUserComponent {
             searchTerm = searchTerm.replace(/ /g, '|')
 
             await this.searchService.searchUser(searchTerm);
-            this.globalUiStateService.setLoading(false)
         }
     }
 }

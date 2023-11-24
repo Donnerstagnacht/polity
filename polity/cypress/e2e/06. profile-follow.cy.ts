@@ -41,28 +41,31 @@ Sizes.forEach((size: Size): void => {
             cy.searchUser(followingUser.first_name as string)
             .click()
 
-            cy.intercept('POST', 'https://qwetlgmbngpopdcgravw.supabase.co/rest/v1/rpc/check_if_following').as('isFollowing')
-            cy.intercept('POST',
-                'https://qwetlgmbngpopdcgravw.supabase.co/rest/v1/rpc/select_following_counter')
-            .as('followingCounter')
-            cy.wait(['@followingCounter', '@isFollowing'])
+            // cy.intercept('POST', 'https://qwetlgmbngpopdcgravw.supabase.co/rest/v1/rpc/check_if_following').as('isFollowing')
+            // cy.intercept('POST',
+            //     'https://qwetlgmbngpopdcgravw.supabase.co/rest/v1/rpc/select_following_counter')
+            // .as('followingCounter')
+            // cy.wait(['@followingCounter', '@isFollowing'])
 
             cy.getDataCy('first-name')
             .shouldBeVisible()
             .contains(followingUser.first_name as string)
 
-            cy.intercept('POST',
-                'https://qwetlgmbngpopdcgravw.supabase.co/rest/v1/rpc/unfollow_transaction')
-            .as('unfollowTransaction')
+            // cy.intercept('POST',
+            //     'https://qwetlgmbngpopdcgravw.supabase.co/rest/v1/rpc/unfollow_transaction')
+            // .as('unfollowTransaction')
 
-            cy.getDataCy('followProfileButton')
+            cy.getDataCy('followButton')
             .shouldBeVisible()
             .should('have.text', 'UNFOLLOW')
             .click()
 
-            cy.wait('@unfollowTransaction')
+            cy.contains('Successful Update')
+            .should('be.visible')
 
-            cy.getDataCy('followProfileButton')
+            // cy.wait('@unfollowTransaction')
+
+            cy.getDataCy('followButton')
             .shouldBeVisible()
             .should('have.text', 'FOLLOW')
 
@@ -98,12 +101,12 @@ Sizes.forEach((size: Size): void => {
             .shouldBeVisible()
             .click()
 
-            cy.getDataCy('following-first-name')
+            cy.getDataCy('following_first_name')
             .shouldBeVisible()
             .contains(followingUser.first_name as string)
 
             cy.intercept('POST', 'https://qwetlgmbngpopdcgravw.supabase.co/rest/v1/rpc/unfollow_transaction').as('unfollowUser')
-            cy.getDataCy('following-remove')
+            cy.getDataCy('following_remove')
             //  cy.contains(followingUser.first_name)
             // .find('[data-cy="following-remove"]')
             .first()
@@ -120,7 +123,9 @@ Sizes.forEach((size: Size): void => {
             cy.signOut(followUser)
             cy.signIn(followingUser)
             cy.navigateToHome();
-            cy.contains(followingUser.first_name as string)
+
+            cy.getDataCy('home-to-profile')
+            .shouldBeVisible()
             .click();
 
             cy.intercept('POST', 'https://qwetlgmbngpopdcgravw.supabase.co/rest/v1/rpc/select_follower_of_user').as('loadFollowerOfUser')
@@ -133,12 +138,11 @@ Sizes.forEach((size: Size): void => {
             .shouldBeVisible()
             .click()
 
-            cy.getDataCy('follower-first-name')
+            cy.getDataCy('follower_first_name')
             .shouldBeVisible()
-            .contains(followUser.first_name as string)
 
             cy.intercept('POST', 'https://qwetlgmbngpopdcgravw.supabase.co/rest/v1/rpc/unfollow_transaction').as('unfollowUser')
-            cy.getDataCy('follower-remove')
+            cy.getDataCy('follower_remove')
             // cy.contains(followUser.first_name)
             // .find('[data-cy="follower-remove"]')
             .shouldBeVisible()

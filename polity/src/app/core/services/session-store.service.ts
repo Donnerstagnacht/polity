@@ -1,17 +1,20 @@
 import {Injectable, signal, WritableSignal} from '@angular/core';
 import {AuthSession} from "@supabase/supabase-js";
 import {Router} from "@angular/router";
+import {LoadingStoreService} from "../../shared/signal-store/loading-store.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class SessionStoreService {
+    public loading: LoadingStoreService
     private session: WritableSignal<AuthSession | null> = signal(null);
 
     constructor(
         private readonly router: Router
     ) {
         this.setInitialSessionData();
+        this.loading = new LoadingStoreService();
     }
 
     /**
@@ -19,7 +22,7 @@ export class SessionStoreService {
      *
      * @return {string | null} The session ID of the user, or null if not available.
      */
-    public sessionId(): string | null {
+    public getSessionId(): string | null {
         if (this.session()?.user.id) {
             return this.session()?.user.id as string
         } else {

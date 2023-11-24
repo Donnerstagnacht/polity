@@ -1,11 +1,10 @@
-import {Component, WritableSignal} from '@angular/core';
+import {Component, signal, WritableSignal} from '@angular/core';
 import {TuiFileLike} from "@taiga-ui/kit";
 import {from, Observable, of, Subject, switchMap} from "rxjs";
 import {FormControl} from "@angular/forms";
 import {ProfileService} from "../services/profile.service";
 import {Profile} from "../types-and-interfaces/profile";
 import {ProfileStoreService} from "../services/profile-store.service";
-import {UiStoreService} from "../../../core/services/ui-store.service";
 
 @Component({
     selector: 'polity-profile-image-upload',
@@ -13,6 +12,7 @@ import {UiStoreService} from "../../../core/services/ui-store.service";
     styleUrls: ['./profile-image-upload.component.less']
 })
 export class ProfileImageUploadComponent {
+    isProfileLoading: WritableSignal<boolean> = signal(true)
     protected control = new FormControl();
     protected rejectedFiles$: Subject<TuiFileLike | null> = new Subject<TuiFileLike | null>();
     protected loadingFiles$: Subject<TuiFileLike | null> = new Subject<TuiFileLike | null>();
@@ -24,14 +24,13 @@ export class ProfileImageUploadComponent {
 
     constructor(
         private readonly profileStoreService: ProfileStoreService,
-        private readonly profileService: ProfileService,
-        private readonly UIStoreService: UiStoreService
+        private readonly profileService: ProfileService
     ) {
-        this.profileWriteable = this.profileStoreService.selectProfile()
+        this.isProfileLoading = this.profileStoreService.profile.loading.getLoading()
+        this.profileWriteable = this.profileStoreService.profile.getEntity()
     }
 
     protected makeRequest(file: TuiFileLike): Observable<TuiFileLike | null> {
-        this.UIStoreService.setLoading(true);
         this.loadingFiles$.next(file);
         const fileExtension: string | undefined = file.name.split('.').pop()
         const filePath: string = `${Math.random()}.${fileExtension}`
@@ -46,7 +45,11 @@ export class ProfileImageUploadComponent {
                 } = this.profileService.getPublicBucket(response.data.path)
                 this.avatarUrl = publicBucket.data.publicUrl;
                 this.profileService.updateProfileImage(this.avatarUrl).then((): void => {
-                    this.profileStoreService.mutateProfileImageURL(this.avatarUrl)
+                    //TODO double check
+                    const profile = {
+                        profile_image: this.avatarUrl
+                    } as Profile
+                    this.profileStoreService.profile.mutateEntity(profile)
                 })
             }
             return file;
@@ -57,7 +60,6 @@ export class ProfileImageUploadComponent {
         })
         .finally((): null => {
             this.loadingFiles$.next(null)
-            this.UIStoreService.setLoading(false);
             return null;
         });
         return from(response)

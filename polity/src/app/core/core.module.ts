@@ -11,20 +11,13 @@ import {
 } from "@taiga-ui/core";
 import {ReactiveFormsModule} from "@angular/forms";
 import {SignUpComponent} from './sign-up/sign-up.component';
-import {CoreRoutingModule} from "./core-routing.module";
-import {FeatureDescriptionComponent} from './feature-description/feature-description.component';
-import {LandingComponent} from './landing/landing.component';
-import {LayoutModule} from "../layout/layout.module";
 import {SignOutComponent} from './sign-out/sign-out.component';
-import {SharedModule} from "../shared/shared.module";
 
 
 @NgModule({
     declarations: [
         SignInComponent,
         SignUpComponent,
-        FeatureDescriptionComponent,
-        LandingComponent,
         SignOutComponent
     ],
     exports: [
@@ -34,7 +27,6 @@ import {SharedModule} from "../shared/shared.module";
     ],
     imports: [
         CommonModule,
-        CoreRoutingModule,
         TuiInputModule,
         TuiButtonModule,
         TuiInputPasswordModule,
@@ -43,9 +35,7 @@ import {SharedModule} from "../shared/shared.module";
         TuiFieldErrorPipeModule,
         TuiHintModule,
         TuiSvgModule,
-        TuiTextfieldControllerModule,
-        LayoutModule,
-        SharedModule
+        TuiTextfieldControllerModule
     ]
 })
 export class CoreModule {

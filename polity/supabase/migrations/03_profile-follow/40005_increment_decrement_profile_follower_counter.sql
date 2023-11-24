@@ -1,5 +1,9 @@
-DROP FUNCTION IF EXISTS hidden_functions.increment_follower_counter(user_id uuid);
-CREATE OR REPLACE FUNCTION hidden_functions.increment_follower_counter(user_id uuid)
+DROP FUNCTION IF EXISTS hidden_functions.increment_follower_counter(
+    user_id uuid
+);
+CREATE OR REPLACE FUNCTION hidden_functions.increment_follower_counter(
+    user_id uuid
+)
     RETURNS void
     LANGUAGE plpgsql
     SECURITY INVOKER

@@ -68,6 +68,48 @@ export interface Database {
           }
         ]
       }
+      notifications_by_user: {
+        Row: {
+          created_at: string
+          id: string
+          read_by_receiver: boolean
+          receiver: string
+          sender: string
+          type_of_notification: Database["public"]["Enums"]["notifications_enum"]
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          read_by_receiver?: boolean
+          receiver: string
+          sender: string
+          type_of_notification?: Database["public"]["Enums"]["notifications_enum"]
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          read_by_receiver?: boolean
+          receiver?: string
+          sender?: string
+          type_of_notification?: Database["public"]["Enums"]["notifications_enum"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notifications_by_user_receiver_fkey"
+            columns: ["receiver"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "notifications_by_user_sender_fkey"
+            columns: ["sender"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       profiles: {
         Row: {
           first_name: string | null
@@ -75,6 +117,7 @@ export interface Database {
           id: string
           last_name: string | null
           profile_image: string | null
+          receive_follow_notifications: boolean
           updated_at: string | null
           username: string | null
         }
@@ -84,6 +127,7 @@ export interface Database {
           id: string
           last_name?: string | null
           profile_image?: string | null
+          receive_follow_notifications?: boolean
           updated_at?: string | null
           username?: string | null
         }
@@ -93,6 +137,7 @@ export interface Database {
           id?: string
           last_name?: string | null
           profile_image?: string | null
+          receive_follow_notifications?: boolean
           updated_at?: string | null
           username?: string | null
         }
@@ -111,16 +156,19 @@ export interface Database {
           follower_counter: number
           following_counter: number
           id: string
+          unread_notifications_counter: number
         }
         Insert: {
           follower_counter?: number
           following_counter?: number
           id: string
+          unread_notifications_counter?: number
         }
         Update: {
           follower_counter?: number
           following_counter?: number
           id?: string
+          unread_notifications_counter?: number
         }
         Relationships: [
           {
@@ -144,10 +192,35 @@ export interface Database {
         }
         Returns: boolean
       }
+      create_notification_from_user_transaction:
+        | {
+            Args: {
+              sender: string
+              receiver: string
+              type_of_notification: Database["public"]["Enums"]["notifications_enum"]
+              read_by_receiver: boolean
+            }
+            Returns: undefined
+          }
+        | {
+            Args: {
+              sender: string
+              receiver: string
+              type_of_notification: string
+              read_by_receiver: boolean
+            }
+            Returns: undefined
+          }
       follow_transaction: {
         Args: {
           follower_id: string
           following_id: string
+        }
+        Returns: undefined
+      }
+      reset_notification_counter: {
+        Args: {
+          user_id: string
         }
         Returns: undefined
       }
@@ -161,6 +234,7 @@ export interface Database {
           id: string
           last_name: string | null
           profile_image: string | null
+          receive_follow_notifications: boolean
           updated_at: string | null
           username: string | null
         }[]
@@ -182,6 +256,7 @@ export interface Database {
         }
         Returns: {
           id: string
+          profile_image: string
           first_name: string
           last_name: string
         }[]
@@ -194,6 +269,7 @@ export interface Database {
           profile_id: string
           follower_counter: number
           following_counter: number
+          unread_notifications_counter: number
         }[]
       }
       select_following_of_user: {
@@ -202,8 +278,35 @@ export interface Database {
         }
         Returns: {
           id: string
+          profile_image: string
           first_name: string
           last_name: string
+        }[]
+      }
+      select_notifications_of_users: {
+        Args: {
+          user_id: string
+        }
+        Returns: {
+          type_of_notification: Database["public"]["Enums"]["notifications_enum"]
+          read_by_receiver: boolean
+          created_at: string
+          first_name: string
+          last_name: string
+          profile_image: string
+        }[]
+      }
+      select_notifications_of_users2: {
+        Args: {
+          user_id: string
+        }
+        Returns: {
+          created_at: string
+          id: string
+          read_by_receiver: boolean
+          receiver: string
+          sender: string
+          type_of_notification: Database["public"]["Enums"]["notifications_enum"]
         }[]
       }
       unfollow_transaction: {
@@ -227,6 +330,13 @@ export interface Database {
         }
         Returns: undefined
       }
+      update_receive_notifications_from_follow: {
+        Args: {
+          user_id: string
+          new_status: boolean
+        }
+        Returns: undefined
+      }
       update_skip_tutorial: {
         Args: {
           user_id: string
@@ -236,6 +346,7 @@ export interface Database {
       }
     }
     Enums: {
+      notifications_enum: "follow_from_user"
       tutorial_enum: "welcome" | "profile" | "search"
     }
     CompositeTypes: {

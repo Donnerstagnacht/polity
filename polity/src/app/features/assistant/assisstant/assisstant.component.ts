@@ -27,9 +27,9 @@ export class AssisstantComponent {
     }
 
     async ngOnInit(): Promise<void> {
-        const sessionId: string | null = await this.sessionStoreService.sessionId() as string;
-        await this.assistantService.selectAssistant(sessionId)
-        this.assistant = this.assistantStoreService.selectAssistant()
+        const sessionId: string | null = this.sessionStoreService.getSessionId();
+        await this.assistantService.selectAssistant(sessionId as string);
+        this.assistant = this.assistantStoreService.assistant.getEntity()
 
         if (this.assistant()?.first_sign_in) {
             // TODO: needs to be activated in production

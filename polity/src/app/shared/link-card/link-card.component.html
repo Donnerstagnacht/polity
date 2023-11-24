@@ -2,7 +2,10 @@
 		(click)="onClick()"
 		[hoverable]="true"
 >
-	<p class="title title_size_s">
+	<p
+			[attr.data-cy]="dataCyTag"
+			[class.tui-skeleton]="isLoading()"
+			class="title title_size_s">
 		{{profile()?.first_name}} {{profile()?.last_name}}
 	</p>
 </tui-island>

@@ -18,16 +18,17 @@
 	</div>
 </form>
 <div
-		*ngIf="searchResults()"
+		*ngIf="searchResults() || loading()"
 		class="grid tui-space_top-4">
 	<div
 			*ngFor="let profile of searchResults()"
 			[attr.data-cy]="'user-search-results'"
 			class="grid-item tui-space_top-4"
 	>
-		<polity-profile-card
+		<polity-search-profile-result
+				[isLoading]="this.loading"
 				[profile]="profile"
-		></polity-profile-card>
+		></polity-search-profile-result>
 	</div>
 </div>
 

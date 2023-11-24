@@ -14,6 +14,7 @@ copy "%~dp0polity\supabase\migrations\02_profile\*" "%destination_folder%"
 copy "%~dp0polity\supabase\migrations\03_profile-follow\*" "%destination_folder%"
 copy "%~dp0polity\supabase\migrations\04_search\*" "%destination_folder%"
 copy "%~dp0polity\supabase\migrations\05_assistant\*" "%destination_folder%"
+copy "%~dp0polity\supabase\migrations\06_notifications\*" "%destination_folder%"
 
 copy "%~dp0polity\supabase\migrations\99_seed\*" "%destination_folder%"
 
