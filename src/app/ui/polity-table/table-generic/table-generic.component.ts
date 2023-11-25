@@ -3,7 +3,9 @@ import {Component, Input, signal, WritableSignal} from '@angular/core';
 @Component({
     selector: 'polity-table-generic',
     templateUrl: './table-generic.component.html',
-    styleUrls: ['./table-generic.component.less']
+    styleUrls: ['./table-generic.component.less'],
+    standalone: true,
+    imports: [],
 })
 export class TableGenericComponent<ObjectType> {
     @Input() public dataKeysForColumns: (keyof ObjectType)[] = [];

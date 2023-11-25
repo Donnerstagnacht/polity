@@ -1,40 +1,39 @@
 <div class="polity-center">
-	<polity-wiki-headline
-			[firstName]="profile()?.first_name"
-			[isLoading]="isProfileLoading"
-			[lastName]="profile()?.last_name"
-	></polity-wiki-headline>
+    <polity-wiki-headline
+        [firstName]="profile()?.first_name"
+        [isLoading]="isProfileLoading"
+        [lastName]="profile()?.last_name"
+    ></polity-wiki-headline>
 
-	<div
-			class=" polity-flex-container polity-single-item-centered tui-space_right-4 tui-space_left-4">
-		<polity-counter
-				[counterTitle]="'Follower'"
-				[counterValue]="this.profileCounter()?.follower_counter"
-				[dataCyTag]="'followerCounter'"
-				[isLoading]="this.isProfileCounterLoading"
-				class="polity-flex-item-first"
-		></polity-counter>
-		<polity-counter
-				[counterTitle]="'Following'"
-				[counterValue]="this.profileCounter()?.following_counter"
-				[dataCyTag]="'followingCounter'"
-				[isLoading]="this.isProfileCounterLoading"
-				class="polity-flex-item-last"
-		></polity-counter>
-	</div>
+    <div
+        class=" polity-flex-container polity-single-item-centered tui-space_right-4 tui-space_left-4">
+        <polity-counter
+            [counterTitle]="'Follower'"
+            [counterValue]="this.profileCounter()?.follower_counter"
+            [dataCyTag]="'followerCounter'"
+            [isLoading]="this.isProfileCounterLoading"
+            class="polity-flex-item-first"
+        ></polity-counter>
+        <polity-counter
+            [counterTitle]="'Following'"
+            [counterValue]="this.profileCounter()?.following_counter"
+            [dataCyTag]="'followingCounter'"
+            [isLoading]="this.isProfileCounterLoading"
+            class="polity-flex-item-last"
+        ></polity-counter>
+    </div>
 
-	<div class="tui-space_bottom-4">
-		<polity-follow-button
-				(toggledFollowing)="toggleFollow($event)"
-				[isFollowing]="isFollowing()"
-				[isLoading]="this.isFollowingCheckLoading"
-				[isOwner]="isOwner()"
-		></polity-follow-button>
-	</div>
+    <div class="tui-space_bottom-4">
+        <polity-follow-button
+            (toggledFollowing)="toggleFollow($event)"
+            [isFollowing]="isFollowing()"
+            [isLoading]="this.isFollowingCheckLoading"
+            [isOwner]="isOwner()"
+        ></polity-follow-button>
+    </div>
 
-	<polity-wiki-image
-			[isLoading]="isProfileLoading"
-			[src]="profile()?.profile_image"
-	></polity-wiki-image>
-
+    <polity-wiki-image
+        [isLoading]="isProfileLoading"
+        [src]="profile()?.profile_image"
+    ></polity-wiki-image>
 </div>
