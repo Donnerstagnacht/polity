@@ -3,12 +3,12 @@
         (showFilter)="toggleShowFilter()"
         [dataCyTag]="'edit-follower-and-followings'"
         [headline]="'Deine Follower & Followings'"></polity-filter-headline>
-    <div *ngIf="showFilter">
+    @if (showFilter) {
         <ng-container [formGroup]="combinedForm">
             <polity-filter-string formGroupName="filterStringForm">
             </polity-filter-string>
         </ng-container>
-    </div>
+    }
 
     <polity-filter-clear (clearFilter)="clearFilter()">
     </polity-filter-clear>
@@ -31,8 +31,7 @@
         Following
     </button>
 </tui-tabs>
-
-<div *ngIf="showFollowers">
+@if (showFollowers) {
     <polity-table-three-icon-text-delete
         (remove)="removeFollower($event)"
 
@@ -44,9 +43,9 @@
         [isLoading]="isFollowersLoading"
     >
     </polity-table-three-icon-text-delete>
-</div>
+}
 
-<div *ngIf="!showFollowers">
+@if (!showFollowers) {
     <polity-table-three-icon-text-delete
         (remove)="removeFollowing($event)"
         [bonusKeys]="['last_name']"
@@ -57,4 +56,4 @@
         [isLoading]="isFollowingLoading"
     >
     </polity-table-three-icon-text-delete>
-</div>
+}

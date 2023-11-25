@@ -1,14 +1,15 @@
 <tui-root>
     <div class="polity-container">
-        <tui-notification
-            (close)="onClose()"
-            *ngIf="showErrorMessage()"
-            [icon]=""
-            class="tui-space_bottom-3"
-            status="error"
-        >
-            {{notification()}} {{showErrorMessage()}}
-        </tui-notification>
+        @if (showErrorMessage()) {
+            <tui-notification
+                (close)="onClose()"
+                [icon]=""
+                class="tui-space_bottom-3"
+                status="error"
+            >
+                {{ notification() }} {{ showErrorMessage() }}
+            </tui-notification>
+        }
         <router-outlet></router-outlet>
     </div>
 </tui-root>

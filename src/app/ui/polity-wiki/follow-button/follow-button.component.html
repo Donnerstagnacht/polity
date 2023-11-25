@@ -1,10 +1,12 @@
-<button
-		(click)="toggleFollow()"
-		*ngIf="!isOwner"
-		[attr.data-cy]="'followButton'"
-		[class.tui-skeleton]="isLoading()"
-		class="tui-form__button"
-		size="l"
-		tuiButton
-		type="button"
->{{isFollowing ? 'UNFOLLOW' : 'FOLLOW'}}</button>
+@if (!isOwner) {
+    <button
+        (click)="toggleFollow()"
+        [attr.data-cy]="'followButton'"
+        [class.tui-skeleton]="isLoading()"
+        class="tui-form__button"
+        size="l"
+        tuiButton
+        type="button"
+    >{{ isFollowing ? 'UNFOLLOW' : 'FOLLOW' }}
+    </button>
+}

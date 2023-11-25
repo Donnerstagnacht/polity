@@ -1,46 +1,49 @@
-<tui-input-files
-		(reject)="onReject($event)"
-		*ngIf="!imageControl.value"
-		[attr.data-cy]="'uploadImage'"
-		[class.tui-skeleton]="isProfileLoading()"
-		[formControl]="imageControl"
-		accept="image/*"
-></tui-input-files>
+@if (!imageControl.value) {
+    <tui-input-files
+        (reject)="onReject($event)"
+        [attr.data-cy]="'uploadImage'"
+        [class.tui-skeleton]="isProfileLoading()"
+        [formControl]="imageControl"
+        accept="image/*"
+    ></tui-input-files>
+}
+
 
 <tui-files [attr.data-cy]="'loading'" class="tui-space_top-1">
-	<tui-file
-			(removed)="removeFile()"
-			*ngIf="loadedFiles$ | async as file"
-			[attr.data-cy]="'test'"
-			[file]="file"
-			[showDelete]="imageControl.enabled"
-	></tui-file>
-
-	<tui-file
-			(removed)="clearRejected()"
-			*ngIf="rejectedFiles$ | async as file"
-			[attr.data-cy]="'test'"
-			[file]="file"
-			[showDelete]="imageControl.enabled"
-			state="error"
-	></tui-file>
-
-	<tui-file
-			*ngIf="loadingFiles$ | async as file"
-			[attr.data-cy]="'test'"
-			[file]="file"
-			[showDelete]="imageControl.enabled"
-			state="loading"
-	></tui-file>
+    @if (loadedFiles$ | async;as file) {
+        <tui-file
+            (removed)="removeFile()"
+            [attr.data-cy]="'test'"
+            [file]="file"
+            [showDelete]="imageControl.enabled"
+        ></tui-file>
+    }
+    @if (rejectedFiles$ | async;as file) {
+        <tui-file
+            (removed)="clearRejected()"
+            [attr.data-cy]="'test'"
+            [file]="file"
+            [showDelete]="imageControl.enabled"
+            state="error"
+        ></tui-file>
+    }
+    @if (loadingFiles$ | async;as file) {
+        <tui-file
+            [attr.data-cy]="'test'"
+            [file]="file"
+            [showDelete]="imageControl.enabled"
+            state="loading"
+        ></tui-file>
+    }
 </tui-files>
 
 <div class="polity-center tui-space_top-5">
-	<img
-			[attr.data-cy]="'uploadedImage'"
-			[class.tui-skeleton]="isProfileLoading()"
-			alt="Italian Trulli"
-			src="{{profileWriteable()?.profile_image}}"
-			width="60%"
-	>
+    <img
+        [attr.data-cy]="'uploadedImage'"
+        [class.tui-skeleton]="isProfileLoading()"
+        alt="Italian Trulli"
+        src="{{profileWriteable()?.profile_image}}"
+        width="60%"
+    >
 </div>
 
