@@ -27,8 +27,8 @@ export class ProfileWikiComponent {
         this.isFollowingCheckLoading = this.profileStoreService.profile.uiFlagStore.getUiFlag('isFollowingCheckLoading')
         this.isProfileLoading = this.profileStoreService.profile.loading.getLoading()
         this.isProfileCounterLoading = this.profileCountersStoreService.profileCounters.loading.getLoading()
-        this.profileCounter = this.profileCountersStoreService.profileCounters.getEntity()
-        this.profile = this.profileStoreService.profile.getEntity()
+        this.profileCounter = this.profileCountersStoreService.profileCounters.getObject()
+        this.profile = this.profileStoreService.profile.getObject()
         this.isOwner = this.profileStoreService.profile.uiFlagStore.getUiFlag('isOwner')
         this.isFollowing = this.profileStoreService.profile.uiFlagStore.getUiFlag('isFollowing')
     }

@@ -45,7 +45,7 @@ export class AssisstantIconComponent {
         private readonly assistantStoreService: AssistantStoreService
     ) {
         this.isAssistantLoading = this.assistantStoreService.assistant.loading.getLoading();
-        this.assistant = this.assistantStoreService.assistant.getEntity()
+        this.assistant = this.assistantStoreService.assistant.getObject()
 
         effect((): void => {
             if (this.assistant()?.last_tutorial === 'welcome') {

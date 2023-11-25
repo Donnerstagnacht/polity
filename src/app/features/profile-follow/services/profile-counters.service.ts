@@ -34,7 +34,7 @@ export class ProfileCountersService {
             //         counters: response.data,
             //     } as ProfileStatistics;
             if (response.data) {
-                this.profileCountersStoreService.profileCounters.setEntity(response.data);
+                this.profileCountersStoreService.profileCounters.setObject(response.data);
             }
         })
     }

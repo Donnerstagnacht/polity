@@ -38,7 +38,7 @@ export class AssistantWelcomeDialogComponent {
         private router: Router
     ) {
         this.sessionId = this.sessionStoreService.getSessionId();
-        this.assistant = this.assistantStoreService.assistant.getEntity()
+        this.assistant = this.assistantStoreService.assistant.getObject()
 
         if (this.assistant()?.last_tutorial === 'welcome') {
             this.index = 0

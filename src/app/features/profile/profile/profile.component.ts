@@ -44,9 +44,9 @@ export class ProfileComponent {
     }
 
     ngOnDestroy(): void {
-        this.profileStoreService.profile.resetEntity();
+        this.profileStoreService.profile.resetObject();
         // this.profileStatisticsStoreService.profileStatistics.resetEntity()
-        this.profileCountersStoreService.profileCounters.resetEntity()
+        this.profileCountersStoreService.profileCounters.resetObject()
     }
 
     private checkIsOwner(urlId: string, sessionId: string | null): void {

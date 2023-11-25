@@ -22,7 +22,7 @@ export class AssistantToggleComponent {
         private readonly assistantService: AssistantService,
         private readonly assistantStoreService: AssistantStoreService
     ) {
-        this.assistant = this.assistantStoreService.assistant.getEntity()
+        this.assistant = this.assistantStoreService.assistant.getObject()
         this.isAssistantLoading = this.assistantStoreService.assistant.loading.getLoading()
 
         effect((): void => {

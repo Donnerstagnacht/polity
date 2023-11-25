@@ -34,7 +34,7 @@ export class ProfileService {
             .single()
             .throwOnError();
             if (response.data) {
-                this.profileStoreService.profile.setEntity(response.data);
+                this.profileStoreService.profile.setObject(response.data);
             }
         })
     }
@@ -57,7 +57,7 @@ export class ProfileService {
                 }
                 const databaseResponse: PostgrestSingleResponse<null> = await this.supabase.from('profiles').upsert(update)
                 if (databaseResponse.error) throw databaseResponse.error
-                this.profileStoreService.profile.mutateEntity(profile)
+                this.profileStoreService.profile.mutateObject(profile)
             } else {
                 throw new Error('no session')
             }
