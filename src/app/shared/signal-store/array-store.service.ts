@@ -3,20 +3,10 @@ import {TuiDay} from "@taiga-ui/cdk";
 import {WrapperStoreService} from "./wrapper-store.service";
 import {PaginationStoreService} from "./pagination-store.service";
 
-type GenericObject = {
-    [key: string]: any
-};
-
-type DateKeys<T> = {
-    [K in keyof T]: T[K] extends Date ? K : never;
-}[keyof T];
-
 @Injectable({
     providedIn: 'root'
 })
 export class ArrayStoreService<StoredObject, UiFlags extends Record<string, WritableSignal<boolean>>> extends WrapperStoreService<UiFlags> {
-    // private
-    // public usePagination: boolean = false;
     public readonly pagination: PaginationStoreService;
     private entities: WritableSignal<StoredObject[]> = signal([]);
     private storedEntities: WritableSignal<StoredObject[]> = signal([]);
