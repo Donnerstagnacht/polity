@@ -31,7 +31,6 @@ export class FollowingOfUserService {
                 }
             )
             .throwOnError()
-            console.log('results', followingResponse.data)
             if (followingResponse.data) {
                 this.followingOfUserStoreService.followingOfUser.setObjects(followingResponse.data)
             }

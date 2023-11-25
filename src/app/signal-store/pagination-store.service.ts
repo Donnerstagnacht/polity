@@ -6,6 +6,13 @@ type Pagination = {
     step: number
 }
 
+/**
+ * Creates a pagination instance.
+ *
+ * @param {@Inject(20)} step - The step determines how many store objects are shown on page load and added if the
+ * user scrolls to the bottom.
+ *
+ */
 @Injectable({
     providedIn: 'root'
 })
@@ -16,14 +23,6 @@ export class PaginationStoreService {
         step: 20
     }
 
-    /**
-     * Creates a pagination instance.
-     *
-     * @param {@Inject(20)} step - The step determines how many store objects are shown on page load and
-     * added if
-     * the user scrolls to the bottom.
-     *
-     */
     constructor(@Inject(20) private step: number) {
         this.pagination.to = this.step;
         this.pagination.step = this.step;

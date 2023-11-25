@@ -26,7 +26,7 @@ export class AssistantWelcomeDialogComponent {
     })
     protected name: string = '';
     protected index: number = 0;
-    private sessionId: string | null = null;
+    private readonly sessionId: string | null = null;
     private assistant: WritableSignal<Tables<'assistants'> | null> = signal(null);
 
     constructor(
@@ -49,42 +49,54 @@ export class AssistantWelcomeDialogComponent {
         }
     }
 
-    protected step1navigateToProfileStep(delta: number): void {
-        this.updateProfileName();
-        this.assistantService.updateFirstSignIn(false)
-        this.setLastTutorial('profile')
+    protected async step1navigateToProfileStep(delta: number): Promise<void> {
+        await Promise.all([
+            this.updateProfileName(),
+            this.assistantService.updateFirstSignIn(false),
+            this.setLastTutorial('profile')
+        ])
         this.index = (this.index + delta) % 3;
     }
 
-    protected step1closeTutorial(): void {
-        this.updateProfileName();
-        this.assistantService.updateFirstSignIn(false)
-        this.setLastTutorial('profile')
+    protected async step1closeTutorial(): Promise<void> {
+        await Promise.all([
+            this.updateProfileName(),
+            this.assistantService.updateFirstSignIn(false),
+            this.setLastTutorial('profile')
+        ])
         this.closeDialog()
     }
 
-    protected step2closeAndSkipTutorial(): void {
-        this.setLastTutorial('search')
-        this.assistantService.skipTutorial(true)
+    protected async step2closeAndSkipTutorial(): Promise<void> {
+        await Promise.all([
+            this.setLastTutorial('search'),
+            this.assistantService.skipTutorial(true)
+        ])
         this.closeDialog()
     }
 
-    protected step2navigateToProfilePage(): void {
-        this.router.navigate(['/profile/' + this.sessionId + '/edit']);
-        this.setLastTutorial('search')
+    protected async step2navigateToProfilePage(): Promise<void> {
+        await Promise.all([
+            await this.router.navigate(['/profile/' + this.sessionId + '/edit']),
+            this.setLastTutorial('search')
+        ])
         this.closeDialog();
     }
 
-    protected step3navigateToSearchPage(): void {
-        this.router.navigate(['/search']);
-        this.assistantService.updateLastTutorial('search')
-        this.assistantService.skipTutorial(true)
+    protected async step3navigateToSearchPage(): Promise<void> {
+        await this.router.navigate(['/search']);
+        await Promise.all([
+            this.assistantService.updateLastTutorial('search'),
+            this.assistantService.skipTutorial(true)
+        ])
         this.closeDialog();
     }
 
-    protected step3closeAndSkipTutorial(): void {
-        this.setLastTutorial('search')
-        this.assistantService.skipTutorial(true)
+    protected async step3closeAndSkipTutorial(): Promise<void> {
+        await Promise.all([
+            this.setLastTutorial('search'),
+            this.assistantService.skipTutorial(true)
+        ])
         this.closeDialog()
     }
 
@@ -92,18 +104,20 @@ export class AssistantWelcomeDialogComponent {
         this.dialogContext.completeWith(false);
     }
 
-    private setLastTutorial(newStatus: DatabaseOverwritten["public"]["Enums"]["tutorial_enum"]): void {
-        this.assistantService.updateLastTutorial(newStatus)
+    private async setLastTutorial(newStatus: DatabaseOverwritten["public"]["Enums"]["tutorial_enum"]): Promise<void> {
+        await this.assistantService.updateLastTutorial(newStatus)
     }
 
-    private updateProfileName(): void {
+    private async updateProfileName(): Promise<void> {
         this.name = this.welcomeForm.value.firstName + ' ' + this.welcomeForm.value.lastName;
         const profile: Profile = {
             id: '',
             first_name: this.welcomeForm.value.firstName as string,
             last_name: this.welcomeForm.value.lastName as string
         }
-        this.profilService.updateProfile(profile)
-        this.assistantService.updateLastTutorial('profile')
+        await Promise.all([
+            this.profilService.updateProfile(profile),
+            this.assistantService.updateLastTutorial('profile')
+        ])
     }
 }

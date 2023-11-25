@@ -24,6 +24,7 @@ export class AssistantToggleComponent {
     ) {
         this.assistant = this.assistantStoreService.assistant.getObject()
         this.isAssistantLoading = this.assistantStoreService.assistant.loading.getLoading()
+        console.log('loading', this.isAssistantLoading())
 
         effect((): void => {
             this.toggleAssistantForm.patchValue({
@@ -32,10 +33,10 @@ export class AssistantToggleComponent {
         })
     }
 
-    protected toggleAssistant(): void {
+    protected async toggleAssistant(): Promise<void> {
         const newValue: boolean = this.toggleAssistantForm.value.showAssistant as boolean
-        this.assistantService.skipTutorial(newValue)
-        this.assistantService.updateLastTutorial('profile')
+        await this.assistantService.skipTutorial(newValue)
+        await this.assistantService.updateLastTutorial('profile')
     }
 
 }

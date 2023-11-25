@@ -15,22 +15,6 @@ export class TableGenericComponent<ObjectType> {
     @Input() dataCyTags: string[] = [];
     @Input() dataCyTagsHeadline: string[] = [];
 
-    constructor() {
-        // console.log('bonusKeys', this.bonusKeys);
-        // console.log('dataKeysForColumns', this.dataKeysForColumns);
-        // console.log('data', this.data);
-        // console.log('isLoading', this.isLoading);
-        // console.log('headings', this.headings);
-    }
-
-    ngOnInit(): void {
-        console.log('bonusKeys', this.bonusKeys);
-        console.log('dataKeysForColumns', this.dataKeysForColumns);
-        console.log('data', this.data());
-        console.log('isLoading', this.isLoading());
-        console.log('headings', this.headings);
-    }
-
     protected getTableValueKey(item: any, key: string | number | symbol): any {
         return item[key];
     }

@@ -9,7 +9,4 @@ import {Item} from "../../layout/types-and-interfaces/item";
 })
 export class AppSkeletonComponent {
     protected items: Item[] = menuItems;
-
-    constructor() {
-    }
 }

@@ -11,19 +11,19 @@ type pathsToValues<StoredObject> = StoredObject extends Record<string, unknown>
     }[keyof StoredObject & string]
     : never;
 
+/**
+ * Creates an instance of the Object store. The store stores the specified object type.
+ *
+ * @param {DictionaryOfBooleans} uiFlags - Optional object that contains UI flags associated with the store. Defaults to an empty
+ * object.
+ * @return {@return {ObjectStoreService<StoredObject>}} An instance of the Object store.
+ */
 @Injectable({
     providedIn: 'root'
 })
 export class ObjectStoreService<StoredObject> extends WrapperStoreService {
     private storedObject: WritableSignal<StoredObject | null> = signal(null);
 
-    /**
-     * Creates an instance of the Object store. The store stores the specified object type.
-     *
-     * @param {DictionaryOfBooleans} uiFlags - Optional object that contains UI flags associated with the store. Defaults to an empty
-     * object.
-     * @return {@return {ObjectStoreService<StoredObject>}} An instance of the Object store.
-     */
     constructor(@Inject({}) private uiFlags: DictionaryOfBooleans = {}) {
         super(uiFlags);
     }
@@ -77,7 +77,6 @@ export class ObjectStoreService<StoredObject> extends WrapperStoreService {
      * @return
      */
     public incrementKey(key: keyof StoredObject | string): void {
-        console.log('in function')
         if (this.storedObject()) {
             this.incrementKeyRecursive(this.storedObject(), key);
         }
@@ -103,12 +102,12 @@ export class ObjectStoreService<StoredObject> extends WrapperStoreService {
      * @return {any} The value associated with the given key in the stored object.
      */
     public getValueByKey(key: keyof StoredObject | pathsToValues<StoredObject>): any {
-        const keyAsString = key.toString()
+        const keyAsString: string = key.toString()
         return this.getValueRecursive(this.storedObject(), keyAsString.split('.'));
     }
 
     private getValueRecursive(obj: StoredObject | any, keys: string[]): any {
-        const currentKey = keys.shift();
+        const currentKey: string | undefined = keys.shift();
 
         if (obj && currentKey !== undefined) {
             return this.getValueRecursive(obj[currentKey], keys);
@@ -117,29 +116,28 @@ export class ObjectStoreService<StoredObject> extends WrapperStoreService {
         return obj;
     }
 
-    private incrementKeyRecursive(obj: any, key: keyof StoredObject | string): void {
-        if (obj && typeof obj === 'object') {
-            for (const prop in obj) {
-                if (obj.hasOwnProperty(prop)) {
-                    if (prop === key && typeof obj[prop] === 'number') {
-                        obj[prop]++;
-                        console.log('new value', obj[prop])
-                    } else if (typeof obj[prop] === 'object') {
-                        this.incrementKeyRecursive(obj[prop], key);
+    private incrementKeyRecursive(object: any, key: keyof StoredObject | string): void {
+        if (object && typeof object === 'object') {
+            for (const property in object) {
+                if (object.hasOwnProperty(property)) {
+                    if (property === key && typeof object[property] === 'number') {
+                        object[property]++;
+                    } else if (typeof object[property] === 'object') {
+                        this.incrementKeyRecursive(object[property], key);
                     }
                 }
             }
         }
     }
 
-    private decrementKeyRecursive(obj: any, key: keyof StoredObject | string): void {
-        if (obj && typeof obj === 'object') {
-            for (const prop in obj) {
-                if (obj.hasOwnProperty(prop)) {
-                    if (prop === key && typeof obj[prop] === 'number') {
-                        obj[prop]--;
-                    } else if (typeof obj[prop] === 'object') {
-                        this.decrementKeyRecursive(obj[prop], key);
+    private decrementKeyRecursive(object: any, key: keyof StoredObject | string): void {
+        if (object && typeof object === 'object') {
+            for (const property in object) {
+                if (object.hasOwnProperty(property)) {
+                    if (property === key && typeof object[property] === 'number') {
+                        object[property]--;
+                    } else if (typeof object[property] === 'object') {
+                        this.decrementKeyRecursive(object[property], key);
                     }
                 }
             }

@@ -8,11 +8,11 @@ import {Tutorial} from "../types-and-interfaces/tutorial";
 
 
 @Component({
-    selector: 'polity-assisstant-icon',
-    templateUrl: './assisstant-icon.component.html',
-    styleUrls: ['./assisstant-icon.component.less']
+    selector: 'polity-assistant-icon',
+    templateUrl: './assistant-icon.component.html',
+    styleUrls: ['./assistant-icon.component.less']
 })
-export class AssisstantIconComponent {
+export class AssistantIconComponent {
     protected isAssistantLoading: WritableSignal<boolean> = signal(true)
     private assistant: WritableSignal<Tables<'assistants'> | null> = signal(null)
     private tutorials: Tutorial[] = [

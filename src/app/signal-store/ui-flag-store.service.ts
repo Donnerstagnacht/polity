@@ -2,18 +2,18 @@ import {Inject, Injectable, WritableSignal} from '@angular/core';
 
 export type DictionaryOfBooleans = Record<string, WritableSignal<boolean>>
 
+/**
+ * Constructs a new instance UI flag store instance.
+ *
+ * @param {type} initialUiFlags - A dictionary (key: string, value: WritableSignal<boolean>) of Ui flags
+ * @return {UiFlagStoreService}
+ */
 @Injectable({
     providedIn: 'root'
 })
 export class UiFlagStoreService {
     private uiFlags: DictionaryOfBooleans = {};
 
-    /**
-     * Constructs a new instance UI flag store instance.
-     *
-     * @param {type} initialUiFlags - A dictionary (key: string, value: WritableSignal<boolean>) of Ui flags
-     * @return {UiFlagStoreService}
-     */
     constructor(@Inject({}) private readonly initialUiFlags: DictionaryOfBooleans = {}) {
         this.uiFlags = this.initialUiFlags;
     }

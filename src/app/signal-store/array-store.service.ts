@@ -22,16 +22,6 @@ export class ArrayStoreService<StoredObject> extends WrapperStoreService {
     private displayedObjects: WritableSignal<StoredObject[]> = signal([]);
     private storedObjects: WritableSignal<StoredObject[]> = signal([]);
 
-    /**
-     * Constructs a new instance of an Array Store.
-     *
-     * @param {boolean} usePagination - Indicates whether pagination is used. Defaults to false, e.g. no pagination.
-     * @param {number} step -  The step determines how many store objects are shown on page load and added each time
-     * the user scrolls to the bottom. Defaults to 20.
-     * @param {DictionaryOfBooleans} uiFlags - Optional object that contains UI flags associated with the store.
-     * Defaults to an empty object.
-     * @return {ArrayStoreService<StoredObject>}
-     */
     constructor(
         @Inject(false) private usePagination: boolean = false,
         @Inject(20) private step: number = 20,

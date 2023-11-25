@@ -4,6 +4,12 @@ import {ErrorStoreService} from "./error-store.service";
 import {LoadingStoreService} from "./loading-store.service";
 import {DictionaryOfBooleans, UiFlagStoreService} from "./ui-flag-store.service";
 
+/**
+ * Constructs an instance of the WrapperStore.
+ *
+ * @param {DictionaryOfBooleans} initialUiFlags - uiFlags - Optional object that contains UI flags associated with the store. Defaults to an empty object.
+ * @return {WrapperStoreService}
+ */
 @Injectable({
     providedIn: 'root'
 })
@@ -13,12 +19,6 @@ export class WrapperStoreService {
     private readonly tuiAlertService: TuiAlertService = inject(TuiAlertService);
     private readonly errorStoreService: ErrorStoreService = inject(ErrorStoreService);
 
-    /**
-     * Constructs an instance of the WrapperStore.
-     *
-     * @param {DictionaryOfBooleans} initialUiFlags - uiFlags - Optional object that contains UI flags associated with the store. Defaults to an empty object.
-     * @return {WrapperStoreService}
-     */
     constructor(@Inject({}) private readonly initialUiFlags: DictionaryOfBooleans = {}) {
         this.loading = new LoadingStoreService();
         this.uiFlagStore = new UiFlagStoreService(this.initialUiFlags);

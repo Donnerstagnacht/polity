@@ -28,11 +28,6 @@ export class ProfileCountersService {
             )
             .single()
             .throwOnError();
-            //
-            // if (response.data) {
-            //     const updateData: ProfileStatistics = {
-            //         counters: response.data,
-            //     } as ProfileStatistics;
             if (response.data) {
                 this.profileCountersStoreService.profileCounters.setObject(response.data);
             }
@@ -45,7 +40,6 @@ export class ProfileCountersService {
 
         await this.profileCountersStoreService.profileCounters.wrapSelectFunction(async (): Promise<void> => {
             this.profileStoreService.profile.uiFlagStore.setUiFlagTrue('isFollowingCheckLoading')
-            // this.profileStoreService.setIsFollowingCheckLoading()
             const response: PostgrestSingleResponse<Functions<'check_if_following'>> = await this.supabaseClient.rpc(
                 'check_if_following',
                 {
@@ -56,25 +50,12 @@ export class ProfileCountersService {
             .single()
             .throwOnError();
 
-            console.log('check_if_following', response.data)
-
-            // TODO double check
             if (response.data) {
                 this.profileStoreService.profile.uiFlagStore.setUiFlagTrue('isFollowing')
-                //  this.profileStoreService.setIsFollowing()
             } else {
                 this.profileStoreService.profile.uiFlagStore.setUiFlagFalse('isFollowing')
-                // this.profileStoreService.setIsNotFollowing()
             }
             this.profileStoreService.profile.uiFlagStore.setUiFlagFalse('isFollowingCheckLoading')
-
-            // this.profileStoreService.setIsNotFollowingCheckLoading()
-
-            // if (response.data) {
-            //     const update = {
-            //         is_following: response.data,
-            //     } as unknown as PlainFunctions<'select_following_counter'>
-            //     this.profileCountersStoreService.profileCounters.mutateEntity(update);
         })
     }
 
@@ -91,8 +72,6 @@ export class ProfileCountersService {
             ).throwOnError()
 
             this.profileStoreService.profile.uiFlagStore.setUiFlagTrue('isFollowing')
-            // this.profileStoreService.setIsFollowing()
-            console.log('increment')
             this.profileCountersStoreService.profileCounters.incrementKey('follower_counter')
         })
     }
@@ -110,8 +89,6 @@ export class ProfileCountersService {
             ).throwOnError()
 
             this.profileStoreService.profile.uiFlagStore.setUiFlagFalse('isFollowing')
-            // this.profileStoreService.setIsNotFollowing()
-
             this.profileCountersStoreService.profileCounters.decrementKey('follower_counter')
         })
     }
