@@ -20,10 +20,15 @@
 			</polity-filter-clear>
 		</ng-container>
 	</div>
-
 </div>
 
-<div>
+<div
+		(scrolled)="onScrollDown($event)"
+		[infiniteScrollDistance]="scrollDistance"
+		[infiniteScrollThrottle]="throttle"
+		[infiniteScrollUpDistance]="scrollUpDistance"
+		infinite-scroll
+>
 	<polity-table-four-icon-text-tag-date
 			[bonusKeys]="['last_name']"
 			[dataCyTagsHeadline]="['profile_image_headline', 'first_name_headline', 'type_of_notification_headline',

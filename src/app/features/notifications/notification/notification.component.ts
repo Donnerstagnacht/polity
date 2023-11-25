@@ -4,6 +4,7 @@ import {NotificationsService} from "../services/notifications.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Functions} from "../../../../../supabase/types/supabase.shorthand-types";
 import {TuiDay} from "@taiga-ui/cdk";
+import {IInfiniteScrollEvent} from "ngx-infinite-scroll";
 
 type filterTag = { text: string, value: string }
 
@@ -13,6 +14,9 @@ type filterTag = { text: string, value: string }
     styleUrls: ['./notification.component.less'],
 })
 export class NotificationComponent {
+    protected throttle = 300;
+    protected scrollDistance = 1;
+    protected scrollUpDistance = 2;
     protected notifications: WritableSignal<Functions<'select_notifications_of_users'>> = signal([]);
     protected isNotificationsLoading: WritableSignal<boolean> = signal(true)
     protected showFilter: boolean = true;
@@ -51,7 +55,25 @@ export class NotificationComponent {
         )
     }
 
-    onCombinedFormChange(): void {
+    async ngOnInit(): Promise<void> {
+        await this.notificationsService.selectNotifications()
+        this.notifications = this.notificationStoreService.notifications.getEntities();
+    }
+
+    protected onScrollDown(event: IInfiniteScrollEvent): void {
+        this.notificationStoreService.notifications.onSrollToBottom()
+    }
+
+    protected clearFilter(): void {
+        this.combinedForm.reset()
+        this.notificationStoreService.notifications.resetFilteredEntities()
+    }
+
+    protected toggleShowFilter(): void {
+        this.showFilter = !this.showFilter
+    }
+
+    private onCombinedFormChange(): void {
         const stringFilter = this.combinedForm.get('filterStringForm')?.value.searchString;
 
         const typeFilter: filterTag[] = this.combinedForm.get('filterTypesForm')?.value.filters;
@@ -59,9 +81,6 @@ export class NotificationComponent {
 
         const dateFilterFrom: TuiDay = this.combinedForm.get('filterDateRangeForm')?.value.from;
         const dateFilterTo: TuiDay = this.combinedForm.get('filterDateRangeForm')?.value.to;
-
-        console.log('dateFilterFrom', dateFilterFrom)
-        console.log('toAsNativeDate', dateFilterTo)
 
         let filterByString: boolean = false;
         let filterByType: boolean = false;
@@ -95,22 +114,5 @@ export class NotificationComponent {
             dateFilterFrom,
             dateFilterTo
         )
-    }
-
-    async ngOnInit(): Promise<void> {
-        await this.notificationsService.selectNotifications()
-        this.notifications = this.notificationStoreService.notifications.getEntities();
-    }
-
-    protected clearFilter(): void {
-        this.combinedForm.reset()
-        this.notificationStoreService.notifications.resetFilteredEntities()
-    }
-
-    protected toggleShowFilter(): void {
-        if (!this.showFilter) {
-            console.log('activate filter')
-        }
-        this.showFilter = !this.showFilter
     }
 }

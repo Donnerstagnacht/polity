@@ -1,6 +1,7 @@
-import {Injectable, signal, WritableSignal} from '@angular/core';
+import {Inject, Injectable, signal, WritableSignal} from '@angular/core';
 import {TuiDay} from "@taiga-ui/cdk";
 import {WrapperStoreService} from "./wrapper-store.service";
+import {PaginationStoreService} from "./pagination-store.service";
 
 type GenericObject = {
     [key: string]: any
@@ -14,13 +15,16 @@ type DateKeys<T> = {
     providedIn: 'root'
 })
 export class ArrayStoreService<StoredObject, UiFlags extends Record<string, WritableSignal<boolean>>> extends WrapperStoreService<UiFlags> {
-    // public loading: LoadingStoreService;
+    // private
+    // public usePagination: boolean = false;
+    public readonly pagination: PaginationStoreService;
     private entities: WritableSignal<StoredObject[]> = signal([]);
     private storedEntities: WritableSignal<StoredObject[]> = signal([]);
 
-    constructor() {
+    constructor(@Inject(false) private usePagination: boolean = false) {
         super();
-        // this.loading = new LoadingStoreService();
+        this.pagination = new PaginationStoreService();
+        console.log('ArrayStoreService', this.usePagination);
     }
 
     getEntities(): WritableSignal<StoredObject[]> {
@@ -32,8 +36,17 @@ export class ArrayStoreService<StoredObject, UiFlags extends Record<string, Writ
     }
 
     setEntities(entities: StoredObject[]): void {
-        this.entities.set(entities);
-        this.storedEntities.set(entities);
+        if (!this.usePagination) {
+            this.storedEntities.set(entities);
+            this.entities.set(entities);
+            //after set
+            console.log('no pagination', this.entities())
+        } else {
+            this.storedEntities.set(entities);
+            console.log('initialLength', this.storedEntities().length)
+            this.entities.set(this.initialEntitiesWithPagination());
+            console.log('pagination', this.entities())
+        }
     }
 
     mutateEntities(entities: StoredObject[]): void {
@@ -60,6 +73,21 @@ export class ArrayStoreService<StoredObject, UiFlags extends Record<string, Writ
         return result;
     }
 
+    onSrollToBottom() {
+        this.pagination.increasePagination()
+        console.log('start and end not provided')
+        let to = this.pagination.getTo()
+        const from = to - this.pagination.getStep()
+        if (to > this.storedEntities().length) {
+            to = this.storedEntities().length
+        }
+        console.log('fetched pagination', from, to)
+        const dataOfNextVirtualPage: StoredObject[] = this.storedEntities().slice(from, to);
+        console.log(dataOfNextVirtualPage)
+        const newData = this.entities().concat(dataOfNextVirtualPage)
+        console.log('length', newData.length, to)
+        this.entities.set(this.entities().concat(dataOfNextVirtualPage))
+    }
 
     filterArray(
         // filterString parameter
@@ -176,5 +204,11 @@ export class ArrayStoreService<StoredObject, UiFlags extends Record<string, Writ
             return comparison;
         });
         return signal(results)
+    }
+
+    private initialEntitiesWithPagination(): StoredObject[] {
+        const to: number = this.pagination.getTo()
+        const initialData: StoredObject[] = this.storedEntities().slice(0, to);
+        return initialData
     }
 }
