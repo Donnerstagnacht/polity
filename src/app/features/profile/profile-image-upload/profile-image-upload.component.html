@@ -1,9 +1,9 @@
 <tui-input-files
 		(reject)="onReject($event)"
-		*ngIf="!control.value"
+		*ngIf="!imageControl.value"
 		[attr.data-cy]="'uploadImage'"
 		[class.tui-skeleton]="isProfileLoading()"
-		[formControl]="control"
+		[formControl]="imageControl"
 		accept="image/*"
 ></tui-input-files>
 
@@ -13,7 +13,7 @@
 			*ngIf="loadedFiles$ | async as file"
 			[attr.data-cy]="'test'"
 			[file]="file"
-			[showDelete]="control.enabled"
+			[showDelete]="imageControl.enabled"
 	></tui-file>
 
 	<tui-file
@@ -21,7 +21,7 @@
 			*ngIf="rejectedFiles$ | async as file"
 			[attr.data-cy]="'test'"
 			[file]="file"
-			[showDelete]="control.enabled"
+			[showDelete]="imageControl.enabled"
 			state="error"
 	></tui-file>
 
@@ -29,7 +29,7 @@
 			*ngIf="loadingFiles$ | async as file"
 			[attr.data-cy]="'test'"
 			[file]="file"
-			[showDelete]="control.enabled"
+			[showDelete]="imageControl.enabled"
 			state="loading"
 	></tui-file>
 </tui-files>

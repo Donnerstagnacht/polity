@@ -25,10 +25,10 @@ export class HomeComponent {
 
     async ngOnInit(): Promise<void> {
         await this.profileService.selectProfile(this.sessionId as string)
-        this.profile = this.profileStoreService.profile.getEntity()
+        this.profile = this.profileStoreService.profile.getObject()
     }
 
     onDestroy(): void {
-        this.profileStoreService.profile.resetEntity()
+        this.profileStoreService.profile.resetObject()
     }
 }

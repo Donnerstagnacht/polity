@@ -34,7 +34,7 @@ export class ProfileEditComponent {
         private readonly profileStoreService: ProfileStoreService,
     ) {
         this.isProfileLoading = this.profileStoreService.profile.loading.getLoading()
-        this.profile = this.profileStoreService.profile.getEntity()
+        this.profile = this.profileStoreService.profile.getObject()
 
         effect(() => {
             this.editProfileForm.patchValue({

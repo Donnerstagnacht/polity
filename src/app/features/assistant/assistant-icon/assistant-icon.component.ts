@@ -8,11 +8,11 @@ import {Tutorial} from "../types-and-interfaces/tutorial";
 
 
 @Component({
-    selector: 'polity-assisstant-icon',
-    templateUrl: './assisstant-icon.component.html',
-    styleUrls: ['./assisstant-icon.component.less']
+    selector: 'polity-assistant-icon',
+    templateUrl: './assistant-icon.component.html',
+    styleUrls: ['./assistant-icon.component.less']
 })
-export class AssisstantIconComponent {
+export class AssistantIconComponent {
     protected isAssistantLoading: WritableSignal<boolean> = signal(true)
     private assistant: WritableSignal<Tables<'assistants'> | null> = signal(null)
     private tutorials: Tutorial[] = [
@@ -45,7 +45,7 @@ export class AssisstantIconComponent {
         private readonly assistantStoreService: AssistantStoreService
     ) {
         this.isAssistantLoading = this.assistantStoreService.assistant.loading.getLoading();
-        this.assistant = this.assistantStoreService.assistant.getEntity()
+        this.assistant = this.assistantStoreService.assistant.getObject()
 
         effect((): void => {
             if (this.assistant()?.last_tutorial === 'welcome') {

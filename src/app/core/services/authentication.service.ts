@@ -13,7 +13,7 @@ import {SessionStoreService} from "./session-store.service";
 import {Router} from "@angular/router";
 import {DatabaseOverwritten} from "../../../../supabase/types/supabase.modified";
 import {supabaseClient} from "../../shared/services/supabase-client";
-import {ErrorStoreService} from "../../shared/signal-store/error-store.service";
+import {ErrorStoreService} from "../../signal-store/error-store.service";
 
 @Injectable({
     providedIn: 'root'

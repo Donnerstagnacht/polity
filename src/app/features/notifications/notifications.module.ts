@@ -18,6 +18,7 @@ import {
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {PolityFilterModule} from "../../shared/polity-filter/polity-filter.module";
 import {PolityTableModule} from "../../shared/polity-table/polity-table.module";
+import {InfiniteScrollModule} from "ngx-infinite-scroll";
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import {PolityTableModule} from "../../shared/polity-table/polity-table.module";
         TuiAccordionModule,
         TuiSvgModule,
         PolityFilterModule,
-        PolityTableModule
+        PolityTableModule,
+        InfiniteScrollModule
     ],
     exports: []
 })

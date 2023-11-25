@@ -25,7 +25,7 @@ export class NotificationsService {
             .rpc('select_notifications_of_users', {user_id: sessionId})
             .throwOnError()
             if (response.data) {
-                this.notificationStoreService.notifications.setEntities(response.data);
+                this.notificationStoreService.notifications.setObjects(response.data);
             }
         })
     }

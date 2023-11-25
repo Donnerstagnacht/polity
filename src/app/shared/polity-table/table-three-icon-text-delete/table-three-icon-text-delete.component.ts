@@ -7,18 +7,9 @@ import {TableGenericComponent} from "../table-generic/table-generic.component";
     styleUrls: ['./table-three-icon-text-delete.component.less']
 })
 export class TableThreeIconTextDeleteComponent<ObjectType> extends TableGenericComponent<ObjectType> {
-    @Output() remove: EventEmitter<string> = new EventEmitter<string>();
+    @Output() public remove: EventEmitter<string> = new EventEmitter<string>();
 
-    constructor() {
-        super();
-        // console.log('bonusKeys', this.bonusKeys);
-        // console.log('dataKeysForColumns', this.dataKeysForColumns);
-        // console.log('data', this.data());
-        // console.log('isLoading', this.isLoading());
-        // console.log('headings', this.headings);
-    }
-
-    onRemove(id: string) {
+    onRemove(id: string): void {
         this.remove.emit(id);
     }
 }

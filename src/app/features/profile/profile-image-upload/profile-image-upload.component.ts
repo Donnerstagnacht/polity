@@ -12,11 +12,11 @@ import {ProfileStoreService} from "../services/profile-store.service";
     styleUrls: ['./profile-image-upload.component.less']
 })
 export class ProfileImageUploadComponent {
-    isProfileLoading: WritableSignal<boolean> = signal(true)
-    protected control = new FormControl();
+    protected isProfileLoading: WritableSignal<boolean> = signal(true)
+    protected imageControl: FormControl<any> = new FormControl();
     protected rejectedFiles$: Subject<TuiFileLike | null> = new Subject<TuiFileLike | null>();
     protected loadingFiles$: Subject<TuiFileLike | null> = new Subject<TuiFileLike | null>();
-    protected loadedFiles$: Observable<TuiFileLike | null> = this.control.valueChanges.pipe(
+    protected loadedFiles$: Observable<TuiFileLike | null> = this.imageControl.valueChanges.pipe(
         switchMap(file => (file ? this.makeRequest(file) : of(null))),
     );
     protected profileWriteable: WritableSignal<Profile | null | undefined>;
@@ -27,7 +27,7 @@ export class ProfileImageUploadComponent {
         private readonly profileService: ProfileService
     ) {
         this.isProfileLoading = this.profileStoreService.profile.loading.getLoading()
-        this.profileWriteable = this.profileStoreService.profile.getEntity()
+        this.profileWriteable = this.profileStoreService.profile.getObject()
     }
 
     protected makeRequest(file: TuiFileLike): Observable<TuiFileLike | null> {
@@ -49,7 +49,7 @@ export class ProfileImageUploadComponent {
                     const profile = {
                         profile_image: this.avatarUrl
                     } as Profile
-                    this.profileStoreService.profile.mutateEntity(profile)
+                    this.profileStoreService.profile.mutateObject(profile)
                 })
             }
             return file;
@@ -71,7 +71,7 @@ export class ProfileImageUploadComponent {
     }
 
     protected removeFile(): void {
-        this.control.setValue(null);
+        this.imageControl.setValue(null);
     }
 
     protected onReject(file: TuiFileLike | readonly TuiFileLike[]): void {

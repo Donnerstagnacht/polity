@@ -10,7 +10,6 @@ import {
     TuiSvgModule,
     TuiTextfieldControllerModule
 } from "@taiga-ui/core";
-import {AssisstantComponent} from './assisstant/assisstant.component';
 import {TuiAutoFocusModule} from "@taiga-ui/cdk";
 import {ReactiveFormsModule} from "@angular/forms";
 import {
@@ -22,15 +21,16 @@ import {
     TuiPaginationModule,
     TuiToggleModule
 } from "@taiga-ui/kit";
-import {AssisstantIconComponent} from './assisstant-icon/assisstant-icon.component';
+import {AssistantIconComponent} from './assistant-icon/assistant-icon.component';
 import {AssistantToggleComponent} from './assistant-toggle/assistant-toggle.component';
+import {AssistantComponent} from "./assistant/assistant.component";
 
 
 @NgModule({
     declarations: [
         AssistantWelcomeDialogComponent,
-        AssisstantComponent,
-        AssisstantIconComponent,
+        AssistantComponent,
+        AssistantIconComponent,
         AssistantToggleComponent
     ],
     imports: [
@@ -54,7 +54,7 @@ import {AssistantToggleComponent} from './assistant-toggle/assistant-toggle.comp
     ],
     exports: [
         AssistantWelcomeDialogComponent,
-        AssisstantComponent,
+        AssistantComponent,
         AssistantToggleComponent
     ]
 })

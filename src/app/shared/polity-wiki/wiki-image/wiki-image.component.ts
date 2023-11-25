@@ -9,7 +9,6 @@ import {CommonModule} from '@angular/common';
     styleUrls: ['./wiki-image.component.less']
 })
 export class WikiImageComponent {
-    @Input() isLoading: WritableSignal<boolean> = signal(true);
-    @Input() src: string | null | undefined = null;
-
+    @Input() public isLoading: WritableSignal<boolean> = signal(true);
+    @Input() public src: string | null | undefined = null;
 }

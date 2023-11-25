@@ -31,7 +31,7 @@ export class AssistantService {
             .single()
             .throwOnError();
             if (response.data) {
-                this.assistantStoreService.assistant.mutateEntity(response.data);
+                this.assistantStoreService.assistant.mutateObject(response.data);
             }
         })
     }
@@ -52,7 +52,7 @@ export class AssistantService {
             const updatedAssistant: Tables<'assistants'> = {
                 first_sign_in: newStatus,
             } as Tables<'assistants'>
-            this.assistantStoreService.assistant.mutateEntity(updatedAssistant)
+            this.assistantStoreService.assistant.mutateObject(updatedAssistant)
         })
     }
 
@@ -72,7 +72,7 @@ export class AssistantService {
             const updatedAssistant: Tables<'assistants'> = {
                 skip_tutorial: newStatus,
             } as Tables<'assistants'>
-            this.assistantStoreService.assistant.mutateEntity(updatedAssistant)
+            this.assistantStoreService.assistant.mutateObject(updatedAssistant)
         })
     }
 
@@ -92,7 +92,7 @@ export class AssistantService {
             const updatedAssistant: Tables<'assistants'> = {
                 last_tutorial: last_tutorial,
             } as Tables<'assistants'>
-            this.assistantStoreService.assistant.mutateEntity(updatedAssistant)
+            this.assistantStoreService.assistant.mutateObject(updatedAssistant)
         })
     }
 }

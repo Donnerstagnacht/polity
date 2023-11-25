@@ -7,8 +7,4 @@ import {Component, signal, WritableSignal} from '@angular/core';
 })
 export class LoadingComponent {
     protected isLoading: WritableSignal<boolean> = signal(false);
-
-    constructor() {
-    }
-
 }

@@ -26,8 +26,7 @@ export class SearchUserComponent {
         private readonly searchStoreService: SearchStoreService,
     ) {
         this.loading = this.searchStoreService.profilSearchResults.loading.getLoading()
-        this.searchResults = this.searchStoreService.profilSearchResults.getEntities();
-        // this.searchResults = this.searchStoreService.selectProfileSearchResults();
+        this.searchResults = this.searchStoreService.profilSearchResults.getObjects();
         this.searchForm.get('search')?.valueChanges.pipe(
             debounceTime(1000)).subscribe(
             () => this.onKeyUp()
@@ -35,8 +34,7 @@ export class SearchUserComponent {
     }
 
     public focused(): void {
-        this.searchStoreService.profilSearchResults.resetEntities()
-        // this.searchStoreService.updateProfileSearchResults(null)
+        this.searchStoreService.profilSearchResults.resetObjects()
     };
 
     private async onKeyUp(): Promise<void> {
@@ -46,7 +44,6 @@ export class SearchUserComponent {
                 searchTerm = searchTerm.substring(0, searchTerm.length - 1)
             }
             searchTerm = searchTerm.replace(/ /g, '|')
-
             await this.searchService.searchUser(searchTerm);
         }
     }

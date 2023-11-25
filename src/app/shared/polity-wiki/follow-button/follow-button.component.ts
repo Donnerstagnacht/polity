@@ -32,5 +32,4 @@ export class FollowButton {
     protected toggleFollow(): void {
         this.toggledFollowing.emit(!this.isFollowing);
     }
-
 }

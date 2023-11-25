@@ -1,6 +1,6 @@
 import {Injectable, signal, WritableSignal} from '@angular/core';
 import {Profile} from "../types-and-interfaces/profile";
-import {ObjectStoreService} from "../../../shared/signal-store/object-store.service";
+import {ObjectStoreService} from "../../../signal-store/object-store.service";
 
 export type profileUiFlags = {
     isOwner: WritableSignal<boolean>,
@@ -12,7 +12,7 @@ export type profileUiFlags = {
     providedIn: 'root'
 })
 export class ProfileStoreService {
-    public profile: ObjectStoreService<Profile, profileUiFlags>;
+    public profile: ObjectStoreService<Profile>;
     private uiFlags: profileUiFlags = {
         isOwner: signal(false),
         isFollowing: signal(false),
@@ -20,7 +20,6 @@ export class ProfileStoreService {
     }
 
     constructor() {
-        this.profile = new ObjectStoreService<Profile, profileUiFlags>();
-        this.profile.uiFlagStore.setUiFlags(this.uiFlags)
+        this.profile = new ObjectStoreService<Profile>(this.uiFlags);
     }
 }

@@ -1,5 +1,4 @@
 import {Component, signal, WritableSignal} from '@angular/core';
-import {ProfileFollowService} from "../services/profile-follow.service";
 import {FollowersOfUserService} from "../services/followers-of-user.service";
 import {Functions} from "../../../../../supabase/types/supabase.shorthand-types";
 import {FollowersOfUserStoreService} from "../services/followers-of-user-store.service";
@@ -20,15 +19,11 @@ export class ProfileFollowEditComponent {
     protected isFollowingLoading: WritableSignal<boolean> = signal(true);
     protected readonly columns: string[] = ['first_name', 'last_name', 'actions'];
     protected activeItemIndex: number = 0;
-
     protected showFollowers: boolean = true;
-    //protected readonly signal = signal;
-
     protected combinedForm: FormGroup;
     protected showFilter: boolean = true;
 
     constructor(
-        private readonly profileFollowService: ProfileFollowService,
         private readonly followersOfUserService: FollowersOfUserService,
         private readonly followingOfUserService: FollowingOfUserService,
         private readonly followersOfUserStoreService: FollowersOfUserStoreService,
@@ -37,15 +32,12 @@ export class ProfileFollowEditComponent {
     ) {
         this.isFollowersLoading = this.followersOfUserStoreService.followersOfUser.loading.getLoading();
         this.isFollowingLoading = this.followingOfUserStoreService.followingOfUser.loading.getLoading();
-        // this.isFollowersLoading = this.followersOfUserStoreService.followersOfUser.loading.getLoading();
-        // this.isFollowingLoading = this.followingOfUserStoreService.followingOfUser.loading.getLoading();
 
         this.combinedForm = this.formBuilder.group({
             filterStringForm: this.formBuilder.group({
                 searchString: [],
             })
         })
-
         this.combinedForm.valueChanges.subscribe(
             () => this.onCombinedFormChange()
         )
@@ -58,51 +50,31 @@ export class ProfileFollowEditComponent {
                 this.followingOfUserService.selectFollowingsOfUser(),
             ]
         )
-        this.followersOfUser = this.followersOfUserStoreService.followersOfUser.getEntities();
-        this.followingsOfUser = this.followingOfUserStoreService.followingOfUser.getEntities();
-
-
+        this.followersOfUser = this.followersOfUserStoreService.followersOfUser.getObjects();
+        this.followingsOfUser = this.followingOfUserStoreService.followingOfUser.getObjects();
     }
 
     onCombinedFormChange(): void {
         const stringFilter = this.combinedForm.get('filterStringForm')?.value.searchString;
-
-        console.log('searchTerm', stringFilter)
         let filterByString: boolean = false;
-        let filterByType: boolean = false;
-        let filterByDate: boolean = false;
 
         if (stringFilter) {
             filterByString = true;
         }
 
         if (this.showFollowers) {
-            console.log('filter followers')
             this.followersOfUserStoreService.followersOfUser.filterArray(
                 filterByString,
                 ['first_name', 'last_name'],
                 stringFilter,
-
-                // filterByType,
-                // 'type_of_notification',
-                // typeKeyValues,
-                //
-                // filterByDate,
-                // 'created_at',
-                // dateFilterFrom,
-                // dateFilterTo
             )
         } else {
-            console.log('filter following')
-
             this.followingOfUserStoreService.followingOfUser.filterArray(
                 filterByString,
                 ['first_name', 'last_name'],
                 stringFilter
             )
-
         }
-
     }
 
     protected showFollowerList(): void {
@@ -114,32 +86,23 @@ export class ProfileFollowEditComponent {
     }
 
     protected async removeFollower(id: string): Promise<void> {
-        this.followersOfUserService.removeFollowerOfUser(id);
+        await this.followersOfUserService.removeFollowerOfUser(id);
     }
 
-    protected removeFollowing(id: string): void {
-        console.log(id)
-        this.followingOfUserService.removeFollowingOfUser(id);
+    protected async removeFollowing(id: string): Promise<void> {
+        await this.followingOfUserService.removeFollowingOfUser(id);
     }
 
     protected clearFilter(): void {
         this.combinedForm.reset()
         if (this.showFollowers) {
-            console.log('clear followers')
-            this.followersOfUserStoreService.followersOfUser.resetFilteredEntities();
+            this.followersOfUserStoreService.followersOfUser.resetDisplayedObjects();
         } else {
-            console.log('clear following')
-            this.followingOfUserStoreService.followingOfUser.resetFilteredEntities();
+            this.followingOfUserStoreService.followingOfUser.resetDisplayedObjects();
         }
-        // this.followersOfUserStoreService.followersOfUser.resetFilteredEntities();
-        // this.followingOfUserStoreService.followingOfUser.resetFilteredEntities();
-        // this.notificationStoreService.notifications.resetFilteredEntities()
     }
 
     protected toggleShowFilter(): void {
-        if (!this.showFilter) {
-            console.log('activate filter')
-        }
         this.showFilter = !this.showFilter
         this.clearFilter()
     }

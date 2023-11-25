@@ -31,15 +31,14 @@ export class FollowingOfUserService {
                 }
             )
             .throwOnError()
-            console.log('results', followingResponse.data)
             if (followingResponse.data) {
-                this.followingOfUserStoreService.followingOfUser.setEntities(followingResponse.data)
+                this.followingOfUserStoreService.followingOfUser.setObjects(followingResponse.data)
             }
         })
     }
 
     public async removeFollowingOfUser(userId: string): Promise<any> {
-        this.followingOfUserStoreService.followingOfUser.wrapUpdateFunction(async (): Promise<void> => {
+        await this.followingOfUserStoreService.followingOfUser.wrapUpdateFunction(async (): Promise<void> => {
             const loggedInUserId: string = this.sessionStoreService.getSessionId() as string;
             const response: PostgrestSingleResponse<void | PostgrestError> = await this.supabaseClient.rpc(
                 'unfollow_transaction',
