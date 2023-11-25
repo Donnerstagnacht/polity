@@ -1,0 +1,68 @@
+<h1 class="tui-text_h1">
+    Login
+</h1>
+<p
+    [attr.data-cy]="'sign-in-instruction'"
+    class="tui-text_body-l"
+>Login in deinen Account.
+</p>
+<form
+    (ngSubmit)="onSignIn()"
+    [formGroup]="signInForm"
+>
+    <div class="tui-form__row">
+        <tui-input
+            [attr.data-cy]="'email'"
+            [tuiTextfieldCleaner]="true"
+            [tuiTextfieldCustomContent]="signInForm.controls.email.valid ? success : ''"
+            formControlName="email"
+            tuiHintContent="It will be used for sending documents"
+        >
+            Type an email
+        </tui-input>
+        <ng-template #success>
+            <tui-svg
+                class="polity-success tui-space_left-3"
+                src="tuiIconCheck"
+            ></tui-svg>
+        </ng-template>
+        <tui-error
+            [error]="[] | tuiFieldError | async"
+            formControlName="email"
+        >
+        </tui-error>
+    </div>
+    <div class="tui-form__row">
+        <tui-input-password
+            [attr.data-cy]="'password'"
+            [tuiTextfieldCleaner]="true"
+            [tuiTextfieldCustomContent]="signInForm.controls.password.valid ? success : ''"
+            formControlName="password"
+        >
+            Gebe ein Password ein.
+        </tui-input-password>
+        <ng-template #success>
+            <tui-svg
+                class="polity-success tui-space_left-3"
+                src="tuiIconCheck"
+            ></tui-svg>
+        </ng-template>
+        <tui-error
+            [error]="[] | tuiFieldError | async"
+            formControlName="password"
+        >
+        </tui-error>
+    </div>
+    <div class="tui-form__buttons">
+        <button
+            [attr.data-cy]="'sign-in'"
+            [disabled]="!signInForm.valid"
+            class="tui-form__button"
+            size="l"
+            tuiButton
+            type="submit"
+        >
+            LOGIN
+        </button>
+    </div>
+</form>
