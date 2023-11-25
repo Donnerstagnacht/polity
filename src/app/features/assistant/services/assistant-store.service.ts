@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Tables} from "../../../../../supabase/types/supabase.shorthand-types";
-import {ObjectStoreService} from "../../../shared/signal-store/object-store.service";
+import {ObjectStoreService} from "../../../signal-store/object-store.service";
 
 @Injectable({
     providedIn: 'root'

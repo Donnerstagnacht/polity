@@ -2,7 +2,7 @@ import {Component, WritableSignal} from '@angular/core';
 import {AuthenticationService} from "./core/services/authentication.service";
 import {SessionStoreService} from "./core/services/session-store.service";
 import {AuthChangeEvent, Session} from "@supabase/supabase-js";
-import {ErrorStoreService} from "./shared/signal-store/error-store.service";
+import {ErrorStoreService} from "./signal-store/error-store.service";
 
 @Component({
     selector: 'polity-root',

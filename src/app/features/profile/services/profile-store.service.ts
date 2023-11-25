@@ -1,6 +1,6 @@
 import {Injectable, signal, WritableSignal} from '@angular/core';
 import {Profile} from "../types-and-interfaces/profile";
-import {ObjectStoreService} from "../../../shared/signal-store/object-store.service";
+import {ObjectStoreService} from "../../../signal-store/object-store.service";
 
 export type profileUiFlags = {
     isOwner: WritableSignal<boolean>,

@@ -16,6 +16,10 @@ export class PaginationStoreService {
         step: 20
     }
 
+    // constructor(@Inject(20) private step: number) {
+    //
+    // }
+
     resetPagination(): void {
         this.pagination.from = 0;
         this.pagination.to = 10;

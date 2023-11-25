@@ -14,9 +14,9 @@ type filterTag = { text: string, value: string }
     styleUrls: ['./notification.component.less'],
 })
 export class NotificationComponent {
-    protected throttle = 300;
-    protected scrollDistance = 1;
-    protected scrollUpDistance = 2;
+    protected throttle: number = 300;
+    protected scrollDistance: number = 1;
+    protected scrollUpDistance: number = 2;
     protected notifications: WritableSignal<Functions<'select_notifications_of_users'>> = signal([]);
     protected isNotificationsLoading: WritableSignal<boolean> = signal(true)
     protected showFilter: boolean = true;
