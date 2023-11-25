@@ -1,43 +1,43 @@
 <form
-		[formGroup]="searchForm"
+    [formGroup]="searchForm"
 >
-	<div class="tui-form__row">
-		<tui-input
-				(focusin)="focused()"
-				[attr.data-cy]="'search'"
-				formControlName="search"
-				tuiHintContent="Bitte einen Suchterm eingeben"
-		>
-			Gebe einen Suchterm ein
-		</tui-input>
-		<tui-error
-				[error]="[] | tuiFieldError | async"
-				formControlName="search"
-		>
-		</tui-error>
-	</div>
+    <div class="tui-form__row">
+        <tui-input
+            (focusin)="focused()"
+            [attr.data-cy]="'search'"
+            formControlName="search"
+            tuiHintContent="Bitte einen Suchterm eingeben"
+        >
+            Gebe einen Suchterm ein
+        </tui-input>
+        <tui-error
+            [error]="[] | tuiFieldError | async"
+            formControlName="search"
+        >
+        </tui-error>
+    </div>
 </form>
-<div
-		*ngIf="searchResults() || loading()"
-		class="grid tui-space_top-4">
-	<div
-			*ngFor="let profile of searchResults()"
-			[attr.data-cy]="'user-search-results'"
-			class="grid-item tui-space_top-4"
-	>
-		<polity-search-profile-result
-				[isLoading]="this.loading"
-				[profile]="profile"
-		></polity-search-profile-result>
-	</div>
-</div>
-
-
+@if (searchResults() || loading()) {
+    <div class="grid tui-space_top-4">
+        @for (profile of searchResults();track profile) {
+            <div
+                [attr.data-cy]="'user-search-results'"
+                class="grid-item tui-space_top-4"
+            >
+                <polity-search-profile-result
+                    [isLoading]="this.loading"
+                    [profile]="profile"
+                ></polity-search-profile-result>
+            </div>
+        }
+    </div>
+}
 <div class="center-grid">
-	<p
-			*ngIf="!searchResults()"
-			[attr.data-cy]="'search-instruction'"
-	>
-		Suche etwas.
-	</p>
+    @if (!searchResults()) {
+        <p
+            [attr.data-cy]="'search-instruction'"
+        >
+            Suche etwas.
+        </p>
+    }
 </div>

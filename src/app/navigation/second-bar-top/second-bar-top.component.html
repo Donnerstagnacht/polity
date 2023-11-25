@@ -2,17 +2,18 @@
     [(activeItemIndex)]="activeItemIndex"
     tuiTabBar
 >
-    <button
-        (click)="onClick(item)"
-        *ngFor="let item of items"
-        [attr.data-cy]="item.dataCy"
-        [badge]="item.badge"
-        [icon]="item.icon"
-        [routerLink]="item.link"
-        routerLinkActive
-        tuiHint="{{item.text}}"
-        tuiTabBarItem
-    >
-    </button>
+    @for (item of items;track item) {
+        <button
+            (click)="onClick(item)"
+            [attr.data-cy]="item.dataCy"
+            [badge]="item.badge"
+            [icon]="item.icon"
+            [routerLink]="item.link"
+            routerLinkActive
+            tuiHint="{{item.text}}"
+            tuiTabBarItem
+        >
+        </button>
+    }
 </nav>
 <h1>This is a dynamic top bar</h1>

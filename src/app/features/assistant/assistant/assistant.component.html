@@ -1,4 +1,3 @@
-<polity-assistant-icon
-		*ngIf="!this.assistant()?.skip_tutorial"
->
-</polity-assistant-icon>
+@if (!this.assistant()?.skip_tutorial) {
+    <polity-assistant-icon></polity-assistant-icon>
+}
