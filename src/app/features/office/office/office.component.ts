@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {Item} from "../../../layout/types-and-interfaces/item";
-import {menuItemsOffice} from "../../../layout/menu-items";
+import {navigationItemsOffice} from "../../../navigation/navigation-item";
+import {NavigationItem} from "../../../navigation/types-and-interfaces/navigationItem";
 
 @Component({
     selector: 'polity-office',
@@ -8,5 +8,5 @@ import {menuItemsOffice} from "../../../layout/menu-items";
     styleUrls: ['./office.component.less']
 })
 export class OfficeComponent {
-    protected menuItemsProfile: Item[] = menuItemsOffice;
+    protected menuItemsProfile: NavigationItem[] = navigationItemsOffice;
 }

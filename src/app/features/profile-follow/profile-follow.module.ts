@@ -5,9 +5,13 @@ import {ProfileFollowEditComponent} from './profile-follow-edit/profile-follow-e
 import {TuiTableModule} from "@taiga-ui/addon-table";
 import {TuiLetModule} from "@taiga-ui/cdk";
 import {TuiTabsModule} from "@taiga-ui/kit";
-import {PolityTableModule} from "../../shared/polity-table/polity-table.module";
-import {PolityFilterModule} from "../../shared/polity-filter/polity-filter.module";
 import {ReactiveFormsModule} from "@angular/forms";
+import {FilterHeadlineComponent} from "../../ui/polity-filter/filter-headline/filter-headline.component";
+import {FilterStringComponent} from "../../ui/polity-filter/filter-string/filter-string.component";
+import {FilterClearComponent} from "../../ui/polity-filter/filter-clear/filter-clear.component";
+import {
+    TableThreeIconTextDeleteComponent
+} from "../../ui/polity-table/table-three-icon-text-delete/table-three-icon-text-delete.component";
 
 
 @NgModule({
@@ -21,9 +25,11 @@ import {ReactiveFormsModule} from "@angular/forms";
         TuiTableModule,
         TuiLetModule,
         TuiTabsModule,
-        PolityTableModule,
-        PolityFilterModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        FilterHeadlineComponent,
+        FilterStringComponent,
+        FilterClearComponent,
+        TableThreeIconTextDeleteComponent
     ]
 })
 export class ProfileFollowModule {

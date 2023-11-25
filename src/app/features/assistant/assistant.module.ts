@@ -6,7 +6,6 @@ import {
     TuiDialogModule,
     TuiErrorModule,
     TuiHintModule,
-    TuiPrimitiveTextfieldModule,
     TuiSvgModule,
     TuiTextfieldControllerModule
 } from "@taiga-ui/core";
@@ -18,7 +17,6 @@ import {
     TuiFieldErrorPipeModule,
     TuiInputModule,
     TuiMarkerIconModule,
-    TuiPaginationModule,
     TuiToggleModule
 } from "@taiga-ui/kit";
 import {AssistantIconComponent} from './assistant-icon/assistant-icon.component';
@@ -35,7 +33,6 @@ import {AssistantComponent} from "./assistant/assistant.component";
     ],
     imports: [
         CommonModule,
-        TuiPrimitiveTextfieldModule,
         TuiAutoFocusModule,
         TuiButtonModule,
         ReactiveFormsModule,
@@ -45,7 +42,6 @@ import {AssistantComponent} from "./assistant/assistant.component";
         TuiErrorModule,
         TuiFieldErrorPipeModule,
         TuiSvgModule,
-        TuiPaginationModule,
         TuiCarouselModule,
         TuiDialogModule,
         TuiMarkerIconModule,

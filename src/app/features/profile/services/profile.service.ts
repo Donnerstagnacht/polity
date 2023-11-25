@@ -3,9 +3,9 @@ import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {Profile} from "../types-and-interfaces/profile";
 import {ProfileStoreService} from "./profile-store.service";
 import {TuiFileLike} from "@taiga-ui/kit";
-import {SessionStoreService} from "../../../core/services/session-store.service";
+import {SessionStoreService} from "../../../auth/services/session-store.service";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
-import {supabaseClient} from "../../../shared/services/supabase-client";
+import {supabaseClient} from "../../../auth/supabase-client";
 
 @Injectable({
     providedIn: 'root'

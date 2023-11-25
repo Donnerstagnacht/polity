@@ -4,7 +4,7 @@ import {POLYMORPHEUS_CONTEXT} from "@tinkoff/ng-polymorpheus";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ProfileService} from "../../profile/services/profile.service";
 import {Profile} from "../../profile/types-and-interfaces/profile";
-import {SessionStoreService} from "../../../core/services/session-store.service";
+import {SessionStoreService} from "../../../auth/services/session-store.service";
 import {Router} from "@angular/router";
 import {AssistantService} from "../services/assistant.service";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";

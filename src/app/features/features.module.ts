@@ -2,10 +2,10 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AppSkeletonComponent} from './app-skeleton/app-skeleton.component';
 import {FeaturesRoutingModule} from "./features-routing.module";
-import {LayoutModule} from "../layout/layout.module";
 import {TuiLoaderModule} from "@taiga-ui/core";
-import {SharedModule} from "../shared/shared.module";
 import {AssistantModule} from "./assistant/assistant.module";
+import {FirstBarBottomComponent} from "../navigation/first-bar-bottom/first-bar-bottom.component";
+import {FirstBarLeftComponent} from "../navigation/first-bar-left/first-bar-left.component";
 
 @NgModule({
     declarations: [
@@ -14,10 +14,10 @@ import {AssistantModule} from "./assistant/assistant.module";
     imports: [
         CommonModule,
         FeaturesRoutingModule,
-        LayoutModule,
         TuiLoaderModule,
-        SharedModule,
         AssistantModule,
+        FirstBarBottomComponent,
+        FirstBarLeftComponent,
     ]
 })
 export class FeaturesModule {

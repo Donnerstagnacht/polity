@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {menuItemsSignedOut} from "../../layout/menu-items";
-import {Item} from "../../layout/types-and-interfaces/item";
+import {NavigationItem} from "../../navigation/types-and-interfaces/navigationItem";
+import {navigationItemsSignedOut} from "../../navigation/navigation-item";
 
 @Component({
     selector: 'polity-landing',
@@ -8,5 +8,5 @@ import {Item} from "../../layout/types-and-interfaces/item";
     styleUrls: ['./landing.component.less']
 })
 export class LandingComponent {
-    signedOutItems: Item[] = menuItemsSignedOut;
+    signedOutItems: NavigationItem[] = navigationItemsSignedOut;
 }

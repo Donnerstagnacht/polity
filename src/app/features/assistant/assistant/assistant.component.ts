@@ -2,7 +2,7 @@ import {Component, Inject, Injector, signal, WritableSignal} from '@angular/core
 import {TuiDialogService} from "@taiga-ui/core";
 import {AssistantWelcomeDialogComponent} from "../assistant-welcome-dialog/assistant-welcome-dialog.component";
 import {PolymorpheusComponent} from "@tinkoff/ng-polymorpheus";
-import {SessionStoreService} from "../../../core/services/session-store.service";
+import {SessionStoreService} from "../../../auth/services/session-store.service";
 import {AssistantService} from "../services/assistant.service";
 import {AssistantStoreService} from "../services/assistant-store.service";
 import {Tables} from "../../../../../supabase/types/supabase.shorthand-types";

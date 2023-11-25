@@ -1,12 +1,12 @@
 import {Component} from '@angular/core';
-import {SessionStoreService} from "../../../core/services/session-store.service";
+import {SessionStoreService} from "../../../auth/services/session-store.service";
 import {ProfileService} from "../services/profile.service";
 import {ProfileStoreService} from "../services/profile-store.service";
 import {ActivatedRoute} from "@angular/router";
-import {menuItemsProfile, menuItemsProfileOwner} from "../../../layout/menu-items";
-import {Item} from "../../../layout/types-and-interfaces/item";
 import {ProfileCountersStoreService} from "../../profile-follow/services/profile-counters-store.service";
 import {ProfileCountersService} from "../../profile-follow/services/profile-counters.service";
+import {NavigationItem} from "../../../navigation/types-and-interfaces/navigationItem";
+import {navigationItemsProfile, navigationItemsProfileOwner} from "../../../navigation/navigation-item";
 
 @Component({
     selector: 'polity-profile',
@@ -14,7 +14,7 @@ import {ProfileCountersService} from "../../profile-follow/services/profile-coun
     styleUrls: ['./profile.component.less']
 })
 export class ProfileComponent {
-    protected menuItemsProfile: Item[] = menuItemsProfile;
+    protected menuItemsProfile: NavigationItem[] = navigationItemsProfile;
 
     constructor(
         private readonly sessionStoreService: SessionStoreService,
@@ -46,13 +46,13 @@ export class ProfileComponent {
     private checkIsOwner(urlId: string, sessionId: string | null): void {
         if (sessionId == urlId) {
             this.profileStoreService.profile.uiFlagStore.setUiFlagTrue('isOwner')
-            this.menuItemsProfile = menuItemsProfileOwner;
+            this.menuItemsProfile = navigationItemsProfileOwner;
             this.menuItemsProfile[0].link = '/profile/' + urlId
             this.menuItemsProfile[1].link = '/profile/' + urlId + '/edit'
             this.menuItemsProfile[2].link = '/profile/' + urlId + '/follower/edit'
         } else {
             this.profileStoreService.profile.uiFlagStore.setUiFlagFalse('isOwner')
-            this.menuItemsProfile = menuItemsProfile;
+            this.menuItemsProfile = navigationItemsProfile;
             this.menuItemsProfile[0].link = '/profile/' + urlId
         }
     }

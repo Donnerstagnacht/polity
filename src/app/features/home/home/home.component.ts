@@ -1,5 +1,5 @@
 import {Component, signal, WritableSignal} from '@angular/core';
-import {SessionStoreService} from "../../../core/services/session-store.service";
+import {SessionStoreService} from "../../../auth/services/session-store.service";
 import {Profile} from "../../profile/types-and-interfaces/profile";
 import {ProfileService} from "../../profile/services/profile.service";
 import {ProfileStoreService} from "../../profile/services/profile-store.service";

@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {HomeRoutingModule} from './home-routing.module';
 import {HomeComponent} from './home/home.component';
-import {SharedModule} from "../../shared/shared.module";
+import {LinkCardComponent} from "../../ui/link-card/link-card.component";
 
 
 @NgModule({
@@ -12,7 +12,7 @@ import {SharedModule} from "../../shared/shared.module";
     imports: [
         CommonModule,
         HomeRoutingModule,
-        SharedModule
+        LinkCardComponent
     ]
 })
 export class HomeModule {

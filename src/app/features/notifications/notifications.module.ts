@@ -5,20 +5,23 @@ import {TuiButtonModule, TuiSvgModule, TuiTextfieldControllerModule} from "@taig
 import {TuiLetModule} from "@taiga-ui/cdk";
 import {TuiTableFiltersModule, TuiTableModule} from "@taiga-ui/addon-table";
 import {
-    TuiAccordionModule,
     TuiAvatarModule,
     TuiFilterModule,
     TuiInputDateModule,
     TuiInputModule,
-    TuiInputNumberModule,
     TuiTagModule,
-    TuiTextareaModule,
     TuiToggleModule
 } from "@taiga-ui/kit";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {PolityFilterModule} from "../../shared/polity-filter/polity-filter.module";
-import {PolityTableModule} from "../../shared/polity-table/polity-table.module";
 import {InfiniteScrollModule} from "ngx-infinite-scroll";
+import {
+    TableFourIconTextTagDateComponent
+} from "../../ui/polity-table/table-four-icon-text-tag-date/table-four-icon-text-tag-date.component";
+import {FilterClearComponent} from "../../ui/polity-filter/filter-clear/filter-clear.component";
+import {FilterTagsComponent} from "../../ui/polity-filter/filter-tags/filter-tags.component";
+import {FilterDateRangeComponent} from "../../ui/polity-filter/filter-date-range/filter-date-range.component";
+import {FilterStringComponent} from "../../ui/polity-filter/filter-string/filter-string.component";
+import {FilterHeadlineComponent} from "../../ui/polity-filter/filter-headline/filter-headline.component";
 
 
 @NgModule({
@@ -35,18 +38,19 @@ import {InfiniteScrollModule} from "ngx-infinite-scroll";
         ReactiveFormsModule,
         TuiInputModule,
         TuiTableFiltersModule,
-        TuiInputNumberModule,
         TuiToggleModule,
         FormsModule,
-        TuiTextareaModule,
         TuiFilterModule,
         TuiInputDateModule,
         TuiTextfieldControllerModule,
-        TuiAccordionModule,
         TuiSvgModule,
-        PolityFilterModule,
-        PolityTableModule,
-        InfiniteScrollModule
+        InfiniteScrollModule,
+        TableFourIconTextTagDateComponent,
+        FilterClearComponent,
+        FilterTagsComponent,
+        FilterDateRangeComponent,
+        FilterStringComponent,
+        FilterHeadlineComponent
     ],
     exports: []
 })
