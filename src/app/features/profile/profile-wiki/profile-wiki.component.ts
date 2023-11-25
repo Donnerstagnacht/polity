@@ -4,11 +4,22 @@ import {ProfileStoreService} from "../services/profile-store.service";
 import {ProfileCountersStoreService} from "../../profile-follow/services/profile-counters-store.service";
 import {PlainFunctions} from "../../../../../supabase/types/supabase.shorthand-types";
 import {ProfileCountersService} from "../../profile-follow/services/profile-counters.service";
+import {WikiHeadlineComponent} from "../../../ui/polity-wiki/wiki-headline/wiki-headline.component";
+import {CounterComponent} from "../../../ui/polity-wiki/counter/counter.component";
+import {FollowButton} from "../../../ui/polity-wiki/follow-button/follow-button.component";
+import {WikiImageComponent} from "../../../ui/polity-wiki/wiki-image/wiki-image.component";
 
 @Component({
     selector: 'polity-profile-wiki',
     templateUrl: './profile-wiki.component.html',
-    styleUrls: ['./profile-wiki.component.less']
+    styleUrls: ['./profile-wiki.component.less'],
+    standalone: true,
+    imports: [
+        WikiHeadlineComponent,
+        CounterComponent,
+        FollowButton,
+        WikiImageComponent
+    ]
 })
 export class ProfileWikiComponent {
     protected isProfileLoading: WritableSignal<boolean> = signal(true);

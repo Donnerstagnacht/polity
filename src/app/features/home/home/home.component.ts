@@ -3,11 +3,17 @@ import {SessionStoreService} from "../../../auth/services/session-store.service"
 import {Profile} from "../../profile/types-and-interfaces/profile";
 import {ProfileService} from "../../profile/services/profile.service";
 import {ProfileStoreService} from "../../profile/services/profile-store.service";
+import {LinkCardComponent} from "../../../ui/link-card/link-card.component";
 
 @Component({
     selector: 'polity-home',
     templateUrl: './home.component.html',
-    styleUrls: ['./home.component.less']
+    styleUrls: ['./home.component.less'],
+    standalone: true,
+    imports: [
+        LinkCardComponent
+
+    ]
 })
 export class HomeComponent {
     protected sessionId: string | null;

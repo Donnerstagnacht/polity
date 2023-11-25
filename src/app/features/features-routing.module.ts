@@ -13,7 +13,7 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
+                loadChildren: () => import('./home/home-routing.module').then(m => m.HomeRoutingModule)
             }
         ]
     },
@@ -23,7 +23,7 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                loadChildren: () => import('./search/search.module').then(m => m.SearchModule)
+                loadChildren: () => import('./search/search-routing.module').then(m => m.SearchRoutingModule)
             }
         ]
     },
@@ -33,7 +33,7 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule)
+                loadChildren: () => import('./profile/profile-routing.module').then(m => m.ProfileRoutingModule)
             }
         ]
     },
@@ -43,7 +43,7 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
+                loadChildren: () => import('./home/home-routing.module').then(m => m.HomeRoutingModule)
             }
         ]
     },
@@ -53,7 +53,7 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                loadChildren: () => import('./new/new.module').then(m => m.NewModule)
+                loadChildren: () => import('./new/new-routing.module').then(m => m.NewRoutingModule)
             }
         ]
     },
@@ -63,7 +63,7 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                loadChildren: () => import('./office/office.module').then(m => m.OfficeModule)
+                loadChildren: () => import('./office/office-routing.module').then(m => m.OfficeRoutingModule)
             }
         ]
     }

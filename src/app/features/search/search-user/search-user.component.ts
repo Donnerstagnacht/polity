@@ -1,14 +1,27 @@
 import {Component, signal, WritableSignal} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {SearchService} from "../services/search.service";
 import {SearchStoreService} from "../services/search-store.service";
 import {debounceTime} from "rxjs";
 import {Functions} from "../../../../../supabase/types/supabase.shorthand-types";
+import {TuiFieldErrorPipeModule, TuiInputModule} from "@taiga-ui/kit";
+import {TuiErrorModule} from "@taiga-ui/core";
+import {SearchProfileResult} from "../search-profile-result/search-profile-result.component";
+import {CommonModule} from "@angular/common";
 
 @Component({
     selector: 'polity-search-user',
     templateUrl: './search-user.component.html',
-    styleUrls: ['./search-user.component.less']
+    styleUrls: ['./search-user.component.less'],
+    imports: [
+        ReactiveFormsModule,
+        TuiInputModule,
+        TuiErrorModule,
+        TuiFieldErrorPipeModule,
+        SearchProfileResult,
+        CommonModule
+    ],
+    standalone: true
 })
 export class SearchUserComponent {
     loading: WritableSignal<boolean> = signal(false);

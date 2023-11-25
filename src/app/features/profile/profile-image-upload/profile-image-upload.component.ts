@@ -1,15 +1,22 @@
 import {Component, signal, WritableSignal} from '@angular/core';
-import {TuiFileLike} from "@taiga-ui/kit";
+import {TuiFileLike, TuiInputFilesModule} from "@taiga-ui/kit";
 import {from, Observable, of, Subject, switchMap} from "rxjs";
-import {FormControl} from "@angular/forms";
+import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {ProfileService} from "../services/profile.service";
 import {Profile} from "../types-and-interfaces/profile";
 import {ProfileStoreService} from "../services/profile-store.service";
+import {CommonModule} from "@angular/common";
 
 @Component({
     selector: 'polity-profile-image-upload',
     templateUrl: './profile-image-upload.component.html',
-    styleUrls: ['./profile-image-upload.component.less']
+    styleUrls: ['./profile-image-upload.component.less'],
+    imports: [
+        TuiInputFilesModule,
+        ReactiveFormsModule,
+        CommonModule
+    ],
+    standalone: true
 })
 export class ProfileImageUploadComponent {
     protected isProfileLoading: WritableSignal<boolean> = signal(true)

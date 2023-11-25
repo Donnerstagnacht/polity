@@ -1,11 +1,16 @@
 import {Component, Input, signal, WritableSignal} from '@angular/core';
 import {Router} from "@angular/router";
 import {PlainFunctions} from "../../../../../supabase/types/supabase.shorthand-types";
+import {TuiIslandModule} from "@taiga-ui/kit";
 
 @Component({
     selector: 'polity-search-profile-result',
     templateUrl: './search-profile-result.component.html',
-    styleUrls: ['./search-profile-result.component.less']
+    styleUrls: ['./search-profile-result.component.less'],
+    imports: [
+        TuiIslandModule
+    ],
+    standalone: true
 })
 export class SearchProfileResult {
     /**

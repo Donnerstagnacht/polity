@@ -11,7 +11,7 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                loadChildren: () => import('./landing/landing.module').then(m => m.LandingModule)
+                loadChildren: () => import('./landing/landing-routing.module').then(m => m.LandingRoutingModule)
             }
         ]
     },
@@ -22,7 +22,7 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                loadChildren: () => import('./features/features.module').then(m => m.FeaturesModule),
+                loadChildren: () => import('./features/features-routing.module').then(m => m.FeaturesRoutingModule)
             }
         ],
     },

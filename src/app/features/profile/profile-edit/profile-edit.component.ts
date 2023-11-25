@@ -1,14 +1,33 @@
 import {Component, effect, signal, WritableSignal} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {TUI_VALIDATION_ERRORS} from "@taiga-ui/kit";
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {TUI_VALIDATION_ERRORS, TuiFieldErrorPipeModule, TuiInputModule} from "@taiga-ui/kit";
 import {Profile} from "../types-and-interfaces/profile";
 import {ProfileService} from "../services/profile.service";
 import {ProfileStoreService} from "../services/profile-store.service";
+import {TuiButtonModule, TuiErrorModule, TuiSvgModule, TuiTextfieldControllerModule} from "@taiga-ui/core";
+import {AssistantToggleComponent} from "../../assistant/assistant-toggle/assistant-toggle.component";
+import {SignOutComponent} from "../../../auth/sign-out/sign-out.component";
+import {CommonModule} from "@angular/common";
+import {ProfileImageUploadComponent} from "../profile-image-upload/profile-image-upload.component";
 
 @Component({
     selector: 'polity-profile-edit',
     templateUrl: './profile-edit.component.html',
     styleUrls: ['./profile-edit.component.less'],
+    standalone: true,
+    imports: [
+        ReactiveFormsModule,
+        TuiInputModule,
+        TuiErrorModule,
+        TuiFieldErrorPipeModule,
+        TuiTextfieldControllerModule,
+        AssistantToggleComponent,
+        SignOutComponent,
+        CommonModule,
+        TuiSvgModule,
+        ProfileImageUploadComponent,
+        TuiButtonModule
+    ],
     providers: [
         {
             provide: TUI_VALIDATION_ERRORS,

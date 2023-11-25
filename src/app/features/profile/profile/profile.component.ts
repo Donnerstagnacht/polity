@@ -2,16 +2,26 @@ import {Component} from '@angular/core';
 import {SessionStoreService} from "../../../auth/services/session-store.service";
 import {ProfileService} from "../services/profile.service";
 import {ProfileStoreService} from "../services/profile-store.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, RouterOutlet} from "@angular/router";
 import {ProfileCountersStoreService} from "../../profile-follow/services/profile-counters-store.service";
 import {ProfileCountersService} from "../../profile-follow/services/profile-counters.service";
 import {NavigationItem} from "../../../navigation/types-and-interfaces/navigationItem";
 import {navigationItemsProfile, navigationItemsProfileOwner} from "../../../navigation/navigation-item";
+import {SecondBarTopComponent} from "../../../navigation/second-bar-top/second-bar-top.component";
+import {SecondBarRightComponent} from "../../../navigation/second-bar-right/second-bar-right.component";
+import {CommonModule} from "@angular/common";
 
 @Component({
     selector: 'polity-profile',
     templateUrl: './profile.component.html',
-    styleUrls: ['./profile.component.less']
+    styleUrls: ['./profile.component.less'],
+    imports: [
+        SecondBarTopComponent,
+        RouterOutlet,
+        SecondBarRightComponent,
+        CommonModule
+    ],
+    standalone: true
 })
 export class ProfileComponent {
     protected menuItemsProfile: NavigationItem[] = navigationItemsProfile;

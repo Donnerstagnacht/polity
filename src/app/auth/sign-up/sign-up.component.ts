@@ -7,11 +7,11 @@ import {
     TuiInputPasswordModule,
     tuiInputPasswordOptionsProvider
 } from "@taiga-ui/kit";
-import {async, of} from "rxjs";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AuthenticationService} from "../services/authentication.service";
-import {TuiErrorModule, TuiSvgModule, TuiTextfieldControllerModule} from "@taiga-ui/core";
+import {TuiButtonModule, TuiErrorModule, TuiSvgModule, TuiTextfieldControllerModule} from "@taiga-ui/core";
 import {CommonModule} from "@angular/common";
+import {of} from "rxjs";
 
 @Component({
     selector: 'polity-sign-up',
@@ -26,7 +26,8 @@ import {CommonModule} from "@angular/common";
         TuiSvgModule,
         TuiFieldErrorPipeModule,
         TuiInputPasswordModule,
-        CommonModule
+        CommonModule,
+        TuiButtonModule
     ],
     providers: [
         tuiInputPasswordOptionsProvider({
@@ -64,7 +65,6 @@ export class SignUpComponent {
             'password',
             [Validators.required, Validators.minLength(6)]),
     })
-    protected readonly async = async;
 
     constructor(
         private readonly authService: AuthenticationService
