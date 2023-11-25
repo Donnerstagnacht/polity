@@ -37,7 +37,7 @@ export class FollowersOfUserService {
     }
 
     public async removeFollowerOfUser(userId: string): Promise<any> {
-        this.followersOfUserStoreService.followersOfUser.wrapUpdateFunction(async (): Promise<void> => {
+        await this.followersOfUserStoreService.followersOfUser.wrapUpdateFunction(async (): Promise<void> => {
             const loggedInUserId: string = this.sessionStoreService.getSessionId() as string;
             const response: PostgrestSingleResponse<Functions<'unfollow_transaction'>> = await this.supabaseClient.rpc(
                 'unfollow_transaction',

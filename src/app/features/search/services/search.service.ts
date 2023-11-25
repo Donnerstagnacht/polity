@@ -26,7 +26,6 @@ export class SearchService {
         this.searchStoreService.profilSearchResults.resetObjects()
         await this.searchStoreService.profilSearchResults.wrapSelectFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<Functions<'search_user'>> = await this.supabaseClient.rpc(
-                // const response: PostgrestSingleResponse<any> = await this.supabaseClient.rpc(
                 'search_user',
                 {search_term: searchTerm}
             ).throwOnError()

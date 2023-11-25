@@ -9,9 +9,4 @@ import {menuItemsOffice} from "../../../layout/menu-items";
 })
 export class OfficeComponent {
     protected menuItemsProfile: Item[] = menuItemsOffice;
-
-
-    constructor() {
-    }
-
 }

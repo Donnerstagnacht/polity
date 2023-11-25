@@ -48,7 +48,8 @@ export class ProfileService {
     public async updateProfile(profile: Profile): Promise<void> {
         const sessionId: string | null = this.sessionStoreService.getSessionId();
 
-        await this.profileStoreService.profile.wrapUpdateFunction(async (): Promise<void> => {
+        // do not await this or preview/display on same page will not work
+        this.profileStoreService.profile.wrapUpdateFunction(async (): Promise<void> => {
             if (sessionId) {
                 const update: Profile = {
                     ...profile,
@@ -72,7 +73,7 @@ export class ProfileService {
      */
     async updateProfileImage(imageUrl: string): Promise<void> {
         const id = this.profileStoreService.profile.getValueByKey('id')
-        this.profileStoreService.profile.wrapUpdateFunction(async (): Promise<void> => {
+        await this.profileStoreService.profile.wrapUpdateFunction(async (): Promise<void> => {
             await this.supabase
             .from('profiles')
             .update({profile_image: imageUrl})
@@ -110,7 +111,6 @@ export class ProfileService {
         data: null,
         error: Error
     }> {
-        this.profileStoreService.profile
         const fileIn: File = file as File;
         return this.supabase
         .storage

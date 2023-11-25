@@ -12,7 +12,7 @@ export type DictionaryOfBooleans = Record<string, WritableSignal<boolean>>
     providedIn: 'root'
 })
 export class UiFlagStoreService {
-    private uiFlags: DictionaryOfBooleans = {};
+    private readonly uiFlags: DictionaryOfBooleans = {};
 
     constructor(@Inject({}) private readonly initialUiFlags: DictionaryOfBooleans = {}) {
         this.uiFlags = this.initialUiFlags;

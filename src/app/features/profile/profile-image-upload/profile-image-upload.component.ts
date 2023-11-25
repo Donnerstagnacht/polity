@@ -12,11 +12,11 @@ import {ProfileStoreService} from "../services/profile-store.service";
     styleUrls: ['./profile-image-upload.component.less']
 })
 export class ProfileImageUploadComponent {
-    isProfileLoading: WritableSignal<boolean> = signal(true)
-    protected control = new FormControl();
+    protected isProfileLoading: WritableSignal<boolean> = signal(true)
+    protected imageControl: FormControl<any> = new FormControl();
     protected rejectedFiles$: Subject<TuiFileLike | null> = new Subject<TuiFileLike | null>();
     protected loadingFiles$: Subject<TuiFileLike | null> = new Subject<TuiFileLike | null>();
-    protected loadedFiles$: Observable<TuiFileLike | null> = this.control.valueChanges.pipe(
+    protected loadedFiles$: Observable<TuiFileLike | null> = this.imageControl.valueChanges.pipe(
         switchMap(file => (file ? this.makeRequest(file) : of(null))),
     );
     protected profileWriteable: WritableSignal<Profile | null | undefined>;
@@ -71,7 +71,7 @@ export class ProfileImageUploadComponent {
     }
 
     protected removeFile(): void {
-        this.control.setValue(null);
+        this.imageControl.setValue(null);
     }
 
     protected onReject(file: TuiFileLike | readonly TuiFileLike[]): void {

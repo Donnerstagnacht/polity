@@ -9,7 +9,7 @@ import {Profile} from "../../features/profile/types-and-interfaces/profile";
 })
 export class LinkCardComponent {
     /**
-     * Takes the sesionId as input to display a profile link
+     * Takes the sessionId as input to display a profile link
      *
      * @Input sessionId - string |null.
      */

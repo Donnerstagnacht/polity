@@ -25,7 +25,7 @@ export class AppComponent {
         this.showErrorMessage = this.errorStoreService.selectShowError()
     }
 
-    onClose() {
+    onClose(): void {
         this.errorStoreService.setErrorStatus(false)
     }
 }
