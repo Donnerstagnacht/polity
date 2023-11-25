@@ -4,12 +4,31 @@ import {Functions} from "../../../../../supabase/types/supabase.shorthand-types"
 import {FollowersOfUserStoreService} from "../services/followers-of-user-store.service";
 import {FollowingOfUserService} from "../services/following-of-user.service";
 import {FollowingOfUserStoreService} from "../services/following-of-user-store.service";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
+import {CommonModule} from "@angular/common";
+import {
+    TableThreeIconTextDeleteComponent
+} from "../../../ui/polity-table/table-three-icon-text-delete/table-three-icon-text-delete.component";
+import {TuiTabsModule} from "@taiga-ui/kit";
+import {FilterClearComponent} from "../../../ui/polity-filter/filter-clear/filter-clear.component";
+import {FilterHeadlineComponent} from "../../../ui/polity-filter/filter-headline/filter-headline.component";
+import {FilterStringComponent} from "../../../ui/polity-filter/filter-string/filter-string.component";
 
 @Component({
     selector: 'polity-follow-button-edit',
     templateUrl: './profile-follow-edit.component.html',
     styleUrls: ['./profile-follow-edit.component.less'],
+    standalone: true,
+    imports: [
+        CommonModule,
+        TableThreeIconTextDeleteComponent,
+        TuiTabsModule,
+        FilterClearComponent,
+        FilterHeadlineComponent,
+        ReactiveFormsModule,
+        FilterStringComponent,
+
+    ]
 
 })
 export class ProfileFollowEditComponent {

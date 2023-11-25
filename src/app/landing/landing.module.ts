@@ -8,7 +8,6 @@ import {FirstBarBottomComponent} from "../navigation/first-bar-bottom/first-bar-
 import {FirstBarLeftComponent} from "../navigation/first-bar-left/first-bar-left.component";
 import {RouterModule} from "@angular/router";
 
-
 @NgModule({
     declarations: [
         FeatureDescriptionComponent,
@@ -17,7 +16,6 @@ import {RouterModule} from "@angular/router";
     imports: [
         CommonModule,
         LandingRoutingModule,
-        // AuthMo,
         TuiButtonModule,
         FirstBarBottomComponent,
         FirstBarLeftComponent,

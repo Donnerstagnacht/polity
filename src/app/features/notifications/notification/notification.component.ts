@@ -1,10 +1,19 @@
 import {Component, signal, WritableSignal} from '@angular/core';
 import {NotificationsStoreService} from "../services/notifications-store.service";
 import {NotificationsService} from "../services/notifications.service";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {Functions} from "../../../../../supabase/types/supabase.shorthand-types";
 import {TuiDay} from "@taiga-ui/cdk";
-import {IInfiniteScrollEvent} from "ngx-infinite-scroll";
+import {IInfiniteScrollEvent, InfiniteScrollModule} from "ngx-infinite-scroll";
+import {CommonModule} from "@angular/common";
+import {FilterHeadlineComponent} from "../../../ui/polity-filter/filter-headline/filter-headline.component";
+import {FilterStringComponent} from "../../../ui/polity-filter/filter-string/filter-string.component";
+import {FilterDateRangeComponent} from "../../../ui/polity-filter/filter-date-range/filter-date-range.component";
+import {FilterTagsComponent} from "../../../ui/polity-filter/filter-tags/filter-tags.component";
+import {FilterClearComponent} from "../../../ui/polity-filter/filter-clear/filter-clear.component";
+import {
+    TableFourIconTextTagDateComponent
+} from "../../../ui/polity-table/table-four-icon-text-tag-date/table-four-icon-text-tag-date.component";
 
 type filterTag = { text: string, value: string }
 
@@ -12,6 +21,18 @@ type filterTag = { text: string, value: string }
     selector: 'polity-notification',
     templateUrl: './notification.component.html',
     styleUrls: ['./notification.component.less'],
+    standalone: true,
+    imports: [
+        CommonModule,
+        FilterHeadlineComponent,
+        FilterStringComponent,
+        ReactiveFormsModule,
+        FilterDateRangeComponent,
+        FilterTagsComponent,
+        FilterClearComponent,
+        InfiniteScrollModule,
+        TableFourIconTextTagDateComponent
+    ]
 })
 export class NotificationComponent {
     protected throttle: number = 300;

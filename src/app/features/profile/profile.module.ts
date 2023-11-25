@@ -14,7 +14,6 @@ import {
     TuiTextfieldControllerModule
 } from "@taiga-ui/core";
 import {ProfileImageUploadComponent} from './profile-image-upload/profile-image-upload.component';
-import {ProfileFollowModule} from "../profile-follow/profile-follow.module";
 import {FollowButton} from "../../ui/polity-wiki/follow-button/follow-button.component";
 import {CounterComponent} from "../../ui/polity-wiki/counter/counter.component";
 import {WikiHeadlineComponent} from "../../ui/polity-wiki/wiki-headline/wiki-headline.component";
@@ -23,6 +22,7 @@ import {SecondBarRightComponent} from "../../navigation/second-bar-right/second-
 import {SecondBarTopComponent} from "../../navigation/second-bar-top/second-bar-top.component";
 import {SignOutComponent} from "../../auth/sign-out/sign-out.component";
 import {AssistantToggleComponent} from "../assistant/assistant-toggle/assistant-toggle.component";
+import {ProfileFollowEditComponent} from "../profile-follow/profile-follow-edit/profile-follow-edit.component";
 
 @NgModule({
     declarations: [
@@ -43,7 +43,6 @@ import {AssistantToggleComponent} from "../assistant/assistant-toggle/assistant-
         TuiTextfieldControllerModule,
         TuiNotificationModule,
         TuiInputFilesModule,
-        ProfileFollowModule,
         FollowButton,
         CounterComponent,
         WikiHeadlineComponent,
@@ -51,7 +50,8 @@ import {AssistantToggleComponent} from "../assistant/assistant-toggle/assistant-
         SecondBarRightComponent,
         SecondBarTopComponent,
         SignOutComponent,
-        AssistantToggleComponent
+        AssistantToggleComponent,
+        ProfileFollowEditComponent
     ]
 })
 export class ProfileModule {
