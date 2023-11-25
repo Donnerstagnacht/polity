@@ -32,7 +32,7 @@ export class FollowersOfUserService {
             .throwOnError()
             console.log('results', followerResponse.data)
             if (followerResponse.data) {
-                this.followersOfUserStoreService.followersOfUser.setEntities(followerResponse.data)
+                this.followersOfUserStoreService.followersOfUser.setObjects(followerResponse.data)
             }
         })
     }

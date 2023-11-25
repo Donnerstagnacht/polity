@@ -58,8 +58,8 @@ export class ProfileFollowEditComponent {
                 this.followingOfUserService.selectFollowingsOfUser(),
             ]
         )
-        this.followersOfUser = this.followersOfUserStoreService.followersOfUser.getEntities();
-        this.followingsOfUser = this.followingOfUserStoreService.followingOfUser.getEntities();
+        this.followersOfUser = this.followersOfUserStoreService.followersOfUser.getObjects();
+        this.followingsOfUser = this.followingOfUserStoreService.followingOfUser.getObjects();
 
 
     }
@@ -126,10 +126,10 @@ export class ProfileFollowEditComponent {
         this.combinedForm.reset()
         if (this.showFollowers) {
             console.log('clear followers')
-            this.followersOfUserStoreService.followersOfUser.resetFilteredEntities();
+            this.followersOfUserStoreService.followersOfUser.resetDisplayedObjects();
         } else {
             console.log('clear following')
-            this.followingOfUserStoreService.followingOfUser.resetFilteredEntities();
+            this.followingOfUserStoreService.followingOfUser.resetDisplayedObjects();
         }
         // this.followersOfUserStoreService.followersOfUser.resetFilteredEntities();
         // this.followingOfUserStoreService.followingOfUser.resetFilteredEntities();

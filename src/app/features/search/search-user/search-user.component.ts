@@ -26,7 +26,7 @@ export class SearchUserComponent {
         private readonly searchStoreService: SearchStoreService,
     ) {
         this.loading = this.searchStoreService.profilSearchResults.loading.getLoading()
-        this.searchResults = this.searchStoreService.profilSearchResults.getEntities();
+        this.searchResults = this.searchStoreService.profilSearchResults.getObjects();
         // this.searchResults = this.searchStoreService.selectProfileSearchResults();
         this.searchForm.get('search')?.valueChanges.pipe(
             debounceTime(1000)).subscribe(
@@ -35,7 +35,7 @@ export class SearchUserComponent {
     }
 
     public focused(): void {
-        this.searchStoreService.profilSearchResults.resetEntities()
+        this.searchStoreService.profilSearchResults.resetObjects()
         // this.searchStoreService.updateProfileSearchResults(null)
     };
 

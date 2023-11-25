@@ -57,16 +57,16 @@ export class NotificationComponent {
 
     async ngOnInit(): Promise<void> {
         await this.notificationsService.selectNotifications()
-        this.notifications = this.notificationStoreService.notifications.getEntities();
+        this.notifications = this.notificationStoreService.notifications.getObjects();
     }
 
     protected onScrollDown(event: IInfiniteScrollEvent): void {
-        this.notificationStoreService.notifications.onSrollToBottom()
+        this.notificationStoreService.notifications.onScrollToBottom()
     }
 
     protected clearFilter(): void {
         this.combinedForm.reset()
-        this.notificationStoreService.notifications.resetFilteredEntities()
+        this.notificationStoreService.notifications.resetDisplayedObjects()
     }
 
     protected toggleShowFilter(): void {
@@ -97,7 +97,7 @@ export class NotificationComponent {
         }
 
         if (!filterByString && !typeKeyValues && !filterByDate) {
-            this.notificationStoreService.notifications.resetFilteredEntities()
+            this.notificationStoreService.notifications.resetDisplayedObjects()
         }
 
         this.notificationStoreService.notifications.filterArray(
