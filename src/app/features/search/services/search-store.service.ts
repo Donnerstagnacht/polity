@@ -7,9 +7,9 @@ import {ArrayStoreService} from "../../../signal-store/array-store.service";
     providedIn: 'root'
 })
 export class SearchStoreService {
-    public profilSearchResults: ArrayStoreService<PlainFunctions<'search_user'>, {}>;
+    public profilSearchResults: ArrayStoreService<PlainFunctions<'search_user'>>;
 
     constructor() {
-        this.profilSearchResults = new ArrayStoreService<PlainFunctions<'search_user'>, {}>;
+        this.profilSearchResults = new ArrayStoreService<PlainFunctions<'search_user'>>;
     }
 }

@@ -1,5 +1,6 @@
-import {Injectable, signal, WritableSignal} from '@angular/core';
+import {Inject, Injectable, signal, WritableSignal} from '@angular/core';
 import {WrapperStoreService} from "./wrapper-store.service";
+import {DictionaryOfBooleans} from "./ui-flag-store.service";
 
 // ATTENTION: Type support only for non nested objects
 // could not figure out how solve the type support for returned nested supabase types e.g. see GeneratedDatabase or
@@ -13,11 +14,18 @@ type pathsToValues<StoredObject> = StoredObject extends Record<string, unknown>
 @Injectable({
     providedIn: 'root'
 })
-export class ObjectStoreService<StoredObject, UiFlags extends Record<string, WritableSignal<boolean>>> extends WrapperStoreService<UiFlags> {
+export class ObjectStoreService<StoredObject> extends WrapperStoreService {
     private storedObject: WritableSignal<StoredObject | null> = signal(null);
 
-    constructor() {
-        super();
+    /**
+     * Creates an instance of the Object store. The store stores the specified object type.
+     *
+     * @param {DictionaryOfBooleans} uiFlags - Optional object that contains UI flags associated with the store. Defaults to an empty
+     * object.
+     * @return {@return {ObjectStoreService<StoredObject>}} An instance of the Object store.
+     */
+    constructor(@Inject({}) private uiFlags: DictionaryOfBooleans = {}) {
+        super(uiFlags);
     }
 
     /**

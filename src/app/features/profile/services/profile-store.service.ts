@@ -12,7 +12,7 @@ export type profileUiFlags = {
     providedIn: 'root'
 })
 export class ProfileStoreService {
-    public profile: ObjectStoreService<Profile, profileUiFlags>;
+    public profile: ObjectStoreService<Profile>;
     private uiFlags: profileUiFlags = {
         isOwner: signal(false),
         isFollowing: signal(false),
@@ -20,7 +20,6 @@ export class ProfileStoreService {
     }
 
     constructor() {
-        this.profile = new ObjectStoreService<Profile, profileUiFlags>();
-        this.profile.uiFlagStore.setUiFlags(this.uiFlags)
+        this.profile = new ObjectStoreService<Profile>(this.uiFlags);
     }
 }

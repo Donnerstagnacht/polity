@@ -6,11 +6,11 @@ import {ArrayStoreService} from "../../../signal-store/array-store.service";
     providedIn: 'root'
 })
 export class FollowersOfUserStoreService {
-    public followersOfUser: ArrayStoreService<PlainFunctions<'select_follower_of_user'>, {}>;
+    public followersOfUser: ArrayStoreService<PlainFunctions<'select_follower_of_user'>>;
 
     // public followersOfUser: ArrayStoreWrapperService<PlainFunctions<'select_follower_of_user'>>;
 
     constructor() {
-        this.followersOfUser = new ArrayStoreService<PlainFunctions<"select_follower_of_user">, {}>();
+        this.followersOfUser = new ArrayStoreService<PlainFunctions<"select_follower_of_user">>();
     }
 }
