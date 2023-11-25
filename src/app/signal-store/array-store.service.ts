@@ -11,9 +11,19 @@ export class ArrayStoreService<StoredObject, UiFlags extends Record<string, Writ
     private entities: WritableSignal<StoredObject[]> = signal([]);
     private storedEntities: WritableSignal<StoredObject[]> = signal([]);
 
-    constructor(@Inject(false) private usePagination: boolean = false) {
+    /**
+     * Constructs a new ArrayStore Instance.
+     *
+     * @param {boolean} usePagination - Indicates whether pagination is used.
+     * @param {number} step -  The step determines how many store objects are shown on page load and added if
+     * the user scrolls to the bottom.
+     */
+    constructor(
+        @Inject(false) private usePagination: boolean = false,
+        @Inject(20) private step: number = 20
+    ) {
         super();
-        this.pagination = new PaginationStoreService();
+        this.pagination = new PaginationStoreService(this.step);
         console.log('ArrayStoreService', this.usePagination);
     }
 
@@ -64,7 +74,7 @@ export class ArrayStoreService<StoredObject, UiFlags extends Record<string, Writ
     }
 
     onSrollToBottom() {
-        this.pagination.increasePagination()
+        this.pagination.incrementTo()
         console.log('start and end not provided')
         let to = this.pagination.getTo()
         const from = to - this.pagination.getStep()

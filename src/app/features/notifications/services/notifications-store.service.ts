@@ -9,6 +9,8 @@ export class NotificationsStoreService {
     public notifications: ArrayStoreService<PlainFunctions<'select_notifications_of_users'>, {}>;
 
     constructor() {
-        this.notifications = new ArrayStoreService<PlainFunctions<'select_notifications_of_users'>, {}>(true);
+        this.notifications = new ArrayStoreService<PlainFunctions<'select_notifications_of_users'>, {}>(
+            true
+        );
     }
 }
