@@ -1,13 +1,19 @@
 import {Component, effect, signal, WritableSignal} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {AssistantService} from "../services/assistant.service";
 import {AssistantStoreService} from "../services/assistant-store.service";
 import {Tables} from "../../../../../supabase/types/supabase.shorthand-types";
+import {TuiToggleModule} from "@taiga-ui/kit";
 
 @Component({
     selector: 'polity-assistant-toggle',
     templateUrl: './assistant-toggle.component.html',
-    styleUrls: ['./assistant-toggle.component.less']
+    styleUrls: ['./assistant-toggle.component.less'],
+    standalone: true,
+    imports: [
+        ReactiveFormsModule,
+        TuiToggleModule
+    ]
 })
 export class AssistantToggleComponent {
     isAssistantLoading: WritableSignal<boolean> = signal(true);

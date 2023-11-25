@@ -1,7 +1,13 @@
 import {Component, Inject, signal, WritableSignal} from '@angular/core';
-import {TuiDialogContext} from "@taiga-ui/core";
+import {
+    TuiButtonModule,
+    TuiDialogContext,
+    TuiErrorModule,
+    TuiSvgModule,
+    TuiTextfieldControllerModule
+} from "@taiga-ui/core";
 import {POLYMORPHEUS_CONTEXT} from "@tinkoff/ng-polymorpheus";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {ProfileService} from "../../profile/services/profile.service";
 import {Profile} from "../../profile/types-and-interfaces/profile";
 import {SessionStoreService} from "../../../auth/services/session-store.service";
@@ -10,11 +16,25 @@ import {AssistantService} from "../services/assistant.service";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
 import {Tables} from "../../../../../supabase/types/supabase.shorthand-types";
 import {AssistantStoreService} from "../services/assistant-store.service";
+import {TuiCarouselModule, TuiFieldErrorPipeModule, TuiInputModule} from "@taiga-ui/kit";
+import {CommonModule} from "@angular/common";
 
 @Component({
     selector: 'polity-assistant-welcome-dialog',
     templateUrl: './assistant-welcome-dialog.component.html',
     styleUrls: ['./assistant-welcome-dialog.component.less'],
+    standalone: true,
+    imports: [
+        TuiCarouselModule,
+        ReactiveFormsModule,
+        TuiSvgModule,
+        TuiInputModule,
+        TuiFieldErrorPipeModule,
+        TuiTextfieldControllerModule,
+        TuiErrorModule,
+        CommonModule,
+        TuiButtonModule
+    ]
 })
 export class AssistantWelcomeDialogComponent {
     protected welcomeForm: FormGroup<{

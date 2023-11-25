@@ -6,11 +6,18 @@ import {SessionStoreService} from "../../../auth/services/session-store.service"
 import {AssistantService} from "../services/assistant.service";
 import {AssistantStoreService} from "../services/assistant-store.service";
 import {Tables} from "../../../../../supabase/types/supabase.shorthand-types";
+import {AssistantIconComponent} from "../assistant-icon/assistant-icon.component";
+import {CommonModule} from "@angular/common";
 
 @Component({
     selector: 'polity-assistant',
     templateUrl: './assistant.component.html',
-    styleUrls: ['./assistant.component.less']
+    styleUrls: ['./assistant.component.less'],
+    standalone: true,
+    imports: [
+        AssistantIconComponent,
+        CommonModule
+    ]
 })
 export class AssistantComponent {
     protected assistant: WritableSignal<Tables<'assistants'> | null> = signal({

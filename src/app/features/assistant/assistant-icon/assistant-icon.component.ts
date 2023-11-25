@@ -1,16 +1,25 @@
 import {Component, effect, Inject, Injector, signal, WritableSignal} from '@angular/core';
 import {PolymorpheusComponent} from "@tinkoff/ng-polymorpheus";
 import {AssistantWelcomeDialogComponent} from "../assistant-welcome-dialog/assistant-welcome-dialog.component";
-import {TuiDialogService} from "@taiga-ui/core";
+import {TuiButtonModule, TuiDialogService} from "@taiga-ui/core";
 import {AssistantStoreService} from "../services/assistant-store.service";
 import {Tables} from "../../../../../supabase/types/supabase.shorthand-types";
 import {Tutorial} from "../types-and-interfaces/tutorial";
+import {TuiActionModule, TuiMarkerIconModule} from "@taiga-ui/kit";
+import {CommonModule} from "@angular/common";
 
 
 @Component({
     selector: 'polity-assistant-icon',
     templateUrl: './assistant-icon.component.html',
-    styleUrls: ['./assistant-icon.component.less']
+    styleUrls: ['./assistant-icon.component.less'],
+    standalone: true,
+    imports: [
+        TuiMarkerIconModule,
+        TuiButtonModule,
+        CommonModule,
+        TuiActionModule
+    ]
 })
 export class AssistantIconComponent {
     protected isAssistantLoading: WritableSignal<boolean> = signal(true)

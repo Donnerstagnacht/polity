@@ -3,9 +3,9 @@ import {CommonModule} from '@angular/common';
 import {AppSkeletonComponent} from './app-skeleton/app-skeleton.component';
 import {FeaturesRoutingModule} from "./features-routing.module";
 import {TuiLoaderModule} from "@taiga-ui/core";
-import {AssistantModule} from "./assistant/assistant.module";
 import {FirstBarBottomComponent} from "../navigation/first-bar-bottom/first-bar-bottom.component";
 import {FirstBarLeftComponent} from "../navigation/first-bar-left/first-bar-left.component";
+import {AssistantComponent} from "./assistant/assistant/assistant.component";
 
 @NgModule({
     declarations: [
@@ -15,9 +15,9 @@ import {FirstBarLeftComponent} from "../navigation/first-bar-left/first-bar-left
         CommonModule,
         FeaturesRoutingModule,
         TuiLoaderModule,
-        AssistantModule,
         FirstBarBottomComponent,
         FirstBarLeftComponent,
+        AssistantComponent,
     ]
 })
 export class FeaturesModule {

@@ -15,7 +15,6 @@ import {
 } from "@taiga-ui/core";
 import {ProfileImageUploadComponent} from './profile-image-upload/profile-image-upload.component';
 import {ProfileFollowModule} from "../profile-follow/profile-follow.module";
-import {AssistantModule} from "../assistant/assistant.module";
 import {FollowButton} from "../../ui/polity-wiki/follow-button/follow-button.component";
 import {CounterComponent} from "../../ui/polity-wiki/counter/counter.component";
 import {WikiHeadlineComponent} from "../../ui/polity-wiki/wiki-headline/wiki-headline.component";
@@ -23,6 +22,7 @@ import {WikiImageComponent} from "../../ui/polity-wiki/wiki-image/wiki-image.com
 import {SecondBarRightComponent} from "../../navigation/second-bar-right/second-bar-right.component";
 import {SecondBarTopComponent} from "../../navigation/second-bar-top/second-bar-top.component";
 import {SignOutComponent} from "../../auth/sign-out/sign-out.component";
+import {AssistantToggleComponent} from "../assistant/assistant-toggle/assistant-toggle.component";
 
 @NgModule({
     declarations: [
@@ -44,14 +44,14 @@ import {SignOutComponent} from "../../auth/sign-out/sign-out.component";
         TuiNotificationModule,
         TuiInputFilesModule,
         ProfileFollowModule,
-        AssistantModule,
         FollowButton,
         CounterComponent,
         WikiHeadlineComponent,
         WikiImageComponent,
         SecondBarRightComponent,
         SecondBarTopComponent,
-        SignOutComponent
+        SignOutComponent,
+        AssistantToggleComponent
     ]
 })
 export class ProfileModule {
