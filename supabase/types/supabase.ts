@@ -316,6 +316,15 @@ export interface Database {
         }
         Returns: undefined
       }
+      unread_notifications_counter: {
+        Args: {
+          user_id: string
+        }
+        Returns: {
+          profile_id: string
+          unread_notifications_counter: number
+        }[]
+      }
       update_first_sign_in: {
         Args: {
           user_id: string

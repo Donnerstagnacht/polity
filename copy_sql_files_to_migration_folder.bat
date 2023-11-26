@@ -30,7 +30,7 @@ if errorlevel 1 (
     supabase db reset
     echo Y | npx supabase db reset --linked
     supabase db push --include-all
-    supabase gen types typescript --project-id "qwetlgmbngpopdcgravw" --schema public > polity/supabase/types/supabase.ts
+    supabase gen types typescript --project-id "qwetlgmbngpopdcgravw" --schema public > supabase/types/supabase.ts
 @REM     pause
 @REM     ng serve
     npx cypress run --spec "cypress/e2e/all.cy.ts" --record false

@@ -1,14 +1,12 @@
-DROP FUNCTION IF EXISTS public.select_following_counter(
+DROP FUNCTION IF EXISTS public.unread_notifications_counter(
     user_id uuid
 );
-CREATE OR REPLACE FUNCTION public.select_following_counter(
+CREATE OR REPLACE FUNCTION public.unread_notifications_counter(
     user_id uuid
 )
     RETURNS table
             (
                 profile_id                   uuid,
-                follower_counter             bigint,
-                following_counter            bigint,
                 unread_notifications_counter bigint
             )
     LANGUAGE plpgsql
@@ -17,7 +15,9 @@ AS
 $$
 BEGIN
     RETURN QUERY (
-        SELECT *
+        SELECT
+            public.profiles_counters.id AS profile_id,
+            public.profiles_counters.unread_notifications_counter
         FROM
             public.profiles_counters
         WHERE
