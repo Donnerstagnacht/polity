@@ -26,8 +26,7 @@ import {FilterStringComponent} from "../../../ui/polity-filter/filter-string/fil
         FilterClearComponent,
         FilterHeadlineComponent,
         ReactiveFormsModule,
-        FilterStringComponent,
-
+        FilterStringComponent
     ]
 
 })

@@ -1,10 +1,9 @@
-import {RouterModule, Routes} from "@angular/router";
-import {NgModule} from "@angular/core";
+import {Routes} from "@angular/router";
 import {FeatureDescriptionComponent} from "./feature-description/feature-description.component";
 import {SignInComponent} from "../auth/sign-in/sign-in.component";
 import {SignUpComponent} from "../auth/sign-up/sign-up.component";
 
-const routes: Routes = [
+export const LANDING_ROUTES: Routes = [
     {
         path: '',
         component: FeatureDescriptionComponent
@@ -18,14 +17,3 @@ const routes: Routes = [
         component: SignUpComponent
     },
 ]
-
-@NgModule({
-    imports: [
-        RouterModule.forChild(routes)
-    ],
-    exports: [
-        RouterModule
-    ]
-})
-export class LandingRoutingModule {
-}

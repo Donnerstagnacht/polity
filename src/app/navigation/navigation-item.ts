@@ -60,21 +60,21 @@ export const navigationItemsProfileOwner: NavigationItem[] = [
     {
         text: 'HOME',
         icon: 'tuiIconUser',
-        link: '/profile',
+        link: '/profile/:id',
         dataCy: 'nav-profile-wiki',
         dataCyDesktop: 'nav-profile-wiki-desktop'
     },
     {
         text: 'EDIT',
         icon: 'tuiIconEdit2',
-        link: '/profile/edit',
+        link: '/profile/:id/edit',
         dataCy: 'nav-profile-edit',
         dataCyDesktop: 'nav-profile-edit-desktop'
     },
     {
         text: 'EDIT',
         icon: 'tuiIconUsers',
-        link: '/profile/follower/edit',
+        link: '/profile/id/follower/edit',
         dataCy: 'nav-follower-edit',
         dataCyDesktop: 'nav-follower-edit-desktop'
     }

@@ -1,4 +1,4 @@
-import {ActivatedRouteSnapshot, CanActivateFn, Router} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot} from '@angular/router';
 import {SessionStoreService} from "../../auth/services/session-store.service";
 import {inject, WritableSignal} from "@angular/core";
 import {Session} from "@supabase/supabase-js";
@@ -9,17 +9,20 @@ import {Session} from "@supabase/supabase-js";
  * @return {boolean} Returns true if the user is signed in, false otherwise.
  */
 export const isOwnerGuard: CanActivateFn = (
-    route: ActivatedRouteSnapshot
+    routeSnapshot: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
 ): boolean => {
     const sessionStoreService: SessionStoreService = inject(SessionStoreService);
     const router: Router = inject(Router);
     let sessionAsSignal: WritableSignal<Session | null> = sessionStoreService.selectSession();
-    const id: string = route.paramMap.get('id') as string;
+    const loggedInUserId: string | undefined = sessionAsSignal()?.user.id;
+    // const id: string = routeSnapshot.paramMap.get('id') as string; // OLD solution, does not work without
+    // ngModule routing
 
-    if (sessionAsSignal()?.user.id === id) {
+    if (loggedInUserId && state.url.includes(loggedInUserId)) {
         return true;
     } else {
-        router.navigate(['/profile/' + id])
+        router.navigate(['/home']);
         return false
     }
 };
