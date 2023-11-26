@@ -2,10 +2,10 @@ import {Component, signal, WritableSignal} from '@angular/core';
 import {TuiFileLike, TuiInputFilesModule} from "@taiga-ui/kit";
 import {from, Observable, of, Subject, switchMap} from "rxjs";
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
-import {ProfileActionService} from "../services/profile.action.service";
 import {Profile} from "../../../../../cypress/fixtures/profile";
-import {ProfileStoreService} from "../services/profile.store.service";
 import {CommonModule} from "@angular/common";
+import {ProfileActionService} from "../action-store-services/profile.action.service";
+import {ProfileStoreService} from "../action-store-services/profile.store.service";
 
 @Component({
     selector: 'polity-profile-image-upload',

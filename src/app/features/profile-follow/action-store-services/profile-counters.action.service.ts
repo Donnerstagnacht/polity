@@ -4,8 +4,8 @@ import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modifi
 import {ProfileCountersStoreService} from "./profile-counters.store.service";
 import {SessionStoreService} from "../../../auth/services/session-store.service";
 import {Functions, Tables} from "../../../../../supabase/types/supabase.shorthand-types";
-import {ProfileStoreService} from "../../profile/services/profile.store.service";
 import {supabaseClient} from "../../../auth/supabase-client";
+import {ProfileStoreService} from "../../profile/action-store-services/profile.store.service";
 
 @Injectable({
     providedIn: 'root'

@@ -1,9 +1,9 @@
 import {Component, effect, signal, WritableSignal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {AssistantActionService} from "../services/assistant.action.service";
-import {AssistantStoreService} from "../services/assistant.store.service";
 import {Tables} from "../../../../../supabase/types/supabase.shorthand-types";
 import {TuiToggleModule} from "@taiga-ui/kit";
+import {AssistantActionService} from "../action-stores-services/assistant.action.service";
+import {AssistantStoreService} from "../action-stores-services/assistant.store.service";
 
 @Component({
     selector: 'polity-assistant-toggle',

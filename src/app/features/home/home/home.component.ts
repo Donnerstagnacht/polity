@@ -1,9 +1,9 @@
 import {Component, signal, WritableSignal} from '@angular/core';
 import {SessionStoreService} from "../../../auth/services/session-store.service";
 import {Profile} from "../../../../../cypress/fixtures/profile";
-import {ProfileActionService} from "../../profile/services/profile.action.service";
-import {ProfileStoreService} from "../../profile/services/profile.store.service";
 import {LinkCardComponent} from "../../../ui/link-card/link-card.component";
+import {ProfileActionService} from "../../profile/action-store-services/profile.action.service";
+import {ProfileStoreService} from "../../profile/action-store-services/profile.store.service";
 
 @Component({
     selector: 'polity-home',

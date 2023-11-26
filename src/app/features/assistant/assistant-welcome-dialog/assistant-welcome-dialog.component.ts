@@ -8,16 +8,16 @@ import {
 } from "@taiga-ui/core";
 import {POLYMORPHEUS_CONTEXT} from "@tinkoff/ng-polymorpheus";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {ProfileActionService} from "../../profile/services/profile.action.service";
 import {Profile} from "../../../../../cypress/fixtures/profile";
 import {SessionStoreService} from "../../../auth/services/session-store.service";
 import {Router} from "@angular/router";
-import {AssistantActionService} from "../services/assistant.action.service";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
 import {Tables} from "../../../../../supabase/types/supabase.shorthand-types";
-import {AssistantStoreService} from "../services/assistant.store.service";
 import {TuiCarouselModule, TuiFieldErrorPipeModule, TuiInputModule} from "@taiga-ui/kit";
 import {CommonModule} from "@angular/common";
+import {ProfileActionService} from "../../profile/action-store-services/profile.action.service";
+import {AssistantActionService} from "../action-stores-services/assistant.action.service";
+import {AssistantStoreService} from "../action-stores-services/assistant.store.service";
 
 @Component({
     selector: 'polity-assistant-welcome-dialog',

@@ -2,11 +2,11 @@ import {Component, effect, Inject, Injector, signal, WritableSignal} from '@angu
 import {PolymorpheusComponent} from "@tinkoff/ng-polymorpheus";
 import {AssistantWelcomeDialogComponent} from "../assistant-welcome-dialog/assistant-welcome-dialog.component";
 import {TuiButtonModule, TuiDialogService} from "@taiga-ui/core";
-import {AssistantStoreService} from "../services/assistant.store.service";
 import {Tables} from "../../../../../supabase/types/supabase.shorthand-types";
 import {TuiActionModule, TuiMarkerIconModule} from "@taiga-ui/kit";
 import {CommonModule} from "@angular/common";
-import {Tutorial, TUTORIALS} from "../types-and-interfaces-constants/tutorial";
+import {Tutorial, TUTORIALS} from "../constants-stypes-interfaces/tutorial";
+import {AssistantStoreService} from "../action-stores-services/assistant.store.service";
 
 
 @Component({

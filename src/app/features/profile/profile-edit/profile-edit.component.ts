@@ -2,13 +2,13 @@ import {Component, effect, signal, WritableSignal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {TUI_VALIDATION_ERRORS, TuiFieldErrorPipeModule, TuiInputModule} from "@taiga-ui/kit";
 import {Profile} from "../../../../../cypress/fixtures/profile";
-import {ProfileActionService} from "../services/profile.action.service";
-import {ProfileStoreService} from "../services/profile.store.service";
 import {TuiButtonModule, TuiErrorModule, TuiSvgModule, TuiTextfieldControllerModule} from "@taiga-ui/core";
 import {AssistantToggleComponent} from "../../assistant/assistant-toggle/assistant-toggle.component";
 import {SignOutComponent} from "../../../auth/sign-out/sign-out.component";
 import {CommonModule} from "@angular/common";
 import {ProfileImageUploadComponent} from "../profile-image-upload/profile-image-upload.component";
+import {ProfileStoreService} from "../action-store-services/profile.store.service";
+import {ProfileActionService} from "../action-store-services/profile.action.service";
 
 @Component({
     selector: 'polity-profile-edit',

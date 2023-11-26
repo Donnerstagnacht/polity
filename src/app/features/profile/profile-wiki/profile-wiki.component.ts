@@ -1,13 +1,13 @@
 import {Component, signal, Signal, WritableSignal} from '@angular/core';
 import {Profile} from "../../../../../cypress/fixtures/profile";
-import {ProfileStoreService} from "../services/profile.store.service";
-import {ProfileCountersStoreService} from "../../profile-follow/services/profile-counters.store.service";
 import {PlainFunctions} from "../../../../../supabase/types/supabase.shorthand-types";
-import {ProfileCountersActionService} from "../../profile-follow/services/profile-counters.action.service";
 import {WikiHeadlineComponent} from "../../../ui/polity-wiki/wiki-headline/wiki-headline.component";
 import {CounterComponent} from "../../../ui/polity-wiki/counter/counter.component";
 import {FollowButton} from "../../../ui/polity-wiki/follow-button/follow-button.component";
 import {WikiImageComponent} from "../../../ui/polity-wiki/wiki-image/wiki-image.component";
+import {ProfileStoreService} from "../action-store-services/profile.store.service";
+import {ProfileCountersActionService} from "../../profile-follow/action-store-services/profile-counters.action.service";
+import {ProfileCountersStoreService} from "../../profile-follow/action-store-services/profile-counters.store.service";
 
 @Component({
     selector: 'polity-profile-wiki',
