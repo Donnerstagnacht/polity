@@ -9,7 +9,7 @@ import {CommonModule} from '@angular/common';
     styleUrls: ['./wiki-headline.component.less']
 })
 export class WikiHeadlineComponent {
-    @Input() firstName: string | null | undefined = null;
-    @Input() lastName: string | null | undefined = null;
-    @Input() isLoading: WritableSignal<boolean> = signal(true);
+    @Input({required: true}) firstName: string | null | undefined = null;
+    @Input({required: true}) lastName: string | null | undefined = null;
+    @Input({required: true}) isLoading: WritableSignal<boolean> = signal(true);
 }

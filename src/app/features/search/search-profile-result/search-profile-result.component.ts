@@ -18,8 +18,8 @@ export class SearchProfileResult {
      *
      * @Input profile: Profile | null.
      */
-    @Input() public profile: PlainFunctions<'search_user'> | null = null;
-    @Input() public isLoading: WritableSignal<boolean> = signal(true);
+    @Input({required: true}) public profile: PlainFunctions<'search_user'> | null = null;
+    @Input({required: true}) public isLoading: WritableSignal<boolean> = signal(true);
 
     constructor(private readonly router: Router) {
     }

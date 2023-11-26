@@ -13,7 +13,7 @@ import {TuiSvgModule} from "@taiga-ui/core";
 })
 export class FilterHeadlineComponent {
     @Output() showFilter: EventEmitter<void> = new EventEmitter();
-    @Input() headline: string = '';
+    @Input({required: true}) headline: string = '';
     @Input() dataCyTag: string = 'headline';
 
     toggleShowFilter(): void {

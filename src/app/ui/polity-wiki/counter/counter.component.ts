@@ -9,8 +9,8 @@ import {CommonModule} from "@angular/common";
     styleUrls: ['./counter.component.less']
 })
 export class CounterComponent {
-    @Input() isLoading: WritableSignal<boolean> = signal(true);
-    @Input() counterValue: number | null | undefined = null;
-    @Input() counterTitle: string | null = null;
+    @Input({required: true}) isLoading: WritableSignal<boolean> = signal(true);
+    @Input({required: true}) counterValue: number | null | undefined = null;
+    @Input({required: true}) counterTitle: string | null = null;
     @Input() dataCyTag: string = 'counter';
 }
