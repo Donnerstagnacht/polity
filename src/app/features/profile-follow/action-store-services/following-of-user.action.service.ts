@@ -3,7 +3,7 @@ import {PostgrestError, PostgrestSingleResponse, SupabaseClient} from "@supabase
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
 import {Functions} from "../../../../../supabase/types/supabase.shorthand-types";
 import {FollowingOfUserStoreService} from "./following-of-user.store.service";
-import {SessionStoreService} from "../../../auth/services/session-store.service";
+import {SessionStoreService} from "../../../auth/services/session.store.service";
 import {ProfileCountersStoreService} from "./profile-counters.store.service";
 import {supabaseClient} from "../../../auth/supabase-client";
 

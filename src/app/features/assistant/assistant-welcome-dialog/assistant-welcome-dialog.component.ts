@@ -9,7 +9,7 @@ import {
 import {POLYMORPHEUS_CONTEXT} from "@tinkoff/ng-polymorpheus";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Profile} from "../../../../../cypress/fixtures/profile";
-import {SessionStoreService} from "../../../auth/services/session-store.service";
+import {SessionStoreService} from "../../../auth/services/session.store.service";
 import {Router} from "@angular/router";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
 import {Tables} from "../../../../../supabase/types/supabase.shorthand-types";

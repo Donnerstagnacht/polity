@@ -9,7 +9,7 @@ import {
     Subscription,
     SupabaseClient
 } from "@supabase/supabase-js";
-import {SessionStoreService} from "./session-store.service";
+import {SessionStoreService} from "./session.store.service";
 import {Router} from "@angular/router";
 import {DatabaseOverwritten} from "../../../../supabase/types/supabase.modified";
 import {ErrorStoreService} from "../../signal-store/error-store.service";

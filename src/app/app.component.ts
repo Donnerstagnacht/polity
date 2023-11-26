@@ -1,6 +1,6 @@
 import {Component, WritableSignal} from '@angular/core';
 import {AuthenticationService} from "./auth/services/authentication.service";
-import {SessionStoreService} from "./auth/services/session-store.service";
+import {SessionStoreService} from "./auth/services/session.store.service";
 import {AuthChangeEvent, Session} from "@supabase/supabase-js";
 import {ErrorStoreService} from "./signal-store/error-store.service";
 import {RouterOutlet} from '@angular/router';
