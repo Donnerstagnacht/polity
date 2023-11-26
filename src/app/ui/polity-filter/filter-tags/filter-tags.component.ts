@@ -14,8 +14,8 @@ import {TuiFilterModule} from "@taiga-ui/kit";
     ]
 })
 export class FilterTagsComponent {
-    @Input() formGroupName!: string;
-    @Input() filterTypes: { text: string, value: string }[] = []
+    @Input({required: true}) formGroupName!: string;
+    @Input({required: true}) filterTypes: { text: string, value: string }[] = []
     filterTagsForm: FormGroup
 
     constructor(private rootFormGroup: FormGroupDirective) {

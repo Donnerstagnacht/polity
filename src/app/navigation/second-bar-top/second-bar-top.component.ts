@@ -19,7 +19,7 @@ import {CommonModule} from "@angular/common";
     ]
 })
 export class SecondBarTopComponent {
-    @Input() public items: NavigationItem[] = navigationItem;
+    @Input({required: true}) public items: NavigationItem[] = navigationItem;
     /**
      * Takes an array of menuItems as input
      *

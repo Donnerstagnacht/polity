@@ -24,7 +24,7 @@ export class FirstBarLeftComponent {
      *
      * @Input items: Item[]. Default is signed out items.
      */
-    @Input() public items: NavigationItem[] = navigationItemsSignedOut;
+    @Input({required: true}) public items: NavigationItem[] = navigationItemsSignedOut;
     protected activeItemIndex: number = 1;
 
     protected onClick(item: NavigationItem): void {

@@ -8,11 +8,11 @@ import {Component, Input, signal, WritableSignal} from '@angular/core';
     imports: [],
 })
 export class TableGenericComponent<ObjectType> {
-    @Input() public dataKeysForColumns: (keyof ObjectType)[] = [];
+    @Input({required: true}) public dataKeysForColumns: (keyof ObjectType)[] = [];
     @Input() public bonusKeys: (keyof ObjectType)[] = [];
-    @Input() public data: WritableSignal<ObjectType[]> = signal([]);
-    @Input() public isLoading: WritableSignal<boolean> = signal(true);
-    @Input() public headings: string[] = [];
+    @Input({required: true}) public data: WritableSignal<ObjectType[]> = signal([]);
+    @Input({required: true}) public isLoading: WritableSignal<boolean> = signal(true);
+    @Input({required: true}) public headings: string[] = [];
     @Input() dataCyTags: string[] = [];
     @Input() dataCyTagsHeadline: string[] = [];
 

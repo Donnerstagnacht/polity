@@ -13,7 +13,7 @@ import {TuiInputDateModule} from "@taiga-ui/kit";
     ]
 })
 export class FilterDateRangeComponent {
-    @Input() formGroupName!: string;
+    @Input({required: true}) formGroupName!: string;
     form!: FormGroup
 
     constructor(private rootFormGroup: FormGroupDirective) {
