@@ -1,7 +1,7 @@
-DROP FUNCTION IF EXISTS public.unread_notifications_counter(
+DROP FUNCTION IF EXISTS public.select_unread_notifications_counter(
     user_id uuid
 );
-CREATE OR REPLACE FUNCTION public.unread_notifications_counter(
+CREATE OR REPLACE FUNCTION public.select_unread_notifications_counter(
     user_id uuid
 )
     RETURNS table
