@@ -11,7 +11,7 @@ port = 54321
 schemas = ["public", "storage", "graphql_public"]
 # Extra schemas to add to the search_path of every request. public is always included.
 extra_search_path = ["public", "extensions"]
-# The maximum key-figure of rows returns from a view, table, or stored procedure. Limits payload size
+# The maximum number of rows returns from a view, table, or stored procedure. Limits payload size
 # for accidental or malicious requests.
 max_rows = 1000
 
@@ -33,7 +33,7 @@ port = 54329
 pool_mode = "transaction"
 # How many server connections to allow per user/database pair.
 default_pool_size = 20
-# Maximum key-figure of client connections allowed.
+# Maximum number of client connections allowed.
 max_client_conn = 100
 
 [realtime]
@@ -97,10 +97,10 @@ enable_confirmations = false
 [auth.sms]
 # Allow/disallow new user signups via SMS to your project.
 enable_signup = true
-# If enabled, users need to confirm their phone key-figure before signing in.
+# If enabled, users need to confirm their phone number before signing in.
 enable_confirmations = false
 
-# Use pre-defined map of phone key-figure to OTP for testing.
+# Use pre-defined map of phone number to OTP for testing.
 [auth.sms.test_otp]
 # 4152127777 = "123456"
 
