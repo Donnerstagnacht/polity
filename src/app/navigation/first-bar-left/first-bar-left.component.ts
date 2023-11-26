@@ -1,4 +1,4 @@
-import {Component, effect, Input, signal, WritableSignal} from '@angular/core';
+import {Component, Input, signal, WritableSignal} from '@angular/core';
 import {NAVIGATION_ITEMS_SIGNED_OUT} from "../navigation-item";
 import {NavigationItem} from "../types-and-interfaces/navigationItem";
 import {TuiTabBarModule} from "@taiga-ui/addon-mobile";
@@ -31,11 +31,4 @@ export class FirstBarLeftComponent {
         unread_notifications_counter: 0
     });
     protected activeItemIndex: number = 1;
-
-    constructor() {
-        effect((): void => {
-            console.log('badge side', this.notificationBadge());
-            // this.items[2].badge = this.notificationBadge()?.unread_notifications_counter
-        })
-    }
 }

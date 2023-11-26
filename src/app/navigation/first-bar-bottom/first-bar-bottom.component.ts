@@ -34,7 +34,6 @@ export class FirstBarBottomComponent {
 
     constructor() {
         effect((): void => {
-            console.log('badge bottom', this.notificationBadge());
             this.items[2].badge = this.notificationBadge()?.unread_notifications_counter
         })
     }
