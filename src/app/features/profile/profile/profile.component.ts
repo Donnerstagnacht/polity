@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {SessionStoreService} from "../../../auth/services/session-store.service";
+import {SessionStoreService} from "../../../auth/services/session.store.service";
 import {ActivatedRoute, RouterOutlet} from "@angular/router";
 import {NavigationItem} from "../../../navigation/types-and-interfaces/navigationItem";
 import {NAVIGATION_ITEMS_PROFILE, NAVIGATION_ITEMS_PROFILE_OWNER} from "../../../navigation/navigation-item";

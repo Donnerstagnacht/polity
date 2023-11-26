@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {Functions} from "../../../../../supabase/types/supabase.shorthand-types";
-import {SessionStoreService} from "../../../auth/services/session-store.service";
+import {SessionStoreService} from "../../../auth/services/session.store.service";
 import {FollowersOfUserStoreService} from "./followers-of-user.store.service";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
 import {ProfileCountersStoreService} from "./profile-counters.store.service";

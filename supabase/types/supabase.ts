@@ -309,12 +309,30 @@ export interface Database {
           type_of_notification: Database["public"]["Enums"]["notifications_enum"]
         }[]
       }
+      select_unread_notifications_counter: {
+        Args: {
+          user_id: string
+        }
+        Returns: {
+          profile_id: string
+          unread_notifications_counter: number
+        }[]
+      }
       unfollow_transaction: {
         Args: {
           follower_id: string
           following_id: string
         }
         Returns: undefined
+      }
+      unread_notifications_counter: {
+        Args: {
+          user_id: string
+        }
+        Returns: {
+          profile_id: string
+          unread_notifications_counter: number
+        }[]
       }
       update_first_sign_in: {
         Args: {

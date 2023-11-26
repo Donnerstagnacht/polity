@@ -4,7 +4,6 @@
 >
     @for (item of items;track item) {
         <button
-            (click)="onClick(item)"
             [attr.data-cy]="item.dataCyDesktop"
             [badge]="item.badge"
             [icon]="item.icon"

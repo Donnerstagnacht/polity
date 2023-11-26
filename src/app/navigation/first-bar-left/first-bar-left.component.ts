@@ -1,10 +1,11 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, signal, WritableSignal} from '@angular/core';
 import {NAVIGATION_ITEMS_SIGNED_OUT} from "../navigation-item";
 import {NavigationItem} from "../types-and-interfaces/navigationItem";
 import {TuiTabBarModule} from "@taiga-ui/addon-mobile";
 import {RouterModule} from "@angular/router";
 import {TuiHintModule} from "@taiga-ui/core";
 import {CommonModule} from "@angular/common";
+import {PlainFunctions} from "../../../../supabase/types/supabase.shorthand-types";
 
 @Component({
     selector: 'polity-main-bar-side',
@@ -25,9 +26,9 @@ export class FirstBarLeftComponent {
      * @Input items: Item[]. Default is signed out items.
      */
     @Input({required: true}) public items: NavigationItem[] = NAVIGATION_ITEMS_SIGNED_OUT;
+    @Input() public notificationBadge: WritableSignal<PlainFunctions<'select_unread_notifications_counter'> | null> = signal({
+        profile_id: '',
+        unread_notifications_counter: 0
+    });
     protected activeItemIndex: number = 1;
-
-    protected onClick(item: NavigationItem): void {
-        item.badge = 0;
-    }
 }

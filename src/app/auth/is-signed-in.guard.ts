@@ -1,5 +1,5 @@
 import {CanActivateFn, Router} from '@angular/router';
-import {SessionStoreService} from "./services/session-store.service";
+import {SessionStoreService} from "./services/session.store.service";
 import {inject, WritableSignal} from "@angular/core";
 import {Session} from "@supabase/supabase-js";
 

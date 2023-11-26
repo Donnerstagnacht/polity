@@ -1,5 +1,5 @@
 import {Component, signal, WritableSignal} from '@angular/core';
-import {SessionStoreService} from "../../../auth/services/session-store.service";
+import {SessionStoreService} from "../../../auth/services/session.store.service";
 import {Profile} from "../../../../../cypress/fixtures/profile";
 import {LinkCardComponent} from "../../../ui/link-card/link-card.component";
 import {ProfileActionService} from "../../profile/action-store-services/profile.action.service";
