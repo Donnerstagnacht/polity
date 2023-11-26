@@ -1,78 +1,45 @@
-import {RouterModule, Routes} from "@angular/router";
-import {NgModule} from "@angular/core";
+import {Routes} from "@angular/router";
 import {ProfileComponent} from "./profile/profile/profile.component";
 import {HomeComponent} from "./home/home/home.component";
 import {SearchComponent} from "./search/search/search.component";
 import {NewComponent} from "./new/new/new.component";
 import {OfficeComponent} from "./office/office/office.component";
 
-const routes: Routes = [
+export const FEATURE_ROUTES: Routes = [
     {
         path: '',
         component: HomeComponent,
-        children: [
-            {
-                path: '',
-                loadChildren: () => import('./home/home-routing.module').then(m => m.HomeRoutingModule)
-            }
-        ]
+        loadChildren: () => import('./home/home-routing.module').then(m => m.HOME_ROUTES)
     },
     {
         path: 'search',
         component: SearchComponent,
-        children: [
-            {
-                path: '',
-                loadChildren: () => import('./search/search-routing.module').then(m => m.SearchRoutingModule)
-            }
-        ]
+        loadChildren: () => import('./search/search-routing.module').then(m => m.SEARCH_ROUTES)
     },
     {
         path: 'profile/:id',
         component: ProfileComponent,
-        children: [
-            {
-                path: '',
-                loadChildren: () => import('./profile/profile-routing.module').then(m => m.ProfileRoutingModule)
-            }
-        ]
+        // children: [
+        //     {
+        //         path: '',
+        //         loadChildren: () => import('./profile/profile-routing.module').then(m => m.ProfileRoutingModule)
+        //     }
+        // ]
+        loadChildren: () => import('./profile/profile-routing.module').then(m => m.PROFILE_ROUTES)
     },
     {
         path: 'home',
         component: HomeComponent,
-        children: [
-            {
-                path: '',
-                loadChildren: () => import('./home/home-routing.module').then(m => m.HomeRoutingModule)
-            }
-        ]
+        loadChildren: () => import('./home/home-routing.module').then(m => m.HOME_ROUTES)
     },
     {
         path: 'new',
         component: NewComponent,
-        children: [
-            {
-                path: '',
-                loadChildren: () => import('./new/new-routing.module').then(m => m.NewRoutingModule)
-            }
-        ]
+        loadChildren: () => import('./new/new-routing.module').then(m => m.NEW_ROUTES)
     },
     {
         path: 'office',
         component: OfficeComponent,
-        children: [
-            {
-                path: '',
-                loadChildren: () => import('./office/office-routing.module').then(m => m.OfficeRoutingModule)
-            }
-        ]
+        loadChildren: () => import('./office/office-routing.module').then(m => m.OFFICE_ROUTES)
     }
 ]
-
-@NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
-})
-export class FeaturesRoutingModule {
-
-}

@@ -8,23 +8,13 @@ const routes: Routes = [
     {
         path: 'landing',
         component: LandingComponent,
-        children: [
-            {
-                path: '',
-                loadChildren: () => import('./landing/landing-routing.module').then(m => m.LandingRoutingModule)
-            }
-        ]
+        loadChildren: () => import('./landing/landing-routing.module').then(m => m.LANDING_ROUTES)
     },
     {
         path: '',
         component: AppSkeletonComponent,
         canActivateChild: [isSignedInGuard],
-        children: [
-            {
-                path: '',
-                loadChildren: () => import('./features/features-routing.module').then(m => m.FeaturesRoutingModule)
-            }
-        ],
+        loadChildren: () => import('./features/features-routing.module').then(m => m.FEATURE_ROUTES)
     },
     {
         path: '**',

@@ -1,11 +1,15 @@
-import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ProfileWikiComponent} from "./profile-wiki/profile-wiki.component";
 import {ProfileEditComponent} from "./profile-edit/profile-edit.component";
 import {ProfileFollowEditComponent} from "../profile-follow/profile-follow-edit/profile-follow-edit.component";
 import {isOwnerGuard} from "./is-owner.guard";
+import {NgModule} from "@angular/core";
 
-const routes: Routes = [
+export const PROFILE_ROUTES: Routes = [
+    {
+        path: '',
+        component: ProfileWikiComponent
+    },
     {
         path: 'follower/edit',
         component: ProfileFollowEditComponent,
@@ -16,14 +20,10 @@ const routes: Routes = [
         component: ProfileEditComponent,
         canActivate: [isOwnerGuard]
     },
-    {
-        path: '',
-        component: ProfileWikiComponent,
-    },
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
+    imports: [RouterModule.forChild(PROFILE_ROUTES)],
     exports: [RouterModule]
 })
 export class ProfileRoutingModule {
