@@ -11,26 +11,6 @@ import {supabaseClient} from "../../../auth/supabase-client";
 import {SessionStoreService} from "../../../auth/services/session.store.service";
 import {PlainFunctions, Tables} from "../../../../../supabase/types/supabase.shorthand-types";
 
-export type realtime = {
-    commit_timestamp: any;
-    errors: any;
-    eventType: any;
-    new: {
-        follower_counter: any;
-        following_counter: any;
-        id: any;
-        unread_notifications_counter: any
-    };
-    // new: any;
-    old: any;
-    schema: any;
-    table: any
-}
-
-// export type  on<T extends {
-//     [key: string]: any;
-// }>
-
 @Injectable({
     providedIn: 'root'
 })
