@@ -2,10 +2,10 @@ import {Component, signal, WritableSignal} from '@angular/core';
 import {TuiFileLike, TuiInputFilesModule} from "@taiga-ui/kit";
 import {from, Observable, of, Subject, switchMap} from "rxjs";
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
-import {ProfileService} from "../services/profile.service";
-import {Profile} from "../types-and-interfaces/profile";
-import {ProfileStoreService} from "../services/profile-store.service";
+import {Profile} from "../../../../../cypress/fixtures/profile";
 import {CommonModule} from "@angular/common";
+import {ProfileActionService} from "../action-store-services/profile.action.service";
+import {ProfileStoreService} from "../action-store-services/profile.store.service";
 
 @Component({
     selector: 'polity-profile-image-upload',
@@ -31,7 +31,7 @@ export class ProfileImageUploadComponent {
 
     constructor(
         private readonly profileStoreService: ProfileStoreService,
-        private readonly profileService: ProfileService
+        private readonly profileService: ProfileActionService
     ) {
         this.isProfileLoading = this.profileStoreService.profile.loading.getLoading()
         this.profileWriteable = this.profileStoreService.profile.getObject()

@@ -3,13 +3,13 @@ import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
 import {Tables} from "../../../../../supabase/types/supabase.shorthand-types";
 import {SessionStoreService} from "../../../auth/services/session-store.service";
-import {AssistantStoreService} from "./assistant-store.service";
+import {AssistantStoreService} from "./assistant.store.service";
 import {supabaseClient} from "../../../auth/supabase-client";
 
 @Injectable({
     providedIn: 'root'
 })
-export class AssistantService {
+export class AssistantActionService {
     private readonly supabaseClient: SupabaseClient<DatabaseOverwritten> = supabaseClient;
 
     constructor(

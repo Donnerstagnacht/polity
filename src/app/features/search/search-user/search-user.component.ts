@@ -1,13 +1,13 @@
 import {Component, signal, WritableSignal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {SearchService} from "../services/search.service";
-import {SearchStoreService} from "../services/search-store.service";
 import {debounceTime} from "rxjs";
 import {Functions} from "../../../../../supabase/types/supabase.shorthand-types";
 import {TuiFieldErrorPipeModule, TuiInputModule} from "@taiga-ui/kit";
 import {TuiErrorModule} from "@taiga-ui/core";
 import {SearchProfileResult} from "../search-profile-result/search-profile-result.component";
 import {CommonModule} from "@angular/common";
+import {SearchStoreService} from "../action-store-services/search.store.service";
+import {SearchUserActionService} from "../action-store-services/search-user.action.service";
 
 @Component({
     selector: 'polity-search-user',
@@ -35,7 +35,7 @@ export class SearchUserComponent {
     })
 
     constructor(
-        private readonly searchService: SearchService,
+        private readonly searchService: SearchUserActionService,
         private readonly searchStoreService: SearchStoreService,
     ) {
         this.loading = this.searchStoreService.profilSearchResults.loading.getLoading()

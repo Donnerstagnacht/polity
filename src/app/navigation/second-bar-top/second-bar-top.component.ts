@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {navigationItem} from "../navigation-item";
+import {NAVIGATION_ITEMS} from "../navigation-item";
 import {NavigationItem} from "../types-and-interfaces/navigationItem";
 import {TuiTabBarModule} from "@taiga-ui/addon-mobile";
 import {RouterModule} from "@angular/router";
@@ -19,7 +19,7 @@ import {CommonModule} from "@angular/common";
     ]
 })
 export class SecondBarTopComponent {
-    @Input({required: true}) public items: NavigationItem[] = navigationItem;
+    @Input({required: true}) public items: NavigationItem[] = NAVIGATION_ITEMS;
     /**
      * Takes an array of menuItems as input
      *

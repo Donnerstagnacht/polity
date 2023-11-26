@@ -1,6 +1,4 @@
 import {Component, signal, WritableSignal} from '@angular/core';
-import {NotificationsStoreService} from "../services/notifications-store.service";
-import {NotificationsService} from "../services/notifications.service";
 import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {Functions} from "../../../../../supabase/types/supabase.shorthand-types";
 import {TuiDay} from "@taiga-ui/cdk";
@@ -14,8 +12,9 @@ import {FilterClearComponent} from "../../../ui/polity-filter/filter-clear/filte
 import {
     TableFourIconTextTagDateComponent
 } from "../../../ui/polity-table/table-four-icon-text-tag-date/table-four-icon-text-tag-date.component";
-
-type filterTag = { text: string, value: string }
+import {NotificationsService} from "../action-store-services/notifications.service";
+import {NotificationsStoreService} from "../action-store-services/notifications-store.service";
+import {Filter_TYPES, filterTag} from "../constants-types-interfaces/notificationFilterTypes";
 
 @Component({
     selector: 'polity-notification',
@@ -35,23 +34,14 @@ type filterTag = { text: string, value: string }
     ]
 })
 export class NotificationComponent {
+    public combinedForm: FormGroup;
     protected throttle: number = 300;
     protected scrollDistance: number = 1;
     protected scrollUpDistance: number = 2;
     protected notifications: WritableSignal<Functions<'select_notifications_of_users'>> = signal([]);
-    protected isNotificationsLoading: WritableSignal<boolean> = signal(true)
+    protected isNotificationsLoading: WritableSignal<boolean> = signal(true);
     protected showFilter: boolean = true;
-    protected readonly filterTypes: filterTag[] = [
-        {
-            text: 'Followers',
-            value: 'follow_from_user'
-        },
-        {
-            text: 'Groups',
-            value: 'follow_from_group'
-        }
-    ];
-    protected combinedForm: FormGroup;
+    protected readonly filterTypes: filterTag[] = Filter_TYPES;
 
     constructor(
         private readonly notificationsService: NotificationsService,

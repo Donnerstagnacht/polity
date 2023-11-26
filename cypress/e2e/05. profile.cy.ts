@@ -1,4 +1,4 @@
-import {ProfileTest} from "../../src/app/features/profile/types-and-interfaces/profile";
+import {ProfileTest} from "../fixtures/profile";
 import {seedReadUser3, seedWriteUser} from "../fixtures/user";
 import {Size, Sizes} from "../fixtures/size";
 

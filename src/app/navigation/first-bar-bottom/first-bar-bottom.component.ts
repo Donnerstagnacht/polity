@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {navigationItemsSignedOut} from "../navigation-item";
+import {NAVIGATION_ITEMS_SIGNED_OUT} from "../navigation-item";
 import {NavigationItem} from "../types-and-interfaces/navigationItem";
 import {TuiTabBarModule} from "@taiga-ui/addon-mobile";
 import {RouterModule} from "@angular/router";
@@ -24,7 +24,7 @@ export class FirstBarBottomComponent {
      *
      * @Input items: Item[]. Default is signed out items.
      */
-    @Input({required: true}) public items: NavigationItem[] = navigationItemsSignedOut;
+    @Input({required: true}) public items: NavigationItem[] = NAVIGATION_ITEMS_SIGNED_OUT;
     protected activeItemIndex: number = 1;
 
     protected onClick(item: NavigationItem): void {

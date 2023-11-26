@@ -1,4 +1,4 @@
-import {ProfileTest} from "../../src/app/features/profile/types-and-interfaces/profile";
+import {ProfileTest} from "./profile";
 
 // A user created by a cypress auth test
 export const userCreatedByCypress: ProfileTest = {

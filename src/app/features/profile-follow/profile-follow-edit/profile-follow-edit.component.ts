@@ -1,9 +1,5 @@
 import {Component, signal, WritableSignal} from '@angular/core';
-import {FollowersOfUserService} from "../services/followers-of-user.service";
 import {Functions} from "../../../../../supabase/types/supabase.shorthand-types";
-import {FollowersOfUserStoreService} from "../services/followers-of-user-store.service";
-import {FollowingOfUserService} from "../services/following-of-user.service";
-import {FollowingOfUserStoreService} from "../services/following-of-user-store.service";
 import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {
@@ -13,6 +9,10 @@ import {TuiTabsModule} from "@taiga-ui/kit";
 import {FilterClearComponent} from "../../../ui/polity-filter/filter-clear/filter-clear.component";
 import {FilterHeadlineComponent} from "../../../ui/polity-filter/filter-headline/filter-headline.component";
 import {FilterStringComponent} from "../../../ui/polity-filter/filter-string/filter-string.component";
+import {FollowersOfUserStoreService} from "../action-store-services/followers-of-user.store.service";
+import {FollowingOfUserStoreService} from "../action-store-services/following-of-user.store.service";
+import {FollowersOfUserActionService} from "../action-store-services/followers-of-user.action.service";
+import {FollowingOfUserActionService} from "../action-store-services/following-of-user.action.service";
 
 @Component({
     selector: 'polity-follow-button-edit',
@@ -42,8 +42,8 @@ export class ProfileFollowEditComponent {
     protected showFilter: boolean = true;
 
     constructor(
-        private readonly followersOfUserService: FollowersOfUserService,
-        private readonly followingOfUserService: FollowingOfUserService,
+        private readonly followersOfUserService: FollowersOfUserActionService,
+        private readonly followingOfUserService: FollowingOfUserActionService,
         private readonly followersOfUserStoreService: FollowersOfUserStoreService,
         private readonly followingOfUserStoreService: FollowingOfUserStoreService,
         private readonly formBuilder: FormBuilder

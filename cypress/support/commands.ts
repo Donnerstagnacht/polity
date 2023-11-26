@@ -12,7 +12,7 @@
 //
 // -- This is a parent command --
 
-import {ProfileTest} from "../../src/app/features/profile/types-and-interfaces/profile";
+import {ProfileTest} from "../fixtures/profile";
 import Chainable = Cypress.Chainable;
 
 /**

@@ -1,5 +1,5 @@
 import {Size, Sizes} from "../fixtures/size";
-import {ProfileTest} from "../../src/app/features/profile/types-and-interfaces/profile";
+import {ProfileTest} from "../fixtures/profile";
 import {userCreatedByCypress} from "../fixtures/user";
 
 const profile1: ProfileTest = userCreatedByCypress;
