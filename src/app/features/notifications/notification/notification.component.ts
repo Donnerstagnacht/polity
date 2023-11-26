@@ -64,6 +64,7 @@ export class NotificationComponent {
         this.combinedForm.valueChanges.subscribe(
             () => this.onCombinedFormChange()
         )
+        this.notificationsService.resetNotificationCounter()
     }
 
     async ngOnInit(): Promise<void> {
