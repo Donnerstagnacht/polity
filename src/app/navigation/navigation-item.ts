@@ -1,6 +1,6 @@
 import {NavigationItem} from "./types-and-interfaces/navigationItem";
 
-export const navigationItem: NavigationItem[] = [
+export const NAVIGATION_ITEMS: NavigationItem[] = [
     {
         text: 'SUCHE',
         icon: 'tuiIconSearch',
@@ -32,7 +32,7 @@ export const navigationItem: NavigationItem[] = [
     },
 ];
 
-export const navigationItemsSignedOut: NavigationItem[] = [
+export const NAVIGATION_ITEMS_SIGNED_OUT: NavigationItem[] = [
     {
         text: 'REGISTER',
         icon: 'tuiIconPlusCircle',
@@ -56,7 +56,7 @@ export const navigationItemsSignedOut: NavigationItem[] = [
     }
 ];
 
-export const navigationItemsProfileOwner: NavigationItem[] = [
+export const NAVIGATION_ITEMS_PROFILE_OWNER: NavigationItem[] = [
     {
         text: 'HOME',
         icon: 'tuiIconUser',
@@ -80,7 +80,7 @@ export const navigationItemsProfileOwner: NavigationItem[] = [
     }
 ]
 
-export const navigationItemsProfile: NavigationItem[] = [
+export const NAVIGATION_ITEMS_PROFILE: NavigationItem[] = [
     {
         text: 'HOME',
         icon: 'tuiIconUser',
@@ -90,7 +90,7 @@ export const navigationItemsProfile: NavigationItem[] = [
     }
 ]
 
-export const navigationItemsOffice: NavigationItem[] = [
+export const NAVIGATION_ITEMS_OFFICE: NavigationItem[] = [
     {
         text: 'NEWS',
         icon: 'tuiIconUser',

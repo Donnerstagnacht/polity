@@ -2,11 +2,11 @@ import {Component, effect, Inject, Injector, signal, WritableSignal} from '@angu
 import {PolymorpheusComponent} from "@tinkoff/ng-polymorpheus";
 import {AssistantWelcomeDialogComponent} from "../assistant-welcome-dialog/assistant-welcome-dialog.component";
 import {TuiButtonModule, TuiDialogService} from "@taiga-ui/core";
-import {AssistantStoreService} from "../services/assistant-store.service";
+import {AssistantStoreService} from "../services/assistant.store.service";
 import {Tables} from "../../../../../supabase/types/supabase.shorthand-types";
-import {Tutorial} from "../types-and-interfaces/tutorial";
 import {TuiActionModule, TuiMarkerIconModule} from "@taiga-ui/kit";
 import {CommonModule} from "@angular/common";
+import {Tutorial, TUTORIALS} from "../types-and-interfaces-constants/tutorial";
 
 
 @Component({
@@ -24,28 +24,7 @@ import {CommonModule} from "@angular/common";
 export class AssistantIconComponent {
     protected isAssistantLoading: WritableSignal<boolean> = signal(true)
     private assistant: WritableSignal<Tables<'assistants'> | null> = signal(null)
-    private tutorials: Tutorial[] = [
-        {
-            title: 'Willkommen',
-            description: 'Wir stellen uns vor.',
-            dataCy: 'assistant-welcome-dialog',
-        },
-        {
-            title: 'Dein Profil',
-            description: 'Zeige der Welt wofür du stehst.',
-            dataCy: 'assistant-profile-dialog',
-        },
-        {
-            title: 'Unsere Suche',
-            description: 'Finde Like Minded Menschen.',
-            dataCy: 'assistant-search-dialog',
-        },
-        {
-            title: 'Follow ',
-            description: 'Follow deinen Lieblingspersonen.',
-            dataCy: 'assistant-follow-dialog',
-        }
-    ]
+    private tutorials: Tutorial[] = TUTORIALS
     protected activatedTutorial: Tutorial = this.tutorials[0]
 
     constructor(

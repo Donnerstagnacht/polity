@@ -1,8 +1,8 @@
 import {Component, signal, WritableSignal} from '@angular/core';
 import {SessionStoreService} from "../../../auth/services/session-store.service";
-import {Profile} from "../../profile/types-and-interfaces/profile";
-import {ProfileService} from "../../profile/services/profile.service";
-import {ProfileStoreService} from "../../profile/services/profile-store.service";
+import {Profile} from "../../../../../cypress/fixtures/profile";
+import {ProfileActionService} from "../../profile/services/profile.action.service";
+import {ProfileStoreService} from "../../profile/services/profile.store.service";
 import {LinkCardComponent} from "../../../ui/link-card/link-card.component";
 
 @Component({
@@ -22,7 +22,7 @@ export class HomeComponent {
 
     constructor(
         private readonly sessionStoreService: SessionStoreService,
-        private readonly profileService: ProfileService,
+        private readonly profileService: ProfileActionService,
         private readonly profileStoreService: ProfileStoreService
     ) {
         this.isProfileLoading = this.profileStoreService.profile.loading.getLoading();

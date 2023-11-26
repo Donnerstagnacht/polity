@@ -1,6 +1,6 @@
 import {Component, Input, signal, WritableSignal} from '@angular/core';
 import {Router} from "@angular/router";
-import {Profile} from "../../features/profile/types-and-interfaces/profile";
+import {Profile} from "../../../../cypress/fixtures/profile";
 import {TuiIslandModule} from "@taiga-ui/kit";
 
 @Component({

@@ -1,9 +1,9 @@
 import {Component, effect, signal, WritableSignal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {TUI_VALIDATION_ERRORS, TuiFieldErrorPipeModule, TuiInputModule} from "@taiga-ui/kit";
-import {Profile} from "../types-and-interfaces/profile";
-import {ProfileService} from "../services/profile.service";
-import {ProfileStoreService} from "../services/profile-store.service";
+import {Profile} from "../../../../../cypress/fixtures/profile";
+import {ProfileActionService} from "../services/profile.action.service";
+import {ProfileStoreService} from "../services/profile.store.service";
 import {TuiButtonModule, TuiErrorModule, TuiSvgModule, TuiTextfieldControllerModule} from "@taiga-ui/core";
 import {AssistantToggleComponent} from "../../assistant/assistant-toggle/assistant-toggle.component";
 import {SignOutComponent} from "../../../auth/sign-out/sign-out.component";
@@ -49,7 +49,7 @@ export class ProfileEditComponent {
     protected isProfileLoading: WritableSignal<boolean> = signal(true);
 
     constructor(
-        private readonly profileService: ProfileService,
+        private readonly profileService: ProfileActionService,
         private readonly profileStoreService: ProfileStoreService,
     ) {
         this.isProfileLoading = this.profileStoreService.profile.loading.getLoading()

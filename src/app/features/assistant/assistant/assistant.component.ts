@@ -3,8 +3,8 @@ import {TuiDialogService} from "@taiga-ui/core";
 import {AssistantWelcomeDialogComponent} from "../assistant-welcome-dialog/assistant-welcome-dialog.component";
 import {PolymorpheusComponent} from "@tinkoff/ng-polymorpheus";
 import {SessionStoreService} from "../../../auth/services/session-store.service";
-import {AssistantService} from "../services/assistant.service";
-import {AssistantStoreService} from "../services/assistant-store.service";
+import {AssistantActionService} from "../services/assistant.action.service";
+import {AssistantStoreService} from "../services/assistant.store.service";
 import {Tables} from "../../../../../supabase/types/supabase.shorthand-types";
 import {AssistantIconComponent} from "../assistant-icon/assistant-icon.component";
 import {CommonModule} from "@angular/common";
@@ -27,7 +27,7 @@ export class AssistantComponent {
     constructor(
         @Inject(TuiDialogService) private readonly dialogs: TuiDialogService,
         @Inject(Injector) private readonly injector: Injector,
-        private readonly assistantService: AssistantService,
+        private readonly assistantService: AssistantActionService,
         private readonly sessionStoreService: SessionStoreService,
         private readonly assistantStoreService: AssistantStoreService
     ) {

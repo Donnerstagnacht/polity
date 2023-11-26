@@ -1,9 +1,9 @@
 import {Component, signal, WritableSignal} from '@angular/core';
-import {FollowersOfUserService} from "../services/followers-of-user.service";
+import {FollowersOfUserActionService} from "../services/followers-of-user.action.service";
 import {Functions} from "../../../../../supabase/types/supabase.shorthand-types";
-import {FollowersOfUserStoreService} from "../services/followers-of-user-store.service";
-import {FollowingOfUserService} from "../services/following-of-user.service";
-import {FollowingOfUserStoreService} from "../services/following-of-user-store.service";
+import {FollowersOfUserStoreService} from "../services/followers-of-user.store.service";
+import {FollowingOfUserActionService} from "../services/following-of-user.action.service";
+import {FollowingOfUserStoreService} from "../services/following-of-user.store.service";
 import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {
@@ -42,8 +42,8 @@ export class ProfileFollowEditComponent {
     protected showFilter: boolean = true;
 
     constructor(
-        private readonly followersOfUserService: FollowersOfUserService,
-        private readonly followingOfUserService: FollowingOfUserService,
+        private readonly followersOfUserService: FollowersOfUserActionService,
+        private readonly followingOfUserService: FollowingOfUserActionService,
         private readonly followersOfUserStoreService: FollowersOfUserStoreService,
         private readonly followingOfUserStoreService: FollowingOfUserStoreService,
         private readonly formBuilder: FormBuilder

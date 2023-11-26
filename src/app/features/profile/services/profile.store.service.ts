@@ -1,5 +1,5 @@
 import {Injectable, signal, WritableSignal} from '@angular/core';
-import {Profile} from "../types-and-interfaces/profile";
+import {Profile} from "../../../../../cypress/fixtures/profile";
 import {ObjectStoreService} from "../../../signal-store/object-store.service";
 
 export type profileUiFlags = {

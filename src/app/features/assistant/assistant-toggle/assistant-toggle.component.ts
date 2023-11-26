@@ -1,7 +1,7 @@
 import {Component, effect, signal, WritableSignal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {AssistantService} from "../services/assistant.service";
-import {AssistantStoreService} from "../services/assistant-store.service";
+import {AssistantActionService} from "../services/assistant.action.service";
+import {AssistantStoreService} from "../services/assistant.store.service";
 import {Tables} from "../../../../../supabase/types/supabase.shorthand-types";
 import {TuiToggleModule} from "@taiga-ui/kit";
 
@@ -25,7 +25,7 @@ export class AssistantToggleComponent {
     private assistant: WritableSignal<Tables<'assistants'> | null> = signal(null);
 
     constructor(
-        private readonly assistantService: AssistantService,
+        private readonly assistantService: AssistantActionService,
         private readonly assistantStoreService: AssistantStoreService
     ) {
         this.assistant = this.assistantStoreService.assistant.getObject()
