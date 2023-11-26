@@ -19,3 +19,5 @@ CREATE POLICY "Public profiles_counters are viewable by everyone." ON profiles_c
 
 CREATE POLICY "Public profiles_counters can be updated by by everyone." ON profiles_counters
     FOR UPDATE USING (TRUE);
+
+ALTER PUBLICATION supabase_realtime ADD TABLE profiles_counters;

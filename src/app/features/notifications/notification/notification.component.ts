@@ -12,8 +12,8 @@ import {FilterClearComponent} from "../../../ui/polity-filter/filter-clear/filte
 import {
     TableFourIconTextTagDateComponent
 } from "../../../ui/polity-table/table-four-icon-text-tag-date/table-four-icon-text-tag-date.component";
-import {NotificationsService} from "../action-store-services/notifications.service";
-import {NotificationsStoreService} from "../action-store-services/notifications-store.service";
+import {NotificationsActionService} from "../action-store-services/notifications.action.service";
+import {NotificationsStoreService} from "../action-store-services/notifications.store.service";
 import {Filter_TYPES, filterTag} from "../constants-types-interfaces/notificationFilterTypes";
 
 @Component({
@@ -44,7 +44,7 @@ export class NotificationComponent {
     protected readonly filterTypes: filterTag[] = Filter_TYPES;
 
     constructor(
-        private readonly notificationsService: NotificationsService,
+        private readonly notificationsService: NotificationsActionService,
         private readonly notificationStoreService: NotificationsStoreService,
         private readonly formBuilder: FormBuilder
     ) {

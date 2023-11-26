@@ -1,10 +1,12 @@
-import {Component} from '@angular/core';
+import {Component, signal, WritableSignal} from '@angular/core';
 import {NavigationItem} from "../../navigation/types-and-interfaces/navigationItem";
 import {NAVIGATION_ITEMS} from "../../navigation/navigation-item";
 import {FirstBarBottomComponent} from "../../navigation/first-bar-bottom/first-bar-bottom.component";
 import {FirstBarLeftComponent} from "../../navigation/first-bar-left/first-bar-left.component";
 import {RouterOutlet} from "@angular/router";
 import {AssistantComponent} from "../assistant/assistant/assistant.component";
+import {NotificationBadgeStoreService} from "../notifications/action-store-services/notification-badge.store.service";
+import {PlainFunctions} from "../../../../supabase/types/supabase.shorthand-types";
 
 @Component({
     selector: 'polity-app-skeleton',
@@ -20,4 +22,13 @@ import {AssistantComponent} from "../assistant/assistant/assistant.component";
 })
 export class AppSkeletonComponent {
     protected items: NavigationItem[] = NAVIGATION_ITEMS;
+    protected notificationBadge: WritableSignal<PlainFunctions<'select_unread_notifications_counter'> | null> = signal({
+        profile_id: '',
+        unread_notifications_counter: 50
+    });
+
+    constructor(private readonly notificationBadgeService: NotificationBadgeStoreService) {
+        this.notificationBadge = this.notificationBadgeService.notificationBadge.getObject();
+    }
 }
+

@@ -1,5 +1,10 @@
-<polity-main-bar-bottom [items]="items"></polity-main-bar-bottom>
-<polity-main-bar-side [items]="items"></polity-main-bar-side>
-
+<polity-main-bar-bottom
+    [items]="items"
+    [notificationBadge]="this.notificationBadge">
+</polity-main-bar-bottom>
+<polity-main-bar-side
+    [items]="items"
+    [notificationBadge]="this.notificationBadge">
+</polity-main-bar-side>
 <router-outlet></router-outlet>
 <polity-assistant></polity-assistant>
