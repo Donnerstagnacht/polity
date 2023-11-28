@@ -14,15 +14,16 @@
     <a href="https://www.figma.com/proto/cAT8Aonu8P7ojwgnKcVlkz/Polity?node-id=51098%3A4670"><img src="https://img.shields.io/badge/Clickdummy-up-brightgreen" alt="Clickdummy" /></a>
   </a>
   <br>
-  Message <a href="tobias.hassebrock@gmail.com">tobias.hassebrock@gmail.com</a> to gain access to the Figma Design files.
 </p>
 
 <p align="center">
-  <stong><strong>Current development state</strong>
+  <a href="https://donnerstagnacht.github.io/polity"><stong><strong>Current development state - prototype (daily database reset)</strong></a>
   <br>
-    <a href="https://donnerstagnacht.github.io/polity/register"><img src="https://img.shields.io/badge/prototype-down-red" alt="Prototype" /></a>
-        <!--<a href="https://donnerstagnacht.github.io/polity/register"><img src="https://img.shields.io/badge/prototype-up-brightgreen" alt="Prototype" /></a>-->
+       <a href="https://donnerstagnacht.github.io/polity"><img src="https://img.shields.io/badge/prototype-up-brightgreen" alt="Prototype" /></a>
 
+</p>
+<p align="center">
+  Message <a href="tobias.hassebrock@gmail.com">tobias.hassebrock@gmail.com</a> to gain access to the Figma Design files.
 </p>
 
 <hr>
