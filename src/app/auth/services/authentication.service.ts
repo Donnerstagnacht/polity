@@ -103,6 +103,7 @@ export class AuthenticationService {
     public async signOut(): Promise<{ error: AuthError | null } | unknown> {
         try {
             this.sessionStoreService.loading.startLoading()
+            this.supabaseClient.removeAllChannels()
             const authResponse: { error: AuthError | null } = await this.supabaseClient.auth.signOut();
             if (authResponse.error) {
                 throw authResponse.error;
