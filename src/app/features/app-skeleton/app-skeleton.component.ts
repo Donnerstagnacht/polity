@@ -7,6 +7,7 @@ import {RouterOutlet} from "@angular/router";
 import {AssistantComponent} from "../assistant/assistant/assistant.component";
 import {NotificationBadgeStoreService} from "../notifications/action-store-services/notification-badge.store.service";
 import {PlainFunctions} from "../../../../supabase/types/supabase.shorthand-types";
+import {NotificationBadgeActionService} from "../notifications/action-store-services/notification-badge.action.service";
 
 @Component({
     selector: 'polity-app-skeleton',
@@ -27,8 +28,13 @@ export class AppSkeletonComponent {
         unread_notifications_counter: 50
     });
 
-    constructor(private readonly notificationBadgeService: NotificationBadgeStoreService) {
+    constructor(
+        private readonly notificationBadgeService: NotificationBadgeStoreService,
+        private readonly notificationBadgeActionService: NotificationBadgeActionService
+    ) {
         this.notificationBadge = this.notificationBadgeService.notificationBadge.getObject();
+        this.notificationBadgeActionService.selectUnreadNotificationsCounter()
+
     }
 }
 

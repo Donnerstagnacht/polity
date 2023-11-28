@@ -55,4 +55,10 @@ export class NotificationBadgeActionService {
             }
         })
     }
+
+    ngOnDestroy(): void {
+        console.log('destoyed')
+        supabaseClient.removeAllChannels()
+        this.channel.unsubscribe()
+    }
 }
