@@ -23,7 +23,7 @@ jobs:
         run: npm install
 
       - name: Build Angular App
-        run: --configuration=production
+        run: ng build --configuration=production
 
       - name: Deploy to GitHub Pages
         run: |
