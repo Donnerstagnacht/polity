@@ -17,7 +17,7 @@ Sizes.forEach((size: Size): void => {
         beforeEach((): void => {
             cy.viewport(size.width, size.height)
             cy.signIn(newUser);
-            cy.intercept('POST', 'https://qwetlgmbngpopdcgravw.supabase.co/rest/v1/rpc/select_assistant')
+            cy.intercept('POST', 'https://abcwkgkiztruxwvfwabf.supabase.co/rest/v1/rpc/select_assistant')
             .as('loadAssistant')
 
             cy.wait(['@loadAssistant'])

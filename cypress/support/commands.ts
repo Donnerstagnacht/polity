@@ -69,10 +69,10 @@ Cypress.Commands.add(
         .click()
         // cy.pause()
 
-        cy.intercept('POST', 'https://qwetlgmbngpopdcgravw.supabase.co/rest/v1/rpc/check_if_following')
+        cy.intercept('POST', 'https://abcwkgkiztruxwvfwabf.supabase.co/rest/v1/rpc/check_if_following')
         .as('isFollowing')
         cy.intercept('POST',
-            'https://qwetlgmbngpopdcgravw.supabase.co/rest/v1/rpc/select_following_counter')
+            'https://abcwkgkiztruxwvfwabf.supabase.co/rest/v1/rpc/select_following_counter')
         .as('followingCounter')
 
 
@@ -81,7 +81,7 @@ Cypress.Commands.add(
         .contains(followingUser.first_name as string)
 
         cy.intercept('POST',
-            'https://qwetlgmbngpopdcgravw.supabase.co/rest/v1/rpc/follow_transaction')
+            'https://abcwkgkiztruxwvfwabf.supabase.co/rest/v1/rpc/follow_transaction')
         .as('followTransaction')
         // cy.wait(['@followingCounter', '@isFollowing'])
 

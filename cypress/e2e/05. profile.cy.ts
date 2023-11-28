@@ -23,12 +23,15 @@ Sizes.forEach((size: Size): void => {
             cy.getDataCy('edit-instruction')
             .shouldBeVisible()
 
-            cy.intercept('POST', 'https://qwetlgmbngpopdcgravw.supabase.co/rest/v1/profiles').as('updateProfile')
+            cy.intercept('POST', 'https://abcwkgkiztruxwvfwabf.supabase.co/rest/v1/profiles').as('updateProfile')
             cy.getDataCy('firstName').clear()
             cy.getDataCy('firstName').type(newFirstName)
             cy.getDataCy('lastName').clear()
             cy.getDataCy('lastName').type(newLastName)
             cy.getDataCy('update').click()
+
+            cy.contains('Successful Update')
+            .should('be.visible')
             cy.wait('@updateProfile')
         })
 
