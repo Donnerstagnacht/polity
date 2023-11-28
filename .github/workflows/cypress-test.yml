@@ -11,13 +11,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20.9.0
+      #- name: Set up Node.js
+      #  uses: actions/setup-node@v3
+      #  with:
+      #    node-version: 20.9.0
 
-      - name: Install dependencies
-        run: npm install
+    #  - name: Install dependencies
+    #    run: npm install
 
       # name: Start Angular app
       #  run: npm start &
