@@ -27,11 +27,11 @@ jobs:
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
-       # with:
-       #   spec: cypress/e2e/all.cy.ts
-       #   browser: chrome
-       #   start: npm run start
-       #   wait-on: "http://localhost:4200"
+        with:
+          spec: cypress/e2e/all.cy.ts
+          browser: chrome
+          start: npm run start
+          wait-on: "http://localhost:4200"
 
       - name: Stop Angular app
         run: npm stop
