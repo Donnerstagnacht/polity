@@ -1,0 +1,35 @@
+name: Deploy to GitHub Pages
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.9.0
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Angular App
+        run: --configuration=production
+
+      - name: Deploy to GitHub Pages
+        run: |
+          git config --global user.email "tobias.hassebrock@gmail.com"
+          git config --global user.name "GitHub Actions"
+          git checkout --orphan gh-pages
+          git --work-tree=./dist/polity add --all
+          git --work-tree=./dist/polity commit -m "GitHub Pages Deployment"
+          git push origin HEAD:gh-pages --force
