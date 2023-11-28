@@ -1,9 +1,7 @@
 name: Cypress Test
 
 on:
-  pull_request:
-    branches:
-      - main  # Adjust the branch name as needed
+  workflow_dispatch
       
 jobs:
   test:
