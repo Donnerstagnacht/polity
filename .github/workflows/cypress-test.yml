@@ -1,7 +1,10 @@
 name: Cypress Test
 
 on:
-  workflow_dispatch
+  workflow_dispatch:
+  push:
+    branches:
+      - main
       
 jobs:
   test:
