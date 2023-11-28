@@ -34,7 +34,6 @@ export class AppSkeletonComponent {
     ) {
         this.notificationBadge = this.notificationBadgeService.notificationBadge.getObject();
         this.notificationBadgeActionService.selectUnreadNotificationsCounter()
-
     }
 }
 
