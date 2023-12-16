@@ -1,4 +1,5 @@
 import {supabaseClient} from "../../src/app/auth/supabase-client";
+import {POSTGRES_ERRORS} from "../fixtures/postgres_errors";
 
 /**
  * ERROR dictionary used in this test:
@@ -18,7 +19,7 @@ import {supabaseClient} from "../../src/app/auth/supabase-client";
 describe(`Negative api tests for profile_counter table show that `, async () => {
     let user_id: string | undefined;
     let token: string | undefined;
-    const testId = '42e58ca1-2eb8-4651-93c2-cefba2e32f42';
+    const TEST_ID = '42e58ca1-2eb8-4651-93c2-cefba2e32f42';
 
     beforeEach(async (): Promise<void> => {
         const response = await supabaseClient.auth.signInWithPassword(
@@ -37,7 +38,7 @@ describe(`Negative api tests for profile_counter table show that `, async () => 
         const response = await supabaseClient
         .rpc('follow_transaction',
             {
-                following_id: testId,
+                following_id: TEST_ID,
             },
         )
         expect(response.data).to.be.null
@@ -46,11 +47,11 @@ describe(`Negative api tests for profile_counter table show that `, async () => 
         const response2 = await supabaseClient
         .rpc('follow_transaction',
             {
-                following_id: testId,
+                following_id: TEST_ID,
             },
         )
         expect(response2.data).to.be.null
-        expect(response2.error?.code).to.be.equal('23505')
+        expect(response2.error?.code).to.be.equal(POSTGRES_ERRORS.unique_violated)
 
     })
 
@@ -58,7 +59,7 @@ describe(`Negative api tests for profile_counter table show that `, async () => 
         const response = await supabaseClient
         .rpc('unfollow_transaction',
             {
-                following_id: testId,
+                following_id: TEST_ID,
             },
         )
         expect(response.data).to.be.null
@@ -67,11 +68,11 @@ describe(`Negative api tests for profile_counter table show that `, async () => 
         const response2 = await supabaseClient
         .rpc('unfollow_transaction',
             {
-                following_id: testId,
+                following_id: TEST_ID,
             },
         )
         expect(response2.data).to.be.null
-        expect(response2.error?.code).to.be.equal('42703')
+        expect(response2.error?.code).to.be.equal(POSTGRES_ERRORS.column_not_existing)
     })
 
     it('a non authenticated user can not call the follow transaction', async (): Promise<void> => {
@@ -80,11 +81,11 @@ describe(`Negative api tests for profile_counter table show that `, async () => 
         const response = await supabaseClient
         .rpc('follow_transaction',
             {
-                following_id: testId,
+                following_id: TEST_ID,
             },
         )
         expect(response.data).to.be.null
-        expect(response.error?.code).to.be.equal('42501')
+        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.noPermission)
     })
 
     it('a non authenticated user can not execute the unfollow transaction', async (): Promise<void> => {
@@ -93,59 +94,59 @@ describe(`Negative api tests for profile_counter table show that `, async () => 
         const response = await supabaseClient
         .rpc('unfollow_transaction',
             {
-                following_id: testId,
+                following_id: TEST_ID,
             },
         )
         expect(response.data).to.be.null
-        expect(response.error?.code).to.be.equal('42501')
+        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.noPermission)
     })
 
     it('the profile_counter following increment function is not publicly available', async (): Promise<void> => {
         const response = await supabaseClient
         // @ts-ignore
-        .rpc('increment_following_counter', {user_id: testId})
+        .rpc('increment_following_counter', {user_id: TEST_ID})
         expect(response.data).to.be.null
-        expect(response.error?.code).to.be.equal('PGRST202')
+        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
     })
 
     it('the profile_counter following decrement function is not publicly available', async (): Promise<void> => {
         const response = await supabaseClient
         // @ts-ignore
-        .rpc('decrement_following_counter', {user_id: testId})
+        .rpc('decrement_following_counter', {user_id: TEST_ID})
         expect(response.data).to.be.null
-        expect(response.error?.code).to.be.equal('PGRST202')
+        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
     })
 
     it('the profile_counter follower increment function is not publicly available', async (): Promise<void> => {
         const response = await supabaseClient
         // @ts-ignore
-        .rpc('increment_follower_counter', {user_id: testId})
+        .rpc('increment_follower_counter', {user_id: TEST_ID})
         expect(response.data).to.be.null
-        expect(response.error?.code).to.be.equal('PGRST202')
+        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
     })
 
     it('the profile_counter follower decrement function is not publicly available', async (): Promise<void> => {
         const response = await supabaseClient
         // @ts-ignore
-        .rpc('decrement_follower_counter', {user_id: testId})
+        .rpc('decrement_follower_counter', {user_id: TEST_ID})
         expect(response.data).to.be.null
-        expect(response.error?.code).to.be.equal('PGRST202')
+        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
     })
 
     it('the insert_following_follower_relationship function is not publicly available', async (): Promise<void> => {
         const response = await supabaseClient
         // @ts-ignore
-        .rpc('insert_following_follower_relationship', {user_id: testId})
+        .rpc('insert_following_follower_relationship', {user_id: TEST_ID})
         expect(response.data).to.be.null
-        expect(response.error?.code).to.be.equal('PGRST202')
+        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
     })
 
     it('the delete_following_follower_relationship function is not publicly available', async (): Promise<void> => {
         const response = await supabaseClient
         // @ts-ignore
-        .rpc('delete_following_follower_relationship', {user_id: testId})
+        .rpc('delete_following_follower_relationship', {user_id: TEST_ID})
         expect(response.data).to.be.null
-        expect(response.error?.code).to.be.equal('PGRST202')
+        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
     })
 
     it('the profile_counter api table not public selectable', async (): Promise<void> => {
@@ -153,10 +154,10 @@ describe(`Negative api tests for profile_counter table show that `, async () => 
         // @ts-ignore
         .from('profiles_counters')
         .select('')
-        .eq('id', testId)
+        .eq('id', TEST_ID)
         .single();
         expect(response.data).to.be.null
-        expect(response.error?.code).to.be.equal('42P01')
+        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.undefined_table)
     })
 
     it('the following_profiles api table not public selectable', async (): Promise<void> => {
@@ -164,9 +165,71 @@ describe(`Negative api tests for profile_counter table show that `, async () => 
         // @ts-ignore
         .from('following_profiles')
         .select('')
-        .eq('id', testId)
+        .eq('id', TEST_ID)
         .single();
         expect(response.data).to.be.null
-        expect(response.error?.code).to.be.equal('42P01')
+        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.undefined_table)
+    })
+
+    it('an authenticated user only checks if he follows a user and not if other user follow each other', async (): Promise<void> => {
+        const response = await supabaseClient
+        .rpc('check_if_following',
+            {
+                following_id: TEST_ID,
+                // @ts-ignore
+                userid: TEST_ID
+            },
+        )
+        expect(response.data).to.be.null
+        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
+    })
+
+    it('an authenticated user can only view its own followings', async (): Promise<void> => {
+        const response = await supabaseClient
+        .rpc('select_following_of_user',
+            {
+                // @ts-ignore
+                userid: TEST_ID
+            },
+        )
+        expect(response.data).to.be.null
+        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
+    })
+
+    it('an authenticated user can only view its own follower', async (): Promise<void> => {
+        const response = await supabaseClient
+        .rpc('select_follower_of_user',
+            {
+                // @ts-ignore
+                userid: TEST_ID
+            },
+        )
+        expect(response.data).to.be.null
+        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
+    })
+
+    it('a non authenticated user can not view counters', async (): Promise<void> => {
+        supabaseClient.auth.signOut()
+
+        const response = await supabaseClient
+        .rpc('select_following_counter',
+            {
+                user_id: TEST_ID
+            },
+        )
+        expect(response.data).to.be.null
+        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.noPermission)
+    })
+
+    it('an authenticated user can only update its own receive_notification status.', async (): Promise<void> => {
+        const response = await supabaseClient
+        .rpc('update_receive_notifications_from_follow',
+            {
+                // @ts-ignore
+                user_id: TEST_ID
+            },
+        )
+        expect(response.data).to.be.null
+        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
     })
 })

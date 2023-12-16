@@ -1,19 +1,5 @@
-import {Size, Sizes} from "../fixtures/size";
-import {ProfileTest} from "../fixtures/profile";
-import {userCreatedByCypress} from "../fixtures/user";
 import {supabaseClient} from "../../src/app/auth/supabase-client";
-
-const profile1: ProfileTest = userCreatedByCypress;
-
-Sizes.forEach((size: Size): void => {
-    describe(`App navigation tests with screen size ${size.width} show that users can `, () => {
-
-        beforeEach((): void => {
-            cy.viewport(size.width, size.height)
-            cy.signIn(profile1);
-        })
-    })
-});
+import {POSTGRES_ERRORS} from "../fixtures/postgres_errors";
 
 describe(`Negative api tests for profile_counter table show that `, async () => {
     let user_id: string | undefined;
@@ -33,7 +19,11 @@ describe(`Negative api tests for profile_counter table show that `, async () => 
         expect(token).to.be.not.null
     })
 
-    it('an authenticated user can call the follow transaction but can not call it twice', async (): Promise<void> => {
-        // TODO test implementation
+    it('a non authenticated users can not search other users', async (): Promise<void> => {
+        await supabaseClient.auth.signOut()
+        const response = await supabaseClient
+        .rpc('search_user', {search_term: TEST_ID})
+        expect(response.data).to.be.null
+        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.noPermission)
     })
 })

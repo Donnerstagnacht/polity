@@ -19,28 +19,44 @@ describe(`Negative api tests for profile_counter table show that `, async () => 
         expect(token).to.be.not.null
     })
 
-    it('a non authenticated user can not update a profile', async (): Promise<void> => {
-        await supabaseClient.auth.signOut()
-
-        const response = await supabaseClient
-        .rpc('update_user')
-        expect(response.data).to.be.null
-        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
-    })
-
-    it('an authenticated user can only update its own profile', async (): Promise<void> => {
+    it('an authenticated user can only view its own assistant.', async (): Promise<void> => {
         const response = await supabaseClient
         // @ts-ignore
-        .rpc('update_user', {user_id: TEST_ID})
+        .rpc('select_assistant', {user_id: TEST_ID})
         expect(response.data).to.be.null
         expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
     })
 
-    it('a non authenticated user can not view profiles', async (): Promise<void> => {
-        await supabaseClient.auth.signOut()
+    it('an authenticated user can only update its own first_sign_in status.', async (): Promise<void> => {
         const response = await supabaseClient
-        .rpc('select_user', {user_id: TEST_ID})
+        .rpc('update_first_sign_in', {
+            new_status: false,
+            // @ts-ignore
+            user_id: TEST_ID
+        })
         expect(response.data).to.be.null
-        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.noPermission)
+        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
+    })
+
+    it('an authenticated user can only update its own last_tutorial status.', async (): Promise<void> => {
+        const response = await supabaseClient
+        .rpc('update_last_tutorial', {
+            new_status: 'welcome',
+            // @ts-ignore
+            user_id: TEST_ID
+        })
+        expect(response.data).to.be.null
+        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
+    })
+
+    it('an authenticated user can only update its own skip_tutorial status.', async (): Promise<void> => {
+        const response = await supabaseClient
+        .rpc('update_skip_tutorial', {
+            new_status: true,
+            // @ts-ignore
+            user_id: TEST_ID
+        })
+        expect(response.data).to.be.null
+        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
     })
 })
