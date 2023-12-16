@@ -73,7 +73,6 @@ Cypress.Commands.add(
 
         cy.searchUser(followingUser.first_name as string)
         .click()
-        cy.pause()
 
         cy.intercept('POST', 'https://abcwkgkiztruxwvfwabf.supabase.co/rest/v1/rpc/check_if_following')
         .as('isFollowing')
@@ -90,8 +89,6 @@ Cypress.Commands.add(
             'https://abcwkgkiztruxwvfwabf.supabase.co/rest/v1/rpc/follow_transaction')
         .as('followTransaction')
         // cy.wait(['@followingCounter', '@isFollowing'])
-
-        cy.pause()
 
         cy.getDataCy('followButton')
         .shouldBeVisible()

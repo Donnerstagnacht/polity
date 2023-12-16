@@ -137,7 +137,6 @@ Sizes.forEach((size: Size): void => {
             cy.interceptSupabaseCall('update_receive_notifications_from_follow')
             .as('updateNotifications')
 
-            cy.pause()
             cy.getDataCy('toggle-notifications-from-user')
             .shouldBeVisible()
             .click()
@@ -145,9 +144,7 @@ Sizes.forEach((size: Size): void => {
 
             cy.signOut(followUser);
             cy.signIn(followingUser)
-            cy.pause()
             cy.followUser(followUser, followingUser)
-            cy.pause()
 
             cy.signOut(followingUser);
             cy.signIn(followUser)
@@ -159,7 +156,6 @@ Sizes.forEach((size: Size): void => {
             cy.getDataCy('notifications-headline')
             .shouldBeVisible()
 
-            cy.pause()
             cy.getDataCy('first_name')
             .should('not.exist')
 
@@ -182,7 +178,6 @@ Sizes.forEach((size: Size): void => {
             cy.interceptSupabaseCall('update_receive_notifications_from_follow')
             .as('updateNotifications')
 
-            cy.pause()
             cy.getDataCy('toggle-notifications-from-user')
             .shouldBeVisible()
             .click()
