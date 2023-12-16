@@ -59,14 +59,20 @@ export class WrapperStoreService {
      * @returns {Promise<T | Error>} - A promise that resolves to the result of the function
      * execution, or an Error object if an error occurred.
      */
-    public async wrapUpdateFunction<T>(func: () => T): Promise<T | Error> {
+    public async wrapUpdateFunction<T>(
+        func: () => T,
+        showMessage: boolean = true,
+        successMessage: string = 'Successful Update.'
+    ): Promise<T | Error> {
         try {
             const result: Awaited<T> = await func();
-            this.tuiAlertService.open(
-                'Successful Update.',
-                {
-                    status: 'success',
-                }).subscribe()
+            if (showMessage) {
+                this.tuiAlertService.open(
+                    successMessage,
+                    {
+                        status: 'success',
+                    }).subscribe()
+            }
             return result
         } catch (error: any) {
             this.errorStoreService.updateError(error.message, true);

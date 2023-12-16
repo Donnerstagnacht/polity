@@ -67,7 +67,7 @@ export class ProfileCountersActionService {
 
             this.profileStoreService.profile.uiFlagStore.setUiFlagTrue('isFollowing')
             this.profileCountersStoreService.profileCounters.incrementKey('follower_counter')
-        })
+        }, true, 'Successful followed!')
     }
 
     public async unFollowProfile() {
@@ -82,7 +82,7 @@ export class ProfileCountersActionService {
 
             this.profileStoreService.profile.uiFlagStore.setUiFlagFalse('isFollowing')
             this.profileCountersStoreService.profileCounters.decrementKey('follower_counter')
-        })
+        }, true, 'Successful unfollowed!')
     }
 
 }

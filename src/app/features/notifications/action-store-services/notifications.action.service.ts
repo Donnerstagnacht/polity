@@ -50,7 +50,7 @@ export class NotificationsActionService {
             .rpc('reset_notification_counter')
             .single()
             .throwOnError()
-        })
+        }, false)
     }
 
     public async updateReceiveFollowNotificationStatus(): Promise<void> {
@@ -61,6 +61,6 @@ export class NotificationsActionService {
             })
             .single()
             .throwOnError()
-        })
+        }, true, 'You will not receive notifications anymore if someone follows you.')
     }
 }

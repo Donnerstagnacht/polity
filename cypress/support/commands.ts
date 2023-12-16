@@ -97,7 +97,7 @@ Cypress.Commands.add(
         .should('have.text', 'FOLLOW ')
         .click()
 
-        cy.contains('Successful Update')
+        cy.contains('Successful')
         .should('be.visible')
 
         // cy.wait('@followTransaction')

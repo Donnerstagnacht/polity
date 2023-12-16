@@ -59,7 +59,7 @@ Sizes.forEach((size: Size): void => {
             .should('have.text', 'UNFOLLOW ')
             .click()
 
-            cy.contains('Successful Update')
+            cy.contains('Successful')
             .should('be.visible')
 
             // cy.wait('@unfollowTransaction')

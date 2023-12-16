@@ -57,7 +57,7 @@ export class ProfileActionService {
             .throwOnError()
             if (response.error) throw response.error
             this.profileStoreService.profile.mutateObject(profile)
-        })
+        }, true, 'Successful Updated your profile!')
     }
 
     /**
@@ -75,7 +75,7 @@ export class ProfileActionService {
             .single()
             .throwOnError()
             if (response.error) throw response.error
-        })
+        }, true, 'Successful Updated your profile image!')
     }
 
     /**

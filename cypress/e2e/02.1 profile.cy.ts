@@ -31,7 +31,7 @@ Sizes.forEach((size: Size): void => {
             cy.getDataCy('lastName').type(newLastName)
             cy.getDataCy('update').click()
 
-            cy.contains('Successful Update')
+            cy.contains('Successful')
             .should('be.visible')
             cy.wait('@updateProfile')
         })

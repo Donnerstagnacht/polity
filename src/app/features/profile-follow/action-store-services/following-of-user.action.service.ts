@@ -47,6 +47,6 @@ export class FollowingOfUserActionService {
                 userId
             )
             this.profileCountersStoreService.profileCounters.decrementKey('following_counter')
-        })
+        }, true, 'Following removed!')
     }
 }

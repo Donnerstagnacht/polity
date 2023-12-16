@@ -50,7 +50,7 @@ export class AssistantActionService {
                 first_sign_in: newStatus,
             } as FunctionSingleReturn<'select_assistant'>
             this.assistantStoreService.assistant.mutateObject(updatedAssistant)
-        })
+        }, false)
     }
 
     /**
@@ -69,7 +69,7 @@ export class AssistantActionService {
                 skip_tutorial: newStatus,
             } as FunctionSingleReturn<'select_assistant'>
             this.assistantStoreService.assistant.mutateObject(updatedAssistant)
-        })
+        }, true, 'You can reactivate your tutorials in your profile settings!')
     }
 
     /**
@@ -88,6 +88,6 @@ export class AssistantActionService {
                 last_tutorial: last_tutorial,
             } as FunctionSingleReturn<'select_assistant'>
             this.assistantStoreService.assistant.mutateObject(updatedAssistant)
-        })
+        }, false)
     }
 }
