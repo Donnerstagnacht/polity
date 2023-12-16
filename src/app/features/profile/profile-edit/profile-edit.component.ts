@@ -9,6 +9,10 @@ import {CommonModule} from "@angular/common";
 import {ProfileImageUploadComponent} from "../profile-image-upload/profile-image-upload.component";
 import {ProfileStoreService} from "../action-store-services/profile.store.service";
 import {ProfileActionService} from "../action-store-services/profile.action.service";
+import {FunctionSingleReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {
+    NotficationsFromFollowToggleComponent
+} from "../../notifications/notfications-from-follow-toggle/notfications-from-follow-toggle.component";
 
 @Component({
     selector: 'polity-profile-edit',
@@ -26,7 +30,8 @@ import {ProfileActionService} from "../action-store-services/profile.action.serv
         CommonModule,
         TuiSvgModule,
         ProfileImageUploadComponent,
-        TuiButtonModule
+        TuiButtonModule,
+        NotficationsFromFollowToggleComponent
     ],
     providers: [
         {
@@ -55,7 +60,7 @@ export class ProfileEditComponent {
         this.isProfileLoading = this.profileStoreService.profile.loading.getLoading()
         this.profile = this.profileStoreService.profile.getObject()
 
-        effect(() => {
+        effect((): void => {
             this.editProfileForm.patchValue({
                 firstName: this.profile()?.first_name as string,
                 lastName: this.profile()?.last_name as string
@@ -65,12 +70,11 @@ export class ProfileEditComponent {
 
 
     protected async onEdit(): Promise<void> {
-        const profile: Profile =
+        const profile: FunctionSingleReturn<'select_user'> =
             {
-                id: '',
                 first_name: this.editProfileForm.value.firstName as string,
                 last_name: this.editProfileForm.value.lastName as string
-            }
+            } as FunctionSingleReturn<'select_user'>
         await this.profileService.updateProfile(profile);
     }
 }

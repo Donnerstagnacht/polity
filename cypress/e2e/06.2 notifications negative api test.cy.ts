@@ -7,6 +7,7 @@ describe(`Negative api tests for profile_counter table show that `, async () => 
     const TEST_ID = '42e58ca1-2eb8-4651-93c2-cefba2e32f42';
 
     beforeEach(async (): Promise<void> => {
+        cy.visit('landing/sign-in');
         const response = await supabaseClient.auth.signInWithPassword(
             {
                 email: 'follow@seed.com',
@@ -19,7 +20,7 @@ describe(`Negative api tests for profile_counter table show that `, async () => 
         expect(token).to.be.not.null
     })
 
-    it('an authenitcated user can not read the notifications_counter from other users', async (): Promise<void> => {
+    it('an authenticated user can call the follow transaction but can not call it twice', async (): Promise<void> => {
         const response = await supabaseClient
         .rpc('select_unread_notifications_counter', {
             // @ts-ignore
@@ -29,7 +30,7 @@ describe(`Negative api tests for profile_counter table show that `, async () => 
         expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
     })
 
-    it('an authenticated user can only view its own messages', async (): Promise<void> => {
+    it('an authenticated user can call the follow transaction but can not call it twice', async (): Promise<void> => {
         const response = await supabaseClient
         .rpc('select_notifications_of_users', {
             // @ts-ignore
@@ -38,4 +39,6 @@ describe(`Negative api tests for profile_counter table show that `, async () => 
         expect(response.data).to.be.null
         expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
     })
+
+
 })

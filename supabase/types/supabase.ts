@@ -114,6 +114,12 @@ export interface Database {
           profile_image: string
         }[]
       }
+      select_user_notification_settings: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          receive_follow_notifications: boolean
+        }[]
+      }
       unfollow_transaction: {
         Args: {
           following_id: string

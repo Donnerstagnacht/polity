@@ -8,7 +8,6 @@ import {
 } from "@taiga-ui/core";
 import {POLYMORPHEUS_CONTEXT} from "@tinkoff/ng-polymorpheus";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {Profile} from "../../../../../cypress/fixtures/profile";
 import {SessionStoreService} from "../../../auth/services/session.store.service";
 import {Router} from "@angular/router";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
@@ -130,11 +129,10 @@ export class AssistantWelcomeDialogComponent {
 
     private async updateProfileName(): Promise<void> {
         this.name = this.welcomeForm.value.firstName + ' ' + this.welcomeForm.value.lastName;
-        const profile: Profile = {
-            id: '',
+        const profile: FunctionSingleReturn<'select_user'> = {
             first_name: this.welcomeForm.value.firstName as string,
             last_name: this.welcomeForm.value.lastName as string
-        }
+        } as FunctionSingleReturn<'select_user'>
         await Promise.all([
             this.profilService.updateProfile(profile),
             this.assistantService.updateLastTutorial('profile')

@@ -44,11 +44,10 @@ export class ProfileActionService {
      * @param {Profile} profile - The profile object containing the updated information.
      * @return {Promise<void>}
      */
-    public async updateProfile(profile: Profile): Promise<void> {
+    public async updateProfile(profile: FunctionSingleReturn<'select_user'>): Promise<void> {
         await this.profileStoreService.profile.wrapUpdateFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<FunctionSingleReturn<'update_user'>> = await this.supabase
             .rpc('update_user', {
-                username_in: profile.username as string,
                 first_name_in: profile.first_name as string,
                 last_name_in: profile.last_name as string,
                 profile_image_in: profile.profile_image as string

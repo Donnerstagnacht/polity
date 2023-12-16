@@ -1,4 +1,3 @@
--- 1. Increment Following counter
 DROP FUNCTION IF EXISTS authenticated_access.check_if_user_receives_follow_notifications(
     user_id uuid
 );

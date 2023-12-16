@@ -59,10 +59,10 @@ export class SignUpComponent {
         password: FormControl<string | null>
     }> = new FormGroup({
         email: new FormControl(
-            'email',
+            'test987@gmail.com',
             [Validators.required, Validators.email]),
         password: new FormControl(
-            'password',
+            '12345678',
             [Validators.required, Validators.minLength(6)]),
     })
 

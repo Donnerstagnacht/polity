@@ -12,6 +12,7 @@ const followingUser: ProfileTest = seedProfileFollowingUser
 Sizes.forEach((size: Size): void => {
     describe(`Profile follow tests with screen size ${size.width} show that users can `, () => {
         beforeEach((): void => {
+            cy.visit('landing/sign-in');
             cy.signIn(followUser);
         })
 

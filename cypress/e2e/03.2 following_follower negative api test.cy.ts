@@ -22,6 +22,7 @@ describe(`Negative api tests for profile_counter table show that `, async () => 
     const TEST_ID = '42e58ca1-2eb8-4651-93c2-cefba2e32f42';
 
     beforeEach(async (): Promise<void> => {
+        cy.visit('landing/sign-in');
         const response = await supabaseClient.auth.signInWithPassword(
             {
                 email: 'follow@seed.com',

@@ -83,6 +83,14 @@
     <polity-assistant-toggle></polity-assistant-toggle>
 </div>
 
+<div class="polity-space_bottom-15">
+    <h3
+        [class.tui-skeleton]="isProfileLoading()"
+        class="tui-form__header"
+    >Benachrichtigungen</h3>
+    <polity-notfications-from-follow-toggle></polity-notfications-from-follow-toggle>
+</div>
+
 <div class="polity-space_bottom-15 extra-margin">
     <h3
         [class.tui-skeleton]="isProfileLoading()"

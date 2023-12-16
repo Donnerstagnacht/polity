@@ -9,6 +9,8 @@ Sizes.forEach((size: Size): void => {
     describe(`App navigation tests with screen size ${size.width} show that users can `, () => {
 
         before((): void => {
+            cy.visit('landing/sign-up');
+
             cy.signUp(newUser).then((value) => {
                 newUser.email = value
             })
@@ -16,6 +18,7 @@ Sizes.forEach((size: Size): void => {
 
         beforeEach((): void => {
             cy.viewport(size.width, size.height)
+            cy.visit('landing/sign-in');
             cy.signIn(newUser);
             cy.intercept('POST', 'https://abcwkgkiztruxwvfwabf.supabase.co/rest/v1/rpc/select_assistant')
             .as('loadAssistant')
