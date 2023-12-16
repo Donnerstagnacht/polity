@@ -17,7 +17,7 @@ BEGIN
         receive_follow_notifications
     INTO receives_follow_notifications_status
     FROM
-        public.profiles
+        authenticated_access.profiles
     WHERE
         id = user_id;
     RETURN receives_follow_notifications_status;

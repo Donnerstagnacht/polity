@@ -1,5 +1,5 @@
 CREATE OR REPLACE FUNCTION
-    public.create_profile_counter()
+    postgres_access.create_profile_counter()
     RETURNS trigger AS
 $$
 BEGIN
@@ -20,4 +20,4 @@ CREATE OR REPLACE TRIGGER on_auth_user_created_add_profile_counter
     AFTER INSERT
     ON auth.users
     FOR EACH ROW
-EXECUTE PROCEDURE public.create_profile_counter();
+EXECUTE PROCEDURE postgres_access.create_profile_counter();

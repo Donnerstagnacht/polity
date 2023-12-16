@@ -1,5 +1,5 @@
 CREATE OR REPLACE FUNCTION
-    public.create_assistant()
+    postgres_access.create_assistant()
     RETURNS trigger AS
 $$
 BEGIN
@@ -20,6 +20,6 @@ $$ LANGUAGE plpgsql
 
 CREATE OR REPLACE TRIGGER on_auth_user_created_add_assistant
     AFTER INSERT
-    ON public.profiles
+    ON authenticated_access.profiles
     FOR EACH ROW
-EXECUTE PROCEDURE public.create_assistant();
+EXECUTE PROCEDURE postgres_access.create_assistant();

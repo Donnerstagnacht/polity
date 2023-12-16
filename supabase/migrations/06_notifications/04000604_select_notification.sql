@@ -27,8 +27,8 @@ BEGIN
             profiles.profile_image
         FROM
             authenticated_access.notifications_by_user
-            JOIN public.profiles
-            ON public.profiles.id = authenticated_access.notifications_by_user.sender
+            JOIN authenticated_access.profiles
+            ON authenticated_access.profiles.id = authenticated_access.notifications_by_user.sender
 
         WHERE
             receiver = authenticated_user

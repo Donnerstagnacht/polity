@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS authenticated_access.profiles_counters
     following_counter            bigint DEFAULT 0::bigint NOT NULL,
     unread_notifications_counter bigint DEFAULT 0::bigint NOT NULL,
     CONSTRAINT profiles_counters_pkey PRIMARY KEY (id),
-    CONSTRAINT profiles_counters_id_fkey FOREIGN KEY (id) REFERENCES public.profiles (id) MATCH SIMPLE
+    CONSTRAINT profiles_counters_id_fkey FOREIGN KEY (id) REFERENCES authenticated_access.profiles (id) MATCH SIMPLE
 );
 
 ALTER TABLE authenticated_access.profiles_counters

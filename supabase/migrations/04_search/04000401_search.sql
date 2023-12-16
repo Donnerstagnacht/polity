@@ -18,12 +18,12 @@ $$
 BEGIN
     RETURN QUERY
         SELECT
-            public.profiles.id,
-            public.profiles.first_name,
-            public.profiles.last_name,
-            public.profiles.username
+            authenticated_access.profiles.id,
+            authenticated_access.profiles.first_name,
+            authenticated_access.profiles.last_name,
+            authenticated_access.profiles.username
         FROM
-            public.profiles
+            authenticated_access.profiles
         WHERE
             fts @@ TO_TSQUERY('german', search_term);
 END

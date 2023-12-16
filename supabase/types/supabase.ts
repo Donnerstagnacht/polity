@@ -9,47 +9,7 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
-      profiles: {
-        Row: {
-          first_name: string | null
-          fts: unknown | null
-          id: string
-          last_name: string | null
-          profile_image: string | null
-          receive_follow_notifications: boolean
-          updated_at: string | null
-          username: string | null
-        }
-        Insert: {
-          first_name?: string | null
-          fts?: unknown | null
-          id: string
-          last_name?: string | null
-          profile_image?: string | null
-          receive_follow_notifications?: boolean
-          updated_at?: string | null
-          username?: string | null
-        }
-        Update: {
-          first_name?: string | null
-          fts?: unknown | null
-          id?: string
-          last_name?: string | null
-          profile_image?: string | null
-          receive_follow_notifications?: boolean
-          updated_at?: string | null
-          username?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "profiles_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
+      [_ in never]: never
     }
     Views: {
       [_ in never]: never

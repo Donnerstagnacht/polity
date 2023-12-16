@@ -18,13 +18,13 @@ $$
 BEGIN
     RETURN QUERY
         SELECT
-            public.profiles.id,
-            public.profiles.first_name,
-            public.profiles.last_name,
-            public.profiles.profile_image
+            authenticated_access.profiles.id,
+            authenticated_access.profiles.first_name,
+            authenticated_access.profiles.last_name,
+            authenticated_access.profiles.profile_image
         FROM
-            public.profiles
+            authenticated_access.profiles
         WHERE
-            public.profiles.id = user_id;
+            authenticated_access.profiles.id = user_id;
 END
 $$;

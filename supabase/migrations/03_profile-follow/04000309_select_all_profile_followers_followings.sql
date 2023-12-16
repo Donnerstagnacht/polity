@@ -18,12 +18,12 @@ BEGIN
     RETURN QUERY (
         SELECT
             profiles.id,
-            public.profiles.profile_image,
+            profiles.profile_image,
             profiles.first_name,
             profiles.last_name
         FROM
             authenticated_access.following_profiles
-            JOIN public.profiles
+            JOIN authenticated_access.profiles
             ON following_profiles.follower = profiles.id
         WHERE
             following_profiles.following = authenticated_user
@@ -52,12 +52,12 @@ BEGIN
         (
             SELECT
                 profiles.id,
-                public.profiles.profile_image,
+                profiles.profile_image,
                 profiles.first_name,
                 profiles.last_name
             FROM
                 authenticated_access.following_profiles
-                JOIN public.profiles
+                JOIN authenticated_access.profiles
                 ON following_profiles.following = profiles.id
             WHERE
                 following_profiles.follower = authenticated_user

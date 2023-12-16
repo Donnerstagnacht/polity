@@ -13,7 +13,7 @@ DECLARE
     authenticated_user uuid;
 BEGIN
     authenticated_user := auth.uid();
-    UPDATE public.profiles
+    UPDATE authenticated_access.profiles
     SET
         receive_follow_notifications = new_status
     WHERE

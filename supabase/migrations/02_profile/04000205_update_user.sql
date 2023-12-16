@@ -23,7 +23,7 @@ DECLARE
     authenticated_user uuid;
 BEGIN
     authenticated_user := auth.uid();
-    UPDATE public.profiles
+    UPDATE authenticated_access.profiles
     SET
         username                     = COALESCE(username_in, username),
         first_name                   = COALESCE(first_name_in, first_name),

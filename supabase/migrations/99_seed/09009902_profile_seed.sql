@@ -1,5 +1,5 @@
 --Updating seeded profiles
-UPDATE public.profiles
+UPDATE authenticated_access.profiles
 SET
     first_name = 'Fabian',
     last_name  = 'Bäcker'
@@ -14,7 +14,7 @@ WHERE
     id = '42e58ca1-2eb8-4651-93c2-cefba2e32f42';
 
 
-UPDATE public.profiles
+UPDATE authenticated_access.profiles
 SET
     first_name = 'Tobias',
     last_name  = 'Müller'
@@ -29,7 +29,7 @@ WHERE
     id = 'f8b028b8-231b-4c80-abf2-7ca787fe686f';
 
 
-UPDATE public.profiles
+UPDATE authenticated_access.profiles
 SET
     first_name = 'Lars',
     last_name  = 'Berg'
@@ -45,7 +45,7 @@ WHERE
 
 
 
-UPDATE public.profiles
+UPDATE authenticated_access.profiles
 SET
     first_name = 'Jana',
     last_name  = 'Klein'
@@ -60,7 +60,7 @@ WHERE
     id = 'd5d41bd8-ca96-4583-a0f8-61a34c6dddaa';
 
 
-UPDATE public.profiles
+UPDATE authenticated_access.profiles
 SET
     first_name = 'Lennart',
     last_name  = 'Lieb'

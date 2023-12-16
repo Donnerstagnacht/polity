@@ -4,11 +4,11 @@ CREATE TABLE IF NOT EXISTS authenticated_access.following_profiles
     following uuid NOT NULL,
     CONSTRAINT following_profiles_pkey PRIMARY KEY (follower, following),
     CONSTRAINT following_profiles_follower_fkey FOREIGN KEY (follower)
-        REFERENCES public.profiles (id) MATCH SIMPLE
+        REFERENCES authenticated_access.profiles (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT following_profiles_following_fkey FOREIGN KEY (following)
-        REFERENCES public.profiles (id) MATCH SIMPLE
+        REFERENCES authenticated_access.profiles (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
