@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
-import {Functions} from "../../../../../supabase/types/supabase.shorthand-types";
-import {SessionStoreService} from "../../../auth/services/session.store.service";
+import {FunctionTableReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {FollowersOfUserStoreService} from "./followers-of-user.store.service";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
 import {ProfileCountersStoreService} from "./profile-counters.store.service";
@@ -14,7 +13,6 @@ export class FollowersOfUserActionService {
     private readonly supabaseClient: SupabaseClient<DatabaseOverwritten> = supabaseClient;
 
     constructor(
-        private sessionStoreService: SessionStoreService,
         private followersOfUserStoreService: FollowersOfUserStoreService,
         private profileCountersStoreService: ProfileCountersStoreService
     ) {
@@ -22,12 +20,8 @@ export class FollowersOfUserActionService {
 
     public async selectFollowersOfUser(): Promise<any> {
         await this.followersOfUserStoreService.followersOfUser.wrapSelectFunction(async (): Promise<void> => {
-            const loggedInUserId: string = this.sessionStoreService.getSessionId() as string;
-            const followerResponse: PostgrestSingleResponse<Functions<'select_follower_of_user'>> = await this.supabaseClient.rpc(
-                'select_follower_of_user',
-                {
-                    following_id: loggedInUserId
-                }
+            const followerResponse: PostgrestSingleResponse<FunctionTableReturn<'select_follower_of_user'>> = await this.supabaseClient.rpc(
+                'select_follower_of_user'
             )
             .throwOnError()
             if (followerResponse.data) {
@@ -38,12 +32,10 @@ export class FollowersOfUserActionService {
 
     public async removeFollowerOfUser(userId: string): Promise<any> {
         await this.followersOfUserStoreService.followersOfUser.wrapUpdateFunction(async (): Promise<void> => {
-            const loggedInUserId: string = this.sessionStoreService.getSessionId() as string;
-            const response: PostgrestSingleResponse<Functions<'unfollow_transaction'>> = await this.supabaseClient.rpc(
-                'unfollow_transaction',
+            const response: PostgrestSingleResponse<FunctionTableReturn<'remove_follower_transaction'>> = await this.supabaseClient.rpc(
+                'remove_follower_transaction',
                 {
                     follower_id: userId,
-                    following_id: loggedInUserId
                 }
             )
             .single()

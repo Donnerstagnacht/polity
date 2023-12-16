@@ -6,7 +6,7 @@ import {FirstBarLeftComponent} from "../../navigation/first-bar-left/first-bar-l
 import {RouterOutlet} from "@angular/router";
 import {AssistantComponent} from "../assistant/assistant/assistant.component";
 import {NotificationBadgeStoreService} from "../notifications/action-store-services/notification-badge.store.service";
-import {PlainFunctions} from "../../../../supabase/types/supabase.shorthand-types";
+import {FunctionSingleReturn} from "../../../../supabase/types/supabase.shorthand-types";
 import {NotificationBadgeActionService} from "../notifications/action-store-services/notification-badge.action.service";
 
 @Component({
@@ -23,7 +23,7 @@ import {NotificationBadgeActionService} from "../notifications/action-store-serv
 })
 export class AppSkeletonComponent {
     protected items: NavigationItem[] = NAVIGATION_ITEMS;
-    protected notificationBadge: WritableSignal<PlainFunctions<'select_unread_notifications_counter'> | null> = signal({
+    protected notificationBadge: WritableSignal<FunctionSingleReturn<'select_unread_notifications_counter'> | null> = signal({
         profile_id: '',
         unread_notifications_counter: 50
     });
@@ -35,5 +35,6 @@ export class AppSkeletonComponent {
         this.notificationBadge = this.notificationBadgeService.notificationBadge.getObject();
         this.notificationBadgeActionService.selectUnreadNotificationsCounter()
     }
+
 }
 

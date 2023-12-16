@@ -2,8 +2,7 @@ import {Injectable} from '@angular/core';
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
 import {ProfileCountersStoreService} from "./profile-counters.store.service";
-import {SessionStoreService} from "../../../auth/services/session.store.service";
-import {Functions, Tables} from "../../../../../supabase/types/supabase.shorthand-types";
+import {FunctionSingleReturn, FunctionTableReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {supabaseClient} from "../../../auth/supabase-client";
 import {ProfileStoreService} from "../../profile/action-store-services/profile.store.service";
 
@@ -14,7 +13,6 @@ export class ProfileCountersActionService {
     private readonly supabaseClient: SupabaseClient<DatabaseOverwritten> = supabaseClient;
 
     constructor(
-        private readonly sessionStoreService: SessionStoreService,
         private readonly profileCountersStoreService: ProfileCountersStoreService,
         private readonly profileStoreService: ProfileStoreService
     ) {
@@ -22,7 +20,7 @@ export class ProfileCountersActionService {
 
     public async selectProfileCounter(userId: string): Promise<void> {
         await this.profileCountersStoreService.profileCounters.wrapSelectFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<Tables<'profiles_counters'>> = await this.supabaseClient.rpc(
+            const response: PostgrestSingleResponse<FunctionSingleReturn<'select_following_counter'>> = await this.supabaseClient.rpc(
                 'select_following_counter',
                 {user_id: userId}
             )
@@ -35,15 +33,13 @@ export class ProfileCountersActionService {
     }
 
     public async checkIfFollowing(): Promise<void> {
-        const followerId: string = this.sessionStoreService.getSessionId() as string;
         const followingId: string = this.profileCountersStoreService.profileCounters.getValueByKey('profile_id')
 
         await this.profileCountersStoreService.profileCounters.wrapSelectFunction(async (): Promise<void> => {
             this.profileStoreService.profile.uiFlagStore.setUiFlagTrue('isFollowingCheckLoading')
-            const response: PostgrestSingleResponse<Functions<'check_if_following'>> = await this.supabaseClient.rpc(
+            const response: PostgrestSingleResponse<FunctionTableReturn<'check_if_following'>> = await this.supabaseClient.rpc(
                 'check_if_following',
                 {
-                    follower_id: followerId,
                     following_id: followingId as string
                 }
             )
@@ -60,13 +56,11 @@ export class ProfileCountersActionService {
     }
 
     public async followProfile() {
-        const followerId: string = this.sessionStoreService.getSessionId() as string;
         const followingId: string = this.profileCountersStoreService.profileCounters.getValueByKey('profile_id');
         await this.profileCountersStoreService.profileCounters.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<Functions<'follow_transaction'>> = await this.supabaseClient.rpc(
+            const response: PostgrestSingleResponse<FunctionTableReturn<'follow_transaction'>> = await this.supabaseClient.rpc(
                 'follow_transaction',
                 {
-                    follower_id: followerId,
                     following_id: followingId
                 }
             ).throwOnError()
@@ -77,13 +71,11 @@ export class ProfileCountersActionService {
     }
 
     public async unFollowProfile() {
-        const followerId: string = this.sessionStoreService.getSessionId() as string;
         const followingId = this.profileCountersStoreService.profileCounters.getValueByKey('profile_id');
         await this.profileCountersStoreService.profileCounters.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<Functions<'unfollow_transaction'>> = await this.supabaseClient.rpc(
+            const response: PostgrestSingleResponse<FunctionTableReturn<'unfollow_transaction'>> = await this.supabaseClient.rpc(
                 'unfollow_transaction',
                 {
-                    follower_id: followerId,
                     following_id: followingId
                 }
             ).throwOnError()

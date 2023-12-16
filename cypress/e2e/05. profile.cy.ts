@@ -23,7 +23,8 @@ Sizes.forEach((size: Size): void => {
             cy.getDataCy('edit-instruction')
             .shouldBeVisible()
 
-            cy.intercept('POST', 'https://abcwkgkiztruxwvfwabf.supabase.co/rest/v1/profiles').as('updateProfile')
+            //  cy.intercept('POST', 'https://abcwkgkiztruxwvfwabf.supabase.co/rest/v1/profiles').
+            cy.interceptSupabaseCall('update_user').as('updateProfile')
             cy.getDataCy('firstName').clear()
             cy.getDataCy('firstName').type(newFirstName)
             cy.getDataCy('lastName').clear()

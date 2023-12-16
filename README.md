@@ -180,11 +180,18 @@
 <hr>
 
 <h1>Documentation</h1>
-<p></p>Document public functions (especially in services).</p>
+<p>Document public functions (especially in services).</p>
+<hr>
+
+<h1>Database security</h1>
+<p>Supabase generates a public api for all database elements in the public schema. Therefore, database tables including data which should not be accessible by everyone, should be added to a non-public layer (hidden layer).</p>
+<p>The public layer is solely used to store invoker database functions ("invoker" ensures that database users can only use database elements according to their role and associated rights). These functions can access the hidden table layer. Therefore, the column access is controlled by the access given to database functions.</p>
+<p>Row level access is controlled by row security rules. Authenticated userIds should not be handed over to functions as function argument. Instead, supabase helper functions like auth.uid() should be used directly in database functions.</p>
 <hr>
 
 <h1>Testing Approach</h1>
-<p>The project uses no unit tests so far. However, all features should be committed with a working end-to-end test that covers at least the expected positive base-line scenario, e.g. negative tests are not required.</p>
+<p>The project uses no unit tests so far. However, all features should be committed with a working Cypress end-to-end test that covers at least the expected positive base-line scenario, e.g. the workflows possible in the GUI</p>
+<p>To facilitate database security, negative scenarios (e.g. database calls which should not return results because they are not allowed) should be tested using Cypress api call tests.</p>
 <hr>
 
 <h1>Recommended "Definition of Done" Checklist</h1>

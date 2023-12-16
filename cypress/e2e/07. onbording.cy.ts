@@ -47,10 +47,6 @@ Sizes.forEach((size: Size): void => {
             cy.getDataCy('step1closeTutorial')
             .shouldBeVisible()
             .click()
-
-            // cy.getDataCy('welcome-name-headline')
-            // .shouldBeVisible()
-            // .contains(loggedInUser.first_name as string)
         })
 
         it('can save their tutorial progress and load their progress', (): void => {
@@ -76,8 +72,11 @@ Sizes.forEach((size: Size): void => {
             cy.getDataCy('step2navigateToProfilePage')
             .scrollIntoView()
             .click()
-        })
 
+            cy.getDataCy('assistant-search-dialog')
+            .shouldBeVisible()
+            .click()
+        })
 
         it('do a tutorial about searching users and follow them', (): void => {
             cy.getDataCy('assistant-search-dialog')
@@ -86,13 +85,19 @@ Sizes.forEach((size: Size): void => {
 
             cy.getDataCy('tutorial-search-headline')
             .shouldBeVisible()
+            .click()
 
             cy.getDataCy('step3closeAndSkipTutorial')
             .scrollIntoView()
+            // .shouldBeVisible() somehow it is overflown and cypress can not detect it even it is visible
 
             cy.getDataCy('step3navigateToSearchPage')
             .scrollIntoView()
+            // .shouldBeVisible() somehow it is overflown and cypress can not detect it even it is visible
             .click()
+
+            cy.getDataCy('search-instruction')
+            .shouldBeVisible()
         })
 
         it('can open the tutorial from profile settings again ', (): void => {
@@ -118,7 +123,6 @@ Sizes.forEach((size: Size): void => {
             cy.getDataCy('assistant-profile-dialog')
             .shouldBeVisible()
         })
-
 
         it('can reject the tutorial and will not see it again ', () => {
             cy.getDataCy('assistant-profile-dialog')

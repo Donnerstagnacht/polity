@@ -13,6 +13,8 @@
 // -- This is a parent command --
 
 import {ProfileTest} from "../fixtures/profile";
+import {FunctionName} from "../../supabase/types/supabase.shorthand-types";
+import {API_URL} from "../fixtures/api_url";
 import Chainable = Cypress.Chainable;
 
 /**
@@ -22,6 +24,11 @@ import Chainable = Cypress.Chainable;
  */
 Cypress.Commands.add('getDataCy', (value: string, value2?: string): void => {
     cy.get(`[data-cy=${value}], [data-cy=${value2}]`)
+});
+
+Cypress.Commands.add('interceptSupabaseCall', (endPoint: FunctionName): void => {
+    const apiUrl = API_URL
+    cy.intercept('POST', apiUrl + endPoint)
 });
 
 Cypress.Commands.add('shouldBeVisible', {prevSubject: 'element'}, (subject) => {
@@ -87,7 +94,7 @@ Cypress.Commands.add(
 
         cy.getDataCy('followButton')
         .shouldBeVisible()
-        .should('have.text', 'FOLLOW')
+        .should('have.text', 'FOLLOW ')
         .click()
 
         cy.contains('Successful Update')
@@ -97,7 +104,7 @@ Cypress.Commands.add(
 
         cy.getDataCy('followButton')
         .shouldBeVisible()
-        .should('have.text', 'UNFOLLOW')
+        .should('have.text', 'UNFOLLOW ')
 
         cy.getDataCy('followerCounter')
         .shouldBeVisible()

@@ -31,15 +31,18 @@ export type DatabaseOverwritten = MergeDeep<
                 profiles_counters: {
                     Row: {
                         id?: string
-                        profile_id: string
+                        profile_id: string,
+                        unread_notifications_counter: number
                     }
                     Insert: {
                         id?: string
-                        profile_id: string
+                        profile_id: string,
+                        unread_notifications_counter: number
                     }
                     Update: {
                         id?: string
-                        profile_id?: string
+                        profile_id?: string,
+                        unread_notifications_counter: number
                     }
                 }
                 // notifications_by_user: {

@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
-import {Tables} from "../../../../../supabase/types/supabase.shorthand-types";
-import {SessionStoreService} from "../../../auth/services/session.store.service";
+import {FunctionSingleReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {AssistantStoreService} from "./assistant.store.service";
 import {supabaseClient} from "../../../auth/supabase-client";
 
@@ -13,7 +12,6 @@ export class AssistantActionService {
     private readonly supabaseClient: SupabaseClient<DatabaseOverwritten> = supabaseClient;
 
     constructor(
-        private readonly sessionStoreService: SessionStoreService,
         private readonly assistantStoreService: AssistantStoreService,
     ) {
     }
@@ -24,10 +22,10 @@ export class AssistantActionService {
      * @param {string} userId - The ID of the user.
      * @return {Promise<void>}
      */
-    public async selectAssistant(userId: string): Promise<void> {
+    public async selectAssistant(): Promise<void> {
         await this.assistantStoreService.assistant.wrapSelectFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<Tables<'assistants'>> = await this.supabaseClient
-            .rpc('select_assistant', {user_id: userId})
+            const response: PostgrestSingleResponse<FunctionSingleReturn<'select_assistant'>> = await this.supabaseClient
+            .rpc('select_assistant')
             .single()
             .throwOnError();
             if (response.data) {
@@ -44,14 +42,13 @@ export class AssistantActionService {
      */
     public async updateFirstSignIn(newStatus: boolean): Promise<void> {
         await this.assistantStoreService.assistant.wrapUpdateFunction(async (): Promise<void> => {
-            const sessionId: string = this.sessionStoreService.getSessionId() as string;
             const response: PostgrestSingleResponse<undefined> = await this.supabaseClient
-            .rpc('update_first_sign_in', {user_id: sessionId, new_status: newStatus})
+            .rpc('update_first_sign_in', {new_status: newStatus})
             .throwOnError()
 
-            const updatedAssistant: Tables<'assistants'> = {
+            const updatedAssistant: FunctionSingleReturn<'select_assistant'> = {
                 first_sign_in: newStatus,
-            } as Tables<'assistants'>
+            } as FunctionSingleReturn<'select_assistant'>
             this.assistantStoreService.assistant.mutateObject(updatedAssistant)
         })
     }
@@ -64,14 +61,13 @@ export class AssistantActionService {
      */
     public async skipTutorial(newStatus: boolean): Promise<void> {
         await this.assistantStoreService.assistant.wrapUpdateFunction(async (): Promise<void> => {
-            const sessionId: string = this.sessionStoreService.getSessionId() as string;
             const response: PostgrestSingleResponse<undefined> = await this.supabaseClient
-            .rpc('update_skip_tutorial', {user_id: sessionId, new_status: newStatus})
+            .rpc('update_skip_tutorial', {new_status: newStatus})
             .throwOnError()
 
-            const updatedAssistant: Tables<'assistants'> = {
+            const updatedAssistant: FunctionSingleReturn<'select_assistant'> = {
                 skip_tutorial: newStatus,
-            } as Tables<'assistants'>
+            } as FunctionSingleReturn<'select_assistant'>
             this.assistantStoreService.assistant.mutateObject(updatedAssistant)
         })
     }
@@ -84,14 +80,13 @@ export class AssistantActionService {
      */
     public async updateLastTutorial(last_tutorial: DatabaseOverwritten["public"]["Enums"]["tutorial_enum"]): Promise<void> {
         await this.assistantStoreService.assistant.wrapUpdateFunction(async (): Promise<void> => {
-            const sessionId: string = this.sessionStoreService.getSessionId() as string;
             const response: PostgrestSingleResponse<undefined> = await this.supabaseClient
-            .rpc('update_last_tutorial', {user_id: sessionId, new_status: last_tutorial})
+            .rpc('update_last_tutorial', {new_status: last_tutorial})
             .throwOnError()
 
-            const updatedAssistant: Tables<'assistants'> = {
+            const updatedAssistant: FunctionSingleReturn<'select_assistant'> = {
                 last_tutorial: last_tutorial,
-            } as Tables<'assistants'>
+            } as FunctionSingleReturn<'select_assistant'>
             this.assistantStoreService.assistant.mutateObject(updatedAssistant)
         })
     }

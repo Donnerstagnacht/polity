@@ -44,7 +44,7 @@ type ArrayElementWithTypeGuard<ArrayType extends readonly unknown[]> =
  *   name: string
  * }
  */
-export type PlainFunctions<T extends keyof DatabaseOverwritten['public']['Functions']> = ArrayElement<DatabaseOverwritten['public']['Functions'][T]['Returns']>;
+export type FunctionSingleReturn<T extends keyof DatabaseOverwritten['public']['Functions']> = ArrayElement<DatabaseOverwritten['public']['Functions'][T]['Returns']>;
 
 /**
  * Abstract type that represents the return of a supabase-js call
@@ -96,7 +96,9 @@ export type Tables<T extends keyof DatabaseOverwritten['public']['Tables']> = Da
  *   name: string
  * }[]
  */
-export type Functions<T extends keyof DatabaseOverwritten['public']['Functions']> = DatabaseOverwritten['public']['Functions'][T]['Returns']
+export type FunctionTableReturn<T extends keyof DatabaseOverwritten['public']['Functions']> = DatabaseOverwritten['public']['Functions'][T]['Returns']
 
 export type Enums<T extends keyof DatabaseOverwritten['public']['Enums']> = DatabaseOverwritten['public']['Enums'][T]
+
+export type FunctionName = keyof DatabaseOverwritten['public']['Functions']
 
