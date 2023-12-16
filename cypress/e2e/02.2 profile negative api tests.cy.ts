@@ -25,7 +25,7 @@ describe(`Negative api tests for profile_counter table show that `, async () => 
         const response = await supabaseClient
         .rpc('update_user')
         expect(response.data).to.be.null
-        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
+        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.noPermission)
     })
 
     it('an authenticated user can only update its own profile', async (): Promise<void> => {
