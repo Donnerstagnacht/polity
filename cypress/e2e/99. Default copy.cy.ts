@@ -6,7 +6,7 @@ import {supabaseClient} from "../../src/app/auth/supabase-client";
 const profile1: ProfileTest = userCreatedByCypress;
 
 Sizes.forEach((size: Size): void => {
-    describe(`App navigation tests with screen size ${size.width} show that users can `, () => {
+    describe(`Feature tests with screen size ${size.width} show that users can `, () => {
 
         beforeEach((): void => {
             cy.viewport(size.width, size.height)

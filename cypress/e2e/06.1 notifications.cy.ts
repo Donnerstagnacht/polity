@@ -6,7 +6,7 @@ const followingUser: ProfileTest = seedProfileFollowingUser;
 const followUser: ProfileTest = seedProfileFollowUser
 
 Sizes.forEach((size: Size): void => {
-    describe(`App navigation tests with screen size { {${size.width} show that users can `, () => {
+    describe(`Notification tests with screen size { {${size.width} show that users can `, () => {
 
         beforeEach((): void => {
             // cy.viewport(size.width, size.height)

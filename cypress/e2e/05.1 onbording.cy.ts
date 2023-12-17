@@ -6,7 +6,7 @@ const newUser: ProfileTest = userCreatedByCypress;
 
 // ATTENTION: tests depends on previous tests
 Sizes.forEach((size: Size): void => {
-    describe(`App navigation tests with screen size ${size.width} show that users can `, () => {
+    describe(`Onboarding tests with screen size ${size.width} show that users can `, () => {
 
         before((): void => {
             cy.visit('landing/sign-up');
