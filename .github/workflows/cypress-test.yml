@@ -1,4 +1,4 @@
-name: Cypress Test
+name: cypress-test.yml
 
 on:
   workflow_dispatch:
@@ -31,7 +31,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          spec: cypress/e2e/99. Default copy.cy.ts
+          spec: cypress/e2e/all.cy.ts
           browser: chrome
           start: npm run start
           wait-on: "http://localhost:4200"
