@@ -25,7 +25,7 @@ export class ProfileImageUploadComponent {
     protected rejectedFiles$: Subject<TuiFileLike | null> = new Subject<TuiFileLike | null>();
     protected loadingFiles$: Subject<TuiFileLike | null> = new Subject<TuiFileLike | null>();
     protected loadedFiles$: Observable<TuiFileLike | null> = this.imageControl.valueChanges.pipe(
-        switchMap(file => (file ? this.makeRequest(file) : of(null))),
+        switchMap(file => (file ? this.returnRequestAsObservable(file) : of(null))),
     );
     protected profileWriteable: WritableSignal<Profile | null | undefined>;
     private avatarUrl: string = '';
@@ -38,47 +38,50 @@ export class ProfileImageUploadComponent {
         this.profileWriteable = this.profileStoreService.profile.getObject()
     }
 
-    protected makeRequest(file: TuiFileLike): Observable<TuiFileLike | null> {
+    returnRequestAsObservable(file: TuiFileLike): Observable<TuiFileLike | null> {
+        const request: Promise<TuiFileLike | null> = this.makeRequest(file)
+        const requestAsObservable: Observable<TuiFileLike | null> = from(request)
+        return requestAsObservable;
+    }
+
+    async makeRequest(file: TuiFileLike): Promise<TuiFileLike | null> {
         this.loadingFiles$.next(file);
         const fileExtension: string | undefined = file.name.split('.').pop()
         const filePath: string = `${Math.random()}.${fileExtension}`
+        try {
+            const response: {
+                data: { path: string };
+                error: null
+            } | {
+                data: null;
+                error: Error
+            } = await this.profileService.uploadImage(filePath, file);
 
-        console.log('before request')
-        const response: Promise<TuiFileLike | null> = this.profileService.uploadImage(filePath, file)
-        .then((response: { data: { path: string }, error: null } | { data: null, error: Error }) => {
             if (response.error) {
-                console.log('error', response.error)
                 throw Error
             } else {
-                // const publicBucket: {
-                //     data: { publicUrl: string }
-                // } = this.profileService.getPublicBucket(response.data.path)
-                // console.log('public bucket', publicBucket)
-                // this.avatarUrl = publicBucket.data.publicUrl;
-                // console.log('public bucket', publicBucket)
-                this.profileService.getSignedImageUrl(response.data.path).then((privateUrl) => {
-                    console.log('fetched privateUrl', privateUrl)
-                    this.profileService.updateProfileImage(response.data.path).then((): void => {
-                        //TODO double check
-                        const profile = {
-                            // profile_image: this.avatarUrl
+                try {
+                    const privateUrl: string | undefined = await this.profileService.getSignedImageUrl(response.data.path);
+                    try {
+                        await this.profileService.updateProfileImage(response.data.path);
+                    } catch (error) {
+                    } finally {
+                        const profile: FunctionSingleReturn<"select_user"> = {
                             profile_image: privateUrl
-                        } as FunctionSingleReturn<'select_user'>
-                        this.profileStoreService.profile.mutateObject(profile)
-                    })
-                });
+                        } as FunctionSingleReturn<'select_user'>;
+                        this.profileStoreService.profile.mutateObject(profile);
+                    }
+                } catch (error) {
+                }
             }
             return file;
-        })
-        .catch((): null => {
+        } catch (error) {
             this.rejectedFiles$.next(file);
             return null;
-        })
-        .finally((): null => {
+        } finally {
             this.loadingFiles$.next(null)
             return null;
-        });
-        return from(response)
+        }
     }
 
     protected clearRejected(): void {
