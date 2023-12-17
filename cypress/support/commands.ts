@@ -74,10 +74,9 @@ Cypress.Commands.add(
         cy.searchUser(followingUser.first_name as string)
         .click()
 
-        cy.intercept('POST', 'https://abcwkgkiztruxwvfwabf.supabase.co/rest/v1/rpc/check_if_following')
+        cy.interceptSupabaseCall('check_if_following')
         .as('isFollowing')
-        cy.intercept('POST',
-            'https://abcwkgkiztruxwvfwabf.supabase.co/rest/v1/rpc/select_following_counter')
+        cy.interceptSupabaseCall('select_following_counter')
         .as('followingCounter')
 
 
@@ -85,8 +84,7 @@ Cypress.Commands.add(
         .shouldBeVisible()
         .contains(followingUser.first_name as string)
 
-        cy.intercept('POST',
-            'https://abcwkgkiztruxwvfwabf.supabase.co/rest/v1/rpc/follow_transaction')
+        cy.interceptSupabaseCall('follow_transaction')
         .as('followTransaction')
         // cy.wait(['@followingCounter', '@isFollowing'])
 
@@ -95,10 +93,10 @@ Cypress.Commands.add(
         .should('have.text', 'FOLLOW ')
         .click()
 
+        cy.wait('@followTransaction')
         cy.contains('Successful')
         .should('be.visible')
 
-        // cy.wait('@followTransaction')
 
         cy.getDataCy('followButton')
         .shouldBeVisible()

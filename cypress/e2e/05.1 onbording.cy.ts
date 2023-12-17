@@ -104,6 +104,7 @@ Sizes.forEach((size: Size): void => {
         })
 
         it('can open the tutorial from profile settings again ', (): void => {
+            // cy.pause()
             cy.navigateToHome()
 
             cy.getDataCy('home-to-profile')
@@ -115,13 +116,16 @@ Sizes.forEach((size: Size): void => {
             .first()
             .click()
 
+            // cy.pause()
             cy.getDataCy('toggle-assistant-headline')
             .shouldBeVisible()
             .contains('Zeige Tutorials')
 
+            cy.interceptSupabaseCall('update_skip_tutorial').as('skipTutorial')
             cy.getDataCy('toggle-assistant')
             .shouldBeVisible()
             .click()
+            cy.wait(['@skipTutorial'])
 
             cy.getDataCy('assistant-profile-dialog')
             .shouldBeVisible()

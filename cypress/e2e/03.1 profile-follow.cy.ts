@@ -41,29 +41,29 @@ Sizes.forEach((size: Size): void => {
             cy.searchUser(followingUser.first_name as string)
             .click()
 
-            // cy.intercept('POST', 'https://abcwkgkiztruxwvfwabf.supabase.co/rest/v1/rpc/check_if_following').as('isFollowing')
-            // cy.intercept('POST',
-            //     'https://abcwkgkiztruxwvfwabf.supabase.co/rest/v1/rpc/select_following_counter')
-            // .as('followingCounter')
+            cy.interceptSupabaseCall('check_if_following')
+            .as('isFollowing')
+
+            cy.interceptSupabaseCall('select_following_counter')
+            .as('followingCounter')
+
             // cy.wait(['@followingCounter', '@isFollowing'])
 
             cy.getDataCy('first-name')
             .shouldBeVisible()
             .contains(followingUser.first_name as string)
 
-            // cy.intercept('POST',
-            //     'https://abcwkgkiztruxwvfwabf.supabase.co/rest/v1/rpc/unfollow_transaction')
-            // .as('unfollowTransaction')
+            cy.interceptSupabaseCall('unfollow_transaction')
+            .as('unfollowTransaction')
 
             cy.getDataCy('followButton')
             .shouldBeVisible()
             .should('have.text', 'UNFOLLOW ')
             .click()
 
+            cy.wait('@unfollowTransaction')
             cy.contains('Successful')
             .should('be.visible')
-
-            // cy.wait('@unfollowTransaction')
 
             cy.getDataCy('followButton')
             .shouldBeVisible()
