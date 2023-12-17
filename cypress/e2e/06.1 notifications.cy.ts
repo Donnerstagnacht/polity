@@ -185,14 +185,27 @@ Sizes.forEach((size: Size): void => {
 
             cy.signOut(followUser)
             cy.signIn(followingUser)
+
+            cy.interceptSupabaseCall('select_user')
+            .as('selectUser')
+            cy.interceptSupabaseCall('check_if_following')
+            .as('isFollowing')
+            cy.interceptSupabaseCall('select_following_counter')
+            .as('followingCounter')
+
             cy.searchUser(followUser.first_name as string)
             .click()
+
+            cy.wait(['@followingCounter', '@isFollowing', '@selectUser'])
+
+            cy.interceptSupabaseCall('unfollow_transaction').as('unfollow')
             cy.getDataCy('followButton')
             .shouldBeVisible()
             .should('have.text', 'UNFOLLOW ')
             .click()
+            cy.wait('@unfollow')
 
-            cy.contains('Successful')
+            cy.contains('Successful unfollowed')
             .should('be.visible')
         })
     })
