@@ -16,7 +16,7 @@ export class FollowingOfUserActionService {
     constructor(
         private readonly followingOfUserStoreService: FollowingOfUserStoreService,
         private readonly profileCountersStoreService: ProfileCountersStoreService,
-        private readonly profileService: ProfileActionService
+        private readonly profileActionService: ProfileActionService
     ) {
     }
 
@@ -28,7 +28,7 @@ export class FollowingOfUserActionService {
             )
             .throwOnError()
             if (followingResponse.data) {
-                const finalArray: FunctionTableReturn<'select_following_of_user'> = await this.profileService.transformImageNamesToUrls(followingResponse.data, 'profile_image')
+                const finalArray: FunctionTableReturn<'select_following_of_user'> = await this.profileActionService.transformImageNamesToUrls(followingResponse.data, 'profile_image')
                 this.followingOfUserStoreService.followingOfUser.setObjects(finalArray)
             }
         })

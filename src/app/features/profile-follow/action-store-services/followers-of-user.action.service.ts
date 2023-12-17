@@ -5,6 +5,7 @@ import {FollowersOfUserStoreService} from "./followers-of-user.store.service";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
 import {ProfileCountersStoreService} from "./profile-counters.store.service";
 import {supabaseClient} from "../../../auth/supabase-client";
+import {ProfileActionService} from "../../profile/action-store-services/profile.action.service";
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +15,8 @@ export class FollowersOfUserActionService {
 
     constructor(
         private followersOfUserStoreService: FollowersOfUserStoreService,
-        private profileCountersStoreService: ProfileCountersStoreService
+        private profileCountersStoreService: ProfileCountersStoreService,
+        private profileActionService: ProfileActionService
     ) {
     }
 
@@ -25,7 +27,8 @@ export class FollowersOfUserActionService {
             )
             .throwOnError()
             if (followerResponse.data) {
-                this.followersOfUserStoreService.followersOfUser.setObjects(followerResponse.data)
+                const finalArray: FunctionTableReturn<'select_follower_of_user'> = await this.profileActionService.transformImageNamesToUrls(followerResponse.data, 'profile_image')
+                this.followersOfUserStoreService.followersOfUser.setObjects(finalArray)
             }
         })
     }

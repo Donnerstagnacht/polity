@@ -14,6 +14,7 @@ import {
 } from "../../../../../supabase/types/supabase.shorthand-types";
 import {supabaseClient} from "../../../auth/supabase-client";
 import {SessionStoreService} from "../../../auth/services/session.store.service";
+import {ProfileActionService} from "../../profile/action-store-services/profile.action.service";
 
 @Injectable({
     providedIn: 'root'
@@ -24,7 +25,8 @@ export class NotificationsActionService {
 
     constructor(
         private readonly notificationStoreService: NotificationsStoreService,
-        private sessionStoreService: SessionStoreService
+        private sessionStoreService: SessionStoreService,
+        private profileActionService: ProfileActionService
     ) {
     }
 
@@ -34,7 +36,8 @@ export class NotificationsActionService {
             .rpc('select_notifications_of_users')
             .throwOnError()
             if (response.data) {
-                this.notificationStoreService.notifications.setObjects(response.data);
+                const finalArray: FunctionTableReturn<'select_notifications_of_users'> = await this.profileActionService.transformImageNamesToUrls(response.data, 'profile_image')
+                this.notificationStoreService.notifications.setObjects(finalArray);
             }
         })
     }

@@ -1,9 +1,7 @@
 import {Injectable} from '@angular/core';
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
-import {Profile} from "../../../../../cypress/fixtures/profile";
 import {ProfileStoreService} from "./profile.store.service";
 import {TuiFileLike} from "@taiga-ui/kit";
-import {SessionStoreService} from "../../../auth/services/session.store.service";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
 import {supabaseClient} from "../../../auth/supabase-client";
 import {FunctionSingleReturn} from "../../../../../supabase/types/supabase.shorthand-types";
@@ -15,8 +13,7 @@ export class ProfileActionService {
     private supabase: SupabaseClient<DatabaseOverwritten> = supabaseClient
 
     constructor(
-        private readonly profileStoreService: ProfileStoreService,
-        private readonly sessionStoreService: SessionStoreService
+        private readonly profileStoreService: ProfileStoreService
     ) {
     }
 
