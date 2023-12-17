@@ -71,14 +71,15 @@ Cypress.Commands.add(
         followUser: ProfileTest
     ) => {
 
-        cy.searchUser(followingUser.first_name as string)
-        .click()
 
         cy.interceptSupabaseCall('check_if_following')
         .as('isFollowing')
         cy.interceptSupabaseCall('select_following_counter')
         .as('followingCounter')
 
+        cy.searchUser(followingUser.first_name as string)
+        .click()
+        cy.wait(['@followingCounter', '@isFollowing'])
 
         cy.getDataCy('first-name')
         .shouldBeVisible()
@@ -86,7 +87,6 @@ Cypress.Commands.add(
 
         cy.interceptSupabaseCall('follow_transaction')
         .as('followTransaction')
-        // cy.wait(['@followingCounter', '@isFollowing'])
 
         cy.getDataCy('followButton')
         .shouldBeVisible()

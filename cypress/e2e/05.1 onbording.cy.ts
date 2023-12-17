@@ -20,10 +20,11 @@ Sizes.forEach((size: Size): void => {
             cy.viewport(size.width, size.height)
             cy.visit('landing/sign-in');
             cy.signIn(newUser);
-            cy.intercept('POST', 'https://abcwkgkiztruxwvfwabf.supabase.co/rest/v1/rpc/select_assistant')
+            cy.interceptSupabaseCall('select_assistant')
             .as('loadAssistant')
-
-            cy.wait(['@loadAssistant'])
+            cy.interceptSupabaseCall('select_user')
+            .as('loadUser')
+            cy.wait(['@loadAssistant', '@loadUser'])
         })
 
         it('see an assistant-welcome-dialog tutorial if they sign in the first time', (): void => {
@@ -72,9 +73,11 @@ Sizes.forEach((size: Size): void => {
             cy.getDataCy('step2closeAndSkipTutorial')
             .scrollIntoView()
 
+            cy.interceptSupabaseCall('update_last_tutorial').as('lastTutorial')
             cy.getDataCy('step2navigateToProfilePage')
             .scrollIntoView()
             .click()
+            cy.wait(['@lastTutorial'])
 
             cy.getDataCy('assistant-search-dialog')
             .shouldBeVisible()
@@ -94,10 +97,13 @@ Sizes.forEach((size: Size): void => {
             .scrollIntoView()
             // .shouldBeVisible() somehow it is overflown and cypress can not detect it even it is visible
 
+            cy.interceptSupabaseCall('update_skip_tutorial').as('skipTutorial')
+            cy.interceptSupabaseCall('update_last_tutorial').as('lastTutorial')
             cy.getDataCy('step3navigateToSearchPage')
             .scrollIntoView()
             // .shouldBeVisible() somehow it is overflown and cypress can not detect it even it is visible
             .click()
+            cy.wait(['@skipTutorial', '@lastTutorial'])
 
             cy.getDataCy('search-instruction')
             .shouldBeVisible()
@@ -122,10 +128,15 @@ Sizes.forEach((size: Size): void => {
             .contains('Zeige Tutorials')
 
             cy.interceptSupabaseCall('update_skip_tutorial').as('skipTutorial')
+            cy.interceptSupabaseCall('update_last_tutorial').as('lastTutorial')
+
             cy.getDataCy('toggle-assistant')
             .shouldBeVisible()
             .click()
-            cy.wait(['@skipTutorial'])
+            cy.wait(['@skipTutorial', '@lastTutorial'])
+
+            cy.contains('reactivate')
+            .should('be.visible')
 
             cy.getDataCy('assistant-profile-dialog')
             .shouldBeVisible()
@@ -142,9 +153,15 @@ Sizes.forEach((size: Size): void => {
             cy.getDataCy('step2navigateToProfilePage')
             .scrollIntoView()
 
+            cy.interceptSupabaseCall('update_skip_tutorial').as('skipTutorial')
+            cy.interceptSupabaseCall('update_last_tutorial').as('lastTutorial')
+
             cy.getDataCy('step2closeAndSkipTutorial')
             .scrollIntoView()
             .click()
+            cy.wait(['@skipTutorial', '@lastTutorial'])
+            cy.contains('You can reactivate')
+            .should('be.visible')
 
             cy.getDataCy('assistant-profile-dialog')
             .should('not.exist')
