@@ -43,22 +43,30 @@ export class ProfileImageUploadComponent {
         const fileExtension: string | undefined = file.name.split('.').pop()
         const filePath: string = `${Math.random()}.${fileExtension}`
 
+        console.log('before request')
         const response: Promise<TuiFileLike | null> = this.profileService.uploadImage(filePath, file)
         .then((response: { data: { path: string }, error: null } | { data: null, error: Error }) => {
             if (response.error) {
+                console.log('error', response.error)
                 throw Error
             } else {
-                const publicBucket: {
-                    data: { publicUrl: string }
-                } = this.profileService.getPublicBucket(response.data.path)
-                this.avatarUrl = publicBucket.data.publicUrl;
-                this.profileService.updateProfileImage(this.avatarUrl).then((): void => {
-                    //TODO double check
-                    const profile = {
-                        profile_image: this.avatarUrl
-                    } as FunctionSingleReturn<'select_user'>
-                    this.profileStoreService.profile.mutateObject(profile)
-                })
+                // const publicBucket: {
+                //     data: { publicUrl: string }
+                // } = this.profileService.getPublicBucket(response.data.path)
+                // console.log('public bucket', publicBucket)
+                // this.avatarUrl = publicBucket.data.publicUrl;
+                // console.log('public bucket', publicBucket)
+                this.profileService.getSignedImageUrl(response.data.path).then((privateUrl) => {
+                    console.log('fetched privateUrl', privateUrl)
+                    this.profileService.updateProfileImage(response.data.path).then((): void => {
+                        //TODO double check
+                        const profile = {
+                            // profile_image: this.avatarUrl
+                            profile_image: privateUrl
+                        } as FunctionSingleReturn<'select_user'>
+                        this.profileStoreService.profile.mutateObject(profile)
+                    })
+                });
             }
             return file;
         })
