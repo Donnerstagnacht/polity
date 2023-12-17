@@ -16,7 +16,7 @@ import {POSTGRES_ERRORS} from "../fixtures/postgres_errors";
  * https://postgrest.org/en/stable/references/errors.html
  **/
 
-describe(`Negative api tests for profile_counter table show that `, async () => {
+describe(`Negative api tests for the following feature show that `, async () => {
     let user_id: string | undefined;
     let token: string | undefined;
     const TEST_ID = '42e58ca1-2eb8-4651-93c2-cefba2e32f42';
