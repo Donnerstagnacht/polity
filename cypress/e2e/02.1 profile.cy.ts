@@ -9,6 +9,7 @@ Sizes.forEach((size: Size): void => {
 
         beforeEach((): void => {
             cy.viewport(size.width, size.height)
+            cy.visit('landing/sign-in');
             cy.signIn(seedWriteUser);
         })
 
@@ -23,14 +24,15 @@ Sizes.forEach((size: Size): void => {
             cy.getDataCy('edit-instruction')
             .shouldBeVisible()
 
-            cy.intercept('POST', 'https://abcwkgkiztruxwvfwabf.supabase.co/rest/v1/profiles').as('updateProfile')
+            //  cy.intercept('POST', 'https://abcwkgkiztruxwvfwabf.supabase.co/rest/v1/profiles').
+            cy.interceptSupabaseCall('update_user').as('updateProfile')
             cy.getDataCy('firstName').clear()
             cy.getDataCy('firstName').type(newFirstName)
             cy.getDataCy('lastName').clear()
             cy.getDataCy('lastName').type(newLastName)
             cy.getDataCy('update').click()
 
-            cy.contains('Successful Update')
+            cy.contains('Successful Updated')
             .should('be.visible')
             cy.wait('@updateProfile')
         })

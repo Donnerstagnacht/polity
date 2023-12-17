@@ -1,7 +1,7 @@
-DROP FUNCTION IF EXISTS hidden_functions.increment_notification_counter(
+DROP FUNCTION IF EXISTS authenticated_access.increment_notification_counter(
     user_id uuid
 );
-CREATE OR REPLACE FUNCTION hidden_functions.increment_notification_counter(
+CREATE OR REPLACE FUNCTION authenticated_access.increment_notification_counter(
     user_id uuid
 )
     RETURNS void
@@ -10,7 +10,7 @@ CREATE OR REPLACE FUNCTION hidden_functions.increment_notification_counter(
 AS
 $$
 BEGIN
-    UPDATE public.profiles_counters
+    UPDATE authenticated_access.profiles_counters
     SET
         unread_notifications_counter = unread_notifications_counter + 1
     WHERE

@@ -1,9 +1,7 @@
 DROP FUNCTION IF EXISTS public.update_first_sign_in(
-    user_id uuid,
     new_status boolean
 );
 CREATE OR REPLACE FUNCTION public.update_first_sign_in(
-    user_id uuid,
     new_status boolean
 )
     RETURNS void
@@ -11,11 +9,14 @@ CREATE OR REPLACE FUNCTION public.update_first_sign_in(
     SECURITY INVOKER
 AS
 $$
+DECLARE
+    authenticated_user uuid;
 BEGIN
-    UPDATE public.assistants
+    authenticated_user := auth.uid();
+    UPDATE authenticated_access.assistants
     SET
         first_sign_in = new_status
     WHERE
-        id = user_id;
+        id = authenticated_user;
 END
 $$;

@@ -1,9 +1,7 @@
 DROP FUNCTION IF EXISTS public.update_receive_notifications_from_follow(
-    user_id uuid,
     new_status boolean
 );
 CREATE OR REPLACE FUNCTION public.update_receive_notifications_from_follow(
-    user_id uuid,
     new_status boolean
 )
     RETURNS void
@@ -11,11 +9,14 @@ CREATE OR REPLACE FUNCTION public.update_receive_notifications_from_follow(
     SECURITY INVOKER
 AS
 $$
+DECLARE
+    authenticated_user uuid;
 BEGIN
-    UPDATE public.profiles
+    authenticated_user := auth.uid();
+    UPDATE authenticated_access.profiles
     SET
         receive_follow_notifications = new_status
     WHERE
-        id = user_id;
+        id = authenticated_user;
 END
 $$;

@@ -6,6 +6,7 @@ import {Profile} from "../../../../../cypress/fixtures/profile";
 import {CommonModule} from "@angular/common";
 import {ProfileActionService} from "../action-store-services/profile.action.service";
 import {ProfileStoreService} from "../action-store-services/profile.store.service";
+import {FunctionSingleReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 
 @Component({
     selector: 'polity-profile-image-upload',
@@ -55,7 +56,7 @@ export class ProfileImageUploadComponent {
                     //TODO double check
                     const profile = {
                         profile_image: this.avatarUrl
-                    } as Profile
+                    } as FunctionSingleReturn<'select_user'>
                     this.profileStoreService.profile.mutateObject(profile)
                 })
             }

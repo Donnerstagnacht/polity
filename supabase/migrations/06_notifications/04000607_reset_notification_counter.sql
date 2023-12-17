@@ -1,19 +1,18 @@
-DROP FUNCTION IF EXISTS public.reset_notification_counter(
-    user_id uuid
-);
-CREATE OR REPLACE FUNCTION public.reset_notification_counter(
-    user_id uuid
-)
+DROP FUNCTION IF EXISTS public.reset_notification_counter();
+CREATE OR REPLACE FUNCTION public.reset_notification_counter()
     RETURNS void
     LANGUAGE plpgsql
     SECURITY INVOKER
 AS
 $$
+DECLARE
+    authenticated_user uuid;
 BEGIN
-    UPDATE public.profiles_counters
+    authenticated_user = auth.uid();
+    UPDATE authenticated_access.profiles_counters
     SET
         unread_notifications_counter = 0
     WHERE
-        id = user_id;
+        id = authenticated_user;
 END
 $$;

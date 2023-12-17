@@ -6,10 +6,10 @@ CREATE OR REPLACE FUNCTION public.select_following_counter(
 )
     RETURNS table
             (
-                profile_id                   uuid,
-                follower_counter             bigint,
-                following_counter            bigint,
-                unread_notifications_counter bigint
+                profile_id        uuid,
+                follower_counter  bigint,
+                following_counter bigint
+                --unread_notifications_counter bigint
             )
     LANGUAGE plpgsql
     SECURITY INVOKER
@@ -17,9 +17,12 @@ AS
 $$
 BEGIN
     RETURN QUERY (
-        SELECT *
+        SELECT
+            authenticated_access.profiles_counters.id,
+            authenticated_access.profiles_counters.follower_counter,
+            authenticated_access.profiles_counters.following_counter
         FROM
-            public.profiles_counters
+            authenticated_access.profiles_counters
         WHERE
             id = user_id
     );

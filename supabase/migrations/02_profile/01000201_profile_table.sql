@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS profiles
+CREATE TABLE IF NOT EXISTS authenticated_access.profiles
 (
     id                           uuid REFERENCES auth.users NOT NULL PRIMARY KEY,
     updated_at                   timestamp WITH TIME ZONE,
@@ -15,16 +15,16 @@ CREATE TABLE IF NOT EXISTS profiles
         CONSTRAINT username_length CHECK (CHAR_LENGTH(username) >= 3)
 );
 
-CREATE INDEX profiles_fts ON profiles USING gin (fts); -- generate the index
+CREATE INDEX profiles_fts ON authenticated_access.profiles USING gin (fts); -- generate the index
 
-ALTER TABLE profiles
+ALTER TABLE authenticated_access.profiles
     ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Users can insert their own profile." ON profiles
+CREATE POLICY "Users can insert their own profile." ON authenticated_access.profiles
     FOR INSERT WITH CHECK (auth.uid() = id);
 
-CREATE POLICY "Public profiles are viewable by everyone." ON profiles
+CREATE POLICY "Public profiles are viewable by everyone." ON authenticated_access.profiles
     FOR SELECT USING (TRUE);
 
-CREATE POLICY "Users can update own profile." ON profiles
+CREATE POLICY "Users can update own profile." ON authenticated_access.profiles
     FOR UPDATE USING (auth.uid() = id);

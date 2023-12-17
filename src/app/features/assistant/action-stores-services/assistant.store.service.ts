@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
-import {Tables} from "../../../../../supabase/types/supabase.shorthand-types";
+import {FunctionSingleReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {ObjectStoreService} from "../../../signal-store/object-store.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class AssistantStoreService {
-    public assistant: ObjectStoreService<Tables<'assistants'>>
+    public assistant: ObjectStoreService<FunctionSingleReturn<'select_assistant'>>
 
     constructor() {
-        this.assistant = new ObjectStoreService<Tables<'assistants'>>();
+        this.assistant = new ObjectStoreService<FunctionSingleReturn<'select_assistant'>>();
     }
 }

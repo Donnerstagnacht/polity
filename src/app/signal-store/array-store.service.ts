@@ -68,6 +68,15 @@ export class ArrayStoreService<StoredObject> extends WrapperStoreService {
         }
     }
 
+    public pushObjectItem(object: StoredObject): void {
+        this.displayedObjects.update((array: StoredObject[]) => {
+            return [...array, object]
+        })
+        this.storedObjects.update((array: StoredObject[]) => {
+            return [...array, object]
+        })
+    }
+
     /**
      * Merges a given list of objects with the existing objects.
      *

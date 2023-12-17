@@ -2,7 +2,7 @@ import {Component, effect, Inject, Injector, signal, WritableSignal} from '@angu
 import {PolymorpheusComponent} from "@tinkoff/ng-polymorpheus";
 import {AssistantWelcomeDialogComponent} from "../assistant-welcome-dialog/assistant-welcome-dialog.component";
 import {TuiButtonModule, TuiDialogService} from "@taiga-ui/core";
-import {Tables} from "../../../../../supabase/types/supabase.shorthand-types";
+import {FunctionSingleReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {TuiActionModule, TuiMarkerIconModule} from "@taiga-ui/kit";
 import {CommonModule} from "@angular/common";
 import {Tutorial, TUTORIALS} from "../constants-stypes-interfaces/tutorial";
@@ -23,7 +23,7 @@ import {AssistantStoreService} from "../action-stores-services/assistant.store.s
 })
 export class AssistantIconComponent {
     protected isAssistantLoading: WritableSignal<boolean> = signal(true)
-    private assistant: WritableSignal<Tables<'assistants'> | null> = signal(null)
+    private assistant: WritableSignal<FunctionSingleReturn<'select_assistant'> | null> = signal(null)
     private tutorials: Tutorial[] = TUTORIALS
     protected activatedTutorial: Tutorial = this.tutorials[0]
 

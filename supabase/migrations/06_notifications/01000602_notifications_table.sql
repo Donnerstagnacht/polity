@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS public.notifications_by_user
+CREATE TABLE IF NOT EXISTS authenticated_access.notifications_by_user
 (
     id                   uuid                     NOT NULL DEFAULT uuid_generate_v4(),
     sender               uuid                     NOT NULL,
@@ -11,12 +11,14 @@ CREATE TABLE IF NOT EXISTS public.notifications_by_user
     CONSTRAINT notifications_by_user_receiver_fkey FOREIGN KEY (receiver) REFERENCES auth.users (id) MATCH SIMPLE
 );
 
-ALTER TABLE notifications_by_user
+ALTER PUBLICATION supabase_realtime ADD TABLE authenticated_access.notifications_by_user;
+
+ALTER TABLE authenticated_access.notifications_by_user
     ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Public notifications_by_user can be created by by everyone." ON notifications_by_user
+CREATE POLICY "Public notifications_by_user can be created by by everyone." ON authenticated_access.notifications_by_user
     FOR INSERT WITH CHECK (TRUE);
 
-CREATE POLICY "Public notifications_by_user can be read by their receiver." ON notifications_by_user
+CREATE POLICY "Public notifications_by_user can be read by their receiver." ON authenticated_access.notifications_by_user
     FOR SELECT USING (auth.uid() = receiver);
 

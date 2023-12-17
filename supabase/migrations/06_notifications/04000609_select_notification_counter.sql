@@ -1,9 +1,5 @@
-DROP FUNCTION IF EXISTS public.select_unread_notifications_counter(
-    user_id uuid
-);
-CREATE OR REPLACE FUNCTION public.select_unread_notifications_counter(
-    user_id uuid
-)
+DROP FUNCTION IF EXISTS public.select_unread_notifications_counter();
+CREATE OR REPLACE FUNCTION public.select_unread_notifications_counter()
     RETURNS table
             (
                 profile_id                   uuid,
@@ -13,15 +9,18 @@ CREATE OR REPLACE FUNCTION public.select_unread_notifications_counter(
     SECURITY INVOKER
 AS
 $$
+DECLARE
+    authenticated_user uuid;
 BEGIN
+    authenticated_user := auth.uid();
     RETURN QUERY (
         SELECT
-            public.profiles_counters.id AS profile_id,
-            public.profiles_counters.unread_notifications_counter
+            authenticated_access.profiles_counters.id AS profile_id,
+            authenticated_access.profiles_counters.unread_notifications_counter
         FROM
-            public.profiles_counters
+            authenticated_access.profiles_counters
         WHERE
-            id = user_id
+            id = authenticated_user
     );
 END
 $$;

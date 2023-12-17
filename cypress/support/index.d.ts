@@ -1,4 +1,5 @@
 import {ProfileTest} from "../fixtures/profile";
+import {FunctionName} from "../../supabase/types/supabase.shorthand-types";
 
 
 declare global {
@@ -10,6 +11,13 @@ declare global {
              *@param {string} value - The value of a second data-cy attribute
              */
             getDataCy(value: string, value2?: string): Chainable<Element>
+
+            /**
+             * Custom command to select one or two DOM element by a data-cy attribute.
+             *@param {string} value - The value of the data-cy attribute
+             *@param {string} value - The value of a second data-cy attribute
+             */
+            interceptSupabaseCall(endPoint: FunctionName): Chainable<Element>
 
             /**
              * Custom command to test if selected element is visible.

@@ -1,6 +1,6 @@
 import {Component, signal, Signal, WritableSignal} from '@angular/core';
 import {Profile} from "../../../../../cypress/fixtures/profile";
-import {PlainFunctions} from "../../../../../supabase/types/supabase.shorthand-types";
+import {FunctionSingleReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {WikiHeadlineComponent} from "../../../ui/polity-wiki/wiki-headline/wiki-headline.component";
 import {CounterComponent} from "../../../ui/polity-wiki/counter/counter.component";
 import {FollowButton} from "../../../ui/polity-wiki/follow-button/follow-button.component";
@@ -26,7 +26,7 @@ export class ProfileWikiComponent {
     protected isProfileCounterLoading: WritableSignal<boolean> = signal(true);
     protected isFollowingCheckLoading: WritableSignal<boolean> = signal(true);
     protected profile: Signal<Profile | null>;
-    protected profileCounter: WritableSignal<PlainFunctions<'select_following_counter'> | null> = signal(null);
+    protected profileCounter: WritableSignal<FunctionSingleReturn<'select_following_counter'> | null> = signal(null);
     protected isOwner: WritableSignal<boolean>;
     protected isFollowing: WritableSignal<boolean>;
 

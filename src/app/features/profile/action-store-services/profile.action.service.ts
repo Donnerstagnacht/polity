@@ -6,6 +6,7 @@ import {TuiFileLike} from "@taiga-ui/kit";
 import {SessionStoreService} from "../../../auth/services/session.store.service";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
 import {supabaseClient} from "../../../auth/supabase-client";
+import {FunctionSingleReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 
 @Injectable({
     providedIn: 'root'
@@ -27,12 +28,10 @@ export class ProfileActionService {
      */
     public async selectProfile(id: string): Promise<void> {
         await this.profileStoreService.profile.wrapSelectFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<Profile> = await this.supabase
-            .from('profiles')
-            .select(`id, username, first_name, last_name, profile_image`)
-            .eq('id', id)
+            const response: PostgrestSingleResponse<FunctionSingleReturn<'select_user'>> = await this.supabase
+            .rpc('select_user', {user_id: id})
             .single()
-            .throwOnError();
+            .throwOnError()
             if (response.data) {
                 this.profileStoreService.profile.setObject(response.data);
             }
@@ -45,24 +44,19 @@ export class ProfileActionService {
      * @param {Profile} profile - The profile object containing the updated information.
      * @return {Promise<void>}
      */
-    public async updateProfile(profile: Profile): Promise<void> {
-        const sessionId: string | null = this.sessionStoreService.getSessionId();
-
-        // do not await this or preview/display on same page will not work
-        this.profileStoreService.profile.wrapUpdateFunction(async (): Promise<void> => {
-            if (sessionId) {
-                const update: Profile = {
-                    ...profile,
-                    updated_at: new Date(),
-                    id: sessionId
-                }
-                const databaseResponse: PostgrestSingleResponse<null> = await this.supabase.from('profiles').upsert(update)
-                if (databaseResponse.error) throw databaseResponse.error
-                this.profileStoreService.profile.mutateObject(profile)
-            } else {
-                throw new Error('no session')
-            }
-        })
+    public async updateProfile(profile: FunctionSingleReturn<'select_user'>): Promise<void> {
+        await this.profileStoreService.profile.wrapUpdateFunction(async (): Promise<void> => {
+            const response: PostgrestSingleResponse<FunctionSingleReturn<'update_user'>> = await this.supabase
+            .rpc('update_user', {
+                first_name_in: profile.first_name as string,
+                last_name_in: profile.last_name as string,
+                profile_image_in: profile.profile_image as string
+            })
+            .single()
+            .throwOnError()
+            if (response.error) throw response.error
+            this.profileStoreService.profile.mutateObject(profile)
+        }, true, 'Successful Updated your profile!')
     }
 
     /**
@@ -72,13 +66,15 @@ export class ProfileActionService {
      * @return {Promise<void>}
      */
     async updateProfileImage(imageUrl: string): Promise<void> {
-        const id = this.profileStoreService.profile.getValueByKey('id')
         await this.profileStoreService.profile.wrapUpdateFunction(async (): Promise<void> => {
-            await this.supabase
-            .from('profiles')
-            .update({profile_image: imageUrl})
-            .eq('id', id as string);
-        })
+            const response: PostgrestSingleResponse<FunctionSingleReturn<'update_user'>> = await this.supabase
+            .rpc('update_user', {
+                profile_image_in: imageUrl
+            })
+            .single()
+            .throwOnError()
+            if (response.error) throw response.error
+        }, true, 'Successful Updated your profile image!')
     }
 
     /**

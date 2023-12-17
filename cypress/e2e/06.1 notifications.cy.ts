@@ -6,10 +6,11 @@ const followingUser: ProfileTest = seedProfileFollowingUser;
 const followUser: ProfileTest = seedProfileFollowUser
 
 Sizes.forEach((size: Size): void => {
-    describe(`App navigation tests with screen size {${size.width} show that users can `, () => {
+    describe(`Notification tests with screen size { {${size.width} show that users can `, () => {
 
         beforeEach((): void => {
             // cy.viewport(size.width, size.height)
+            cy.visit('landing/sign-in');
             cy.signIn(followingUser);
         })
         const today = new Date();
@@ -31,7 +32,7 @@ Sizes.forEach((size: Size): void => {
         })
 
         it('receives notification once someone follows a user and notification resets if viewed.', (): void => {
-            cy.intercept('POST', 'https://abcwkgkiztruxwvfwabf.supabase.co/rest/v1/rpc/select_notifications_of_users').as('loadNotifications')
+            cy.interceptSupabaseCall('select_notifications_of_users').as('loadNotifications')
 
             cy.getDataCy('nav-office', 'nav-office-desktop')
             .shouldBeVisible()
@@ -69,7 +70,7 @@ Sizes.forEach((size: Size): void => {
 
         })
         //
-        it('can filter notifications for follow type', (): void => {
+        it('filter notifications for follow type', (): void => {
             cy.getDataCy('nav-office', 'nav-office-desktop')
             .shouldBeVisible()
             .first()
@@ -83,7 +84,7 @@ Sizes.forEach((size: Size): void => {
             .shouldBeVisible()
         })
 
-        it('can filter notifications for strings', (): void => {
+        it('filter notifications for strings', (): void => {
             cy.getDataCy('nav-office', 'nav-office-desktop')
             .shouldBeVisible()
             .first()
@@ -98,7 +99,7 @@ Sizes.forEach((size: Size): void => {
             .contains(followUser.first_name as string)
         })
 
-        it('can filter notifications for dates', (): void => {
+        it('filter notifications for dates', (): void => {
             cy.getDataCy('nav-office', 'nav-office-desktop')
             .shouldBeVisible()
             .first()
@@ -115,5 +116,97 @@ Sizes.forEach((size: Size): void => {
             .contains(checkString)
         })
 
+        it('will not receive messages from following if the user disables it.', (): void => {
+            cy.signOut(followingUser);
+            cy.signIn(followUser);
+
+            cy.navigateToHome()
+            cy.getDataCy('home-to-profile')
+            .shouldBeVisible()
+            .click()
+
+            cy.getDataCy('nav-profile-edit', 'nav-profile-edit-desktop')
+            .filter(':visible')
+            .first()
+            .click()
+
+            cy.getDataCy('toggle-notifications-headline')
+            .shouldBeVisible()
+            .contains('Erhalte Nachrichten')
+
+            cy.interceptSupabaseCall('update_receive_notifications_from_follow')
+            .as('updateNotifications')
+
+            cy.getDataCy('toggle-notifications-from-user')
+            .shouldBeVisible()
+            .click()
+            cy.wait('@updateNotifications')
+
+            cy.signOut(followUser);
+            cy.signIn(followingUser)
+            cy.followUser(followUser, followingUser)
+
+            cy.signOut(followingUser);
+            cy.signIn(followUser)
+
+            cy.getDataCy('nav-office', 'nav-office-desktop')
+            .shouldBeVisible()
+            .first()
+            .click({force: true})
+            cy.getDataCy('notifications-headline')
+            .shouldBeVisible()
+
+            cy.getDataCy('first_name')
+            .should('not.exist')
+
+            cy.navigateToHome()
+            cy.getDataCy('home-to-profile')
+            .shouldBeVisible()
+            .click()
+
+            // reverse changes from here onward (implicite cleanup)
+
+            cy.getDataCy('nav-profile-edit', 'nav-profile-edit-desktop')
+            .filter(':visible')
+            .first()
+            .click()
+
+            cy.getDataCy('toggle-notifications-headline')
+            .shouldBeVisible()
+            .contains('Erhalte Nachrichten')
+
+            cy.interceptSupabaseCall('update_receive_notifications_from_follow')
+            .as('updateNotifications')
+
+            cy.getDataCy('toggle-notifications-from-user')
+            .shouldBeVisible()
+            .click()
+            cy.wait('@updateNotifications')
+
+            cy.signOut(followUser)
+            cy.signIn(followingUser)
+
+            cy.interceptSupabaseCall('select_user')
+            .as('selectUser')
+            cy.interceptSupabaseCall('check_if_following')
+            .as('isFollowing')
+            cy.interceptSupabaseCall('select_following_counter')
+            .as('followingCounter')
+
+            cy.searchUser(followUser.first_name as string)
+            .click()
+
+            cy.wait(['@followingCounter', '@isFollowing', '@selectUser'])
+
+            cy.interceptSupabaseCall('unfollow_transaction').as('unfollow')
+            cy.getDataCy('followButton')
+            .shouldBeVisible()
+            .should('have.text', 'UNFOLLOW ')
+            .click()
+            cy.wait('@unfollow')
+
+            cy.contains('Successful unfollowed')
+            .should('be.visible')
+        })
     })
 });

@@ -1,6 +1,6 @@
-import {Component, signal, WritableSignal} from '@angular/core';
+import {Component, effect, signal, WritableSignal} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {Functions} from "../../../../../supabase/types/supabase.shorthand-types";
+import {FunctionTableReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {TuiDay} from "@taiga-ui/cdk";
 import {IInfiniteScrollEvent, InfiniteScrollModule} from "ngx-infinite-scroll";
 import {CommonModule} from "@angular/common";
@@ -38,7 +38,7 @@ export class NotificationComponent {
     protected throttle: number = 300;
     protected scrollDistance: number = 1;
     protected scrollUpDistance: number = 2;
-    protected notifications: WritableSignal<Functions<'select_notifications_of_users'>> = signal([]);
+    protected notifications: WritableSignal<FunctionTableReturn<'select_notifications_of_users'>> = signal([]);
     protected isNotificationsLoading: WritableSignal<boolean> = signal(true);
     protected showFilter: boolean = true;
     protected readonly filterTypes: filterTag[] = Filter_TYPES;
@@ -65,11 +65,21 @@ export class NotificationComponent {
             () => this.onCombinedFormChange()
         )
         this.notificationsService.resetNotificationCounter()
+
+        effect(() => {
+            console.log('data', this.notifications())
+        })
     }
 
     async ngOnInit(): Promise<void> {
-        await this.notificationsService.selectNotifications()
+        this.notificationsService.selectNotifications()
         this.notifications = this.notificationStoreService.notifications.getObjects();
+        this.notificationsService.subscribeToRealtimeNotifications()
+    }
+
+    async ngOnDestroy(): Promise<void> {
+        await this.notificationsService.unsubscribeToRealtimeNotifications()
+        console.log('called')
     }
 
     protected onScrollDown(event: IInfiniteScrollEvent): void {

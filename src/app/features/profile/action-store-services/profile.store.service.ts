@@ -1,6 +1,6 @@
 import {Injectable, signal, WritableSignal} from '@angular/core';
-import {Profile} from "../../../../../cypress/fixtures/profile";
 import {ObjectStoreService} from "../../../signal-store/object-store.service";
+import {FunctionSingleReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 
 export type profileUiFlags = {
     isOwner: WritableSignal<boolean>,
@@ -12,7 +12,7 @@ export type profileUiFlags = {
     providedIn: 'root'
 })
 export class ProfileStoreService {
-    public profile: ObjectStoreService<Profile>;
+    public profile: ObjectStoreService<FunctionSingleReturn<'select_user'>>;
     private uiFlags: profileUiFlags = {
         isOwner: signal(false),
         isFollowing: signal(false),
@@ -20,6 +20,6 @@ export class ProfileStoreService {
     }
 
     constructor() {
-        this.profile = new ObjectStoreService<Profile>(this.uiFlags);
+        this.profile = new ObjectStoreService<FunctionSingleReturn<'select_user'>>(this.uiFlags);
     }
 }

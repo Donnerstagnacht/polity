@@ -1,25 +1,26 @@
 -- 1. Increment Following counter
 DROP FUNCTION IF EXISTS public.check_if_following(
-	follower_id uuid,
-	following_id uuid
+    following_id uuid
 );
 CREATE OR REPLACE FUNCTION public.check_if_following(
-	follower_id uuid,
-	following_id uuid
+    following_id uuid
 )
-	RETURNS boolean
-	LANGUAGE plpgsql
-	SECURITY INVOKER
+    RETURNS boolean
+    LANGUAGE plpgsql
+    SECURITY INVOKER
 AS
 $$
+DECLARE
+    auth_user_id uuid;
 BEGIN
-	RETURN EXISTS (
-		SELECT *
-		FROM
-			public.following_profiles
-		WHERE
-			  follower = follower_id
-		  AND following = following_id
-	);
+    auth_user_id = auth.uid();
+    RETURN EXISTS (
+        SELECT *
+        FROM
+            authenticated_access.following_profiles
+        WHERE
+              follower = auth_user_id
+          AND following = following_id
+    );
 END
 $$;

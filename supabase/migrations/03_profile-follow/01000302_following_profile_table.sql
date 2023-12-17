@@ -1,26 +1,41 @@
-CREATE TABLE IF NOT EXISTS public.following_profiles
+CREATE TABLE IF NOT EXISTS authenticated_access.following_profiles
 (
-	follower  uuid NOT NULL,
-	following uuid NOT NULL,
-	CONSTRAINT following_profiles_pkey PRIMARY KEY (follower, following),
-	CONSTRAINT following_profiles_follower_fkey FOREIGN KEY (follower)
-		REFERENCES public.profiles (id) MATCH SIMPLE
-		ON UPDATE NO ACTION
-		ON DELETE NO ACTION,
-	CONSTRAINT following_profiles_following_fkey FOREIGN KEY (following)
-		REFERENCES public.profiles (id) MATCH SIMPLE
-		ON UPDATE NO ACTION
-		ON DELETE NO ACTION
+    follower  uuid NOT NULL,
+    following uuid NOT NULL,
+    CONSTRAINT following_profiles_pkey PRIMARY KEY (follower, following),
+    CONSTRAINT following_profiles_follower_fkey FOREIGN KEY (follower)
+        REFERENCES authenticated_access.profiles (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT following_profiles_following_fkey FOREIGN KEY (following)
+        REFERENCES authenticated_access.profiles (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 );
 
-ALTER TABLE following_profiles
-	ENABLE ROW LEVEL SECURITY;
+ALTER TABLE authenticated_access.following_profiles
+    ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Public following_profiles can be followed by by everyone." ON following_profiles
-	FOR INSERT WITH CHECK (TRUE);
+DROP POLICY IF EXISTS "Public following_profiles can be followed by by everyone."
+    ON authenticated_access.following_profiles;
+CREATE POLICY "Public following_profiles can be followed by by everyone."
+    ON authenticated_access.following_profiles
+    FOR INSERT
+    TO authenticated
+    WITH CHECK (TRUE);
 
-CREATE POLICY "Public following_profiles are viewable by everyone." ON following_profiles
-	FOR SELECT USING (TRUE);
+DROP POLICY IF EXISTS "Public following_profiles are viewable by everyone."
+    ON authenticated_access.following_profiles;
+CREATE POLICY "Public following_profiles are viewable by everyone."
+    ON authenticated_access.following_profiles
+    FOR SELECT
+    TO authenticated
+    USING (TRUE);
 
-CREATE POLICY "Public following_profiles can be updated by by everyone." ON following_profiles
-	FOR UPDATE USING (TRUE);
+DROP POLICY IF EXISTS "Public following_profiles can be deleted by by everyone."
+    ON authenticated_access.following_profiles;
+CREATE POLICY "Public following_profiles can be deleted by by everyone."
+    ON authenticated_access.following_profiles
+    FOR DELETE
+    TO authenticated
+    USING (TRUE);

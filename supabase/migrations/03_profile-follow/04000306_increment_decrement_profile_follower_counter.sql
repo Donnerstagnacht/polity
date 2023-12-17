@@ -1,7 +1,7 @@
-DROP FUNCTION IF EXISTS hidden_functions.increment_follower_counter(
+DROP FUNCTION IF EXISTS authenticated_access.increment_follower_counter(
     user_id uuid
 );
-CREATE OR REPLACE FUNCTION hidden_functions.increment_follower_counter(
+CREATE OR REPLACE FUNCTION authenticated_access.increment_follower_counter(
     user_id uuid
 )
     RETURNS void
@@ -10,26 +10,31 @@ CREATE OR REPLACE FUNCTION hidden_functions.increment_follower_counter(
 AS
 $$
 BEGIN
-    UPDATE public.profiles_counters
+    PERFORM SET_CONFIG('app.current_function', 'increment_follower_counter', TRUE);
+    UPDATE authenticated_access.profiles_counters
     SET
         follower_counter = follower_counter + 1
     WHERE
         id = user_id;
+    PERFORM SET_CONFIG('app.current_function', NULL, TRUE);
+
 END
 $$;
 
-DROP FUNCTION IF EXISTS hidden_functions.decrement_follower_counter(user_id uuid);
-CREATE OR REPLACE FUNCTION hidden_functions.decrement_follower_counter(user_id uuid)
+DROP FUNCTION IF EXISTS authenticated_access.decrement_follower_counter(user_id uuid);
+CREATE OR REPLACE FUNCTION authenticated_access.decrement_follower_counter(user_id uuid)
     RETURNS void
     LANGUAGE plpgsql
     SECURITY INVOKER
 AS
 $$
 BEGIN
-    UPDATE public.profiles_counters
+    PERFORM SET_CONFIG('app.current_function', 'decrement_follower_counter', TRUE);
+    UPDATE authenticated_access.profiles_counters
     SET
         follower_counter = follower_counter - 1
     WHERE
         id = user_id;
+    PERFORM SET_CONFIG('app.current_function', NULL, TRUE);
 END;
 $$;

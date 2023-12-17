@@ -28,6 +28,7 @@ Sizes.forEach((size: Size): void => {
         })
 
         it('sign in.', (): void => {
+            cy.visit('landing/sign-in');
             cy.signIn(newUser);
             cy.url().should('contain', 'profile')
         })
@@ -40,6 +41,7 @@ Sizes.forEach((size: Size): void => {
         // })
 
         it('sign out.', (): void => {
+            cy.visit('landing/sign-in');
             cy.signIn(newUser);
             cy.signOut(newUser)
         })

@@ -10,6 +10,7 @@ Sizes.forEach((size: Size): void => {
 
         beforeEach((): void => {
             cy.viewport(size.width, size.height)
+            cy.visit('landing/sign-in');
             cy.signIn(loggedInUser);
         })
 

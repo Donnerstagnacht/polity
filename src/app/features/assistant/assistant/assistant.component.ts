@@ -3,7 +3,7 @@ import {TuiDialogService} from "@taiga-ui/core";
 import {AssistantWelcomeDialogComponent} from "../assistant-welcome-dialog/assistant-welcome-dialog.component";
 import {PolymorpheusComponent} from "@tinkoff/ng-polymorpheus";
 import {SessionStoreService} from "../../../auth/services/session.store.service";
-import {Tables} from "../../../../../supabase/types/supabase.shorthand-types";
+import {FunctionSingleReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {AssistantIconComponent} from "../assistant-icon/assistant-icon.component";
 import {CommonModule} from "@angular/common";
 import {AssistantActionService} from "../action-stores-services/assistant.action.service";
@@ -20,9 +20,9 @@ import {AssistantStoreService} from "../action-stores-services/assistant.store.s
     ]
 })
 export class AssistantComponent {
-    protected assistant: WritableSignal<Tables<'assistants'> | null> = signal({
+    protected assistant: WritableSignal<FunctionSingleReturn<'select_assistant'> | null> = signal({
         skip_tutorial: true,
-    }) as WritableSignal<Tables<'assistants'> | null>;
+    }) as WritableSignal<FunctionSingleReturn<'select_assistant'> | null>;
 
     constructor(
         @Inject(TuiDialogService) private readonly dialogs: TuiDialogService,
@@ -34,8 +34,7 @@ export class AssistantComponent {
     }
 
     async ngOnInit(): Promise<void> {
-        const sessionId: string | null = this.sessionStoreService.getSessionId();
-        await this.assistantService.selectAssistant(sessionId as string);
+        await this.assistantService.selectAssistant();
         this.assistant = this.assistantStoreService.assistant.getObject()
         console.log('assistant', this.assistant());
 

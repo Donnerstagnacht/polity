@@ -13,6 +13,8 @@
 // -- This is a parent command --
 
 import {ProfileTest} from "../fixtures/profile";
+import {FunctionName} from "../../supabase/types/supabase.shorthand-types";
+import {API_URL} from "../fixtures/api_url";
 import Chainable = Cypress.Chainable;
 
 /**
@@ -24,6 +26,11 @@ Cypress.Commands.add('getDataCy', (value: string, value2?: string): void => {
     cy.get(`[data-cy=${value}], [data-cy=${value2}]`)
 });
 
+Cypress.Commands.add('interceptSupabaseCall', (endPoint: FunctionName): void => {
+    const apiUrl = API_URL
+    cy.intercept('POST', apiUrl + endPoint)
+});
+
 Cypress.Commands.add('shouldBeVisible', {prevSubject: 'element'}, (subject) => {
     cy.wrap(subject).should('be.visible');
 });
@@ -33,7 +40,6 @@ Cypress.Commands.add('andContain', {prevSubject: 'element'}, (subject, value) =>
 });
 
 Cypress.Commands.add('signIn', (profile: ProfileTest) => {
-    cy.visit('landing/sign-in');
     cy.get('input').clear()
     cy.get('[data-cy="email"]').type(profile.email)
     cy.get('[data-cy="password"]').clear()
@@ -65,39 +71,37 @@ Cypress.Commands.add(
         followUser: ProfileTest
     ) => {
 
-        cy.searchUser(followingUser.first_name as string)
-        .click()
-        // cy.pause()
-
-        cy.intercept('POST', 'https://abcwkgkiztruxwvfwabf.supabase.co/rest/v1/rpc/check_if_following')
+        cy.interceptSupabaseCall('select_user')
+        .as('selectUser')
+        cy.interceptSupabaseCall('check_if_following')
         .as('isFollowing')
-        cy.intercept('POST',
-            'https://abcwkgkiztruxwvfwabf.supabase.co/rest/v1/rpc/select_following_counter')
+        cy.interceptSupabaseCall('select_following_counter')
         .as('followingCounter')
 
+        cy.searchUser(followingUser.first_name as string)
+        .click()
+        cy.wait(['@followingCounter', '@isFollowing', '@selectUser'])
 
         cy.getDataCy('first-name')
         .shouldBeVisible()
         .contains(followingUser.first_name as string)
 
-        cy.intercept('POST',
-            'https://abcwkgkiztruxwvfwabf.supabase.co/rest/v1/rpc/follow_transaction')
+        cy.interceptSupabaseCall('follow_transaction')
         .as('followTransaction')
-        // cy.wait(['@followingCounter', '@isFollowing'])
 
         cy.getDataCy('followButton')
         .shouldBeVisible()
-        .should('have.text', 'FOLLOW')
+        .should('have.text', 'FOLLOW ')
         .click()
 
-        cy.contains('Successful Update')
+        cy.wait('@followTransaction')
+        cy.contains('Successful followed')
         .should('be.visible')
 
-        // cy.wait('@followTransaction')
 
         cy.getDataCy('followButton')
         .shouldBeVisible()
-        .should('have.text', 'UNFOLLOW')
+        .should('have.text', 'UNFOLLOW ')
 
         cy.getDataCy('followerCounter')
         .shouldBeVisible()
