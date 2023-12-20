@@ -30,13 +30,14 @@
                         "tsConfig": "tsconfig.app.json",
                         "inlineStyleLanguage": "less",
                         "assets": [
-                            "src/favicon.ico",
-                            "src/assets",
-                            {
-                                "glob": "**/*",
-                                "input": "node_modules/@taiga-ui/icons/src",
-                                "output": "assets/taiga-ui/icons"
-                            }
+                          "src/favicon.ico",
+                          "src/assets",
+                          {
+                            "glob": "**/*",
+                            "input": "node_modules/@taiga-ui/icons/src",
+                            "output": "assets/taiga-ui/icons"
+                          },
+                          "src/manifest.webmanifest"
                         ],
                         "styles": [
                             "node_modules/@taiga-ui/core/styles/taiga-ui-theme.less",
@@ -44,7 +45,9 @@
                             "node_modules/@taiga-ui/styles/taiga-ui-global.less",
                             "src/styles.less"
                         ],
-                        "scripts": []
+                        "scripts": [],
+                        "serviceWorker": true,
+                        "ngswConfigPath": "ngsw-config.json"
                     },
                     "configurations": {
                         "production": {
@@ -101,8 +104,9 @@
                         "tsConfig": "tsconfig.spec.json",
                         "inlineStyleLanguage": "less",
                         "assets": [
-                            "src/favicon.ico",
-                            "src/assets"
+                          "src/favicon.ico",
+                          "src/assets",
+                          "src/manifest.webmanifest"
                         ],
                         "styles": [
                             "src/styles.less"
