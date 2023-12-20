@@ -161,6 +161,15 @@ export interface Database {
         }
         Returns: undefined
       }
+      upsert_push_subscription: {
+        Args: {
+          endpoint: string
+          expirationtime: string
+          auth: string
+          p256dh: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       notifications_enum: "follow_from_user"
