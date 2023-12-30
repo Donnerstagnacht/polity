@@ -9,11 +9,11 @@ import * as webPush from "https://dev.jspm.io/web-push"
 // import { FunctionTableReturn } from '../../types/supabase.shorthand-types.ts'
 
 type PushsSubscription = {
-  id: string,
-  endpoint: string,
-  expirationtime: string| null,
-  auth: string,
-  p256dh: string
+    id: string,
+    endpoint: string,
+    expirationtime: string | null,
+    auth: string,
+    p256dh: string
 }[]
 
 console.log("Hello from Functions! v2.1")
@@ -21,6 +21,7 @@ console.log("Hello from Functions! v2.1")
 // TODO: THIS FUNCTION DOES NOT WORK
 // I THINK WEB-PUSH LIBRARY IS NOT SUPPORTED IN DENO
 // CHANGE LIBRARY; MAKE LIBRARY WORK OR SWITCH TO SUPABASE ONE SIGNAL OR EXPO
+// ALSO Create webhook in sql or set it up via supabase GUI
 Deno.serve(async (req) => {
     try {
         const supabase = createClient(
@@ -42,8 +43,8 @@ Deno.serve(async (req) => {
         console.log('data from database', pushSubscriptions)
 
         const vapidKeys = {
-          publicKey: 'BL8N69j1Xo5NCPPFqkuf7VQqPTkSLi5D34bV7HTe079sffnQi_6B44o9oCCud9Y4TTye64ZV2XgPyoE91ta7OHs',
-          privateKey: '<The private Key>',
+            publicKey: 'BL8N69j1Xo5NCPPFqkuf7VQqPTkSLi5D34bV7HTe079sffnQi_6B44o9oCCud9Y4TTye64ZV2XgPyoE91ta7OHs',
+            privateKey: '<The private Key>',
         }
 
         console.log('vapidKeys.publicKey', vapidKeys.privateKey)
@@ -55,23 +56,23 @@ Deno.serve(async (req) => {
         webpush.setGCMAPIKey('<The GCM API Key>'); // TODO: THIS LINE times out the function, webpush seems to not exist
         console.log('before setVapidDetails')
         webpush.setVapidDetails(
-          'mailto:example@yourdomain.org',
-          vapidKeys.publicKey,
-          vapidKeys.privateKey
+            'mailto:example@yourdomain.org',
+            vapidKeys.publicKey,
+            vapidKeys.privateKey
         );
 
         pushSubscriptions.forEach(pushSubscription => {
-          console.log('response data', pushSubscription)
-          // This is the same output of calling JSON.stringify on a PushSubscription
-          const pushSubscription2 = {
-            endpoint: pushSubscription.endpoint,
-            keys: {
-              auth: pushSubscription.auth,
-              p256dh: pushSubscription.p256dh
-            }
-          };
-          console.log('before send pushNotification')
-          webpush.sendNotification(pushSubscription2, 'Your Push Payload Text');
+            console.log('response data', pushSubscription)
+            // This is the same output of calling JSON.stringify on a PushSubscription
+            const pushSubscription2 = {
+                endpoint: pushSubscription.endpoint,
+                keys: {
+                    auth: pushSubscription.auth,
+                    p256dh: pushSubscription.p256dh
+                }
+            };
+            console.log('before send pushNotification')
+            webpush.sendNotification(pushSubscription2, 'Your Push Payload Text');
         })
 
         console.log('response error', response.error)
