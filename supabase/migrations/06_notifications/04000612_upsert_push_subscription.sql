@@ -19,7 +19,9 @@ DECLARE
     authenticated_user uuid;
 BEGIN
     authenticated_user := auth.uid();
-
+    -- TODO: is this gonna work? I think I have to create a composite key from id and endpoint because a user can
+    --  subscribe in multiple browsers. How is the endpont string looking from different brwosers? Probably a
+    --  composite key or a simple new row for each subscription?
     INSERT INTO
         authenticated_access.push_subscriptions (id,
                                                  endpoint,

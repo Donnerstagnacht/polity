@@ -1,5 +1,5 @@
 import {DatabaseOverwritten} from "./supabase.modified";
-import {PostgrestError} from "@supabase/supabase-js";
+// import {PostgrestError} from "@supabase/supabase-js";
 
 /**
  * The Generated Database return types are of type array if the postgres database function returns a table.
@@ -59,7 +59,7 @@ export type DbResultOk<T> = T extends PromiseLike<{ data: infer U }> ? Exclude<U
 /**
  * Abstract type that represents the returned postgres of a unsuccessful supabase-js call
  */
-export type DbResultErr = PostgrestError
+// export type DbResultErr = PostgrestError
 
 /**
  * Type that represents the definition of a postgres table in the database as typescript object.
