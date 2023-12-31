@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1704020747552,
+  "timestamp": 1704021955881,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -2506,7 +2506,7 @@
     "/assets/taiga-ui/icons/tuiIconZoomOutLarge.svg": "395326ffdf53e7a698b61cc4e3e3813ecf2d3448",
     "/assets/taiga-ui/icons/tuiIconZoomOutOutline.svg": "649232602165b4880fe74e2c1fc59c37a5c76ea8",
     "/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
-    "/index.html": "a48abf6799e96d7691b8690ca54aebbbf9aee23e",
+    "/index.html": "f006be5a3d1cd94b0387a17f0ab4c7199291f5d4",
     "/main.342c395608001eb4.js": "01d7fe79e682ff0e16490982490af9bdbfd73790",
     "/manifest.webmanifest": "c42e2b310e44014645e13327d714a9bdada74018",
     "/polyfills.d7bbef9c44982577.js": "7003bb074bee2a228ccb0ad25afd9c82ad83cdc2",
