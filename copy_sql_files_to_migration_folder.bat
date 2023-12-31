@@ -38,6 +38,7 @@ if errorlevel 1 (
 @REM     Generate types from remote (requires to click apply editor config to work locally, else wise type errors
 @REM occure)
     supabase gen types typescript --project-id "abcwkgkiztruxwvfwabf" --schema public > supabase/types/supabase.ts
+    supabase gen types typescript --project-id "abcwkgkiztruxwvfwabf" --schema authenticated_access > supabase/types/supabase_authenticated_access.ts
 
 @REM Start angular client and run tests
 @REM     pause

@@ -6,6 +6,8 @@ import {ErrorStoreService} from "./signal-store/error-store.service";
 import {RouterOutlet} from '@angular/router';
 import {TuiNotificationModule} from '@taiga-ui/core/components/notification';
 import {TuiRootModule} from '@taiga-ui/core';
+import {PushActionService} from "./features/notifications/action-store-services/push-action.service";
+import {SwUpdate} from "@angular/service-worker";
 
 @Component({
     selector: 'polity-root',
@@ -22,10 +24,13 @@ export class AppComponent {
     showErrorMessage: WritableSignal<boolean>;
     notification: WritableSignal<string>;
 
+
     constructor(
         private readonly authService: AuthenticationService,
         private sessionStoreService: SessionStoreService,
         private errorStoreService: ErrorStoreService,
+        private pushService: PushActionService,
+        private swUpdate: SwUpdate
     ) {
         this.authService.authChanges((_: AuthChangeEvent, session: Session | null): void => {
             this.sessionStoreService.setAuthData(session);
@@ -34,7 +39,27 @@ export class AppComponent {
         this.showErrorMessage = this.errorStoreService.selectShowError()
     }
 
+    ngOnInit(): void {
+        this.subscribeToNotifications()
+        if (this.swUpdate.isEnabled) {
+
+            this.swUpdate.versionUpdates.subscribe((): void => {
+
+                if (confirm("New version available. Load New Version?")) {
+
+                    window.location.reload();
+                }
+            });
+        }
+
+
+    }
+
     onClose(): void {
         this.errorStoreService.setErrorStatus(false)
+    }
+
+    subscribeToNotifications(): void {
+        this.pushService.subscribeToNotifications()
     }
 }

@@ -9,7 +9,48 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
-      [_ in never]: never
+      notifications_by_user: {
+        Row: {
+          created_at: string
+          id: string
+          read_by_receiver: boolean
+          receiver: string
+          sender: string
+          type_of_notification: Database["public"]["Enums"]["notifications_enum"]
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          read_by_receiver?: boolean
+          receiver: string
+          sender: string
+          type_of_notification?: Database["public"]["Enums"]["notifications_enum"]
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          read_by_receiver?: boolean
+          receiver?: string
+          sender?: string
+          type_of_notification?: Database["public"]["Enums"]["notifications_enum"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notifications_by_user_receiver_fkey"
+            columns: ["receiver"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "notifications_by_user_sender_fkey"
+            columns: ["sender"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -46,6 +87,18 @@ export interface Database {
           first_name: string
           last_name: string
           username: string
+        }[]
+      }
+      select_all_push_subscriptions_of_user: {
+        Args: {
+          user_to_be_notified: string
+        }
+        Returns: {
+          id: string
+          endpoint: string
+          expirationtime: string
+          auth: string
+          p256dh: string
         }[]
       }
       select_assistant: {
@@ -158,6 +211,15 @@ export interface Database {
           last_name_in?: string
           profile_image_in?: string
           receive_follow_notifications_in?: boolean
+        }
+        Returns: undefined
+      }
+      upsert_push_subscription: {
+        Args: {
+          endpoint: string
+          expirationtime: string
+          auth: string
+          p256dh: string
         }
         Returns: undefined
       }
