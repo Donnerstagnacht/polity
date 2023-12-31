@@ -43,7 +43,7 @@ Deno.serve(async (req) => {
         console.log('data from database', pushSubscriptions)
 
         const vapidKeys = {
-            publicKey: 'BL8N69j1Xo5NCPPFqkuf7VQqPTkSLi5D34bV7HTe079sffnQi_6B44o9oCCud9Y4TTye64ZV2XgPyoE91ta7OHs',
+            publicKey: '<The public Key>',
             privateKey: '<The private Key>',
         }
 
