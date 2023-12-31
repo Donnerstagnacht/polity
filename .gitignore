@@ -44,3 +44,10 @@ Thumbs.db
 # Ignore all files in the migrations directory
 /supabase/migrations/*
 !supabase/migrations/*/
+
+# Ignore changes to webhooks including an added service role key (should not be added to public repositories)
+/supabase/migrations/06_notifications/02000614_send_push_notification_trigger.sql
+
+# Ignore changes to the html file so that local in base href differs from remote base href (so github pages
+# deployment works)
+/src/index.html
