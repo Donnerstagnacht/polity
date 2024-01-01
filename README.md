@@ -75,6 +75,11 @@
 5. Set up local development for supabase
    ```sh
    https://supabase.com/docs/guides/cli/local-development
+   
+   Update environment variables (supabaseProjectUrl, supabaseAnonKey, supabaseRoleLevelSecurityKeys VAPID_Keys ) in 
+      - src/environments/environment.ts
+      - supabase/migrations/<all files with webhook>
+      - the .bat files
    ```
 6. Start Angular dev server
    ```sh

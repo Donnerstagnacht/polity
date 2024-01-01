@@ -14,7 +14,7 @@
 
 import {ProfileTest} from "../fixtures/profile";
 import {FunctionName} from "../../supabase/types/supabase.shorthand-types";
-import {API_URL} from "../fixtures/api_url";
+import {environment} from "../../src/environments/environment";
 import Chainable = Cypress.Chainable;
 
 /**
@@ -27,7 +27,7 @@ Cypress.Commands.add('getDataCy', (value: string, value2?: string): void => {
 });
 
 Cypress.Commands.add('interceptSupabaseCall', (endPoint: FunctionName): void => {
-    const apiUrl = API_URL
+    const apiUrl = environment.supabaseUrl;
     cy.intercept('POST', apiUrl + endPoint)
 });
 
