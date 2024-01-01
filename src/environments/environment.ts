@@ -1,7 +1,7 @@
 export const environment = {
     production: false,
-    supabaseProjectUrl: 'https://qvqennixanwyxkrxoosv.supabase.co',
-    supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF2cWVubml4YW53eXhrcnhvb3N2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQxMTg4NTksImV4cCI6MjAxOTY5NDg1OX0.eZgJ-R0nhnni933Jhth6sbZxEj0G8wyrta3QKrrhpfQ',
+    supabaseProjectUrl: 'https://rjljgqxktntquuftngcf.supabase.co',
+    supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqbGpncXhrdG50cXV1ZnRuZ2NmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQxMjAxNTksImV4cCI6MjAxOTY5NjE1OX0.dP-CKlbAPQsTVFDmPfEMvAc4ZtyJmyfOZUi-BGPdCl8',
     vapidPublicKey: '<vapidPublickey>',
     vapidPrivateKey: '<vapidPrivateKey>',
     senderId: '<senderId>',
