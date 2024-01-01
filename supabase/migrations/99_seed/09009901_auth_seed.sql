@@ -10,9 +10,9 @@ WITH
                     "id": "ff6cc644-ec9e-45dc-a98a-1186e091674f",
                     "aud": "authenticated",
                     "role": "authenticated",
-                    "email": "user1@seed.com",
-                    "encrypted_password": "$2a$10$V31IziLiRRQFCO/ISWvGaOIonwHq0ePKojtkZOyVkmAeFBYAVSsba",
-                    "email_confirmed_at": "2022-06-24T17:22:59.653Z",
+                    "email": "user1@gmail.com",
+                    "encrypted_password": "$2a$10$X2B4kwBYyMzt54HgToaMvekAz1lCy8CvMV7FMoU3IjPXnsl8PjBMy",
+                    "email_confirmed_at": "2024-01-01 16:15:00.697049+00",
                     "invited_at": "2022-06-24T17:22:59.653Z",
                     "confirmation_token": "",
                     "confirmation_sent_at": "2022-06-24T17:22:59.653Z",
@@ -22,8 +22,13 @@ WITH
                     "email_change": "",
                     "email_change_sent_at": "2022-06-24T17:22:59.653Z",
                     "last_sign_in_at": "2022-06-24T17:22:59.657Z",
-                    "raw_app_meta_data": "{\n\"provider\": \"email\",\n\"providers\": [\n\"email\"\n]\n}",
-                    "raw_user_meta_data": "{}",
+                    "raw_app_meta_data": {
+                        "provider": "email",
+                        "providers": [
+                            "email"
+                        ]
+                    },
+                    "raw_user_meta_data": {},
                     "is_super_admin": "FALSE",
                     "created_at": "2022-06-24T17:22:59.649Z",
                     "updated_at": "2022-06-24T17:22:59.649Z",
@@ -46,72 +51,144 @@ WITH
                     "id": "b24f9e68-8fac-4525-b001-fffb91704d68",
                     "aud": "authenticated",
                     "role": "authenticated",
-                    "email": "user2@seed.com",
-                    "encrypted_password": "$2a$10$V31IziLiRRQFCO/ISWvGaOIonwHq0ePKojtkZOyVkmAeFBYAVSsba"
+                    "email": "user2@gmail.com",
+                    "encrypted_password": "$2a$10$X2B4kwBYyMzt54HgToaMvekAz1lCy8CvMV7FMoU3IjPXnsl8PjBMy",
+                    "email_confirmed_at": "2024-01-01 16:15:00.697049+00",
+                    "raw_app_meta_data": {
+                        "provider": "email",
+                        "providers": [
+                            "email"
+                        ]
+                    },
+                    "raw_user_meta_data": {}
                 },
                 {
                     "instance_id": "00000000-0000-0000-0000-000000000000",
                     "id": "71aa5d19-43d8-4063-839d-114a0ad49ed7",
                     "aud": "authenticated",
                     "role": "authenticated",
-                    "email": "user3@seed.com",
-                    "encrypted_password": "$2a$10$V31IziLiRRQFCO/ISWvGaOIonwHq0ePKojtkZOyVkmAeFBYAVSsba"
+                    "email": "user3@gmail.com",
+                    "encrypted_password": "$2a$10$X2B4kwBYyMzt54HgToaMvekAz1lCy8CvMV7FMoU3IjPXnsl8PjBMy",
+                    "email_confirmed_at": "2024-01-01 16:15:00.697049+00",
+                    "raw_app_meta_data": {
+                        "provider": "email",
+                        "providers": [
+                            "email"
+                        ]
+                    },
+                    "raw_user_meta_data": {}
                 },
                 {
                     "instance_id": "00000000-0000-0000-0000-000000000000",
                     "id": "94875c0e-fa45-4504-828a-6ec9f21a49ca",
                     "aud": "authenticated",
                     "role": "authenticated",
-                    "email": "user4a@seed.com",
-                    "encrypted_password": "$2a$10$V31IziLiRRQFCO/ISWvGaOIonwHq0ePKojtkZOyVkmAeFBYAVSsba"
+                    "email": "user4@gmail.com",
+                    "encrypted_password": "$2a$10$X2B4kwBYyMzt54HgToaMvekAz1lCy8CvMV7FMoU3IjPXnsl8PjBMy",
+                    "email_confirmed_at": "2024-01-01 16:15:00.697049+00",
+                    "raw_app_meta_data": {
+                        "provider": "email",
+                        "providers": [
+                            "email"
+                        ]
+                    },
+                    "raw_user_meta_data": {}
                 },
                 {
                     "instance_id": "00000000-0000-0000-0000-000000000000",
                     "id": "2d196d44-ae7f-4999-b080-e8a0db639c65",
                     "aud": "authenticated",
                     "role": "authenticated",
-                    "email": "user5@seed.com",
-                    "encrypted_password": "$2a$10$V31IziLiRRQFCO/ISWvGaOIonwHq0ePKojtkZOyVkmAeFBYAVSsba"
+                    "email": "user5@gmail.com",
+                    "encrypted_password": "$2a$10$X2B4kwBYyMzt54HgToaMvekAz1lCy8CvMV7FMoU3IjPXnsl8PjBMy",
+                    "email_confirmed_at": "2024-01-01 16:15:00.697049+00",
+                    "raw_app_meta_data": {
+                        "provider": "email",
+                        "providers": [
+                            "email"
+                        ]
+                    },
+                    "raw_user_meta_data": {}
                 },
                 {
                     "instance_id": "00000000-0000-0000-0000-000000000000",
                     "id": "393bc641-eaa3-45a2-9a2a-ab16dc62424b",
                     "aud": "authenticated",
                     "role": "authenticated",
-                    "email": "user6@seed.com",
-                    "encrypted_password": "$2a$10$V31IziLiRRQFCO/ISWvGaOIonwHq0ePKojtkZOyVkmAeFBYAVSsba"
+                    "email": "user6@gmail.com",
+                    "encrypted_password": "$2a$10$X2B4kwBYyMzt54HgToaMvekAz1lCy8CvMV7FMoU3IjPXnsl8PjBMy",
+                    "email_confirmed_at": "2024-01-01 16:15:00.697049+00",
+                    "raw_app_meta_data": {
+                        "provider": "email",
+                        "providers": [
+                            "email"
+                        ]
+                    },
+                    "raw_user_meta_data": {}
                 },
                 {
                     "instance_id": "00000000-0000-0000-0000-000000000000",
                     "id": "fefe27da-66ac-4d08-a8b3-c5adfb9bd5ce",
                     "aud": "authenticated",
                     "role": "authenticated",
-                    "email": "user7@seed.com",
-                    "encrypted_password": "$2a$10$V31IziLiRRQFCO/ISWvGaOIonwHq0ePKojtkZOyVkmAeFBYAVSsba"
+                    "email": "user7@gmail.com",
+                    "encrypted_password": "$2a$10$X2B4kwBYyMzt54HgToaMvekAz1lCy8CvMV7FMoU3IjPXnsl8PjBMy",
+                    "email_confirmed_at": "2024-01-01 16:15:00.697049+00",
+                    "raw_app_meta_data": {
+                        "provider": "email",
+                        "providers": [
+                            "email"
+                        ]
+                    },
+                    "raw_user_meta_data": {}
                 },
                 {
                     "instance_id": "00000000-0000-0000-0000-000000000000",
                     "id": "437bf909-34c5-4e54-b1eb-799771159cd1",
                     "aud": "authenticated",
                     "role": "authenticated",
-                    "email": "user8@seed.com",
-                    "encrypted_password": "$2a$10$V31IziLiRRQFCO/ISWvGaOIonwHq0ePKojtkZOyVkmAeFBYAVSsba"
+                    "email": "user8@gmail.com",
+                    "encrypted_password": "$2a$10$X2B4kwBYyMzt54HgToaMvekAz1lCy8CvMV7FMoU3IjPXnsl8PjBMy",
+                    "email_confirmed_at": "2024-01-01 16:15:00.697049+00",
+                    "raw_app_meta_data": {
+                        "provider": "email",
+                        "providers": [
+                            "email"
+                        ]
+                    },
+                    "raw_user_meta_data": {}
                 },
                 {
                     "instance_id": "00000000-0000-0000-0000-000000000000",
                     "id": "eada6e0c-e432-4af8-b238-71394e0866bc",
                     "aud": "authenticated",
                     "role": "authenticated",
-                    "email": "user9@seed.com",
-                    "encrypted_password": "$2a$10$V31IziLiRRQFCO/ISWvGaOIonwHq0ePKojtkZOyVkmAeFBYAVSsba"
+                    "email": "user9@gmail.com",
+                    "encrypted_password": "$2a$10$X2B4kwBYyMzt54HgToaMvekAz1lCy8CvMV7FMoU3IjPXnsl8PjBMy",
+                    "email_confirmed_at": "2024-01-01 16:15:00.697049+00",
+                    "raw_app_meta_data": {
+                        "provider": "email",
+                        "providers": [
+                            "email"
+                        ]
+                    },
+                    "raw_user_meta_data": {}
                 },
                 {
                     "instance_id": "00000000-0000-0000-0000-000000000000",
                     "id": "1c8171bb-36bd-41ff-b207-a5d219e53740",
                     "aud": "authenticated",
                     "role": "authenticated",
-                    "email": "user10@seed.com",
-                    "encrypted_password": "$2a$10$V31IziLiRRQFCO/ISWvGaOIonwHq0ePKojtkZOyVkmAeFBYAVSsba"
+                    "email": "user10@gmail.com",
+                    "encrypted_password": "$2a$10$X2B4kwBYyMzt54HgToaMvekAz1lCy8CvMV7FMoU3IjPXnsl8PjBMy",
+                    "email_confirmed_at": "2024-01-01 16:15:00.697049+00",
+                    "raw_app_meta_data": {
+                        "provider": "email",
+                        "providers": [
+                            "email"
+                        ]
+                    },
+                    "raw_user_meta_data": {}
                 }
             ]'::json)
     )
@@ -122,7 +199,7 @@ INTO
                 aud, --3
                 role, --4
                 email, --5
-                encrypted_password --6
+    --encrypted_password, --6
     --email_confirmed_at, --7
     --invited_at, --8
     --confirmation_token, --9
@@ -133,8 +210,8 @@ INTO
     --email_change, --14
     --email_change_sent_at, --15
     --last_sign_in_at, --16
-    --raw_app_meta_data, --17
-    --raw_user_meta_data, --18
+                raw_app_meta_data, --17
+                raw_user_meta_data --18
     --is_super_admin, --19
     --created_at, --20
     --updated_at, --21
@@ -143,7 +220,7 @@ INTO
     --phone_change, --24
     --phone_change_token, --25
     --phone_change_sent_at, --26
-    --confirmed_at, --missing? --27
+    --confirmed_at --missing? --27
     --email_change_token_current, --28
     --email_change_confirm_status, --29
     --banned_until, --30
@@ -158,8 +235,8 @@ SELECT
     aud,               --3
     role,              --4
     email,             --5
-    encrypted_password --6
---email_confirmed_at, --7
+    --encrypted_password, --6
+    --email_confirmed_at, --7
 --invited_at, --8
 --confirmation_token, --9
 --confirmation_sent_at, --10
@@ -169,8 +246,8 @@ SELECT
 --email_change, --14
 --email_change_sent_at, --15
 --last_sign_in_at, --16
---raw_app_meta_data, --17
---raw_user_meta_data, --18
+    raw_app_meta_data, --17
+    raw_user_meta_data --18
 --is_super_admin, --19
 --created_at, --20
 --updated_at, --21
@@ -190,3 +267,16 @@ SELECT
 FROM
     auth_json a
     CROSS JOIN LATERAL JSON_POPULATE_RECORDSET(NULL::auth.users, doc) AS u;
+
+
+UPDATE auth.users
+SET
+    encrypted_password     = '$2a$10$WB.1YZRHv1JWNwV4l1Es8e5hVzDe2m/E9sO.1WOp836dTcPkayKZ2',
+    last_sign_in_at        = '2024-01-01 16:38:49.847114+00',
+    created_at             = '2024-01-01 16:38:49.847114+00',
+    updated_at             = '2024-01-01 16:38:49.847114+00',
+    email_confirmed_at     = '2024-01-01 16:38:49.847114+00',
+    email_change           = '',
+    email_change_token_new = '',
+    confirmation_token     = '',
+    recovery_token         = '';
