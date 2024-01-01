@@ -27,7 +27,7 @@ Cypress.Commands.add('getDataCy', (value: string, value2?: string): void => {
 });
 
 Cypress.Commands.add('interceptSupabaseCall', (endPoint: FunctionName): void => {
-    const apiUrl = environment.supabaseUrl;
+    const apiUrl = environment.supabaseProjectUrl;
     cy.intercept('POST', apiUrl + endPoint)
 });
 
