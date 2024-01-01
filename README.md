@@ -76,6 +76,7 @@
    ```sh
    https://supabase.com/docs/guides/cli/local-development
    
+   Enable webhooks in the supabase dashboard or create a "supabase_functions" schema manually.
    Update environment variables (supabaseProjectUrl, supabaseAnonKey, supabaseRoleLevelSecurityKeys VAPID_Keys ) in 
       - src/environments/environment.ts
       - supabase/migrations/<all files with webhook>

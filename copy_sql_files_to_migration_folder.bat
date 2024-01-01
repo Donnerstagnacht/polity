@@ -35,6 +35,9 @@ if errorlevel 1 (
     supabase db push --include-all
     pause
 
+    supabase functions deploy
+    pause
+
 @REM     Generate types from remote (requires to click apply editor config to work locally, else wise type errors
 @REM occure)
     supabase gen types typescript --project-id "bmuhavvmpfohclypxrjn" --schema public > supabase/types/supabase.ts
