@@ -4,7 +4,7 @@ CREATE OR REPLACE TRIGGER "send-push-hook"
     ON authenticated_access.notifications_by_user
     FOR EACH ROW
 EXECUTE FUNCTION supabase_functions.http_request(
-    'https://bmuhavvmpfohclypxrjn.supabase.co/functions/v1/send-push-notification',
+    'https://qvqennixanwyxkrxoosv.supabase.co/functions/v1/send-push-notification',
     'POST',
     '{
       "Content-Type":"application/json",
