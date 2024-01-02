@@ -9,48 +9,7 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
-      notifications_by_user: {
-        Row: {
-          created_at: string
-          id: string
-          read_by_receiver: boolean
-          receiver: string
-          sender: string
-          type_of_notification: Database["public"]["Enums"]["notifications_enum"]
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          read_by_receiver?: boolean
-          receiver: string
-          sender: string
-          type_of_notification?: Database["public"]["Enums"]["notifications_enum"]
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          read_by_receiver?: boolean
-          receiver?: string
-          sender?: string
-          type_of_notification?: Database["public"]["Enums"]["notifications_enum"]
-        }
-        Relationships: [
-          {
-            foreignKeyName: "notifications_by_user_receiver_fkey"
-            columns: ["receiver"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "notifications_by_user_sender_fkey"
-            columns: ["sender"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
+      [_ in never]: never
     }
     Views: {
       [_ in never]: never

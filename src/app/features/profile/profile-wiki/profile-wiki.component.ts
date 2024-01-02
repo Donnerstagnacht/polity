@@ -1,5 +1,4 @@
 import {Component, signal, Signal, WritableSignal} from '@angular/core';
-import {Profile} from "../../../../../cypress/fixtures/profile";
 import {FunctionSingleReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {WikiHeadlineComponent} from "../../../ui/polity-wiki/wiki-headline/wiki-headline.component";
 import {CounterComponent} from "../../../ui/polity-wiki/counter/counter.component";
@@ -25,7 +24,7 @@ export class ProfileWikiComponent {
     protected isProfileLoading: WritableSignal<boolean> = signal(true);
     protected isProfileCounterLoading: WritableSignal<boolean> = signal(true);
     protected isFollowingCheckLoading: WritableSignal<boolean> = signal(true);
-    protected profile: Signal<Profile | null>;
+    protected profile: Signal<FunctionSingleReturn<'select_user'> | null>;
     protected profileCounter: WritableSignal<FunctionSingleReturn<'select_following_counter'> | null> = signal(null);
     protected isOwner: WritableSignal<boolean>;
     protected isFollowing: WritableSignal<boolean>;

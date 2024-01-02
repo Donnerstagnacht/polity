@@ -1,26 +1,37 @@
-import {ProfileTest} from "../fixtures/profile";
-import {seedProfileFollowingUser, seedProfileFollowUser} from "../fixtures/user";
 import {Size, Sizes} from "../fixtures/size";
+import {AUTH_DATA1, AUTH_DATA2, AuthData} from "../../seed_and_test_data/01_test_auth";
+import {Profile, PROFILE1, PROFILE2, PROFILE3} from "../../seed_and_test_data/02_test_profiles";
+import {PROFILE_COUNTER1, PROFILE_COUNTER2, ProfileCounter} from "../../seed_and_test_data/04_test_profile_counters";
 
-const followingUser: ProfileTest = seedProfileFollowingUser;
-const followUser: ProfileTest = seedProfileFollowUser
+const userWhoIsNotifiedAuth: AuthData = AUTH_DATA2;
+const userWhoIsNotifiedProfile: Profile = PROFILE2;
+const userWhoIsNotifiedCounter: ProfileCounter = PROFILE_COUNTER2;
+
+const userWhoNotifiesAuth: AuthData = AUTH_DATA1;
+const userWhoNotifiesProfile: Profile = PROFILE1;
+const userWhoNotifiesCounter: ProfileCounter = PROFILE_COUNTER1;
+
+const userWhoNotifiedBySeedProfile: Profile = PROFILE3;
 
 Sizes.forEach((size: Size): void => {
-    describe(`Notification tests with screen size { {${size.width} show that users can `, () => {
+    describe(`Notification tests with screen size { {${size.width} show that users can `, (): void => {
+        before((): void => {
+        })
 
         beforeEach((): void => {
-            // cy.viewport(size.width, size.height)
+            cy.viewport(size.width, size.height);
             cy.visit('landing/sign-in');
-            cy.signIn(followingUser);
+            cy.resetSupabase()
+            cy.signIn(userWhoIsNotifiedAuth);
         })
-        const today = new Date();
 
-        const yearString = today.getFullYear().toString();
-        const monthString = String(today.getMonth() + 1).padStart(2, '0').toString(); // Months are zero-indexed, so we add 1
-        const dayString = String(today.getDate()).padStart(2, '0').toString();
-
-        const todayString = dayString + '.' + monthString + '.' + yearString
-        const checkString = dayString + '/' + monthString + '/' + yearString.substring(2)
+        const today: Date = new Date();
+        const yearString: string = today.getFullYear().toString();
+        const monthString: string = String(today.getMonth() + 1).padStart(2, '0').toString(); // Months are zero-indexed,
+        // so we add 1
+        const dayString: string = String(today.getDate()).padStart(2, '0').toString();
+        const todayString: string = dayString + '.' + monthString + '.' + yearString
+        const checkString: string = dayString + '/' + monthString + '/' + yearString.substring(2)
 
         it('can open notification tabs.', (): void => {
             cy.getDataCy('nav-office', 'nav-office-desktop')
@@ -38,11 +49,6 @@ Sizes.forEach((size: Size): void => {
             .shouldBeVisible()
             .first()
             .click({force: true})
-
-
-            cy.getDataCy('created_at_headline')
-            .shouldBeVisible()
-            .click()
 
             cy.getDataCy('created_at')
             .shouldBeVisible()
@@ -69,7 +75,7 @@ Sizes.forEach((size: Size): void => {
             // .should('not.be.visible')
 
         })
-        //
+
         it('filter notifications for follow type', (): void => {
             cy.getDataCy('nav-office', 'nav-office-desktop')
             .shouldBeVisible()
@@ -91,12 +97,12 @@ Sizes.forEach((size: Size): void => {
             .click({force: true})
 
             cy.getDataCy('filterStringInput')
-            .type(followUser.first_name as string)
+            .type(userWhoNotifiedBySeedProfile.first_name as string)
 
             cy.getDataCy('first_name')
             .shouldBeVisible()
             .first()
-            .contains(followUser.first_name as string)
+            .contains(userWhoNotifiedBySeedProfile.first_name as string)
         })
 
         it('filter notifications for dates', (): void => {
@@ -117,9 +123,6 @@ Sizes.forEach((size: Size): void => {
         })
 
         it('will not receive messages from following if the user disables it.', (): void => {
-            cy.signOut(followingUser);
-            cy.signIn(followUser);
-
             cy.navigateToHome()
             cy.getDataCy('home-to-profile')
             .shouldBeVisible()
@@ -142,12 +145,17 @@ Sizes.forEach((size: Size): void => {
             .click()
             cy.wait('@updateNotifications')
 
-            cy.signOut(followUser);
-            cy.signIn(followingUser)
-            cy.followUser(followUser, followingUser)
+            cy.signOut(userWhoIsNotifiedAuth);
+            cy.signIn(userWhoNotifiesAuth)
+            cy.followUser(
+                userWhoIsNotifiedProfile,
+                userWhoIsNotifiedCounter,
+                userWhoNotifiesProfile,
+                userWhoNotifiesCounter
+            )
 
-            cy.signOut(followingUser);
-            cy.signIn(followUser)
+            cy.signOut(userWhoNotifiesAuth);
+            cy.signIn(userWhoIsNotifiedAuth)
 
             cy.getDataCy('nav-office', 'nav-office-desktop')
             .shouldBeVisible()
@@ -157,56 +165,8 @@ Sizes.forEach((size: Size): void => {
             .shouldBeVisible()
 
             cy.getDataCy('first_name')
-            .should('not.exist')
-
-            cy.navigateToHome()
-            cy.getDataCy('home-to-profile')
             .shouldBeVisible()
-            .click()
-
-            // reverse changes from here onward (implicite cleanup)
-
-            cy.getDataCy('nav-profile-edit', 'nav-profile-edit-desktop')
-            .filter(':visible')
-            .first()
-            .click()
-
-            cy.getDataCy('toggle-notifications-headline')
-            .shouldBeVisible()
-            .contains('Erhalte Nachrichten')
-
-            cy.interceptSupabaseCall('update_receive_notifications_from_follow')
-            .as('updateNotifications')
-
-            cy.getDataCy('toggle-notifications-from-user')
-            .shouldBeVisible()
-            .click()
-            cy.wait('@updateNotifications')
-
-            cy.signOut(followUser)
-            cy.signIn(followingUser)
-
-            cy.interceptSupabaseCall('select_user')
-            .as('selectUser')
-            cy.interceptSupabaseCall('check_if_following')
-            .as('isFollowing')
-            cy.interceptSupabaseCall('select_following_counter')
-            .as('followingCounter')
-
-            cy.searchUser(followUser.first_name as string)
-            .click()
-
-            cy.wait(['@followingCounter', '@isFollowing', '@selectUser'])
-
-            cy.interceptSupabaseCall('unfollow_transaction').as('unfollow')
-            cy.getDataCy('followButton')
-            .shouldBeVisible()
-            .should('have.text', 'UNFOLLOW ')
-            .click()
-            cy.wait('@unfollow')
-
-            cy.contains('Successful unfollowed')
-            .should('be.visible')
+            .should('not.contain', userWhoNotifiesProfile.first_name as string)
         })
     })
 });

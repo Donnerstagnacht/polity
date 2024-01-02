@@ -1,33 +1,35 @@
 import {Size, Sizes} from "../fixtures/size";
-import {ProfileTest} from "../fixtures/profile";
-import {userCreatedByCypress} from "../fixtures/user";
+import {AUTH_DATA1, AUTH_DATA2, AUTH_DATA3, AUTH_DATA4, AuthData} from "../../seed_and_test_data/01_test_auth";
+import {Profile, PROFILE1} from "../../seed_and_test_data/02_test_profiles";
 
-const newUser: ProfileTest = userCreatedByCypress;
+const userFirstLoginDoingWelcomeTutorialAuth: AuthData = AUTH_DATA1;
+const userFirstLoginDoingWelcomeTutorialProfile: Profile = PROFILE1;
 
-// ATTENTION: tests depends on previous tests
+const userDoingProfileTutorialAuth: AuthData = AUTH_DATA2;
+
+const userDoingSearchTutorialAuth: AuthData = AUTH_DATA3;
+
+const userRestartingTutorialAuth: AuthData = AUTH_DATA4;
+
 Sizes.forEach((size: Size): void => {
-    describe(`Onboarding tests with screen size ${size.width} show that users can `, () => {
+    describe(`Onboarding tests with screen size ${size.width} show that users can `, (): void => {
 
         before((): void => {
-            cy.visit('landing/sign-up');
-
-            cy.signUp(newUser).then((value) => {
-                newUser.email = value
-            })
         })
 
         beforeEach((): void => {
             cy.viewport(size.width, size.height)
             cy.visit('landing/sign-in');
-            cy.signIn(newUser);
+        })
+
+        it('see an assistant-welcome-dialog tutorial if they sign in the first time', (): void => {
+            cy.resetSupabase()
+            cy.signIn(userFirstLoginDoingWelcomeTutorialAuth);
             cy.interceptSupabaseCall('select_assistant')
             .as('loadAssistant')
             cy.interceptSupabaseCall('select_user')
             .as('loadUser')
             cy.wait(['@loadAssistant', '@loadUser'])
-        })
-
-        it('see an assistant-welcome-dialog tutorial if they sign in the first time', (): void => {
 
             cy.getDataCy('assistant-welcome-dialog')
             .shouldBeVisible()
@@ -37,13 +39,13 @@ Sizes.forEach((size: Size): void => {
             .scrollIntoView()
 
             cy.getDataCy('welcome-first-name')
-            .type(newUser.first_name as string)
+            .type(userFirstLoginDoingWelcomeTutorialProfile.first_name as string)
 
             cy.getDataCy('welcome-last-name')
             .scrollIntoView()
 
             cy.getDataCy('welcome-last-name')
-            .type(newUser.last_name as string)
+            .type(userFirstLoginDoingWelcomeTutorialProfile.last_name as string)
 
             cy.getDataCy('step1navigateToProfileStep')
             .shouldBeVisible()
@@ -54,6 +56,13 @@ Sizes.forEach((size: Size): void => {
         })
 
         it('can save their tutorial progress and load their progress', (): void => {
+            cy.signIn(userFirstLoginDoingWelcomeTutorialAuth);
+            cy.interceptSupabaseCall('select_assistant')
+            .as('loadAssistant')
+            cy.interceptSupabaseCall('select_user')
+            .as('loadUser')
+            cy.wait(['@loadAssistant', '@loadUser'])
+
             cy.getDataCy('assistant-profile-dialog')
             .shouldBeVisible()
             .click()
@@ -62,7 +71,15 @@ Sizes.forEach((size: Size): void => {
             .shouldBeVisible()
         })
 
-        it('do a tutorial about their profile settings', () => {
+        it('do a tutorial about their profile settings', (): void => {
+            cy.resetSupabase()
+            cy.signIn(userDoingProfileTutorialAuth);
+            cy.interceptSupabaseCall('select_assistant')
+            .as('loadAssistant')
+            cy.interceptSupabaseCall('select_user')
+            .as('loadUser')
+            cy.wait(['@loadAssistant', '@loadUser'])
+
             cy.getDataCy('assistant-profile-dialog')
             .shouldBeVisible()
             .click()
@@ -85,6 +102,14 @@ Sizes.forEach((size: Size): void => {
         })
 
         it('do a tutorial about searching users and follow them', (): void => {
+            cy.resetSupabase()
+            cy.signIn(userDoingSearchTutorialAuth);
+            cy.interceptSupabaseCall('select_assistant')
+            .as('loadAssistant')
+            cy.interceptSupabaseCall('select_user')
+            .as('loadUser')
+            cy.wait(['@loadAssistant', '@loadUser'])
+
             cy.getDataCy('assistant-search-dialog')
             .shouldBeVisible()
             .click()
@@ -95,13 +120,11 @@ Sizes.forEach((size: Size): void => {
 
             cy.getDataCy('step3closeAndSkipTutorial')
             .scrollIntoView()
-            // .shouldBeVisible() somehow it is overflown and cypress can not detect it even it is visible
 
             cy.interceptSupabaseCall('update_skip_tutorial').as('skipTutorial')
             cy.interceptSupabaseCall('update_last_tutorial').as('lastTutorial')
             cy.getDataCy('step3navigateToSearchPage')
             .scrollIntoView()
-            // .shouldBeVisible() somehow it is overflown and cypress can not detect it even it is visible
             .click()
             cy.wait(['@skipTutorial', '@lastTutorial'])
 
@@ -110,7 +133,14 @@ Sizes.forEach((size: Size): void => {
         })
 
         it('can open the tutorial from profile settings again ', (): void => {
-            // cy.pause()
+            cy.resetSupabase()
+            cy.signIn(userRestartingTutorialAuth);
+            cy.interceptSupabaseCall('select_assistant')
+            .as('loadAssistant')
+            cy.interceptSupabaseCall('select_user')
+            .as('loadUser')
+            cy.wait(['@loadAssistant', '@loadUser'])
+
             cy.navigateToHome()
 
             cy.getDataCy('home-to-profile')
@@ -122,7 +152,6 @@ Sizes.forEach((size: Size): void => {
             .first()
             .click()
 
-            // cy.pause()
             cy.getDataCy('toggle-assistant-headline')
             .shouldBeVisible()
             .contains('Zeige Tutorials')
@@ -142,7 +171,15 @@ Sizes.forEach((size: Size): void => {
             .shouldBeVisible()
         })
 
-        it('can reject the tutorial and will not see it again ', () => {
+        it('can reject the tutorial and will not see it again ', (): void => {
+            cy.resetSupabase()
+            cy.signIn(userDoingProfileTutorialAuth);
+            cy.interceptSupabaseCall('select_assistant')
+            .as('loadAssistant')
+            cy.interceptSupabaseCall('select_user')
+            .as('loadUser')
+            cy.wait(['@loadAssistant', '@loadUser'])
+
             cy.getDataCy('assistant-profile-dialog')
             .shouldBeVisible()
             .click()

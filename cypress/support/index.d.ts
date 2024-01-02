@@ -1,5 +1,7 @@
-import {ProfileTest} from "../fixtures/profile";
 import {FunctionName} from "../../supabase/types/supabase.shorthand-types";
+import {AuthData} from "../../seed_and_test_data/01_test_auth";
+import {Profile} from "../../seed_and_test_data/02_test_profiles";
+import {ProfileCounter} from "../../seed_and_test_data/04_test_profile_counters";
 
 
 declare global {
@@ -35,9 +37,9 @@ declare global {
             /**
              * Sign in a user with the given profile.
              *
-             * @param {ProfileTest} profile - The profile information of the user.
+             * @param {AuthData} profile - The profile information of the user.
              */
-            signIn(profileTest: ProfileTest): Chainable<Element>
+            signIn(authData: AuthData): Chainable<Element>
 
             /**
              * Custom command to test if user can open the search tab.
@@ -51,15 +53,21 @@ declare global {
              */
             searchUser(firstName: string): Chainable<Element>
 
+
             /**
-             * Follows a user.
+             * Follows a user's profile by updating the counters and returning a Chainable element.
              *
-             * @param {ProfileTest}  followingUser - The profile who is being followed.
-             * @param {ProfileTest} followUser - The profile who follows the other user.
+             * @param {Profile} userWhoIsFollowedProfile - The profile of the user who is being followed.
+             * @param {ProfileCounter} userWhoIsFollowedCounter - The counter of the user who is being followed.
+             * @param {Profile} userWhoFollowsProfile - The profile of the user who is following.
+             * @param {ProfileCounter} userWhoFollowsCounter - The counter of the user who is following.
+             * @return {Chainable<Element>} - A Chainable element.
              */
             followUser(
-                followingUser: ProfileTest,
-                followUser: ProfileTest
+                userWhoIsFollowedProfile: Profile,
+                userWhoIsFollowedCounter: ProfileCounter,
+                userWhoFollowsProfile: Profile,
+                userWhoFollowsCounter: ProfileCounter
             ): Chainable<Element>
 
             /**
@@ -70,16 +78,21 @@ declare global {
             /**
              * Signs out a signed-in user.
              *
-             * @param {ProfileTest} signedInUser - The signed-in user.
+             * @param {AuthData} signedInUser - The signed-in user.
              */
-            signOut(signedInUser: ProfileTest): Chainable<Element>
+            signOut(signedInUser: AuthData): Chainable<Element>
 
             /**
              * Signs up a new user.
              *
-             * @param {ProfileTest} newUser - The new user.
+             * @param {AuthData} newUser - The new user.
              */
-            signUp(newUser: ProfileTest): Chainable<string>
+            signUp(newUser: AuthData): Chainable<string>
+
+            /**
+             * Custom command to reset supabase
+             */
+            resetSupabase(): boolean
         }
     }
 }

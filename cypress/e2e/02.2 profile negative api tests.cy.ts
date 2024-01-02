@@ -1,17 +1,26 @@
 import {supabaseClient} from "../../src/app/auth/supabase-client";
 import {POSTGRES_ERRORS} from "../fixtures/postgres_errors";
+import {AuthTokenResponse} from "@supabase/supabase-js";
+import {AUTH_DATA1, AUTH_DATA2, AuthData} from "../../seed_and_test_data/01_test_auth";
 
-describe(`Negative api tests for profile_counter table show that `, async () => {
+const signedInUserAuth: AuthData = AUTH_DATA1;
+const otherUser: AuthData = AUTH_DATA2;
+
+describe(`Negative api tests for profile_counter table show that `, async (): Promise<void> => {
     let user_id: string | undefined;
     let token: string | undefined;
-    const TEST_ID = '42e58ca1-2eb8-4651-93c2-cefba2e32f42';
+    const TEST_ID: string = otherUser.id;
+
+    before((): void => {
+        cy.resetSupabase()
+    })
 
     beforeEach(async (): Promise<void> => {
         cy.visit('landing/sign-in');
-        const response = await supabaseClient.auth.signInWithPassword(
+        const response: AuthTokenResponse = await supabaseClient.auth.signInWithPassword(
             {
-                email: 'follow@seed.com',
-                password: '12345678',
+                email: signedInUserAuth.email,
+                password: signedInUserAuth.password,
             }
         )
         user_id = response.data.user?.id

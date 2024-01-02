@@ -1,22 +1,28 @@
-import {ProfileTest} from "../fixtures/profile";
-import {seedReadUser3, seedWriteUser} from "../fixtures/user";
 import {Size, Sizes} from "../fixtures/size";
+import {AUTH_DATA1, AuthData} from "../../seed_and_test_data/01_test_auth";
+import {Profile, PROFILE1, PROFILE2} from "../../seed_and_test_data/02_test_profiles";
 
-const seedUser2: ProfileTest = seedReadUser3;
+const userWhoEditsItsProfileAuthData: AuthData = AUTH_DATA1;
+const userWhoEditsItsProfileProfileData: Profile = PROFILE1;
+const userWhosProfileIsChecked: Profile = PROFILE2;
 
 Sizes.forEach((size: Size): void => {
-    describe(`Profile tests with screen size ${size.width} show that users can `, () => {
+    describe(`Profile tests with screen size ${size.width} show that users can `, (): void => {
+
+        before((): void => {
+            cy.resetSupabase()
+        })
 
         beforeEach((): void => {
             cy.viewport(size.width, size.height)
             cy.visit('landing/sign-in');
-            cy.signIn(seedWriteUser);
+            cy.signIn(userWhoEditsItsProfileAuthData);
         })
 
-        const newFirstName = seedWriteUser.first_name as string + Math.random();
-        const newLastName = seedWriteUser.last_name as string + Math.random();
+        const newFirstName: string = userWhoEditsItsProfileProfileData.first_name as string + Math.random();
+        const newLastName: string = userWhoEditsItsProfileProfileData.last_name as string + Math.random();
 
-        it('edit its own profile data.', () => {
+        it('edit its own profile data.', (): void => {
             cy.getDataCy('nav-profile-edit', 'nav-profile-edit-desktop')
             .filter(':visible')
             .first()
@@ -24,7 +30,6 @@ Sizes.forEach((size: Size): void => {
             cy.getDataCy('edit-instruction')
             .shouldBeVisible()
 
-            //  cy.intercept('POST', 'https://abcwkgkiztruxwvfwabf.supabase.co/rest/v1/profiles').
             cy.interceptSupabaseCall('update_user').as('updateProfile')
             cy.getDataCy('firstName').clear()
             cy.getDataCy('firstName').type(newFirstName)
@@ -37,14 +42,14 @@ Sizes.forEach((size: Size): void => {
             cy.wait('@updateProfile')
         })
 
-        it('view its own profile.', () => {
+        it('view its own profile.', (): void => {
             cy.getDataCy('first-name')
             .shouldBeVisible()
             .contains(newFirstName)
             .contains(newLastName)
         })
 
-        it('change its profile image.', () => {
+        it('change its profile image.', (): void => {
             cy.getDataCy('nav-profile-edit', 'nav-profile-edit-desktop')
             .filter(':visible')
             .first()
@@ -74,27 +79,27 @@ Sizes.forEach((size: Size): void => {
 
         it('view other user profiles', (): void => {
             cy.openSearchTab()
-            cy.getDataCy('search').type(seedUser2.first_name as string)
+            cy.getDataCy('search').type(userWhosProfileIsChecked.first_name as string)
             cy.getDataCy('user-search-results')
             .find('polity-search-profile-result')
             .shouldBeVisible()
-            .contains(seedUser2.first_name as string)
+            .contains(userWhosProfileIsChecked.first_name as string)
             .click()
             cy.getDataCy('first-name')
             .shouldBeVisible()
-            .contains(seedUser2.first_name as string)
+            .contains(userWhosProfileIsChecked.first_name as string)
             cy.getDataCy('first-name')
             .shouldBeVisible()
-            .contains(seedUser2.last_name as string)
+            .contains(userWhosProfileIsChecked.last_name as string)
         })
 
         it('not edit other users profiles', (): void => {
             cy.openSearchTab()
-            cy.getDataCy('search').type(seedUser2.first_name as string)
+            cy.getDataCy('search').type(userWhosProfileIsChecked.first_name as string)
             cy.getDataCy('user-search-results')
             .find('polity-search-profile-result')
             .shouldBeVisible()
-            .contains(seedUser2.first_name as string)
+            .contains(userWhosProfileIsChecked.first_name as string)
             .click()
             cy.getDataCy('nav-profile-edit', 'nav-profile-edit-desktop')
             .should('not.exist')

@@ -1,9 +1,9 @@
 import {Component, signal, WritableSignal} from '@angular/core';
 import {SessionStoreService} from "../../../auth/services/session.store.service";
-import {Profile} from "../../../../../cypress/fixtures/profile";
 import {LinkCardComponent} from "../../../ui/link-card/link-card.component";
 import {ProfileActionService} from "../../profile/action-store-services/profile.action.service";
 import {ProfileStoreService} from "../../profile/action-store-services/profile.store.service";
+import {FunctionSingleReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 
 @Component({
     selector: 'polity-home',
@@ -17,7 +17,7 @@ import {ProfileStoreService} from "../../profile/action-store-services/profile.s
 })
 export class HomeComponent {
     protected sessionId: string | null;
-    protected profile: WritableSignal<Profile | null> = signal(null)
+    protected profile: WritableSignal<FunctionSingleReturn<'select_user'> | null> = signal(null)
     protected isProfileLoading: WritableSignal<boolean> = signal(true)
 
     constructor(

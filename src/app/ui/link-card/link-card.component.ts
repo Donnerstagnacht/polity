@@ -1,7 +1,7 @@
 import {Component, Input, signal, WritableSignal} from '@angular/core';
 import {Router} from "@angular/router";
-import {Profile} from "../../../../cypress/fixtures/profile";
 import {TuiIslandModule} from "@taiga-ui/kit";
+import {FunctionSingleReturn} from "../../../../supabase/types/supabase.shorthand-types";
 
 @Component({
     selector: 'polity-link-card',
@@ -21,7 +21,7 @@ export class LinkCardComponent {
     @Input({required: true}) public sessionId: string | null = null;
     @Input({required: true}) public isLoading: WritableSignal<boolean> = signal(true);
     @Input({required: true}) public profile: WritableSignal<
-        Profile | null | undefined
+        FunctionSingleReturn<'select_user'> | null | undefined
     > = signal(
         null
     )

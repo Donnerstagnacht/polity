@@ -1,10 +1,14 @@
-import {ProfileTest} from "../fixtures/profile";
 import {Size, Sizes} from "../fixtures/size";
-import {userCreatedByCypress} from "../fixtures/user";
+import {userCreatedByCypress} from "../../seed_and_test_data/user_created_by_cypress";
+import {AuthData} from "../../seed_and_test_data/01_test_auth";
 
-const newUser: ProfileTest = userCreatedByCypress;
+const newUser: AuthData = userCreatedByCypress;
 Sizes.forEach((size: Size): void => {
-    describe(`Auth tests with screen size ${size.width} show that users can `, () => {
+    describe(`Auth tests with screen size ${size.width} show that users can `, (): void => {
+        before((): void => {
+            cy.resetSupabase()
+        })
+
         beforeEach((): void => {
             cy.viewport(size.width, size.height)
             cy.clearLocalStorage()

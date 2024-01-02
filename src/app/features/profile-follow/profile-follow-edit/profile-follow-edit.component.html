@@ -37,6 +37,8 @@
 
         [bonusKeys]="['last_name']"
         [dataCyTags]="['follower_profile_image', 'follower_first_name', 'follower_remove']"
+        [dataCyTagsHeadline]="['follower_profile_image_headline', 'follower_first_name_headline',
+        'follower_remove_headline']"
         [dataKeysForColumns]="['profile_image', 'first_name', 'id']"
         [data]="followersOfUser"
         [headings]="['Foto', 'test', 'Entfernen']"
@@ -50,9 +52,11 @@
         (remove)="removeFollowing($event)"
         [bonusKeys]="['last_name']"
         [dataCyTags]="['following_profile_image', 'following_first_name', 'following_remove']"
+        [dataCyTagsHeadline]="['following_profile_image_headline', 'following_first_name_headline',
+        'following_remove_headline']"
         [dataKeysForColumns]="['profile_image', 'first_name', 'id']"
         [data]="followingsOfUser"
-        [headings]="['Foto', 'test', 'Entfernen']"
+        [headings]="['Foto', 'Name', 'Entfernen']"
         [isLoading]="isFollowingLoading"
     >
     </polity-table-three-icon-text-delete>

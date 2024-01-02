@@ -1,11 +1,12 @@
 import {Size, Sizes} from "../fixtures/size";
-import {ProfileTest} from "../fixtures/profile";
-import {seedReadUser2} from "../fixtures/user";
+import {AUTH_DATA1, AuthData} from "../../seed_and_test_data/01_test_auth";
 
-const profile1: ProfileTest = seedReadUser2;
+const profile1: AuthData = AUTH_DATA1;
 
 Sizes.forEach((size: Size): void => {
-    describe(`App navigation tests with screen size ${size.width} show that users can `, () => {
+    describe(`App navigation tests with screen size ${size.width} show that users can `, (): void => {
+        before(() => {
+        })
 
         beforeEach((): void => {
             cy.viewport(size.width, size.height)

@@ -2,7 +2,6 @@ import {Component, signal, WritableSignal} from '@angular/core';
 import {TuiFileLike, TuiInputFilesModule} from "@taiga-ui/kit";
 import {from, Observable, of, Subject, switchMap} from "rxjs";
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
-import {Profile} from "../../../../../cypress/fixtures/profile";
 import {CommonModule} from "@angular/common";
 import {ProfileActionService} from "../action-store-services/profile.action.service";
 import {ProfileStoreService} from "../action-store-services/profile.store.service";
@@ -27,7 +26,7 @@ export class ProfileImageUploadComponent {
     protected loadedFiles$: Observable<TuiFileLike | null> = this.imageControl.valueChanges.pipe(
         switchMap(file => (file ? this.returnRequestAsObservable(file) : of(null))),
     );
-    protected profileWriteable: WritableSignal<Profile | null | undefined>;
+    protected profileWriteable: WritableSignal<FunctionSingleReturn<'select_user'> | null | undefined>;
     private avatarUrl: string = '';
 
     constructor(
