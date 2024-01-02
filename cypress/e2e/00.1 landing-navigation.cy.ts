@@ -1,7 +1,9 @@
 import {Size, Sizes} from "../fixtures/size";
 
 Sizes.forEach((size: Size): void => {
-    describe(`Landing page tests with screen size ${size.width} show that users can `, () => {
+    describe(`Landing page tests with screen size ${size.width} show that users can `, (): void => {
+        before((): void => {
+        })
 
         beforeEach((): void => {
             cy.viewport(size.width, size.height)

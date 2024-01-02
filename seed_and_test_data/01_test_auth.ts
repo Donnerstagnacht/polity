@@ -6,6 +6,7 @@ export type AuthData = {
     aud: string,
     role: string,
     email: string,
+    password: string,
     encrypted_password: string,
     email_confirmed_at?: Date | string | undefined,
     invited_at?: Date | string | undefined,

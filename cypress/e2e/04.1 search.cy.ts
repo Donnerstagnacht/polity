@@ -1,17 +1,20 @@
 import {Size, Sizes} from "../fixtures/size";
-import {ProfileTest} from "../fixtures/profile";
-import {seedReadUser2} from "../fixtures/user";
+import {AUTH_DATA1, AuthData} from "../../seed_and_test_data/01_test_auth";
+import {Profile, PROFILE1} from "../../seed_and_test_data/02_test_profiles";
 
-const loggedInUser: ProfileTest = seedReadUser2;
-const searchedUser: ProfileTest = seedReadUser2;
+const userWhoSearches: AuthData = AUTH_DATA1;
+const searchedUser: Profile = PROFILE1;
 
 Sizes.forEach((size: Size): void => {
     describe(`Search tests with screen size ${size.width} show that users can `, () => {
+        before((): void => {
+            cy.resetSupabase()
+        })
 
         beforeEach((): void => {
             cy.viewport(size.width, size.height)
             cy.visit('landing/sign-in');
-            cy.signIn(loggedInUser);
+            cy.signIn(userWhoSearches);
         })
 
         it('search other users by their first name.', (): void => {

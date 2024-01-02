@@ -8,10 +8,6 @@ WITH
                 },
                 {
                     "follower": "ff6cc644-ec9e-45dc-a98a-1186e091674f",
-                    "following": "b24f9e68-8fac-4525-b001-fffb91704d68"
-                },
-                {
-                    "follower": "ff6cc644-ec9e-45dc-a98a-1186e091674f",
                     "following": "71aa5d19-43d8-4063-839d-114a0ad49ed7"
                 },
                 {

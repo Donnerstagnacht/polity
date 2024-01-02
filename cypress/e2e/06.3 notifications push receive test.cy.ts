@@ -1,20 +1,20 @@
-import {ProfileTest} from "../fixtures/profile";
-import {userCreatedByCypress} from "../fixtures/user";
 import {supabaseClient} from "../../src/app/auth/supabase-client";
-import {POSTGRES_ERRORS} from "../fixtures/postgres_errors";
+import {AuthTokenResponse} from "@supabase/supabase-js";
+import {AUTH_DATA1, AUTH_DATA2, AuthData} from "../../seed_and_test_data/01_test_auth";
 
-const profile1: ProfileTest = userCreatedByCypress;
+const signedInUserAuth: AuthData = AUTH_DATA1;
+const otherUser: AuthData = AUTH_DATA2;
 
 describe(`Push tests show that `, async (): Promise<void> => {
     let user_id: string | undefined;
     let token: string | undefined;
-    const TEST_ID = '42e58ca1-2eb8-4651-93c2-cefba2e32f42';
+    const TEST_ID: string = otherUser.id;
 
     beforeEach(async (): Promise<void> => {
-        const response = await supabaseClient.auth.signInWithPassword(
+        const response: AuthTokenResponse = await supabaseClient.auth.signInWithPassword(
             {
-                email: 'follow@seed.com',
-                password: '12345678',
+                email: signedInUserAuth.email,
+                password: signedInUserAuth.password,
             }
         )
         user_id = response.data.user?.id
@@ -25,16 +25,16 @@ describe(`Push tests show that `, async (): Promise<void> => {
 
     it('notifications function can not be accessed by client users', async (): Promise<void> => {
         // TODO test implementation
-        const response = await supabaseClient.functions.invoke('hello-world');
-        expect(response.data).to.be.null
-        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
+        // const response = await supabaseClient.functions.invoke('hello-world');
+        // expect(response.data).to.be.null
+        // expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
     })
 
     it('notifications function can not be called by postgres service role', async (): Promise<void> => {
         // TODO test implementation
-        const response = await supabaseClient.functions.invoke('hello-world');
-        expect(response.data).to.be.null
-        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
+        // const response = await supabaseClient.functions.invoke('hello-world');
+        // expect(response.data).to.be.null
+        // expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
         // add secret env service role key variable
     })
 

@@ -10,21 +10,21 @@ WITH
                 },
                 {
                     "id": "b24f9e68-8fac-4525-b001-fffb91704d68",
-                    "first_sign_in": "TRUE",
+                    "first_sign_in": "FALSE",
                     "skip_tutorial": "FALSE",
-                    "last_tutorial": "welcome"
+                    "last_tutorial": "profile"
                 },
                 {
                     "id": "71aa5d19-43d8-4063-839d-114a0ad49ed7",
-                    "first_sign_in": "TRUE",
+                    "first_sign_in": "FALSE",
                     "skip_tutorial": "FALSE",
-                    "last_tutorial": "welcome"
+                    "last_tutorial": "search"
                 },
                 {
                     "id": "94875c0e-fa45-4504-828a-6ec9f21a49ca",
-                    "first_sign_in": "TRUE",
-                    "skip_tutorial": "FALSE",
-                    "last_tutorial": "welcome"
+                    "first_sign_in": "FALSE",
+                    "skip_tutorial": "TRUE",
+                    "last_tutorial": "search"
                 },
                 {
                     "id": "2d196d44-ae7f-4999-b080-e8a0db639c65",
@@ -62,7 +62,8 @@ WITH
                     "skip_tutorial": "FALSE",
                     "last_tutorial": "welcome"
                 }
-            ]'::json)
+            ]
+            '::json)
     )
 UPDATE authenticated_access.assistants AS a
 SET

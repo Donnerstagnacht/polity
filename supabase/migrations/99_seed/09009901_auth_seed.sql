@@ -11,6 +11,7 @@ WITH
                     "aud": "authenticated",
                     "role": "authenticated",
                     "email": "user1@gmail.com",
+                    "password": "12345678",
                     "encrypted_password": "$2a$10$X2B4kwBYyMzt54HgToaMvekAz1lCy8CvMV7FMoU3IjPXnsl8PjBMy",
                     "email_confirmed_at": "2024-01-01 16:15:00.697049+00",
                     "invited_at": "2022-06-24T17:22:59.653Z",
@@ -52,6 +53,7 @@ WITH
                     "aud": "authenticated",
                     "role": "authenticated",
                     "email": "user2@gmail.com",
+                    "password": "12345678",
                     "encrypted_password": "$2a$10$X2B4kwBYyMzt54HgToaMvekAz1lCy8CvMV7FMoU3IjPXnsl8PjBMy",
                     "email_confirmed_at": "2024-01-01 16:15:00.697049+00",
                     "raw_app_meta_data": {
@@ -68,6 +70,7 @@ WITH
                     "aud": "authenticated",
                     "role": "authenticated",
                     "email": "user3@gmail.com",
+                    "password": "12345678",
                     "encrypted_password": "$2a$10$X2B4kwBYyMzt54HgToaMvekAz1lCy8CvMV7FMoU3IjPXnsl8PjBMy",
                     "email_confirmed_at": "2024-01-01 16:15:00.697049+00",
                     "raw_app_meta_data": {
@@ -84,6 +87,7 @@ WITH
                     "aud": "authenticated",
                     "role": "authenticated",
                     "email": "user4@gmail.com",
+                    "password": "12345678",
                     "encrypted_password": "$2a$10$X2B4kwBYyMzt54HgToaMvekAz1lCy8CvMV7FMoU3IjPXnsl8PjBMy",
                     "email_confirmed_at": "2024-01-01 16:15:00.697049+00",
                     "raw_app_meta_data": {
@@ -100,6 +104,7 @@ WITH
                     "aud": "authenticated",
                     "role": "authenticated",
                     "email": "user5@gmail.com",
+                    "password": "12345678",
                     "encrypted_password": "$2a$10$X2B4kwBYyMzt54HgToaMvekAz1lCy8CvMV7FMoU3IjPXnsl8PjBMy",
                     "email_confirmed_at": "2024-01-01 16:15:00.697049+00",
                     "raw_app_meta_data": {
@@ -116,6 +121,7 @@ WITH
                     "aud": "authenticated",
                     "role": "authenticated",
                     "email": "user6@gmail.com",
+                    "password": "12345678",
                     "encrypted_password": "$2a$10$X2B4kwBYyMzt54HgToaMvekAz1lCy8CvMV7FMoU3IjPXnsl8PjBMy",
                     "email_confirmed_at": "2024-01-01 16:15:00.697049+00",
                     "raw_app_meta_data": {
@@ -132,6 +138,7 @@ WITH
                     "aud": "authenticated",
                     "role": "authenticated",
                     "email": "user7@gmail.com",
+                    "password": "12345678",
                     "encrypted_password": "$2a$10$X2B4kwBYyMzt54HgToaMvekAz1lCy8CvMV7FMoU3IjPXnsl8PjBMy",
                     "email_confirmed_at": "2024-01-01 16:15:00.697049+00",
                     "raw_app_meta_data": {
@@ -148,6 +155,7 @@ WITH
                     "aud": "authenticated",
                     "role": "authenticated",
                     "email": "user8@gmail.com",
+                    "password": "12345678",
                     "encrypted_password": "$2a$10$X2B4kwBYyMzt54HgToaMvekAz1lCy8CvMV7FMoU3IjPXnsl8PjBMy",
                     "email_confirmed_at": "2024-01-01 16:15:00.697049+00",
                     "raw_app_meta_data": {
@@ -164,6 +172,7 @@ WITH
                     "aud": "authenticated",
                     "role": "authenticated",
                     "email": "user9@gmail.com",
+                    "password": "12345678",
                     "encrypted_password": "$2a$10$X2B4kwBYyMzt54HgToaMvekAz1lCy8CvMV7FMoU3IjPXnsl8PjBMy",
                     "email_confirmed_at": "2024-01-01 16:15:00.697049+00",
                     "raw_app_meta_data": {
@@ -180,6 +189,7 @@ WITH
                     "aud": "authenticated",
                     "role": "authenticated",
                     "email": "user10@gmail.com",
+                    "password": "12345678",
                     "encrypted_password": "$2a$10$X2B4kwBYyMzt54HgToaMvekAz1lCy8CvMV7FMoU3IjPXnsl8PjBMy",
                     "email_confirmed_at": "2024-01-01 16:15:00.697049+00",
                     "raw_app_meta_data": {
@@ -190,7 +200,8 @@ WITH
                     },
                     "raw_user_meta_data": {}
                 }
-            ]'::json)
+            ]
+            '::json)
     )
 INSERT
 INTO

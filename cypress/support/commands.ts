@@ -12,9 +12,11 @@
 //
 // -- This is a parent command --
 
-import {ProfileTest} from "../fixtures/profile";
 import {FunctionName} from "../../supabase/types/supabase.shorthand-types";
 import {environment} from "../../src/environments/environment";
+import {Profile} from "../../seed_and_test_data/02_test_profiles";
+import {ProfileCounter} from "../../seed_and_test_data/04_test_profile_counters";
+import {AuthData} from "../../seed_and_test_data/01_test_auth";
 import Chainable = Cypress.Chainable;
 
 /**
@@ -28,18 +30,18 @@ Cypress.Commands.add('getDataCy', (value: string, value2?: string): void => {
 
 Cypress.Commands.add('interceptSupabaseCall', (endPoint: FunctionName): void => {
     const apiUrl = environment.supabaseProjectUrl;
-    cy.intercept('POST', apiUrl + endPoint)
+    cy.intercept('POST', apiUrl + '/rest/v1/rpc/' + endPoint)
 });
 
-Cypress.Commands.add('shouldBeVisible', {prevSubject: 'element'}, (subject) => {
+Cypress.Commands.add('shouldBeVisible', {prevSubject: 'element'}, (subject): void => {
     cy.wrap(subject).should('be.visible');
 });
 
-Cypress.Commands.add('andContain', {prevSubject: 'element'}, (subject, value) => {
+Cypress.Commands.add('andContain', {prevSubject: 'element'}, (subject, value): void => {
     cy.wrap(subject).and('contain', value);
 });
 
-Cypress.Commands.add('signIn', (profile: ProfileTest) => {
+Cypress.Commands.add('signIn', (profile: AuthData): void => {
     cy.get('input').clear()
     cy.get('[data-cy="email"]').type(profile.email)
     cy.get('[data-cy="password"]').clear()
@@ -47,15 +49,14 @@ Cypress.Commands.add('signIn', (profile: ProfileTest) => {
     cy.get('[data-cy="sign-in"]').click()
 });
 
-Cypress.Commands.add('openSearchTab', () => {
+Cypress.Commands.add('openSearchTab', (): void => {
     cy.getDataCy('nav-search', 'nav-search-desktop')
     .filter(':visible')
     .first()
     .click()
 });
 
-Cypress.Commands.add('searchUser', (firstName: string) => {
-    // y.pause()
+Cypress.Commands.add('searchUser', (firstName: string): void => {
     cy.openSearchTab()
     cy.getDataCy('search').type(firstName)
     cy.getDataCy('user-search-results')
@@ -67,9 +68,11 @@ Cypress.Commands.add('searchUser', (firstName: string) => {
 Cypress.Commands.add(
     'followUser',
     (
-        followingUser: ProfileTest,
-        followUser: ProfileTest
-    ) => {
+        userWhoIsFollowedProfile: Profile,
+        userWhoIsFollowedCounter: ProfileCounter,
+        userWhoFollowsProfile: Profile,
+        userWhoFollowsCounter: ProfileCounter
+    ): void => {
 
         cy.interceptSupabaseCall('select_user')
         .as('selectUser')
@@ -78,23 +81,24 @@ Cypress.Commands.add(
         cy.interceptSupabaseCall('select_following_counter')
         .as('followingCounter')
 
-        cy.searchUser(followingUser.first_name as string)
+        cy.searchUser(userWhoIsFollowedProfile.first_name as string)
         .click()
-        cy.wait(['@followingCounter', '@isFollowing', '@selectUser'])
+        // cy.wait(['@followingCounter', '@isFollowing', '@selectUser'])
 
         cy.getDataCy('first-name')
         .shouldBeVisible()
-        .contains(followingUser.first_name as string)
+        .contains(userWhoIsFollowedProfile.first_name as string)
 
         cy.interceptSupabaseCall('follow_transaction')
         .as('followTransaction')
 
         cy.getDataCy('followButton')
+        .scrollIntoView()
         .shouldBeVisible()
         .should('have.text', 'FOLLOW ')
         .click()
 
-        cy.wait('@followTransaction')
+        // cy.wait('@followTransaction')
         cy.contains('Successful followed')
         .should('be.visible')
 
@@ -105,22 +109,22 @@ Cypress.Commands.add(
 
         cy.getDataCy('followerCounter')
         .shouldBeVisible()
-        .contains(followingUser.follower_counter + 1)
+        .contains(userWhoIsFollowedCounter.follower_counter + 1)
 
-        cy.searchUser(followUser.first_name as string)
+        cy.searchUser(userWhoFollowsProfile.first_name as string)
         .click()
 
         cy.getDataCy('first-name')
         .shouldBeVisible()
-        .contains(followUser.first_name as string)
+        .contains(userWhoFollowsProfile.first_name as string)
 
         cy.getDataCy('followingCounter')
         .shouldBeVisible()
-        .contains(followUser.following_counter + 1)
+        .contains(userWhoFollowsCounter.following_counter + 1)
     }
 )
 
-Cypress.Commands.add('navigateToHome', () => {
+Cypress.Commands.add('navigateToHome', (): void => {
     cy.getDataCy('nav-home', 'nav-home-desktop')
     .filter(':visible')
     .first()
@@ -130,7 +134,7 @@ Cypress.Commands.add('navigateToHome', () => {
     .contains('Dein Profil und Gruppen.')
 })
 
-Cypress.Commands.add('signOut', (signedInUser: ProfileTest) => {
+Cypress.Commands.add('signOut', (signedInUser: AuthData): void => {
     cy.navigateToHome()
     cy.getDataCy('home-to-profile')
     .shouldBeVisible()
@@ -145,7 +149,7 @@ Cypress.Commands.add('signOut', (signedInUser: ProfileTest) => {
     cy.url().should('contain', 'sign-in')
 })
 
-Cypress.Commands.add('signUp', (newUser: ProfileTest): Chainable<string> => {
+Cypress.Commands.add('signUp', (newUser: AuthData): Chainable<string> => {
     const randomNumber: number = Math.floor(Math.random() * 10000000);
     newUser.email = 'test' + randomNumber + '@gmail.com';
     cy.visit('landing/signup');
@@ -163,3 +167,8 @@ Cypress.Commands.add('signUp', (newUser: ProfileTest): Chainable<string> => {
     return cy.wrap(newUser.email);
 })
 
+Cypress.Commands.add('resetSupabase', (): void => {
+    cy.exec('echo Y | npx supabase db reset --linked').then((result: Cypress.Exec): boolean => {
+        return true;
+    });
+});

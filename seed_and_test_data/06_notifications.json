@@ -7,12 +7,6 @@
     },
     {
         "sender": "ff6cc644-ec9e-45dc-a98a-1186e091674f",
-        "receiver": "b24f9e68-8fac-4525-b001-fffb91704d68",
-        "type_of_notification": "follow_from_user",
-        "read_by_receiver": "FALSE"
-    },
-    {
-        "sender": "ff6cc644-ec9e-45dc-a98a-1186e091674f",
         "receiver": "71aa5d19-43d8-4063-839d-114a0ad49ed7",
         "type_of_notification": "follow_from_user",
         "read_by_receiver": "FALSE"
