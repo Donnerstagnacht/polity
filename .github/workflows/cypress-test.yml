@@ -2,9 +2,9 @@ name: cypress-test.yml
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - '*'
+#  push:
+#    branches:
+#      - '*'
       
 jobs:
   test:
