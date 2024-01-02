@@ -168,7 +168,14 @@ Cypress.Commands.add('signUp', (newUser: AuthData): Chainable<string> => {
 })
 
 Cypress.Commands.add('resetSupabase', (): void => {
-    cy.exec('echo Y | npx supabase db reset --linked').then((result: Cypress.Exec): boolean => {
-        return true;
-    });
+    // Tries to reset the database 3 times
+    try {
+        cy.exec('echo Y | npx supabase db reset --linked')
+    } catch (error) {
+        try {
+            cy.exec('echo Y | npx supabase db reset --linked')
+        } catch (error) {
+            cy.exec('echo Y | npx supabase db reset --linked')
+        }
+    }
 });

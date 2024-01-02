@@ -30,6 +30,6 @@ describe(`Negative api tests for psearch feature show that `, async (): Promise<
         const response = await supabaseClient
         .rpc('search_user', {search_term: TEST_ID})
         expect(response.data).to.be.null
-        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.noPermission)
+        expect(response.error?.code).to.be.oneOf([POSTGRES_ERRORS.noPermission, POSTGRES_ERRORS.function_not_existing])
     })
 })

@@ -25,7 +25,7 @@ const userWhoIsUnFollowedCounter: ProfileCounter = PROFILE_COUNTER3;
 // These test depend on each other, e.g. unfollow test only work if follow test works
 
 Sizes.forEach((size: Size): void => {
-    describe(`Profile follow tests with screen size ${size.width} show that users can `, () => {
+    describe(`Profile follow tests with screen size ${size.width} show that users can `, (): void => {
         before((): void => {
         })
 
@@ -113,14 +113,30 @@ Sizes.forEach((size: Size): void => {
 
         it('remove a following from management tab', (): void => {
             cy.navigateToHome();
+            cy.interceptSupabaseCall('check_if_following')
+            .as('isFollowing')
+            cy.interceptSupabaseCall('select_following_counter')
+            .as('followingCounter')
+            cy.interceptSupabaseCall('select_user')
+            .as('user')
             cy.contains(userWhoFollowsProfile.first_name as string)
             .click();
+            cy.wait(['@isFollowing', '@followingCounter', '@user'])
 
             cy.interceptSupabaseCall('select_following_of_user').as('loadFollowingOfUser')
 
-            cy.getDataCy('nav-follower-edit')
-            .shouldBeVisible()
-            .click()
+            console.log('size width', size.width)
+            console.log('sizes[2] width', Sizes[2].width)
+
+            if (size.width === Sizes[2].width) {
+                cy.getDataCy('nav-follower-edit-desktop')
+                .shouldBeVisible()
+                .click()
+            } else {
+                cy.getDataCy('nav-follower-edit')
+                .shouldBeVisible()
+                .click()
+            }
             cy.wait(['@loadFollowingOfUser'])
 
             cy.getDataCy('show-followings')
@@ -142,17 +158,29 @@ Sizes.forEach((size: Size): void => {
             .should('not.exist')
         })
 
-        it('remove a follower from management tab', () => {
+        it('remove a follower from management tab', (): void => {
             cy.navigateToHome();
-
+            cy.interceptSupabaseCall('check_if_following')
+            .as('isFollowing')
+            cy.interceptSupabaseCall('select_following_counter')
+            .as('followingCounter')
+            cy.interceptSupabaseCall('select_user')
+            .as('user')
             cy.getDataCy('home-to-profile')
             .shouldBeVisible()
             .click();
+            cy.wait(['@isFollowing', '@followingCounter', '@user'])
 
             cy.interceptSupabaseCall('select_follower_of_user').as('loadFollowerOfUser')
-            cy.getDataCy('nav-follower-edit')
-            .shouldBeVisible()
-            .click()
+            if (size.width === Sizes[2].width) {
+                cy.getDataCy('nav-follower-edit-desktop')
+                .shouldBeVisible()
+                .click()
+            } else {
+                cy.getDataCy('nav-follower-edit')
+                .shouldBeVisible()
+                .click()
+            }
             cy.wait(['@loadFollowerOfUser'])
 
             cy.getDataCy('show-follower')

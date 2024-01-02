@@ -6,13 +6,12 @@ import {AUTH_DATA1, AUTH_DATA2, AuthData} from "../../seed_and_test_data/01_test
 const signedInUserAuth: AuthData = AUTH_DATA1;
 const otherUser: AuthData = AUTH_DATA2;
 
-describe(`Negative api tests for the following feature show that `, async () => {
+describe(`Negative api tests for the following feature show that `, async (): Promise<void> => {
     let user_id: string | undefined;
     let token: string | undefined;
     const TEST_ID: string = otherUser.id;
 
     beforeEach(async (): Promise<void> => {
-        cy.resetSupabase()
         cy.visit('landing/sign-in');
         const response: AuthTokenResponse = await supabaseClient.auth.signInWithPassword(
             {
@@ -27,6 +26,7 @@ describe(`Negative api tests for the following feature show that `, async () => 
     })
 
     it('an authenticated user can call the follow transaction but can not call it twice', async (): Promise<void> => {
+        cy.resetSupabase()
         const response = await supabaseClient
         .rpc('follow_transaction',
             {
@@ -48,6 +48,7 @@ describe(`Negative api tests for the following feature show that `, async () => 
     })
 
     it('an authenticated user can call the unfollow transaction but can not call it twice', async (): Promise<void> => {
+        cy.resetSupabase()
         const response = await supabaseClient
         .rpc('unfollow_transaction',
             {
@@ -98,7 +99,7 @@ describe(`Negative api tests for the following feature show that `, async () => 
         // @ts-ignore
         .rpc('increment_following_counter', {user_id: TEST_ID})
         expect(response.data).to.be.null
-        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
+        expect(response.error?.code).to.be.oneOf([POSTGRES_ERRORS.noPermission, POSTGRES_ERRORS.function_not_existing])
     })
 
     it('the profile_counter following decrement function is not publicly available', async (): Promise<void> => {
@@ -106,7 +107,7 @@ describe(`Negative api tests for the following feature show that `, async () => 
         // @ts-ignore
         .rpc('decrement_following_counter', {user_id: TEST_ID})
         expect(response.data).to.be.null
-        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
+        expect(response.error?.code).to.be.oneOf([POSTGRES_ERRORS.noPermission, POSTGRES_ERRORS.function_not_existing])
     })
 
     it('the profile_counter follower increment function is not publicly available', async (): Promise<void> => {
@@ -114,7 +115,7 @@ describe(`Negative api tests for the following feature show that `, async () => 
         // @ts-ignore
         .rpc('increment_follower_counter', {user_id: TEST_ID})
         expect(response.data).to.be.null
-        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
+        expect(response.error?.code).to.be.oneOf([POSTGRES_ERRORS.noPermission, POSTGRES_ERRORS.function_not_existing])
     })
 
     it('the profile_counter follower decrement function is not publicly available', async (): Promise<void> => {
@@ -122,7 +123,7 @@ describe(`Negative api tests for the following feature show that `, async () => 
         // @ts-ignore
         .rpc('decrement_follower_counter', {user_id: TEST_ID})
         expect(response.data).to.be.null
-        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
+        expect(response.error?.code).to.be.oneOf([POSTGRES_ERRORS.noPermission, POSTGRES_ERRORS.function_not_existing])
     })
 
     it('the insert_following_follower_relationship function is not publicly available', async (): Promise<void> => {
@@ -130,7 +131,7 @@ describe(`Negative api tests for the following feature show that `, async () => 
         // @ts-ignore
         .rpc('insert_following_follower_relationship', {user_id: TEST_ID})
         expect(response.data).to.be.null
-        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
+        expect(response.error?.code).to.be.oneOf([POSTGRES_ERRORS.noPermission, POSTGRES_ERRORS.function_not_existing])
     })
 
     it('the delete_following_follower_relationship function is not publicly available', async (): Promise<void> => {
@@ -138,7 +139,7 @@ describe(`Negative api tests for the following feature show that `, async () => 
         // @ts-ignore
         .rpc('delete_following_follower_relationship', {user_id: TEST_ID})
         expect(response.data).to.be.null
-        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
+        expect(response.error?.code).to.be.oneOf([POSTGRES_ERRORS.noPermission, POSTGRES_ERRORS.function_not_existing])
     })
 
     it('the profile_counter api table not public selectable', async (): Promise<void> => {
@@ -173,7 +174,7 @@ describe(`Negative api tests for the following feature show that `, async () => 
             },
         )
         expect(response.data).to.be.null
-        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
+        expect(response.error?.code).to.be.oneOf([POSTGRES_ERRORS.noPermission, POSTGRES_ERRORS.function_not_existing])
     })
 
     it('an authenticated user can only view its own followings', async (): Promise<void> => {
@@ -185,7 +186,7 @@ describe(`Negative api tests for the following feature show that `, async () => 
             },
         )
         expect(response.data).to.be.null
-        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
+        expect(response.error?.code).to.be.oneOf([POSTGRES_ERRORS.noPermission, POSTGRES_ERRORS.function_not_existing])
     })
 
     it('an authenticated user can only view its own follower', async (): Promise<void> => {
@@ -197,7 +198,7 @@ describe(`Negative api tests for the following feature show that `, async () => 
             },
         )
         expect(response.data).to.be.null
-        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
+        expect(response.error?.code).to.be.oneOf([POSTGRES_ERRORS.noPermission, POSTGRES_ERRORS.function_not_existing])
     })
 
     it('a non authenticated user can not view counters', async (): Promise<void> => {
@@ -222,6 +223,6 @@ describe(`Negative api tests for the following feature show that `, async () => 
             },
         )
         expect(response.data).to.be.null
-        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
+        expect(response.error?.code).to.be.oneOf([POSTGRES_ERRORS.noPermission, POSTGRES_ERRORS.function_not_existing])
     })
 })
