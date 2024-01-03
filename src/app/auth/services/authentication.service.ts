@@ -124,6 +124,12 @@ export class AuthenticationService {
         }
     }
 
+    /**
+     * Updates the email of the user.
+     *
+     * @param {string} newEmail - The new email address to update.
+     * @return {Promise<{ user: User } | unknown>} - A promise that resolves to an an object containing the updated user data or an unknown error.
+     */
     public async updateEmail(newEmail: string): Promise<{ user: User } | unknown> {
         try {
             this.sessionStoreService.loading.startLoading()
@@ -131,7 +137,6 @@ export class AuthenticationService {
             if (userResponse.error) {
                 throw userResponse.error;
             }
-            console.log(userResponse.data)
             this.tuiAlertService.open(
                 'Email erfolgreich geändert. Die Änderung muss in der Alten und Neuen Email-Adresse bestätigt werden' +
                 ' und wird dann beim nächsten Login benötigt.',
@@ -149,6 +154,13 @@ export class AuthenticationService {
         }
     }
 
+    /**
+     * Updates the password of the current user.
+     *
+     * @param {string} newPassword - The new password to be set.
+     * @returns {Promise<{ user: User } | unknown>} A Promise that resolves to either an object containing the
+     * updated user data or an unknown error.
+     */
     public async updatePassword(newPassword: string): Promise<{ user: User } | unknown> {
         try {
             this.sessionStoreService.loading.startLoading()
@@ -156,7 +168,6 @@ export class AuthenticationService {
             if (userResponse.error) {
                 throw userResponse.error;
             }
-            console.log(userResponse.data)
             this.tuiAlertService.open(
                 'Passwort erfolgreich geändert und beim nächsten Login benötigt.',
                 {
@@ -173,6 +184,12 @@ export class AuthenticationService {
         }
     }
 
+    /**
+     * Requests a password reset for the given email address.
+     *
+     * @param {string} emailResetShouldBeSend - The email address to send the password reset to.
+     * @returns {Promise<any>} - A Promise that resolves to the response data, or rejects with an error.
+     */
     public async requestPasswordReset(emailResetShouldBeSend: string): Promise<any> {
         try {
             this.sessionStoreService.loading.startLoading()
@@ -186,7 +203,6 @@ export class AuthenticationService {
             if (userResponse.error) {
                 throw userResponse.error;
             }
-            console.log(userResponse.data)
             this.tuiAlertService.open(
                 'Email erfolgreich versendet. Öffne deinen Email Account.',
                 {
