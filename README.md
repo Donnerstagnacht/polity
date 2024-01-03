@@ -130,11 +130,14 @@
 ├── cypress: End-2-End tests organized by features
 │    ├── e2e: End to end tests ordered by execution
 │    │    └── Feature: according to front end
-│    ├── fixtures: static test files and test data objects
+│    ├── fixtures: specific test variables
 │    └──  support
 │          ├── commands: Definition of cypress commonands
 │          └── index.d.ts: Signature and types of cypress commands
 │       
+├── seed_and_test_data
+│    └── Data used to seed database and set test states
+│
 ├── src
 │    ├── app: Frontend
 │    │    ├── auth: Authentication functionality
