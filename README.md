@@ -81,6 +81,7 @@
       - src/environments/environment.ts
       - supabase/migrations/<all files with webhook>
       - the .bat files
+   Update redirect links in the Auth Service.
    
    Optional: Set up a remote environment on supabase.com
    ```
