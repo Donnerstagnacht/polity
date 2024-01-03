@@ -12,6 +12,8 @@ import {FunctionSingleReturn} from "../../../../../supabase/types/supabase.short
 import {
     NotficationsFromFollowToggleComponent
 } from "../../notifications/notfications-from-follow-toggle/notfications-from-follow-toggle.component";
+import {UpdateEmailComponent} from "../../../auth/update-email/update-email.component";
+import {UpdatePasswordComponent} from "../../../auth/update-password/update-password.component";
 
 @Component({
     selector: 'polity-profile-edit',
@@ -30,7 +32,9 @@ import {
         TuiSvgModule,
         ProfileImageUploadComponent,
         TuiButtonModule,
-        NotficationsFromFollowToggleComponent
+        NotficationsFromFollowToggleComponent,
+        UpdateEmailComponent,
+        UpdatePasswordComponent
     ],
     providers: [
         {

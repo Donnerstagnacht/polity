@@ -7,13 +7,16 @@ import {
     Session,
     SignInWithPasswordCredentials,
     Subscription,
-    SupabaseClient
+    SupabaseClient,
+    User,
+    UserResponse
 } from "@supabase/supabase-js";
 import {SessionStoreService} from "./session.store.service";
 import {Router} from "@angular/router";
 import {DatabaseOverwritten} from "../../../../supabase/types/supabase.modified";
 import {ErrorStoreService} from "../../signal-store/error-store.service";
 import {supabaseClient} from "../supabase-client";
+import {TuiAlertService} from "@taiga-ui/core";
 
 @Injectable({
     providedIn: 'root'
@@ -24,6 +27,7 @@ export class AuthenticationService {
     constructor(
         private readonly notificationService: ErrorStoreService,
         private readonly sessionStoreService: SessionStoreService,
+        private readonly tuiAlertService: TuiAlertService,
         private readonly router: Router
     ) {
     }
@@ -115,6 +119,55 @@ export class AuthenticationService {
                 this.notificationService.updateError(error.message, true);
             }
             return error
+        } finally {
+            this.sessionStoreService.loading.stopLoading()
+        }
+    }
+
+    public async updateEmail(newEmail: string): Promise<{ user: User } | unknown> {
+        try {
+            this.sessionStoreService.loading.startLoading()
+            const userResponse: UserResponse = await this.supabaseClient.auth.updateUser({email: newEmail})
+            if (userResponse.error) {
+                throw userResponse.error;
+            }
+            console.log(userResponse.data)
+            this.tuiAlertService.open(
+                'Email erfolgreich geändert. Die Änderung muss in der Alten und Neuen Email-Adresse bestätigt werden' +
+                ' und wird dann beim nächsten Login benötigt.',
+                {
+                    status: 'success',
+                }).subscribe()
+            return userResponse.data;
+        } catch (error) {
+            if (error instanceof Error) {
+                this.notificationService.updateError(error.message, true);
+            }
+            return error;
+        } finally {
+            this.sessionStoreService.loading.stopLoading()
+        }
+    }
+
+    public async updatePassword(newPassword: string): Promise<{ user: User } | unknown> {
+        try {
+            this.sessionStoreService.loading.startLoading()
+            const userResponse: UserResponse = await this.supabaseClient.auth.updateUser({password: newPassword})
+            if (userResponse.error) {
+                throw userResponse.error;
+            }
+            console.log(userResponse.data)
+            this.tuiAlertService.open(
+                'Passwort erfolgreich geändert und beim nächsten Login benötigt.',
+                {
+                    status: 'success',
+                }).subscribe()
+            return userResponse.data;
+        } catch (error) {
+            if (error instanceof Error) {
+                this.notificationService.updateError(error.message, true);
+            }
+            return error;
         } finally {
             this.sessionStoreService.loading.stopLoading()
         }

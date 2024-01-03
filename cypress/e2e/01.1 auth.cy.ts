@@ -49,5 +49,17 @@ Sizes.forEach((size: Size): void => {
             cy.signIn(newUser);
             cy.signOut(newUser)
         })
+
+        it('update their email address and login with their new email address.', (): void => {
+
+        })
+
+        it('update their password and login with their new password.', (): void => {
+
+        })
+
+        it('reset their password and login with their new password.', (): void => {
+
+        })
     })
 })

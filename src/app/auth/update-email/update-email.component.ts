@@ -1,35 +1,33 @@
 import {Component} from '@angular/core';
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {
     TUI_PASSWORD_TEXTS,
     TUI_VALIDATION_ERRORS,
     TuiFieldErrorPipeModule,
     TuiInputModule,
     TuiInputPasswordModule,
-    tuiInputPasswordOptionsProvider
+    tuiInputPasswordOptionsProvider,
+    TuiIslandModule
 } from "@taiga-ui/kit";
 import {of} from "rxjs";
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AuthenticationService} from "../services/authentication.service";
+import {AsyncPipe} from "@angular/common";
 import {TuiButtonModule, TuiErrorModule, TuiSvgModule, TuiTextfieldControllerModule} from "@taiga-ui/core";
-import {CommonModule} from "@angular/common";
-import {RouterLink} from "@angular/router";
 
 @Component({
-    selector: 'polity-sign-in',
-    templateUrl: './sign-in.component.html',
-    styleUrls: ['./sign-in.component.less'],
+    selector: 'polity-update-email',
     standalone: true,
     imports: [
-        TuiErrorModule,
-        TuiButtonModule,
-        TuiInputPasswordModule,
-        TuiFieldErrorPipeModule,
-        TuiSvgModule,
-        TuiTextfieldControllerModule,
+        AsyncPipe,
         ReactiveFormsModule,
+        TuiButtonModule,
+        TuiErrorModule,
+        TuiFieldErrorPipeModule,
         TuiInputModule,
-        CommonModule,
-        RouterLink
+        TuiInputPasswordModule,
+        TuiIslandModule,
+        TuiSvgModule,
+        TuiTextfieldControllerModule
     ],
     providers: [
         tuiInputPasswordOptionsProvider({
@@ -53,19 +51,17 @@ import {RouterLink} from "@angular/router";
                     of(`Passwort benötigt mindestens ${requiredLength} Zeichen.`)
             }
         }
-    ]
+    ],
+    templateUrl: './update-email.component.html',
+    styleUrl: './update-email.component.less'
 })
-export class SignInComponent {
-    protected signInForm: FormGroup<{
+export class UpdateEmailComponent {
+    protected updateEmailForm: FormGroup<{
         email: FormControl<string | null>,
-        password: FormControl<string | null>
     }> = new FormGroup({
         email: new FormControl(
             'user1@gmail.com',
-            [Validators.required, Validators.email]),
-        password: new FormControl(
-            '12345678',
-            [Validators.required, Validators.minLength(6)]),
+            [Validators.required, Validators.email])
     })
 
     constructor(
@@ -73,11 +69,11 @@ export class SignInComponent {
     ) {
     }
 
-    protected async onSignIn(): Promise<void> {
-        await this.authService.signIn({
-            email: this.signInForm.value.email as string,
-            password: this.signInForm.value.password as string
-        });
-        this.signInForm.reset();
+    protected async onUpdateEmail(): Promise<void> {
+        await this.authService.updateEmail(
+            this.updateEmailForm.value.email as string
+        );
+        this.updateEmailForm.reset();
     }
+
 }
