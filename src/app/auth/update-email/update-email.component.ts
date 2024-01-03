@@ -1,14 +1,11 @@
 import {Component} from '@angular/core';
 import {
-    TUI_PASSWORD_TEXTS,
     TUI_VALIDATION_ERRORS,
     TuiFieldErrorPipeModule,
     TuiInputModule,
     TuiInputPasswordModule,
-    tuiInputPasswordOptionsProvider,
     TuiIslandModule
 } from "@taiga-ui/kit";
-import {of} from "rxjs";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AuthenticationService} from "../services/authentication.service";
 import {AsyncPipe} from "@angular/common";
@@ -30,25 +27,11 @@ import {TuiButtonModule, TuiErrorModule, TuiSvgModule, TuiTextfieldControllerMod
         TuiTextfieldControllerModule
     ],
     providers: [
-        tuiInputPasswordOptionsProvider({
-            icons: {
-                hide: 'tuiIconLockLarge',
-                show: 'tuiIconUnlockLarge'
-            },
-        }),
-        {
-            provide: TUI_PASSWORD_TEXTS,
-            useValue: of([''])
-        },
         {
             provide: TUI_VALIDATION_ERRORS,
             useValue: {
                 required: 'Bitte ausfüllen.',
-                email: 'Bitte eine gültige E-Mail-Adresse eingeben.',
-                minlength: ({requiredLength}: {
-                    requiredLength: string
-                }) =>
-                    of(`Passwort benötigt mindestens ${requiredLength} Zeichen.`)
+                email: 'Bitte eine gültige E-Mail-Adresse eingeben.'
             }
         }
     ],
@@ -60,7 +43,7 @@ export class UpdateEmailComponent {
         email: FormControl<string | null>,
     }> = new FormGroup({
         email: new FormControl(
-            'user1@gmail.com',
+            '',
             [Validators.required, Validators.email])
     })
 

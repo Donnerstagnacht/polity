@@ -172,4 +172,34 @@ export class AuthenticationService {
             this.sessionStoreService.loading.stopLoading()
         }
     }
+
+    public async requestPasswordReset(emailResetShouldBeSend: string): Promise<any> {
+        try {
+            this.sessionStoreService.loading.startLoading()
+            const userResponse: { data: {}; error: null } | {
+                data: null;
+                error: AuthError
+            } = await this.supabaseClient.auth.resetPasswordForEmail(
+                emailResetShouldBeSend,
+                {redirectTo: 'http://localhost:4200/landing/reset-password'}
+            )
+            if (userResponse.error) {
+                throw userResponse.error;
+            }
+            console.log(userResponse.data)
+            this.tuiAlertService.open(
+                'Email erfolgreich versendet. Öffne deinen Email Account.',
+                {
+                    status: 'success',
+                }).subscribe()
+            return userResponse.data;
+        } catch (error) {
+            if (error instanceof Error) {
+                this.notificationService.updateError(error.message, true);
+            }
+            return error;
+        } finally {
+            this.sessionStoreService.loading.stopLoading()
+        }
+    }
 }

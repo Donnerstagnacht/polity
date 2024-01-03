@@ -44,7 +44,6 @@ import {TuiButtonModule, TuiErrorModule, TuiSvgModule, TuiTextfieldControllerMod
             provide: TUI_VALIDATION_ERRORS,
             useValue: {
                 required: 'Bitte ausfüllen.',
-                email: 'Bitte eine gültige E-Mail-Adresse eingeben.',
                 minlength: ({requiredLength}: {
                     requiredLength: string
                 }) =>
@@ -60,7 +59,7 @@ export class UpdatePasswordComponent {
         password: FormControl<string | null>
     }> = new FormGroup({
         password: new FormControl(
-            '12345678',
+            '',
             [Validators.required, Validators.minLength(6)]),
     })
 
