@@ -49,5 +49,20 @@ Sizes.forEach((size: Size): void => {
             cy.signIn(newUser);
             cy.signOut(newUser)
         })
+
+        it('update their email address and login with their new email address.', (): void => {
+            // need a mock of an email confirmation to test this
+            // I could seed this into the database directly
+        })
+
+        it('update their password and login with their new password.', (): void => {
+            // need a mock of an email confirmation to test this
+            // I could seed this into the database directly
+        })
+
+        it('reset their password and login with their new password.', (): void => {
+            // need a mock of an email confirmation to test this
+            // I could seed this into the database directly
+        })
     })
 })
