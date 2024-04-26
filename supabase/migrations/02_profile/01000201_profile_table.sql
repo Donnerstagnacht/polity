@@ -10,7 +10,8 @@ CREATE TABLE IF NOT EXISTS authenticated_access.profiles
     fts                          tsvector GENERATED ALWAYS AS (
                                      TO_TSVECTOR(
                                          'german',
-                                         (first_name || ' ' || last_name))
+                                         (first_name || ' ' || last_name)
+                                     )
                                      ) STORED
         CONSTRAINT username_length CHECK (CHAR_LENGTH(username) >= 3)
 );

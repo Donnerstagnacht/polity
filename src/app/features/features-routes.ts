@@ -35,5 +35,9 @@ export const FEATURE_ROUTES: Routes = [
         path: 'office',
         component: OfficeComponent,
         loadChildren: () => import('./office/office-routes').then(m => m.OFFICE_ROUTES)
+    },
+    {
+        path: 'group',
+        loadChildren: () => import('./group/group-routes').then(m => m.GROUP_ROUTES)
     }
 ]

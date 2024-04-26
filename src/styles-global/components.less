@@ -20,6 +20,16 @@ polity-second-bar-top {
     }
 }
 
+polity-stepper-top {
+    z-index: 1000 !important;
+    top: 0;
+    left: 0;
+    position: fixed;
+    @media @tui-desktop-min {
+        display: none;
+    }
+}
+
 polity-main-bar-side {
     z-index: 1000 !important;
     top: 0;
@@ -40,6 +50,20 @@ polity-second-bar-side {
     right: 0;
     position: fixed;
     width: 80px;
+    @media @tui-mobile {
+        display: none;
+    }
+
+    @media @tui-tablet {
+        display: none;
+    }
+}
+
+polity-stepper-right {
+    z-index: 1000 !important;
+    bottom: 0;
+    right: 0;
+    position: fixed;
     @media @tui-mobile {
         display: none;
     }

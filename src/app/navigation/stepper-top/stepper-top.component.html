@@ -1,0 +1,30 @@
+<div class="stepper-top-container">
+
+    <tui-stepper [activeItemIndex]="1">
+        <button
+            stepState="pass"
+            tuiStep
+        >
+            Finished step
+        </button>
+        <button tuiStep>Simple step</button>
+        <button
+            stepState="error"
+            tuiStep
+        >
+            Error step
+        </button>
+        <button
+            disabled
+            tuiStep
+        >
+            Disabled step
+        </button>
+        <button
+            icon="tuiIconClockLarge"
+            tuiStep
+        >
+            Step with an icon
+        </button>
+    </tui-stepper>
+</div>

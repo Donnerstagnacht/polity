@@ -9,11 +9,18 @@ del /q "%destination_folder%\*.*"
 
 REM Use the copy command to copy the migration files to the destination folder
 copy "%~dp0supabase\migrations\01_migration_preparation_and_schemas\*" "%destination_folder%"
+
 copy "%~dp0supabase\migrations\02_profile\*" "%destination_folder%"
 copy "%~dp0supabase\migrations\03_profile-follow\*" "%destination_folder%"
 copy "%~dp0supabase\migrations\04_search\*" "%destination_folder%"
 copy "%~dp0supabase\migrations\05_assistant\*" "%destination_folder%"
 copy "%~dp0supabase\migrations\06_notifications\*" "%destination_folder%"
+copy "%~dp0supabase\migrations\07_groups\*" "%destination_folder%"
+copy "%~dp0supabase\migrations\08_group_relations\*" "%destination_folder%"
+copy "%~dp0supabase\migrations\09_group_member\*" "%destination_folder%"
+copy "%~dp0supabase\migrations\11_hashtags\*" "%destination_folder%"
+copy "%~dp0supabase\migrations\12_meetings\*" "%destination_folder%"
+
 copy "%~dp0supabase\migrations\98_access_grants\*" "%destination_folder%"
 copy "%~dp0supabase\migrations\99_seed\*" "%destination_folder%"
 

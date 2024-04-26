@@ -1,1 +1,15 @@
-<p>new works!</p>
+<div class="center-element">
+    <div>
+        <h1>Create a new...</h1>
+        <tui-island
+            (click)="onCreateGroup()"
+            [hoverable]="true"
+            class="width-60vw"
+        >
+            <p
+                [attr.data-cy]="'createGroup'"
+                class="tui-text_h6 action">
+                GROUP</p>
+        </tui-island>
+    </div>
+</div>
