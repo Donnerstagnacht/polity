@@ -1,30 +1,23 @@
 <div class="stepper-top-container">
 
-    <tui-stepper [activeItemIndex]="1">
-        <button
-            stepState="pass"
-            tuiStep
-        >
-            Finished step
-        </button>
-        <button tuiStep>Simple step</button>
-        <button
-            stepState="error"
-            tuiStep
-        >
-            Error step
-        </button>
-        <button
-            disabled
-            tuiStep
-        >
-            Disabled step
-        </button>
-        <button
-            icon="tuiIconClockLarge"
-            tuiStep
-        >
-            Step with an icon
-        </button>
+    <tui-stepper
+        (activeItemIndexChange)="onActiveItemChange($event)"
+        [activeIndex]="activeIndex"
+        [activeItemIndex]="activeIndex"
+        [activeItem]="activeItem"
+        [menuItems]="steps"
+        orientation="horizontal"
+        polityAutoscroll>
+        @for (step of steps;track step) {
+            <button
+                [pageScrollDuration]="500"
+                pageScroll href="#{{step.title}}"
+                [stepState]="step.icon"
+                tuiStep
+            >
+                {{ step.title }}
+            </button>
+        }
     </tui-stepper>
+
 </div>

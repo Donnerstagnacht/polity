@@ -1,17 +1,22 @@
-import {Component} from '@angular/core';
+import {Component, signal, WritableSignal} from '@angular/core';
 import {StepperRightComponent} from "../../../navigation/stepper-right/stepper-right.component";
 import {StepperTopComponent} from "../../../navigation/stepper-top/stepper-top.component";
 import {SecondBarTopComponent} from "../../../navigation/second-bar-top/second-bar-top.component";
 import {AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {
+    TuiComboBoxModule,
     TuiDataListWrapperModule,
     TuiFieldErrorPipeModule,
+    TuiFilterByInputPipeModule,
     TuiInputModule,
     TuiInputTagModule,
-    TuiRadioBlockModule
+    TuiRadioBlockModule,
+    TuiSelectModule,
+    TuiStringifyContentPipeModule
 } from "@taiga-ui/kit";
 import {
     TuiButtonModule,
+    TuiDataListModule,
     TuiErrorModule,
     TuiGroupModule,
     TuiHintModule,
@@ -23,16 +28,18 @@ import {NgxPageScrollModule} from "ngx-page-scroll";
 import {AutoscrollDirective} from "../../../navigation/autoscroll.directive";
 import {StepperItem} from "../../../navigation/types-and-interfaces/stepper-item";
 import {CreateGroupService} from "../../new/action-store-services/create-group.service";
-import {delay, Observable, of, startWith, Subject, switchMap} from "rxjs";
-
-const databaseMockData: readonly string[] = [
-    'John Cleese',
-    'Eric Idle',
-    'Michael Palin',
-    'Terry Gilliam',
-    'Terry Jones',
-    'Graham Chapman',
-];
+import {SearchUserActionService} from "../../search/action-store-services/search-user.action.service";
+import {
+    FunctionTableSingleReturn,
+    SupabaseEnum,
+    SupabaseFunctionTableReturn
+} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SearchStoreService} from "../../search/action-store-services/search.store.service";
+import {
+    TableThreeIconTextDeleteComponent
+} from "../../../ui/polity-table/table-three-icon-text-delete/table-three-icon-text-delete.component";
+import {CREATE_GROUP_STEPPER_ITEMS} from "../../../navigation/create-groupe-stepper";
+import {GroupNew} from "../../new/types/group-new";
 
 @Component({
     selector: 'polity-group-new',
@@ -57,13 +64,21 @@ const databaseMockData: readonly string[] = [
         TuiRadioBlockModule,
         TuiGroupModule,
         TuiInputTagModule,
-        TuiDataListWrapperModule
+        TuiDataListWrapperModule,
+        TuiDataListModule,
+        TuiStringifyContentPipeModule,
+        TuiFilterByInputPipeModule,
+        TuiComboBoxModule,
+        TableThreeIconTextDeleteComponent,
+        TuiSelectModule
     ],
     templateUrl: './group-new.component.html',
     styleUrl: './group-new.component.less'
 })
 export class GroupNewComponent {
     value = [];
+    selectedUsers: SupabaseFunctionTableReturn<'search_user'> = []
+    selectedUsersAsSignal: WritableSignal<SupabaseFunctionTableReturn<'search_user'>> = signal([])
     protected createGroupForm: FormGroup<{
         name: FormControl<string | null>,
         level: FormControl<string | null>
@@ -72,58 +87,74 @@ export class GroupNewComponent {
     }> = new FormGroup({
         name: new FormControl('', Validators.required),
         level: new FormControl('', Validators.required),
-        description: new FormControl(''),
+        description: new FormControl('', Validators.required),
         members: new FormControl('')
     })
-    protected menuItems: StepperItem[] = [
-        {
-            title: 'Name',
-            icon: 'normal'
-        },
-        {
-            title: 'Level',
-            icon: 'normal'
-        },
-        {
-            title: 'Description',
-            icon: 'normal'
-        },
-        {
-            title: 'Members',
-            icon: 'pass'
-        },
-        {
-            title: 'Inaugural-Meeting',
-            icon: 'pass'
-        }
-    ]
-    private readonly search$ = new Subject<string>();
-    readonly items$ = this.search$.pipe(
-        switchMap(search =>
-            this.serverRequest(search).pipe(startWith<readonly string[] | null>(null)),
-        ),
-        startWith(databaseMockData),
-    );
+    protected menuItems: StepperItem[] = CREATE_GROUP_STEPPER_ITEMS;
+    protected searchResults: WritableSignal<SupabaseFunctionTableReturn<'search_user'>> = signal([]);
+    protected readonly signal = signal;
 
-    constructor(private createGroupService: CreateGroupService) {
+    constructor(
+        private createGroupService: CreateGroupService,
+        private searchUserActionService: SearchUserActionService,
+        private searchStoreService: SearchStoreService
+    ) {
+        this.searchResults = this.searchStoreService.profilSearchResults.getObjects();
     }
 
     ngOnInit(): void {
-        this.createGroupForm.valueChanges.subscribe((value) => {
+        this.createGroupForm.valueChanges.subscribe((value): void => {
             this.updateMenuItemIcon('name', 0);
             this.updateMenuItemIcon('level', 1);
             this.updateMenuItemIcon('description', 2);
             this.updateMenuItemIcon('members', 3);
             this.updateMenuItemIcon('Inaugural-Meeting', 4);
         })
+
+        this.createGroupForm.controls['members'].valueChanges.subscribe((value: any): void => {
+            if (value) {
+                const choosenObject: FunctionTableSingleReturn<'search_user'> | undefined = this.searchResults().find((searchResult: FunctionTableSingleReturn<'search_user'>): boolean => {
+                    return value.id === searchResult.id
+                })
+
+                if (choosenObject && !this.selectedUsers.some((item: FunctionTableSingleReturn<'search_user'>): boolean => item.id === choosenObject.id)) {
+                    this.selectedUsers.push(choosenObject);
+                    this.selectedUsersAsSignal.update((selectedUser: SupabaseFunctionTableReturn<'search_user'>) => ([...selectedUser, choosenObject]))
+                    this.createGroupForm.controls['members'].setValue(null);
+                } else {
+                    this.createGroupForm.controls['members'].setValue(null);
+                }
+            }
+        })
     }
 
-    onSearchChange(search: string): void {
-        this.search$.next(search);
+    protected onSearchChange(search: string | null): void {
+        if (search) {
+            this.searchUserActionService.searchUser(search);
+        }
     }
 
-    protected onCreateGroup(): void {
-        this.createGroupService.createGroup(this.createGroupForm.value)
+    protected onRemove(id: string): void {
+        this.selectedUsers = this.selectedUsers.filter((item: FunctionTableSingleReturn<'search_user'>): boolean => item.id !== id);
+        this.selectedUsersAsSignal.set(this.selectedUsers);
+    }
+
+    protected stringify(searchResult: { first_name: string; last_name: string }): string {
+        if (searchResult.first_name && searchResult.last_name) {
+            return `${searchResult.first_name} ${searchResult.last_name}`
+        } else {
+            return ''
+        }
+    }
+
+    protected async onCreateGroup(): Promise<void> {
+        const newGroup: GroupNew = {
+            name: this.createGroupForm.value.name as string,
+            level: this.createGroupForm.value.level as SupabaseEnum<'group_level'>,
+            description: this.createGroupForm.value.description as string,
+            invited_members: this.selectedUsers.map((item: FunctionTableSingleReturn<'search_user'>): string => item.id)
+        }
+        await this.createGroupService.createGroup(newGroup);
         this.createGroupForm.reset()
     }
 
@@ -135,16 +166,5 @@ export class GroupNewComponent {
         } else {
             this.menuItems[index].icon = 'error';
         }
-    }
-
-    /**
-     * Server request emulation
-     */
-    private serverRequest(search: string): Observable<readonly string[]> {
-        const result = databaseMockData.filter(item =>
-            item.toLowerCase().includes(search.toLowerCase()),
-        );
-
-        return of(result).pipe(delay(Math.random() * 1000 + 500));
     }
 }

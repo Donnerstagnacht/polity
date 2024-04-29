@@ -1,4 +1,8 @@
-<polity-stepper-top></polity-stepper-top>
+<polity-stepper-top
+    [activeIndex]="0"
+    [activeItem]="menuItems[0].title"
+    [steps]="menuItems"
+></polity-stepper-top>
 <h1 class="tui-text_h1">Create a new group</h1>
 
 
@@ -102,25 +106,37 @@
             Member
         </h2>
     </div>
-    <tui-input-tag
+    <tui-combo-box
         (searchChange)="onSearchChange($event)"
-        [(ngModel)]="value"
+        [stringify]="stringify"
         [tuiTextfieldLabelOutside]="true"
-        class="b-form"
+        formControlName="members"
     >
-        Choose your Pythons'
+        Lade ein neues Mitglied ein.
         <tui-data-list-wrapper
             *tuiDataList
-            [items]="items$ | async"
+            [itemContent]="stringify | tuiStringifyContent"
+            [items]="searchResults() | tuiFilterByInputWith: stringify"
         ></tui-data-list-wrapper>
-    </tui-input-tag>
+    </tui-combo-box>
+
+    <polity-table-three-icon-text-delete
+        (remove)="onRemove($event)"
+        [bonusKeys]="['last_name']"
+        [dataCyTagsHeadline]="['user_image_title', 'user_first_name_title', 'remove_invitation_title']"
+        [dataCyTags]="['user_image', 'user_first_name', 'follower_remove']"
+        [dataKeysForColumns]="['first_name', 'last_name', 'id']"
+        [data]="selectedUsersAsSignal"
+        [headings]="['Foto', 'Name', 'Entfernen']"
+        [isLoading]="signal(false)"
+    >
+    </polity-table-three-icon-text-delete>
 
     <div id="Inaugural-Meeting">
         <h2 class="tui-text_h2">
             Inaugural-Meeting
         </h2>
     </div>
-
 
     <div class="tui-form__buttons">
         <button

@@ -15,9 +15,9 @@ import {DatabaseOverwritten} from "./supabase.modified";
  *
  * @see https://stackoverflow.com/questions/41253310/typescript-retrieve-element-type-information-from-array-type
  **/
-type ArrayElement<ArrayType> =
+type SupabaseArrayElement<ArrayType> =
     ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
-type ArrayElementWithTypeGuard<ArrayType extends readonly unknown[]> =
+type SupabaseArrayElementWithTypeGuard<ArrayType extends readonly unknown[]> =
     ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
 
 /**
@@ -44,17 +44,17 @@ type ArrayElementWithTypeGuard<ArrayType extends readonly unknown[]> =
  *   name: string
  * }
  */
-export type FunctionSingleReturn<T extends keyof DatabaseOverwritten['public']['Functions']> = ArrayElement<DatabaseOverwritten['public']['Functions'][T]['Returns']>;
+export type FunctionSingleReturn<T extends keyof DatabaseOverwritten['public']['Functions']> = SupabaseArrayElement<DatabaseOverwritten['public']['Functions'][T]['Returns']>;
 
 /**
  * Abstract type that represents the return of a supabase-js call
  */
-export type DbResult<T> = T extends PromiseLike<infer U> ? U : never
+export type SupabaseResult<T> = T extends PromiseLike<infer U> ? U : never
 
 /**
  * Abstract type that represents the returned data of a successful supabase-js call
  */
-export type DbResultOk<T> = T extends PromiseLike<{ data: infer U }> ? Exclude<U, null> : never
+export type SupabaseResultOk<T> = T extends PromiseLike<{ data: infer U }> ? Exclude<U, null> : never
 
 /**
  * Abstract type that represents the returned postgres of a unsuccessful supabase-js call
@@ -78,7 +78,7 @@ export type DbResultOk<T> = T extends PromiseLike<{ data: infer U }> ? Exclude<U
  *   name: string
  * }
  */
-export type Tables<T extends keyof DatabaseOverwritten['public']['Tables']> = DatabaseOverwritten['public']['Tables'][T]['Row']
+export type SupabaseTable<T extends keyof DatabaseOverwritten['public']['Tables']> = DatabaseOverwritten['public']['Tables'][T]['Row']
 /**
  * Type that represents the return of a postgres function as array.
  * @example
@@ -96,9 +96,58 @@ export type Tables<T extends keyof DatabaseOverwritten['public']['Tables']> = Da
  *   name: string
  * }[]
  */
-export type FunctionTableReturn<T extends keyof DatabaseOverwritten['public']['Functions']> = DatabaseOverwritten['public']['Functions'][T]['Returns']
-
-export type Enums<T extends keyof DatabaseOverwritten['public']['Enums']> = DatabaseOverwritten['public']['Enums'][T]
+export type SupabaseFunctionTableReturn<T extends keyof DatabaseOverwritten['public']['Functions']> = DatabaseOverwritten['public']['Functions'][T]['Returns']
 
 export type FunctionName = keyof DatabaseOverwritten['public']['Functions']
 
+/**
+ * Type that represents the return of a postgres function as object array e.g. a multiple rows.
+ * @example
+ * If a postgres function "find_user()" returns
+ *
+ * RETURNS table (
+ *   id: string,
+ *   name: string
+ * )[]
+ *
+ * supabase-JS generated types will be
+ *
+ * {
+ *   id: string,
+ *   name: string
+ * }[]
+ * */
+type FunctionTableReturnSingle<T extends keyof DatabaseOverwritten['public']['Functions']> =
+    DatabaseOverwritten['public']['Functions'][T] extends { Returns: (infer R)[] }
+        ? R[]
+        : never;
+
+/**
+ * Type that represents the return of a postgres function as object e.g. a single row.
+ * @example
+ * If a postgres function "find_user()" returns
+ *
+ * RETURNS table (
+ *   id: string,
+ *   name: string
+ * )
+ *
+ * supabase-JS generated types will be
+ *
+ * {
+ *   id: string,
+ *   name: string
+ * }
+ * even this is not indicated by hovering on the [T]
+ * */
+export type FunctionTableSingleReturn<T extends keyof DatabaseOverwritten['public']['Functions']> =
+    DatabaseOverwritten['public']['Functions'][T] extends { Returns: (infer R)[] }
+        ? R
+        : never;
+
+/**
+ *  Type that represents the definition of an enum in the database as typescript object.
+ *  @example
+ *  If a database enum is defined as "group_level", it should be used as SupabaseEnum<'group_level'>
+ */
+export type SupabaseEnum<T extends keyof DatabaseOverwritten['public']['Enums']> = DatabaseOverwritten['public']['Enums'][T];

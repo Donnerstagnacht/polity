@@ -9,8 +9,8 @@ import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modifi
 import {NotificationsStoreService} from "./notifications.store.service";
 import {
     FunctionSingleReturn,
-    FunctionTableReturn,
-    Tables
+    SupabaseFunctionTableReturn,
+    SupabaseTable
 } from "../../../../../supabase/types/supabase.shorthand-types";
 import {supabaseClient} from "../../../auth/supabase-client";
 import {SessionStoreService} from "../../../auth/services/session.store.service";
@@ -32,11 +32,11 @@ export class NotificationsActionService {
 
     public async selectNotifications(): Promise<void> {
         await this.notificationStoreService.notifications.wrapSelectFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<FunctionTableReturn<'select_notifications_of_users'>> = await this.supabaseClient
+            const response: PostgrestSingleResponse<SupabaseFunctionTableReturn<'select_notifications_of_users'>> = await this.supabaseClient
             .rpc('select_notifications_of_users')
             .throwOnError()
             if (response.data) {
-                const finalArray: FunctionTableReturn<'select_notifications_of_users'> = await this.profileActionService.transformImageNamesToUrls(response.data, 'profile_image')
+                const finalArray: SupabaseFunctionTableReturn<'select_notifications_of_users'> = await this.profileActionService.transformImageNamesToUrls(response.data, 'profile_image')
                 this.notificationStoreService.notifications.setObjects(finalArray);
             }
         })
@@ -101,10 +101,10 @@ export class NotificationsActionService {
                 table: 'notifications_by_user',
                 filter: 'receiver=eq.' + this.sessionStoreService.getSessionId()
             },
-            async (payload: RealtimePostgresInsertPayload<Tables<any>>): Promise<void> => {
+            async (payload: RealtimePostgresInsertPayload<SupabaseTable<any>>): Promise<void> => {
 
                 // WORKING SOLUTION
-                const response: PostgrestSingleResponse<FunctionTableReturn<'select_notifications_of_users'>> = await this.supabaseClient
+                const response: PostgrestSingleResponse<SupabaseFunctionTableReturn<'select_notifications_of_users'>> = await this.supabaseClient
                 .rpc('select_notifications_of_users')
 
                 if (response.data) {

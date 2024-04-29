@@ -665,6 +665,7 @@ export type Database = {
         Args: {
           name: string
           description: string
+          level: "local" | "regional" | "federal"
           created_by: string
           created_at?: string
           updated_at?: string
@@ -714,14 +715,6 @@ export type Database = {
           right_to_amend?: boolean
           right_to_vote_active?: boolean
           right_to_vote_passive?: boolean
-        }
-        Returns: undefined
-      }
-      create_group_transaction: {
-        Args: {
-          name: string
-          description: string
-          created_by: string
         }
         Returns: undefined
       }
@@ -843,19 +836,6 @@ export type Database = {
           read_by_receiver: boolean
         }
         Returns: undefined
-      }
-      read_group: {
-        Args: {
-          group_id: string
-        }
-        Returns: {
-          id: string
-          name: string
-          description: string
-          created_by: string
-          created_at: string
-          updated_at: string
-        }[]
       }
       read_group_hashtags: {
         Args: {

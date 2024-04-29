@@ -1,6 +1,7 @@
 DROP FUNCTION IF EXISTS authenticated_access.create_group(
     text,
     text,
+    group_level,
     uuid,
     timestamp WITH TIME ZONE,
     timestamp WITH TIME ZONE
@@ -9,6 +10,7 @@ DROP FUNCTION IF EXISTS authenticated_access.create_group(
 CREATE OR REPLACE FUNCTION authenticated_access.create_group(
     name text,
     description text,
+    level group_level,
     created_by uuid,
     created_at timestamp WITH TIME ZONE DEFAULT NOW(),
     updated_at timestamp WITH TIME ZONE DEFAULT NOW()
@@ -24,12 +26,14 @@ BEGIN
     INSERT INTO
         authenticated_access.groups (name,
                                      description,
+                                     level,
                                      creator,
                                      created_at,
                                      updated_at)
     VALUES
         (name,
          description,
+         level,
          created_by,
          created_at,
          updated_at)

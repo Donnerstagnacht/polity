@@ -1,5 +1,16 @@
 import {Component, Input, signal, WritableSignal} from '@angular/core';
 
+/**
+ * A generic table componen that offers generic functionality for tui tables
+ * variable access.
+ * @param dataKeysForColumns: (keyof ObjectType)[] = [] - Required keys of the data to be displayed.
+ * @param bonusKeys: (keyof ObjectType)[] = [] - Optional bonus keys of the data to be displayed.
+ * @param data: WritableSignal<ObjectType[]> = signal([]) - The data to be displayed;
+ * @param isLoading: WritableSignal<boolean> = signal(true) - Displays a loading spinner if data is loading
+ * @param headings: string[] = [] - Headings of the columns.
+ * @param dataCyTags: string[] = [] - Tags used for automated testing
+ * @param dataCyTagsHeadline: string[] = [] - Headline tags used for automated testing
+ **/
 @Component({
     selector: 'polity-table-generic',
     templateUrl: './table-generic.component.html',

@@ -1,28 +1,44 @@
-DROP FUNCTION IF EXISTS authenticated_access.create_group_transaction(
+DROP FUNCTION IF EXISTS public.create_group_transaction(
     name text,
     description text,
-    created_by uuid
+    level group_level,
+    invited_members uuid[]
 );
 
-CREATE OR REPLACE FUNCTION authenticated_access.create_group_transaction(
+CREATE OR REPLACE FUNCTION public.create_group_transaction(
     name text,
     description text,
-    created_by uuid
+    level group_level,
+    invited_members uuid[]
 )
     RETURNS void
     LANGUAGE plpgsql
 AS
 $$
 DECLARE
-    group_id uuid;
+    group_id          uuid;
+    logged_in_user_id uuid;
+    invited_member    uuid;
 BEGIN
+    logged_in_user_id = auth.uid();
     group_id := authenticated_access.create_group(
         name,
         description,
-        created_by);
+        level,
+        logged_in_user_id
+                );
+
+    FOREACH invited_member IN ARRAY invited_members
+        LOOP
+            PERFORM authenticated_access.create_group_member(
+                group_id,
+                invited_member,
+                'member');
+        END LOOP;
+
     PERFORM authenticated_access.create_group_member(
         group_id,
-        created_by,
+        logged_in_user_id,
         'board_president');
 END;
 $$;

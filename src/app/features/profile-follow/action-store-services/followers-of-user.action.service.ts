@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
-import {FunctionTableReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseFunctionTableReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {FollowersOfUserStoreService} from "./followers-of-user.store.service";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
 import {ProfileCountersStoreService} from "./profile-counters.store.service";
@@ -22,12 +22,12 @@ export class FollowersOfUserActionService {
 
     public async selectFollowersOfUser(): Promise<any> {
         await this.followersOfUserStoreService.followersOfUser.wrapSelectFunction(async (): Promise<void> => {
-            const followerResponse: PostgrestSingleResponse<FunctionTableReturn<'select_follower_of_user'>> = await this.supabaseClient.rpc(
+            const followerResponse: PostgrestSingleResponse<SupabaseFunctionTableReturn<'select_follower_of_user'>> = await this.supabaseClient.rpc(
                 'select_follower_of_user'
             )
             .throwOnError()
             if (followerResponse.data) {
-                const finalArray: FunctionTableReturn<'select_follower_of_user'> = await this.profileActionService.transformImageNamesToUrls(followerResponse.data, 'profile_image')
+                const finalArray: SupabaseFunctionTableReturn<'select_follower_of_user'> = await this.profileActionService.transformImageNamesToUrls(followerResponse.data, 'profile_image')
                 this.followersOfUserStoreService.followersOfUser.setObjects(finalArray)
             }
         })
@@ -35,7 +35,7 @@ export class FollowersOfUserActionService {
 
     public async removeFollowerOfUser(userId: string): Promise<any> {
         await this.followersOfUserStoreService.followersOfUser.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<FunctionTableReturn<'remove_follower_transaction'>> = await this.supabaseClient.rpc(
+            const response: PostgrestSingleResponse<SupabaseFunctionTableReturn<'remove_follower_transaction'>> = await this.supabaseClient.rpc(
                 'remove_follower_transaction',
                 {
                     follower_id: userId,

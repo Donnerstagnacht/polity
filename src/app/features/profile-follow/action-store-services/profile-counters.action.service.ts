@@ -2,7 +2,10 @@ import {Injectable} from '@angular/core';
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
 import {ProfileCountersStoreService} from "./profile-counters.store.service";
-import {FunctionSingleReturn, FunctionTableReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {
+    FunctionSingleReturn,
+    SupabaseFunctionTableReturn
+} from "../../../../../supabase/types/supabase.shorthand-types";
 import {supabaseClient} from "../../../auth/supabase-client";
 import {ProfileStoreService} from "../../profile/action-store-services/profile.store.service";
 
@@ -37,7 +40,7 @@ export class ProfileCountersActionService {
 
         await this.profileCountersStoreService.profileCounters.wrapSelectFunction(async (): Promise<void> => {
             this.profileStoreService.profile.uiFlagStore.setUiFlagTrue('isFollowingCheckLoading')
-            const response: PostgrestSingleResponse<FunctionTableReturn<'check_if_following'>> = await this.supabaseClient.rpc(
+            const response: PostgrestSingleResponse<SupabaseFunctionTableReturn<'check_if_following'>> = await this.supabaseClient.rpc(
                 'check_if_following',
                 {
                     following_id: followingId as string
@@ -58,7 +61,7 @@ export class ProfileCountersActionService {
     public async followProfile() {
         const followingId: string = this.profileCountersStoreService.profileCounters.getValueByKey('profile_id');
         await this.profileCountersStoreService.profileCounters.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<FunctionTableReturn<'follow_transaction'>> = await this.supabaseClient.rpc(
+            const response: PostgrestSingleResponse<SupabaseFunctionTableReturn<'follow_transaction'>> = await this.supabaseClient.rpc(
                 'follow_transaction',
                 {
                     following_id: followingId
@@ -73,7 +76,7 @@ export class ProfileCountersActionService {
     public async unFollowProfile() {
         const followingId = this.profileCountersStoreService.profileCounters.getValueByKey('profile_id');
         await this.profileCountersStoreService.profileCounters.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<FunctionTableReturn<'unfollow_transaction'>> = await this.supabaseClient.rpc(
+            const response: PostgrestSingleResponse<SupabaseFunctionTableReturn<'unfollow_transaction'>> = await this.supabaseClient.rpc(
                 'unfollow_transaction',
                 {
                     following_id: followingId

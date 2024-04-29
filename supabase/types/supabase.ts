@@ -36,6 +36,15 @@ export type Database = {
         }
         Returns: undefined
       }
+      create_group_transaction: {
+        Args: {
+          name: string
+          description: string
+          level: Database["public"]["Enums"]["group_level"]
+          invited_members: string[]
+        }
+        Returns: undefined
+      }
       follow_transaction: {
         Args: {
           following_id: string
@@ -71,6 +80,19 @@ export type Database = {
           "": unknown
         }
         Returns: unknown
+      }
+      read_group: {
+        Args: {
+          group_id: string
+        }
+        Returns: {
+          id: string
+          name: string
+          description: string
+          created_by: string
+          created_at: string
+          updated_at: string
+        }[]
       }
       remove_follower_transaction: {
         Args: {

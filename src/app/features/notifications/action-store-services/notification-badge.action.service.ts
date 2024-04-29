@@ -8,7 +8,7 @@ import {
 } from "@supabase/supabase-js";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
 import {supabaseClient} from "../../../auth/supabase-client";
-import {FunctionSingleReturn, Tables} from "../../../../../supabase/types/supabase.shorthand-types";
+import {FunctionSingleReturn, SupabaseTable} from "../../../../../supabase/types/supabase.shorthand-types";
 import {SessionStoreService} from "../../../auth/services/session.store.service";
 
 @Injectable({
@@ -19,13 +19,13 @@ export class NotificationBadgeActionService {
 
     private channel: RealtimeChannel = this.supabaseClient
     .channel('profiles_counters')
-    .on<Tables<'profiles_counters'>>('postgres_changes', {
+    .on<SupabaseTable<'profiles_counters'>>('postgres_changes', {
             event: 'UPDATE',
             schema: 'authenticated_access',
             table: 'profiles_counters',
             filter: 'id=eq.' + this.sessionStoreService.getSessionId()
         },
-        (payload: RealtimePostgresUpdatePayload<Tables<'profiles_counters'>>): void => {
+        (payload: RealtimePostgresUpdatePayload<SupabaseTable<'profiles_counters'>>): void => {
             console.log('payload', payload)
             const testReturn: FunctionSingleReturn<'select_unread_notifications_counter'> = {
                 unread_notifications_counter: payload.new.unread_notifications_counter as number,
