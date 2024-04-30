@@ -1,5 +1,5 @@
-DROP FUNCTION IF EXISTS public.read_group(uuid);
-CREATE OR REPLACE FUNCTION public.read_group(group_id uuid)
+DROP FUNCTION IF EXISTS public.read_group_record(uuid);
+CREATE OR REPLACE FUNCTION public.read_group_record(group_id uuid)
     RETURNS record
     LANGUAGE plpgsql
     SECURITY INVOKER

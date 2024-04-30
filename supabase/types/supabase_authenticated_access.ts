@@ -349,7 +349,7 @@ export type Database = {
           fts: unknown | null
           id: string
           img_url: string | null
-          level: "local" | "regional" | "federal"
+          level: "local" | "regional" | "national"
           name: string
           updated_at: string
         }
@@ -360,7 +360,7 @@ export type Database = {
           fts?: unknown | null
           id?: string
           img_url?: string | null
-          level?: "local" | "regional" | "federal"
+          level?: "local" | "regional" | "national"
           name: string
           updated_at?: string
         }
@@ -371,7 +371,7 @@ export type Database = {
           fts?: unknown | null
           id?: string
           img_url?: string | null
-          level?: "local" | "regional" | "federal"
+          level?: "local" | "regional" | "national"
           name?: string
           updated_at?: string
         }
@@ -665,7 +665,7 @@ export type Database = {
         Args: {
           name: string
           description: string
-          level: "local" | "regional" | "federal"
+          level: "local" | "regional" | "national"
           created_by: string
           created_at?: string
           updated_at?: string

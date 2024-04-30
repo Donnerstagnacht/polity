@@ -34,7 +34,7 @@ import {
     SupabaseEnum,
     SupabaseFunctionTableReturn
 } from "../../../../../supabase/types/supabase.shorthand-types";
-import {SearchStoreService} from "../../search/action-store-services/search.store.service";
+import {SearchUserStoreService} from "../../search/action-store-services/search-user.store.service";
 import {
     TableThreeIconTextDeleteComponent
 } from "../../../ui/polity-table/table-three-icon-text-delete/table-three-icon-text-delete.component";
@@ -97,7 +97,7 @@ export class GroupNewComponent {
     constructor(
         private createGroupService: CreateGroupService,
         private searchUserActionService: SearchUserActionService,
-        private searchStoreService: SearchStoreService
+        private searchStoreService: SearchUserStoreService
     ) {
         this.searchResults = this.searchStoreService.profilSearchResults.getObjects();
     }

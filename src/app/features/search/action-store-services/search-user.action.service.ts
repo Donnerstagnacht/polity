@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
-import {SearchStoreService} from "./search.store.service";
+import {SearchUserStoreService} from "./search-user.store.service";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
 import {SupabaseFunctionTableReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {supabaseClient} from "../../../auth/supabase-client";
@@ -12,7 +12,7 @@ export class SearchUserActionService {
     private supabaseClient: SupabaseClient<DatabaseOverwritten> = supabaseClient
 
     constructor(
-        private readonly searchStoreService: SearchStoreService
+        private readonly searchStoreService: SearchUserStoreService
     ) {
     }
 

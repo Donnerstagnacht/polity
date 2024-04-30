@@ -6,8 +6,11 @@ import {TuiFieldErrorPipeModule, TuiInputModule} from "@taiga-ui/kit";
 import {TuiErrorModule} from "@taiga-ui/core";
 import {SearchProfileResult} from "../search-profile-result/search-profile-result.component";
 import {CommonModule} from "@angular/common";
-import {SearchStoreService} from "../action-store-services/search.store.service";
+import {SearchUserStoreService} from "../action-store-services/search-user.store.service";
 import {SearchUserActionService} from "../action-store-services/search-user.action.service";
+import {SearchGroupStoreService} from "../action-store-services/search-group.store.service";
+import {SearchGroupActionService} from "../action-store-services/search-group.action.service";
+import {SearchGroupResultComponent} from "../search-group-result/search-group-result.component";
 
 @Component({
     selector: 'polity-search-user',
@@ -19,13 +22,15 @@ import {SearchUserActionService} from "../action-store-services/search-user.acti
         TuiErrorModule,
         TuiFieldErrorPipeModule,
         SearchProfileResult,
-        CommonModule
+        CommonModule,
+        SearchGroupResultComponent
     ],
     standalone: true
 })
 export class SearchUserComponent {
     loading: WritableSignal<boolean> = signal(false);
-    protected searchResults: WritableSignal<SupabaseFunctionTableReturn<'search_user'>> = signal([]);
+    protected searchUserResults: WritableSignal<SupabaseFunctionTableReturn<'search_user'>> = signal([]);
+    protected searchGroupResults: WritableSignal<SupabaseFunctionTableReturn<'search_group'>> = signal([]);
     protected searchForm: FormGroup<{
         search: FormControl<string | null>
     }> = new FormGroup({
@@ -35,11 +40,14 @@ export class SearchUserComponent {
     })
 
     constructor(
-        private readonly searchService: SearchUserActionService,
-        private readonly searchStoreService: SearchStoreService,
+        private readonly searchUserActionService: SearchUserActionService,
+        private readonly searchGroupActionService: SearchGroupActionService,
+        private readonly searchUserStoreService: SearchUserStoreService,
+        private readonly searchGroupStoreService: SearchGroupStoreService
     ) {
-        this.loading = this.searchStoreService.profilSearchResults.loading.getLoading()
-        this.searchResults = this.searchStoreService.profilSearchResults.getObjects();
+        this.loading = this.searchUserStoreService.profilSearchResults.loading.getLoading() || this.searchGroupStoreService.groupSearchResults.loading.getLoading();
+        this.searchUserResults = this.searchUserStoreService.profilSearchResults.getObjects();
+        this.searchGroupResults = this.searchGroupStoreService.groupSearchResults.getObjects();
         this.searchForm.get('search')?.valueChanges.pipe(
             debounceTime(1000)).subscribe(
             () => this.onKeyUp()
@@ -47,7 +55,7 @@ export class SearchUserComponent {
     }
 
     public focused(): void {
-        this.searchStoreService.profilSearchResults.resetObjects()
+        this.searchUserStoreService.profilSearchResults.resetObjects()
     };
 
     private async onKeyUp(): Promise<void> {
@@ -57,7 +65,11 @@ export class SearchUserComponent {
                 searchTerm = searchTerm.substring(0, searchTerm.length - 1)
             }
             searchTerm = searchTerm.replace(/ /g, '|')
-            await this.searchService.searchUser(searchTerm);
+
+            await Promise.all([
+                await this.searchUserActionService.searchUser(searchTerm),
+                this.searchGroupActionService.searchGroup(searchTerm)
+            ])
         }
     }
 }

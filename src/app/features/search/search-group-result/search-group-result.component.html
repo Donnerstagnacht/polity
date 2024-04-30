@@ -1,0 +1,12 @@
+<tui-island
+    (click)="onClick()"
+    [hoverable]="true"
+>
+    <p
+        [class.tui-skeleton]="isLoading()"
+        class="tui-island__category">GROUP</p>
+    <h3 [class.tui-skeleton]="isLoading()"
+        class="tui-island__title">
+        {{ group?.name }} {{ group?.level }}
+    </h3>
+</tui-island>

@@ -12,7 +12,7 @@ export type groupUiFlags = {
     providedIn: 'root'
 })
 export class GroupStoreService {
-    public group: ObjectStoreService<FunctionSingleReturn<'read_group'>>
+    public group: ObjectStoreService<FunctionSingleReturn<'read_group_columns'>>
     private uiFlags: groupUiFlags = {
         isMember: signal(false),
         isBoardMember: signal(false),
@@ -20,6 +20,6 @@ export class GroupStoreService {
     }
 
     constructor() {
-        this.group = new ObjectStoreService<FunctionSingleReturn<'read_group'>>(this.uiFlags);
+        this.group = new ObjectStoreService<FunctionSingleReturn<'read_group_columns'>>(this.uiFlags);
     }
 }

@@ -17,9 +17,9 @@
         </tui-error>
     </div>
 </form>
-@if (searchResults() || loading()) {
+@if (searchUserResults() || loading()) {
     <div class="grid tui-space_top-4">
-        @for (profile of searchResults();track profile) {
+        @for (profile of searchUserResults();track profile) {
             <div
                 [attr.data-cy]="'user-search-results'"
                 class="grid-item tui-space_top-4"
@@ -32,8 +32,23 @@
         }
     </div>
 }
+@if (searchGroupResults() || loading()) {
+    <div class="grid tui-space_top-4">
+        @for (group of searchGroupResults();track group) {
+            <div
+                [attr.data-cy]="'user-search-results'"
+                class="grid-item tui-space_top-4"
+            >
+                <polity-search-group-result
+                    [isLoading]="this.loading"
+                    [group]="group"
+                ></polity-search-group-result>
+            </div>
+        }
+    </div>
+}
 <div class="center-grid">
-    @if (!searchResults()) {
+    @if (!searchUserResults()) {
         <p
             [attr.data-cy]="'search-instruction'"
         >

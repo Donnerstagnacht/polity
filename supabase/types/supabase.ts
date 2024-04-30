@@ -81,18 +81,34 @@ export type Database = {
         }
         Returns: unknown
       }
-      read_group: {
+      read_group_columns: {
         Args: {
           group_id: string
         }
         Returns: {
           id: string
           name: string
+          level: Database["public"]["Enums"]["group_level"]
           description: string
-          created_by: string
-          created_at: string
-          updated_at: string
         }[]
+      }
+      read_group_groups_no_variable: {
+        Args: {
+          group_id: string
+        }
+        Returns: unknown
+      }
+      read_group_implied_type: {
+        Args: {
+          group_id: string
+        }
+        Returns: unknown
+      }
+      read_group_record: {
+        Args: {
+          group_id: string
+        }
+        Returns: Record<string, unknown>
       }
       remove_follower_transaction: {
         Args: {
@@ -103,6 +119,17 @@ export type Database = {
       reset_notification_counter: {
         Args: Record<PropertyKey, never>
         Returns: undefined
+      }
+      search_group: {
+        Args: {
+          search_term: string
+        }
+        Returns: {
+          id: string
+          name: string
+          level: Database["public"]["Enums"]["group_level"]
+          description: string
+        }[]
       }
       search_user: {
         Args: {
@@ -267,7 +294,7 @@ export type Database = {
       }
     }
     Enums: {
-      group_level: "local" | "regional" | "federal"
+      group_level: "local" | "regional" | "national"
       group_member: "member" | "board_member" | "board_president"
       group_relation: "child" | "parent" | "sibling"
       meeting_type: "inaugural_meeting" | "board_meeting" | "general_assembly"
