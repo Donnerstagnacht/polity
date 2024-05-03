@@ -10,6 +10,6 @@ import {CommonModule} from '@angular/common';
 })
 export class WikiHeadlineComponent {
     @Input({required: true}) firstName: string | null | undefined = null;
-    @Input({required: true}) lastName: string | null | undefined = null;
+    @Input() lastName: string | null | undefined = null;
     @Input({required: true}) isLoading: WritableSignal<boolean> = signal(true);
 }

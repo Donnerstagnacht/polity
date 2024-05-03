@@ -22,7 +22,7 @@ export class FollowButton {
     /**
      * If true, the follow button is not displayed.
      */
-    @Input({required: true}) public isOwner: boolean = false;
+    @Input() public isOwner: boolean = false;
     /**
      * If true, the follow button is not displayed.
      */

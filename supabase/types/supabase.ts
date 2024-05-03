@@ -92,12 +92,6 @@ export type Database = {
           description: string
         }[]
       }
-      read_group_groups_no_variable: {
-        Args: {
-          group_id: string
-        }
-        Returns: unknown
-      }
       read_group_implied_type: {
         Args: {
           group_id: string
