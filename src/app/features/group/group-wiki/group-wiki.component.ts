@@ -5,6 +5,8 @@ import {RequestButton} from "../../../ui/polity-wiki/request-button/request-butt
 import {WikiHeadlineComponent} from "../../../ui/polity-wiki/wiki-headline/wiki-headline.component";
 import {FunctionSingleReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {GroupStoreService} from "../action-store-service/group.store.service";
+import {GroupCountersActionService} from "../../group-follow/action-store-services/group-counters.action.service";
+import {GroupCountersStoreService} from "../../group-follow/action-store-services/group-counters.store.service";
 
 @Component({
     selector: 'polity-group-wiki',
@@ -23,29 +25,37 @@ export class GroupWikiComponent {
     protected isGroupLoading: WritableSignal<boolean> = signal(true);
     protected isGroupMemberLoading: WritableSignal<boolean> = signal(false);
 
+    protected groupCounter: WritableSignal<FunctionSingleReturn<'read_group_following_counter'> | null> = signal(null);
+    protected isGroupCounterLoading: WritableSignal<boolean> = signal(true);
+
     protected isFollowingCheckLoading: WritableSignal<boolean> = signal(false);
     protected isFollowing: WritableSignal<boolean> = signal(false);
 
     constructor(
-        private groupStoreService: GroupStoreService
+        private groupStoreService: GroupStoreService,
+        private groupCountersStoreService: GroupCountersStoreService,
+        private groupCountersActionService: GroupCountersActionService
     ) {
 
     }
 
     async ngOnInit(): Promise<void> {
         this.group = this.groupStoreService.group.getObject();
+        this.groupCounter = this.groupCountersStoreService.groupCounters.getObject();
+
         this.isGroupLoading = this.groupStoreService.group.loading.getLoading();
+        this.isGroupCounterLoading = this.groupCountersStoreService.groupCounters.loading.getLoading();
     }
 
     async toggleFollow(newIsFollowing: boolean): Promise<void> {
         if (newIsFollowing) {
             console.log('follow')
             this.isFollowing.set(true);
-            // await this.profileCounterService.followProfile();
+            await this.groupCountersActionService.followGroup();
         } else {
             console.log('unfollow')
             this.isFollowing.set(false);
-            // await this.profileCounterService.unFollowProfile();
+            await this.groupCountersActionService.unFollowGroup();
         }
     }
 

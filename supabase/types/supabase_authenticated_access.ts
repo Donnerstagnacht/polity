@@ -38,6 +38,36 @@ export type Database = {
           },
         ]
       }
+      following_groups: {
+        Row: {
+          follower: string
+          following: string
+        }
+        Insert: {
+          follower: string
+          following: string
+        }
+        Update: {
+          follower?: string
+          following?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "following_groups_follower_fkey"
+            columns: ["follower"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "following_groups_following_fkey"
+            columns: ["following"]
+            isOneToOne: false
+            referencedRelation: "groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       following_profiles: {
         Row: {
           follower: string
@@ -385,6 +415,35 @@ export type Database = {
           },
         ]
       }
+      groups_counters: {
+        Row: {
+          follower_counter: number
+          following_counter: number
+          id: string
+          unread_notifications_counter: number
+        }
+        Insert: {
+          follower_counter?: number
+          following_counter?: number
+          id: string
+          unread_notifications_counter?: number
+        }
+        Update: {
+          follower_counter?: number
+          following_counter?: number
+          id?: string
+          unread_notifications_counter?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "groups_counters_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       hashtag_groups: {
         Row: {
           group_id: string
@@ -672,6 +731,13 @@ export type Database = {
         }
         Returns: string
       }
+      create_group_following_follower_relationship: {
+        Args: {
+          follower_id: string
+          following_id: string
+        }
+        Returns: undefined
+      }
       create_group_hashtag_relationship: {
         Args: {
           group_id: string
@@ -758,7 +824,26 @@ export type Database = {
         }
         Returns: undefined
       }
+      decrement_group_follower_counter: {
+        Args: {
+          group_id_in: string
+        }
+        Returns: undefined
+      }
+      decrement_group_following_counter: {
+        Args: {
+          group_id_in: string
+        }
+        Returns: undefined
+      }
       delete_following_follower_relationship: {
+        Args: {
+          follower_id: string
+          following_id: string
+        }
+        Returns: undefined
+      }
+      delete_group_following_follower_relationship: {
         Args: {
           follower_id: string
           following_id: string
@@ -812,6 +897,18 @@ export type Database = {
       increment_following_counter: {
         Args: {
           user_id: string
+        }
+        Returns: undefined
+      }
+      increment_group_follower_counter: {
+        Args: {
+          group_id_in: string
+        }
+        Returns: undefined
+      }
+      increment_group_following_counter: {
+        Args: {
+          group_id_in: string
         }
         Returns: undefined
       }

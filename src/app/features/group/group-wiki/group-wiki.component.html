@@ -13,6 +13,13 @@
             [isLoading]="isGroupMemberLoading"
             class="polity-flex-item-first"
         ></polity-counter>
+        <polity-counter
+            [counterTitle]="'Follower'"
+            [counterValue]="this.groupCounter()?.follower_counter"
+            [dataCyTag]="'memberCounter'"
+            [isLoading]="isGroupMemberLoading"
+            class="polity-flex-item-first"
+        ></polity-counter>
     </div>
 
     <div class="tui-space_bottom-4">

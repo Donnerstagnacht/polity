@@ -6,7 +6,7 @@ import {ArrayStoreService} from "../../../signal-store/array-store.service";
     providedIn: 'root'
 })
 export class FollowingOfUserStoreService {
-    public followingOfUser: ArrayStoreService<FunctionSingleReturn<'select_following_of_user'>>
+    public followingOfUser: ArrayStoreService<FunctionSingleReturn<'select_following_of_user'>>;
 
     constructor() {
         this.followingOfUser = new ArrayStoreService<FunctionSingleReturn<'select_following_of_user'>>();

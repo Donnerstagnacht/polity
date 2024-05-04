@@ -58,7 +58,7 @@ export class ProfileCountersActionService {
         })
     }
 
-    public async followProfile() {
+    public async followProfile(): Promise<void> {
         const followingId: string = this.profileCountersStoreService.profileCounters.getValueByKey('profile_id');
         await this.profileCountersStoreService.profileCounters.wrapUpdateFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<SupabaseFunctionTableReturn<'follow_transaction'>> = await this.supabaseClient.rpc(
@@ -73,7 +73,7 @@ export class ProfileCountersActionService {
         }, true, 'Successful followed!')
     }
 
-    public async unFollowProfile() {
+    public async unFollowProfile(): Promise<void> {
         const followingId = this.profileCountersStoreService.profileCounters.getValueByKey('profile_id');
         await this.profileCountersStoreService.profileCounters.wrapUpdateFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<SupabaseFunctionTableReturn<'unfollow_transaction'>> = await this.supabaseClient.rpc(

@@ -5,10 +5,10 @@ import {ArrayStoreService} from "../../../signal-store/array-store.service";
 @Injectable({
     providedIn: 'root'
 })
-export class FollowerOfGroupStoreService {
-    public followersOfGroup: ArrayStoreService<FunctionSingleReturn<'read_follower_of_group'>>
+export class FollowingOfGroupStoreService {
+    public followingOfGroup: ArrayStoreService<FunctionSingleReturn<'select_following_of_group'>>;
 
     constructor() {
-        this.followersOfGroup = new ArrayStoreService<FunctionSingleReturn<'read_follower_of_group'>>();
+        this.followingOfGroup = new ArrayStoreService<FunctionSingleReturn<'select_following_of_group'>>();
     }
 }

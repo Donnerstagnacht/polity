@@ -15,7 +15,7 @@ DECLARE
 BEGIN
     follow_enum := 'follow_from_user';
     follower_id := auth.uid();
-    PERFORM authenticated_access.insert_group_following_follower_relationship(
+    PERFORM authenticated_access.create_group_following_follower_relationship(
         follower_id,
         following_id
             );

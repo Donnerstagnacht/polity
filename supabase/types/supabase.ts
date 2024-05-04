@@ -21,6 +21,12 @@ export type Database = {
         }
         Returns: boolean
       }
+      check_if_following_group: {
+        Args: {
+          following_id: string
+        }
+        Returns: boolean
+      }
       create_group_relation: {
         Args: {
           group_id: string
@@ -42,6 +48,12 @@ export type Database = {
           description: string
           level: Database["public"]["Enums"]["group_level"]
           invited_members: string[]
+        }
+        Returns: undefined
+      }
+      follow_group_transaction: {
+        Args: {
+          following_id: string
         }
         Returns: undefined
       }
@@ -81,6 +93,17 @@ export type Database = {
         }
         Returns: unknown
       }
+      read_follower_of_group: {
+        Args: {
+          group_id_in: string
+        }
+        Returns: {
+          id: string
+          profile_image: string
+          first_name: string
+          last_name: string
+        }[]
+      }
       read_group_columns: {
         Args: {
           group_id: string
@@ -90,6 +113,16 @@ export type Database = {
           name: string
           level: Database["public"]["Enums"]["group_level"]
           description: string
+        }[]
+      }
+      read_group_following_counter: {
+        Args: {
+          group_id_in: string
+        }
+        Returns: {
+          group_id: string
+          follower_counter: number
+          following_counter: number
         }[]
       }
       read_group_implied_type: {
@@ -105,6 +138,12 @@ export type Database = {
         Returns: Record<string, unknown>
       }
       remove_follower_transaction: {
+        Args: {
+          follower_id: string
+        }
+        Returns: undefined
+      }
+      remove_group_follower_transaction: {
         Args: {
           follower_id: string
         }
@@ -176,6 +215,17 @@ export type Database = {
           following_counter: number
         }[]
       }
+      select_following_of_group: {
+        Args: {
+          group_id_in: string
+        }
+        Returns: {
+          id: string
+          profile_image: string
+          first_name: string
+          last_name: string
+        }[]
+      }
       select_following_of_user: {
         Args: Record<PropertyKey, never>
         Returns: {
@@ -235,6 +285,12 @@ export type Database = {
           "": string
         }
         Returns: string[]
+      }
+      unfollow_group_transaction: {
+        Args: {
+          following_id: string
+        }
+        Returns: undefined
       }
       unfollow_transaction: {
         Args: {
