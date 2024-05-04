@@ -18,6 +18,7 @@ copy "%~dp0supabase\migrations\06_notifications\*" "%destination_folder%"
 copy "%~dp0supabase\migrations\07_groups\*" "%destination_folder%"
 copy "%~dp0supabase\migrations\08_group_relations\*" "%destination_folder%"
 copy "%~dp0supabase\migrations\09_group_member\*" "%destination_folder%"
+copy "%~dp0supabase\migrations\10_group_follow\*" "%destination_folder%"
 copy "%~dp0supabase\migrations\11_hashtags\*" "%destination_folder%"
 copy "%~dp0supabase\migrations\12_meetings\*" "%destination_folder%"
 

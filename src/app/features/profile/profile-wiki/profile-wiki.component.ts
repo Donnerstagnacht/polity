@@ -31,7 +31,7 @@ export class ProfileWikiComponent {
 
     constructor(
         private readonly profileStoreService: ProfileStoreService,
-        private readonly profileCounterService: ProfileCountersActionService,
+        private readonly profileCounterActionService: ProfileCountersActionService,
         private readonly profileCountersStoreService: ProfileCountersStoreService
     ) {
         this.isFollowingCheckLoading = this.profileStoreService.profile.uiFlagStore.getUiFlag('isFollowingCheckLoading')
@@ -45,9 +45,9 @@ export class ProfileWikiComponent {
 
     async toggleFollow(newIsFollowing: boolean): Promise<void> {
         if (newIsFollowing) {
-            await this.profileCounterService.followProfile();
+            await this.profileCounterActionService.followProfile();
         } else {
-            await this.profileCounterService.unFollowProfile();
+            await this.profileCounterActionService.unFollowProfile();
         }
     }
 }

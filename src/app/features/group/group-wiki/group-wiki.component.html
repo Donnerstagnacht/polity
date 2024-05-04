@@ -1,0 +1,35 @@
+<div class="polity-center min-height">
+    <polity-wiki-headline
+        [firstName]="group()?.name"
+        [isLoading]="isGroupLoading"
+    ></polity-wiki-headline>
+
+    <div
+        class=" polity-flex-container polity-single-item-centered tui-space_right-4 tui-space_left-4">
+        <polity-counter
+            [counterTitle]="'Member'"
+            [counterValue]="10"
+            [dataCyTag]="'memberCounter'"
+            [isLoading]="isGroupMemberLoading"
+            class="polity-flex-item-first"
+        ></polity-counter>
+    </div>
+
+    <div class="tui-space_bottom-4">
+        <polity-follow-button
+            (toggledFollowing)="toggleFollow($event)"
+            [isFollowing]="isFollowing()"
+            [isLoading]="this.isFollowingCheckLoading"
+        ></polity-follow-button>
+    </div>
+
+    <div class="tui-space_bottom-4">
+        <polity-request-button
+            (toggledFollowing)="toggleFollow($event)"
+            [isLoading]="this.isFollowingCheckLoading"
+            [isRequested]="isFollowing()"
+            [requestTitle]="'MEMBERSHIP REQUESTED'"
+            [toggledTitle]="'REQUEST MEMBERSHIP'"
+        ></polity-request-button>
+    </div>
+</div>
