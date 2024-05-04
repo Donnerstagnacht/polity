@@ -36,6 +36,7 @@ export class GroupCountersActionService {
     }
 
     public async checkIfFollowing(): Promise<void> {
+        console.log('check following')
         const followingId: string = this.groupCountersStoreService.groupCounters.getValueByKey('group_id')
 
         await this.groupCountersStoreService.groupCounters.wrapSelectFunction(async (): Promise<void> => {
@@ -48,10 +49,13 @@ export class GroupCountersActionService {
             )
             .single()
             .throwOnError();
+            console.log('response', response)
 
             if (response.data) {
+                console.log(response.data)
                 this.groupStoreService.group.uiFlagStore.setUiFlagTrue('isFollowing')
             } else {
+                console.log(response.error)
                 this.groupStoreService.group.uiFlagStore.setUiFlagFalse('isFollowing')
             }
             this.groupStoreService.group.uiFlagStore.setUiFlagFalse('isFollowingCheckLoading')

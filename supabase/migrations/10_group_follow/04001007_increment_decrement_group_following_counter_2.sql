@@ -11,7 +11,7 @@ AS
 $$
 BEGIN
     PERFORM SET_CONFIG('app.current_function', 'increment_following_counter', TRUE);
-    UPDATE authenticated_access.profiles_counters
+    UPDATE authenticated_access.groups_counters
     SET
         following_counter = following_counter + 1
     WHERE
@@ -33,7 +33,7 @@ AS
 $$
 BEGIN
     PERFORM SET_CONFIG('app.current_function', 'decrement_following_counter', TRUE);
-    UPDATE authenticated_access.profiles_counters
+    UPDATE authenticated_access.groups_counters
     SET
         following_counter = following_counter - 1
     WHERE

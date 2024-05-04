@@ -45,6 +45,8 @@ export class GroupWikiComponent {
 
         this.isGroupLoading = this.groupStoreService.group.loading.getLoading();
         this.isGroupCounterLoading = this.groupCountersStoreService.groupCounters.loading.getLoading();
+        this.isFollowingCheckLoading = this.groupStoreService.group.uiFlagStore.getUiFlag('isFollowingCheckLoading');
+        this.isFollowing = this.groupStoreService.group.uiFlagStore.getUiFlag('isFollowing');
     }
 
     async toggleFollow(newIsFollowing: boolean): Promise<void> {

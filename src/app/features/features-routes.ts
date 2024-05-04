@@ -4,6 +4,7 @@ import {HomeComponent} from "./home/home/home.component";
 import {SearchComponent} from "./search/search/search.component";
 import {NewComponent} from "./new/new/new.component";
 import {OfficeComponent} from "./office/office/office.component";
+import {GroupComponent} from "./group/group/group.component";
 
 export const FEATURE_ROUTES: Routes = [
     {
@@ -37,7 +38,8 @@ export const FEATURE_ROUTES: Routes = [
         loadChildren: () => import('./office/office-routes').then(m => m.OFFICE_ROUTES)
     },
     {
-        path: 'group',
+        path: 'group/:id',
+        component: GroupComponent,
         loadChildren: () => import('./group/group-routes').then(m => m.GROUP_ROUTES)
     }
 ]
