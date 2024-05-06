@@ -47,7 +47,7 @@ export class GroupComponent {
     async ngOnInit(): Promise<void> {
         const urlId: string = this.route.snapshot.params['id'];
         this.menuItemsGroup[0].link = '/group/' + urlId;
-        this.checkIfBoardMember();
+        this.checkIfBoardMember(urlId);
 
         await Promise.all([
             this.groupActionService.readGroup(urlId),
@@ -62,12 +62,16 @@ export class GroupComponent {
         this.groupCountersStoreService.groupCounters.resetObject()
     }
 
-    private checkIfBoardMember(): void {
+    private checkIfBoardMember(urlId: string): void {
         // TODO
         if (true) {
             this.menuItemsGroup = NAVIGATION_ITEMS_GROUP_BOARD_MEMBER
+            this.menuItemsGroup[0].link = '/group/' + urlId
+            this.menuItemsGroup[1].link = '/group/' + urlId + '/edit'
+            this.menuItemsGroup[2].link = '/group/' + urlId + '/follower/edit'
         } else {
             this.menuItemsGroup = NAVIGATION_ITEMS_GROUP
+            this.menuItemsGroup[0].link = '/group/' + urlId
         }
     }
 }
