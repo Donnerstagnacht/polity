@@ -15,6 +15,19 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      check_group_membership_status: {
+        Args: {
+          group_id_in: string
+        }
+        Returns: {
+          id: string
+          group_id: string
+          member_id: string
+          member_type: Database["public"]["Enums"]["group_member"]
+          created_at: string
+          updated_at: string
+        }[]
+      }
       check_if_following: {
         Args: {
           following_id: string
@@ -130,6 +143,45 @@ export type Database = {
           group_id: string
         }
         Returns: unknown
+      }
+      read_group_member_invitations: {
+        Args: {
+          group_id: string
+        }
+        Returns: {
+          id: string
+          group_id_in: string
+          member_id: string
+          member_type: Database["public"]["Enums"]["group_member"]
+          created_at: string
+          updated_at: string
+        }[]
+      }
+      read_group_member_requests: {
+        Args: {
+          group_id_in: string
+        }
+        Returns: {
+          id: string
+          group_id: string
+          member_id: string
+          member_type: Database["public"]["Enums"]["group_member"]
+          created_at: string
+          updated_at: string
+        }[]
+      }
+      read_group_members: {
+        Args: {
+          group_id_in: string
+        }
+        Returns: {
+          id: string
+          group_id: string
+          member_id: string
+          member_type: Database["public"]["Enums"]["group_member"]
+          created_at: string
+          updated_at: string
+        }[]
       }
       read_group_record: {
         Args: {

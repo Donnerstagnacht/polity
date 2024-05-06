@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS authenticated_access.read_group_members(uuid);
+DROP FUNCTION IF EXISTS public.read_group_members(uuid);
 
-CREATE OR REPLACE FUNCTION authenticated_access.read_group_members(
+CREATE OR REPLACE FUNCTION public.read_group_members(
     group_id_in uuid
 )
     RETURNS table

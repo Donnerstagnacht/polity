@@ -7,6 +7,7 @@ export type groupUiFlags = {
     isBoardMember: WritableSignal<boolean>;
     isFollowing: WritableSignal<boolean>;
     isFollowingCheckLoading: WritableSignal<boolean>;
+    isGroupMemberLoading: WritableSignal<boolean>;
 }
 
 @Injectable({
@@ -18,7 +19,8 @@ export class GroupStoreService {
         isMember: signal(false),
         isBoardMember: signal(false),
         isFollowing: signal(false),
-        isFollowingCheckLoading: signal(true)
+        isFollowingCheckLoading: signal(true),
+        isGroupMemberLoading: signal(true)
     }
 
     constructor() {

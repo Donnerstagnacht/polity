@@ -969,48 +969,9 @@ export type Database = {
           updated_at: string
         }[]
       }
-      read_group_member_invitations: {
-        Args: {
-          group_id: string
-        }
-        Returns: {
-          id: string
-          group_id_in: string
-          member_id: string
-          member_type: "member" | "board_member" | "board_president"
-          created_at: string
-          updated_at: string
-        }[]
-      }
       read_group_member_request: {
         Args: {
           group_member_request_id: string
-        }
-        Returns: {
-          id: string
-          group_id: string
-          member_id: string
-          member_type: "member" | "board_member" | "board_president"
-          created_at: string
-          updated_at: string
-        }[]
-      }
-      read_group_member_requests: {
-        Args: {
-          group_id_in: string
-        }
-        Returns: {
-          id: string
-          group_id: string
-          member_id: string
-          member_type: "member" | "board_member" | "board_president"
-          created_at: string
-          updated_at: string
-        }[]
-      }
-      read_group_members: {
-        Args: {
-          group_id_in: string
         }
         Returns: {
           id: string

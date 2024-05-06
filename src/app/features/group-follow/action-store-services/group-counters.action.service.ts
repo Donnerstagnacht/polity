@@ -36,7 +36,6 @@ export class GroupCountersActionService {
     }
 
     public async checkIfFollowing(): Promise<void> {
-        console.log('check following')
         const followingId: string = this.groupCountersStoreService.groupCounters.getValueByKey('group_id')
 
         await this.groupCountersStoreService.groupCounters.wrapSelectFunction(async (): Promise<void> => {
@@ -49,10 +48,8 @@ export class GroupCountersActionService {
             )
             .single()
             .throwOnError();
-            console.log('response', response)
 
             if (response.data) {
-                console.log(response.data)
                 this.groupStoreService.group.uiFlagStore.setUiFlagTrue('isFollowing')
             } else {
                 console.log(response.error)
@@ -63,10 +60,6 @@ export class GroupCountersActionService {
     }
 
     public async followGroup(): Promise<void> {
-        const test = this.groupCountersStoreService.groupCounters.getObject()
-        console.log(
-            test()
-        )
         const followingId: string = this.groupCountersStoreService.groupCounters.getValueByKey('group_id');
         await this.groupCountersStoreService.groupCounters.wrapUpdateFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<SupabaseFunctionTableReturn<'follow_group_transaction'>> = await this.supabaseClient.rpc(
