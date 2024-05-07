@@ -183,9 +183,13 @@
 
 <h1>Naming conventions</h1>
 <p>PostgreSQL code and code or variables that are used to call PostgreSQL functions should be written in lowercase with underscores e.g. <code>a_variable_for_a_postgres functions.</code>.</p> 
-<p>For purely frontend-related variables code camelCase is used e.g. <code>aVariableForTheFrontend</code>.</p>
 
-<p>Postgres files must be named like <code>timestamp_name.sql</code>. In case the file determines the initial setup, it must be prefixed with an initial 0, e.g. <code>0numbercode_name.sql </code></p>
+<p>Postgres files must be named like <code>timestamp_name.sql</code>. In case the file determines the initial setup, it must be prefixed with an initial 0, e.g. <code>0numbercode_name.sql </code>. Since initial setup/migration is executed by alphabetical order (e.g. earliest timestamp or numbercode first), the numbercode follows a certain logic:</p>
+
+<p><code>numbercode = two digit number implying the postgres object type + four digit number equal to feature number + two digit running number starting from 01</code></p>
+<p> The two digit number code is mapped to postgres types: 00 = pre migration tasks (resets, schema creation...), 01 = table creation, 02 = triggers, 04 = standalone functions,  06 = transactions calling standalone functions, 08 = access grants, 09 = database seed, 99 = post migration tasks (supabase bug fixes...). For example,  <code>04000705_read_group.sql</code> is a file including the standalone function (04) "read_group" of the seventh feature (groups, 0007) and is the 5th file of this feature (05).</p>
+
+<p>For purely frontend-related variables code camelCase is used e.g. <code>aVariableForTheFrontend</code>.</p>
 
 <p>HTML elements used for testing should contain the <code>[attr.data-cy]="'element-name'"</code>.</p>
 <p>In general, use speaking names and choose a longer more specific name over a short unspecific name.</p>
@@ -216,11 +220,11 @@
 </ol>
 
 <hr>
-<h1>Development server Frontend (Angular)</h1>
+<h1>Local development server Frontend (Angular)</h1>
 <p>Run <code>ng serve</code> for a dev server. Navigate to <code>http://localhost:4200/</code>.</p>
 
-<h1>Development server Backend (Supabase)</h1>
+<h1>Local development server Backend (Supabase)</h1>
 <p>Run <code>supabase start</code> for a local dev server. Navigate to <code>http://localhost:54323/</code>. Follow the <a href="https://supabase.com/docs/guides/cli/local-development">local development</a> guide of Supabase to reset or reload your environment</p>
 
-<h1>Running Cypress end-to-end tests</h1>
+<h1>Local running Cypress end-to-end tests</h1>
 Run <code>npm run e2e_open</code> to open the Cypress test runner and execute tests without resetting your Supabase environment. Run <code>npm run e2e_run</code> to run the e2e test in your command line.
