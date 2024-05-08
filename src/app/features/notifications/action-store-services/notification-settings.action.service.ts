@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
-import {SupabaseArrayReturnConditional} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {NotificationSettingsStoreService} from "./notification-settings.store.service";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
 import {supabaseClient} from "../../../auth/supabase-client";
@@ -16,7 +16,7 @@ export class NotificationSettingsActionService {
 
     public async selectNotificationSettings(): Promise<void> {
         await this.notificationSettingsStore.notificationSettings.wrapSelectFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseArrayReturnConditional<'select_user_notification_settings'>> = await this.supabaseClient
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'select_user_notification_settings'>> = await this.supabaseClient
             .rpc('select_user_notification_settings')
             .single()
             .throwOnError()

@@ -11,7 +11,10 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/
 import {SessionStoreService} from "../../../auth/services/session.store.service";
 import {Router} from "@angular/router";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
-import {SupabaseArrayReturnConditional} from "../../../../../supabase/types/supabase.shorthand-types";
+import {
+    SupabaseArrayReturnConditional,
+    SupabaseObjectReturn
+} from "../../../../../supabase/types/supabase.shorthand-types";
 import {TuiCarouselModule, TuiFieldErrorPipeModule, TuiInputModule} from "@taiga-ui/kit";
 import {CommonModule} from "@angular/common";
 import {ProfileActionService} from "../../profile/action-store-services/profile.action.service";
@@ -46,7 +49,7 @@ export class AssistantWelcomeDialogComponent {
     protected name: string = '';
     protected index: number = 0;
     private readonly sessionId: string | null = null;
-    private assistant: WritableSignal<SupabaseArrayReturnConditional<'select_assistant'> | null> = signal(null);
+    private assistant: WritableSignal<SupabaseObjectReturn<'select_assistant'> | null> = signal(null);
 
     constructor(
         @Inject(POLYMORPHEUS_CONTEXT) private readonly dialogContext: TuiDialogContext<boolean>,

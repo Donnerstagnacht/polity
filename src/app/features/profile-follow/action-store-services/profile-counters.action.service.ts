@@ -2,10 +2,7 @@ import {Injectable} from '@angular/core';
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
 import {ProfileCountersStoreService} from "./profile-counters.store.service";
-import {
-    SupabaseArrayReturn,
-    SupabaseArrayReturnConditional
-} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseArrayReturn, SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {supabaseClient} from "../../../auth/supabase-client";
 import {ProfileStoreService} from "../../profile/action-store-services/profile.store.service";
 
@@ -23,7 +20,7 @@ export class ProfileCountersActionService {
 
     public async selectProfileCounter(userId: string): Promise<void> {
         await this.profileCountersStoreService.profileCounters.wrapSelectFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseArrayReturnConditional<'select_following_counter'>> = await this.supabaseClient.rpc(
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'select_following_counter'>> = await this.supabaseClient.rpc(
                 'select_following_counter',
                 {user_id: userId}
             )

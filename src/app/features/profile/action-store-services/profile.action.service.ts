@@ -48,7 +48,7 @@ export class ProfileActionService {
      */
     public async updateProfile(profile: SupabaseArrayReturnConditional<'select_user'>): Promise<void> {
         await this.profileStoreService.profile.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseArrayReturnConditional<'update_user'>> = await this.supabase
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'update_user'>> = await this.supabase
             .rpc('update_user', {
                 first_name_in: profile.first_name as string,
                 last_name_in: profile.last_name as string,
@@ -69,7 +69,7 @@ export class ProfileActionService {
      */
     async updateProfileImage(imageUrl: string): Promise<void> {
         await this.profileStoreService.profile.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseArrayReturnConditional<'update_user'>> = await this.supabase
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'update_user'>> = await this.supabase
             .rpc('update_user', {
                 profile_image_in: imageUrl
             })

@@ -1,7 +1,7 @@
 import {Component, Input, signal, WritableSignal} from '@angular/core';
 import {Router} from "@angular/router";
 import {TuiIslandModule} from "@taiga-ui/kit";
-import {SupabaseArrayReturnConditional} from "../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../supabase/types/supabase.shorthand-types";
 
 @Component({
     selector: 'polity-profile-link-card',
@@ -21,7 +21,7 @@ export class ProfileLinkCardComponent {
     @Input({required: true}) public sessionId: string | null = null;
     @Input({required: true}) public isLoading: WritableSignal<boolean> = signal(true);
     @Input({required: true}) public profile: WritableSignal<
-        SupabaseArrayReturnConditional<'select_user'> | null | undefined
+        SupabaseObjectReturn<'select_user'> | null | undefined
     > = signal(
         null
     )

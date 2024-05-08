@@ -5,7 +5,7 @@ import {TuiTabBarModule} from "@taiga-ui/addon-mobile";
 import {RouterModule} from "@angular/router";
 import {TuiHintModule} from "@taiga-ui/core";
 import {CommonModule} from "@angular/common";
-import {SupabaseArrayReturnConditional} from "../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../supabase/types/supabase.shorthand-types";
 
 @Component({
     selector: 'polity-main-bar-bottom',
@@ -26,7 +26,7 @@ export class FirstBarBottomComponent {
      * @Input items: Item[]. Default is signed out items.
      */
     @Input({required: true}) public items: NavigationItem[] = NAVIGATION_ITEMS_SIGNED_OUT;
-    @Input() public notificationBadge: WritableSignal<SupabaseArrayReturnConditional<'select_unread_notifications_counter'> | null> = signal({
+    @Input() public notificationBadge: WritableSignal<SupabaseObjectReturn<'select_unread_notifications_counter'> | null> = signal({
         profile_id: '',
         unread_notifications_counter: 0
     });

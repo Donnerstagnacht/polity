@@ -5,10 +5,7 @@ import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {ProfileActionService} from "../action-store-services/profile.action.service";
 import {ProfileStoreService} from "../action-store-services/profile.store.service";
-import {
-    SupabaseArrayReturnConditional,
-    SupabaseObjectReturn
-} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 
 @Component({
     selector: 'polity-profile-image-upload',
@@ -68,9 +65,9 @@ export class ProfileImageUploadComponent {
                         await this.profileService.updateProfileImage(response.data.path);
                     } catch (error) {
                     } finally {
-                        const profile: SupabaseArrayReturnConditional<"select_user"> = {
+                        const profile: SupabaseObjectReturn<"select_user"> = {
                             profile_image: privateUrl
-                        } as SupabaseArrayReturnConditional<'select_user'>;
+                        } as SupabaseObjectReturn<'select_user'>;
                         this.profileStoreService.profile.mutateObject(profile);
                     }
                 } catch (error) {
