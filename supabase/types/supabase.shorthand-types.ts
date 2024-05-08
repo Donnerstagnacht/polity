@@ -3,7 +3,8 @@ import {DatabaseOverwritten} from "./supabase.modified";
 // Commonly used types
 // from functions
 /**
- * Type that represents the return of a postgres function as array.
+ * Type that represents the table return of a postgres function as array. It assumes that the return from the
+ * postgres function can include multiple rows
  * @example
  * If a postgres function "find_user()" returns
  *
@@ -50,7 +51,8 @@ export type SupabaseArrayReturnConditional<T extends keyof DatabaseOverwritten['
     SupabaseArrayElement<DatabaseOverwritten['public']['Functions'][T]['Returns']>;
 
 /**
- * Type that represents the return of a postgres function as object e.g. a single row.
+ * Type that represents the table return of a postgres function as object e.g. a single row. It assumes that the
+ * return from the postgres function can only include one row
  * @example
  * If a postgres function "find_user()" returns
  *
@@ -130,4 +132,6 @@ export type SupabaseResult<T> = T extends PromiseLike<infer U> ? U : never
  * Abstract type that represents the returned data of a successful supabase-js call
  */
 export type SupabaseResultOk<T> = T extends PromiseLike<{ data: infer U }> ? Exclude<U, null> : never
+
+
 

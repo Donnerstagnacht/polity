@@ -2,8 +2,7 @@ import {Component, Inject, Injector, signal, WritableSignal} from '@angular/core
 import {TuiDialogService} from "@taiga-ui/core";
 import {AssistantWelcomeDialogComponent} from "../assistant-welcome-dialog/assistant-welcome-dialog.component";
 import {PolymorpheusComponent} from "@tinkoff/ng-polymorpheus";
-import {SessionStoreService} from "../../../auth/services/session.store.service";
-import {SupabaseArrayReturnConditional} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {AssistantIconComponent} from "../assistant-icon/assistant-icon.component";
 import {CommonModule} from "@angular/common";
 import {AssistantActionService} from "../action-stores-services/assistant.action.service";
@@ -20,15 +19,14 @@ import {AssistantStoreService} from "../action-stores-services/assistant.store.s
     ]
 })
 export class AssistantComponent {
-    protected assistant: WritableSignal<SupabaseArrayReturnConditional<'select_assistant'> | null> = signal({
+    protected assistant: WritableSignal<SupabaseObjectReturn<'select_assistant'> | null> = signal({
         skip_tutorial: true,
-    }) as WritableSignal<SupabaseArrayReturnConditional<'select_assistant'> | null>;
+    }) as WritableSignal<SupabaseObjectReturn<'select_assistant'> | null>;
 
     constructor(
         @Inject(TuiDialogService) private readonly dialogs: TuiDialogService,
         @Inject(Injector) private readonly injector: Injector,
         private readonly assistantService: AssistantActionService,
-        private readonly sessionStoreService: SessionStoreService,
         private readonly assistantStoreService: AssistantStoreService
     ) {
     }

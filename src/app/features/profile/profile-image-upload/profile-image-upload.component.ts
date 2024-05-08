@@ -5,7 +5,10 @@ import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {ProfileActionService} from "../action-store-services/profile.action.service";
 import {ProfileStoreService} from "../action-store-services/profile.store.service";
-import {SupabaseArrayReturnConditional} from "../../../../../supabase/types/supabase.shorthand-types";
+import {
+    SupabaseArrayReturnConditional,
+    SupabaseObjectReturn
+} from "../../../../../supabase/types/supabase.shorthand-types";
 
 @Component({
     selector: 'polity-profile-image-upload',
@@ -26,7 +29,7 @@ export class ProfileImageUploadComponent {
     protected loadedFiles$: Observable<TuiFileLike | null> = this.imageControl.valueChanges.pipe(
         switchMap(file => (file ? this.returnRequestAsObservable(file) : of(null))),
     );
-    protected profileWriteable: WritableSignal<SupabaseArrayReturnConditional<'select_user'> | null | undefined>;
+    protected profileWriteable: WritableSignal<SupabaseObjectReturn<'select_user'> | null | undefined>;
     private avatarUrl: string = '';
 
     constructor(
