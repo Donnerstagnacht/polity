@@ -33,7 +33,7 @@ export class FollowerOfGroupActionService {
             )
             .throwOnError()
             if (followerResponse.data) {
-                const finalArray: SupabaseObjectReturn<'select_follower_of_user'>[] = await this.groupActionService.transformImageNamesToUrls(followerResponse.data, 'profile_image')
+                const finalArray: SupabaseObjectReturn<'read_follower_of_user'>[] = await this.groupActionService.transformImageNamesToUrls(followerResponse.data, 'profile_image')
                 this.followersOfGroupStoreService.followersOfGroup.setObjects(finalArray)
             }
         })

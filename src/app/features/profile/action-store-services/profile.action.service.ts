@@ -23,10 +23,10 @@ export class ProfileActionService {
      * @param {string} id - The ID of the profile to retrieve.
      * @return {Promise<void>}
      */
-    public async selectProfile(id: string): Promise<void> {
+    public async readProfile(id: string): Promise<void> {
         await this.profileStoreService.profile.wrapSelectFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'select_user'>> = await this.supabase
-            .rpc('select_user', {user_id: id})
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_user'>> = await this.supabase
+            .rpc('read_user', {user_id: id})
             .single()
             .throwOnError()
             if (response.data) {
@@ -43,7 +43,7 @@ export class ProfileActionService {
      * @param {Profile} profile - The profile object containing the updated information.
      * @return {Promise<void>}
      */
-    public async updateProfile(profile: SupabaseObjectReturn<'select_user'>): Promise<void> {
+    public async updateProfile(profile: SupabaseObjectReturn<'read_user'>): Promise<void> {
         await this.profileStoreService.profile.wrapUpdateFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<SupabaseObjectReturn<'update_user'>> = await this.supabase
             .rpc('update_user', {

@@ -1,5 +1,5 @@
-DROP FUNCTION IF EXISTS public.select_follower_of_user();
-CREATE OR REPLACE FUNCTION public.select_follower_of_user()
+DROP FUNCTION IF EXISTS public.read_follower_of_user();
+CREATE OR REPLACE FUNCTION public.read_follower_of_user()
     RETURNS table
             (
                 id            uuid,
@@ -31,8 +31,8 @@ BEGIN
 END
 $$;
 
-DROP FUNCTION IF EXISTS public.select_following_of_user();
-CREATE OR REPLACE FUNCTION public.select_following_of_user()
+DROP FUNCTION IF EXISTS public.read_following_of_user();
+CREATE OR REPLACE FUNCTION public.read_following_of_user()
     RETURNS table
             (
                 id            uuid,

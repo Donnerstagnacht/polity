@@ -23,7 +23,7 @@ import {AssistantStoreService} from "../action-stores-services/assistant.store.s
 })
 export class AssistantIconComponent {
     protected isAssistantLoading: WritableSignal<boolean> = signal(true)
-    private assistant: WritableSignal<SupabaseObjectReturn<'select_assistant'> | null> = signal(null)
+    private assistant: WritableSignal<SupabaseObjectReturn<'read_assistant'> | null> = signal(null)
     private tutorials: Tutorial[] = TUTORIALS
     protected activatedTutorial: Tutorial = this.tutorials[0]
 

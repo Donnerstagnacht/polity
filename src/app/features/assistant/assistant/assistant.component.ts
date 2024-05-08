@@ -19,9 +19,9 @@ import {AssistantStoreService} from "../action-stores-services/assistant.store.s
     ]
 })
 export class AssistantComponent {
-    protected assistant: WritableSignal<SupabaseObjectReturn<'select_assistant'> | null> = signal({
+    protected assistant: WritableSignal<SupabaseObjectReturn<'read_assistant'> | null> = signal({
         skip_tutorial: true,
-    }) as WritableSignal<SupabaseObjectReturn<'select_assistant'> | null>;
+    }) as WritableSignal<SupabaseObjectReturn<'read_assistant'> | null>;
 
     constructor(
         @Inject(TuiDialogService) private readonly dialogs: TuiDialogService,
@@ -32,7 +32,7 @@ export class AssistantComponent {
     }
 
     async ngOnInit(): Promise<void> {
-        await this.assistantService.selectAssistant();
+        await this.assistantService.readAssistant();
         this.assistant = this.assistantStoreService.assistant.getObject()
         console.log('assistant', this.assistant());
 

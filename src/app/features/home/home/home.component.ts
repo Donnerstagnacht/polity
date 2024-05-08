@@ -16,7 +16,7 @@ import {ProfileLinkCardComponent} from "../../../ui/profile-link-card/profile-li
 })
 export class HomeComponent {
     protected sessionId: string | null;
-    protected profile: WritableSignal<SupabaseObjectReturn<'select_user'> | null> = signal(null)
+    protected profile: WritableSignal<SupabaseObjectReturn<'read_user'> | null> = signal(null)
     protected isProfileLoading: WritableSignal<boolean> = signal(true)
 
     constructor(
@@ -29,7 +29,7 @@ export class HomeComponent {
     }
 
     async ngOnInit(): Promise<void> {
-        await this.profileService.selectProfile(this.sessionId as string)
+        await this.profileService.readProfile(this.sessionId as string)
         this.profile = this.profileStoreService.profile.getObject()
     }
 

@@ -31,8 +31,8 @@ import {FollowingOfUserActionService} from "../action-store-services/following-o
 
 })
 export class ProfileFollowEditComponent {
-    protected followersOfUser: WritableSignal<SupabaseObjectReturn<'select_follower_of_user'>[]> = signal([]);
-    protected followingsOfUser: WritableSignal<SupabaseObjectReturn<'select_following_of_user'>[]> = signal([]);
+    protected followersOfUser: WritableSignal<SupabaseObjectReturn<'read_follower_of_user'>[]> = signal([]);
+    protected followingsOfUser: WritableSignal<SupabaseObjectReturn<'read_following_of_user'>[]> = signal([]);
     protected isFollowersLoading: WritableSignal<boolean> = signal(true);
     protected isFollowingLoading: WritableSignal<boolean> = signal(true);
     protected readonly columns: string[] = ['first_name', 'last_name', 'actions'];

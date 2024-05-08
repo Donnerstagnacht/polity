@@ -1,5 +1,5 @@
-DROP FUNCTION IF EXISTS public.select_assistant();
-CREATE OR REPLACE FUNCTION public.select_assistant()
+DROP FUNCTION IF EXISTS public.read_assistant();
+CREATE OR REPLACE FUNCTION public.read_assistant()
     RETURNS table
             (
                 id            uuid,

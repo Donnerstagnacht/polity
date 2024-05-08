@@ -1,7 +1,7 @@
-DROP FUNCTION IF EXISTS public.select_user(
+DROP FUNCTION IF EXISTS public.read_user(
     user_id uuid
 );
-CREATE OR REPLACE FUNCTION public.select_user(
+CREATE OR REPLACE FUNCTION public.read_user(
     user_id uuid
 )
     RETURNS table

@@ -46,7 +46,7 @@ export class AssistantWelcomeDialogComponent {
     protected name: string = '';
     protected index: number = 0;
     private readonly sessionId: string | null = null;
-    private assistant: WritableSignal<SupabaseObjectReturn<'select_assistant'> | null> = signal(null);
+    private assistant: WritableSignal<SupabaseObjectReturn<'read_assistant'> | null> = signal(null);
 
     constructor(
         @Inject(POLYMORPHEUS_CONTEXT) private readonly dialogContext: TuiDialogContext<boolean>,
@@ -129,10 +129,10 @@ export class AssistantWelcomeDialogComponent {
 
     private async updateProfileName(): Promise<void> {
         this.name = this.welcomeForm.value.firstName + ' ' + this.welcomeForm.value.lastName;
-        const profile: SupabaseObjectReturn<'select_user'> = {
+        const profile: SupabaseObjectReturn<'read_user'> = {
             first_name: this.welcomeForm.value.firstName as string,
             last_name: this.welcomeForm.value.lastName as string
-        } as SupabaseObjectReturn<'select_user'>
+        } as SupabaseObjectReturn<'read_user'>
         await Promise.all([
             this.profilService.updateProfile(profile),
             this.assistantService.updateLastTutorial('profile')

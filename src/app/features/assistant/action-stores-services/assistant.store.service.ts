@@ -6,9 +6,9 @@ import {ObjectStoreService} from "../../../signal-store/object-store.service";
     providedIn: 'root'
 })
 export class AssistantStoreService {
-    public assistant: ObjectStoreService<SupabaseObjectReturn<'select_assistant'>>
+    public assistant: ObjectStoreService<SupabaseObjectReturn<'read_assistant'>>
 
     constructor() {
-        this.assistant = new ObjectStoreService<SupabaseObjectReturn<'select_assistant'>>();
+        this.assistant = new ObjectStoreService<SupabaseObjectReturn<'read_assistant'>>();
     }
 }

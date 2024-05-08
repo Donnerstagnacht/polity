@@ -1,5 +1,5 @@
-DROP FUNCTION IF EXISTS public.select_user_notification_settings();
-CREATE OR REPLACE FUNCTION public.select_user_notification_settings()
+DROP FUNCTION IF EXISTS public.read_user_notification_settings();
+CREATE OR REPLACE FUNCTION public.read_user_notification_settings()
     RETURNS table
             (
                 receive_follow_notifications boolean

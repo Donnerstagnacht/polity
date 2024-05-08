@@ -16,8 +16,8 @@ export class NotificationSettingsActionService {
 
     public async selectNotificationSettings(): Promise<void> {
         await this.notificationSettingsStore.notificationSettings.wrapSelectFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'select_user_notification_settings'>> = await this.supabaseClient
-            .rpc('select_user_notification_settings')
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_user_notification_settings'>> = await this.supabaseClient
+            .rpc('read_user_notification_settings')
             .single()
             .throwOnError()
             console.log(response.data)

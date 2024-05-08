@@ -1,5 +1,5 @@
-DROP FUNCTION IF EXISTS public.select_notifications_of_users();
-CREATE OR REPLACE FUNCTION public.select_notifications_of_users()
+DROP FUNCTION IF EXISTS public.read_notifications_of_users();
+CREATE OR REPLACE FUNCTION public.read_notifications_of_users()
     RETURNS table
             (
                 type_of_notification notifications_enum,
@@ -38,10 +38,10 @@ END
 $$;
 
 --option with retrun query instead of setof
--- DROP FUNCTION IF EXISTS public.select_notifications_of_users(
+-- DROP FUNCTION IF EXISTS public.read_notifications_of_users(
 --     user_id uuid
 -- );
--- CREATE OR REPLACE FUNCTION public.select_notifications_of_users(
+-- CREATE OR REPLACE FUNCTION public.read_notifications_of_users(
 --     user_id uuid
 -- )
 --     RETURNS table

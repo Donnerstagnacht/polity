@@ -22,7 +22,7 @@ export class AssistantToggleComponent {
     }> = new FormGroup({
         showAssistant: new FormControl(false),
     });
-    private assistant: WritableSignal<SupabaseObjectReturn<'select_assistant'> | null> = signal(null);
+    private assistant: WritableSignal<SupabaseObjectReturn<'read_assistant'> | null> = signal(null);
 
     constructor(
         private readonly assistantService: AssistantActionService,

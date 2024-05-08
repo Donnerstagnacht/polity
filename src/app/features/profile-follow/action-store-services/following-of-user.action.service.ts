@@ -23,12 +23,12 @@ export class FollowingOfUserActionService {
 
     public async selectFollowingsOfUser(): Promise<any> {
         await this.followingOfUserStoreService.followingOfUser.wrapSelectFunction(async (): Promise<void> => {
-            const followingResponse: PostgrestSingleResponse<SupabaseObjectReturn<'select_following_of_user'>[]> = await this.supabaseClient.rpc(
-                'select_following_of_user'
+            const followingResponse: PostgrestSingleResponse<SupabaseObjectReturn<'read_following_of_user'>[]> = await this.supabaseClient.rpc(
+                'read_following_of_user'
             )
             .throwOnError()
             if (followingResponse.data) {
-                const finalArray: SupabaseObjectReturn<'select_following_of_user'>[] = await this.profileActionService.transformImageNamesToUrls(followingResponse.data, 'profile_image')
+                const finalArray: SupabaseObjectReturn<'read_following_of_user'>[] = await this.profileActionService.transformImageNamesToUrls(followingResponse.data, 'profile_image')
                 this.followingOfUserStoreService.followingOfUser.setObjects(finalArray)
             }
         })

@@ -46,7 +46,7 @@ import {UpdatePasswordComponent} from "../../../auth/update-password/update-pass
     ]
 })
 export class ProfileEditComponent {
-    protected profile: WritableSignal<SupabaseObjectReturn<'select_user'> | null> = signal(null);
+    protected profile: WritableSignal<SupabaseObjectReturn<'read_user'> | null> = signal(null);
     protected editProfileForm: FormGroup<{
         firstName: FormControl<string | null>,
         lastName: FormControl<string | null>
@@ -73,11 +73,11 @@ export class ProfileEditComponent {
 
 
     protected async onEdit(): Promise<void> {
-        const profile: SupabaseObjectReturn<'select_user'> =
+        const profile: SupabaseObjectReturn<'read_user'> =
             {
                 first_name: this.editProfileForm.value.firstName as string,
                 last_name: this.editProfileForm.value.lastName as string
-            } as SupabaseObjectReturn<'select_user'>
+            } as SupabaseObjectReturn<'read_user'>
         await this.profileService.updateProfile(profile);
     }
 }

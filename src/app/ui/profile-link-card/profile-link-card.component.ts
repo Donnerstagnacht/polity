@@ -21,7 +21,7 @@ export class ProfileLinkCardComponent {
     @Input({required: true}) public sessionId: string | null = null;
     @Input({required: true}) public isLoading: WritableSignal<boolean> = signal(true);
     @Input({required: true}) public profile: WritableSignal<
-        SupabaseObjectReturn<'select_user'> | null | undefined
+        SupabaseObjectReturn<'read_user'> | null | undefined
     > = signal(
         null
     )

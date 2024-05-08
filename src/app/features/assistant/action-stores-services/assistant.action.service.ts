@@ -22,10 +22,10 @@ export class AssistantActionService {
      * @param {string} userId - The ID of the user.
      * @return {Promise<void>}
      */
-    public async selectAssistant(): Promise<void> {
+    public async readAssistant(): Promise<void> {
         await this.assistantStoreService.assistant.wrapSelectFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'select_assistant'>> = await this.supabaseClient
-            .rpc('select_assistant')
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_assistant'>> = await this.supabaseClient
+            .rpc('read_assistant')
             .single()
             .throwOnError();
             if (response.data) {
@@ -46,9 +46,9 @@ export class AssistantActionService {
             .rpc('update_first_sign_in', {new_status: newStatus})
             .throwOnError()
 
-            const updatedAssistant: SupabaseObjectReturn<'select_assistant'> = {
+            const updatedAssistant: SupabaseObjectReturn<'read_assistant'> = {
                 first_sign_in: newStatus,
-            } as SupabaseObjectReturn<'select_assistant'>
+            } as SupabaseObjectReturn<'read_assistant'>
             this.assistantStoreService.assistant.mutateObject(updatedAssistant)
         }, false)
     }
@@ -65,9 +65,9 @@ export class AssistantActionService {
             .rpc('update_skip_tutorial', {new_status: newStatus})
             .throwOnError()
 
-            const updatedAssistant: SupabaseObjectReturn<'select_assistant'> = {
+            const updatedAssistant: SupabaseObjectReturn<'read_assistant'> = {
                 skip_tutorial: newStatus,
-            } as SupabaseObjectReturn<'select_assistant'>
+            } as SupabaseObjectReturn<'read_assistant'>
             this.assistantStoreService.assistant.mutateObject(updatedAssistant)
         }, true, 'You can reactivate your tutorials in your profile settings!')
     }
@@ -84,9 +84,9 @@ export class AssistantActionService {
             .rpc('update_last_tutorial', {new_status: last_tutorial})
             .throwOnError()
 
-            const updatedAssistant: SupabaseObjectReturn<'select_assistant'> = {
+            const updatedAssistant: SupabaseObjectReturn<'read_assistant'> = {
                 last_tutorial: last_tutorial,
-            } as SupabaseObjectReturn<'select_assistant'>
+            } as SupabaseObjectReturn<'read_assistant'>
             this.assistantStoreService.assistant.mutateObject(updatedAssistant)
         }, false)
     }

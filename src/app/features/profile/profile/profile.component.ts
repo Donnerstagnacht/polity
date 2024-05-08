@@ -43,7 +43,7 @@ export class ProfileComponent {
         this.checkIsOwner(urlId, sessionId)
 
         await Promise.all([
-            this.profileService.selectProfile(urlId),
+            this.profileService.readProfile(urlId),
             this.profileCounterService.selectProfileCounter(urlId)
         ])
         await this.profileCounterService.checkIfFollowing();

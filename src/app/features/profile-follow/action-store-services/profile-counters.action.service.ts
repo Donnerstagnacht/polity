@@ -20,8 +20,8 @@ export class ProfileCountersActionService {
 
     public async selectProfileCounter(userId: string): Promise<void> {
         await this.profileCountersStoreService.profileCounters.wrapSelectFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'select_following_counter'>> = await this.supabaseClient.rpc(
-                'select_following_counter',
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_following_counter'>> = await this.supabaseClient.rpc(
+                'read_following_counter',
                 {user_id: userId}
             )
             .single()

@@ -106,6 +106,15 @@ export type Database = {
         }
         Returns: unknown
       }
+      read_assistant: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          id: string
+          first_sign_in: boolean
+          skip_tutorial: boolean
+          last_tutorial: Database["public"]["Enums"]["tutorial_enum"]
+        }[]
+      }
       read_follower_of_group: {
         Args: {
           group_id_in: string
@@ -117,10 +126,38 @@ export type Database = {
           last_name: string
         }[]
       }
+      read_follower_of_user: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          id: string
+          profile_image: string
+          first_name: string
+          last_name: string
+        }[]
+      }
+      read_following_counter: {
+        Args: {
+          user_id: string
+        }
+        Returns: {
+          profile_id: string
+          follower_counter: number
+          following_counter: number
+        }[]
+      }
       read_following_of_group: {
         Args: {
           group_id_in: string
         }
+        Returns: {
+          id: string
+          profile_image: string
+          first_name: string
+          last_name: string
+        }[]
+      }
+      read_following_of_user: {
+        Args: Record<PropertyKey, never>
         Returns: {
           id: string
           profile_image: string
@@ -201,6 +238,34 @@ export type Database = {
         }
         Returns: Record<string, unknown>
       }
+      read_notifications_of_users: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          type_of_notification: Database["public"]["Enums"]["notifications_enum"]
+          read_by_receiver: boolean
+          created_at: string
+          first_name: string
+          last_name: string
+          profile_image: string
+        }[]
+      }
+      read_user: {
+        Args: {
+          user_id: string
+        }
+        Returns: {
+          id: string
+          first_name: string
+          last_name: string
+          profile_image: string
+        }[]
+      }
+      read_user_notification_settings: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          receive_follow_notifications: boolean
+        }[]
+      }
       remove_follower_transaction: {
         Args: {
           follower_id: string
@@ -252,76 +317,11 @@ export type Database = {
           p256dh: string
         }[]
       }
-      select_assistant: {
-        Args: Record<PropertyKey, never>
-        Returns: {
-          id: string
-          first_sign_in: boolean
-          skip_tutorial: boolean
-          last_tutorial: Database["public"]["Enums"]["tutorial_enum"]
-        }[]
-      }
-      select_follower_of_user: {
-        Args: Record<PropertyKey, never>
-        Returns: {
-          id: string
-          profile_image: string
-          first_name: string
-          last_name: string
-        }[]
-      }
-      select_following_counter: {
-        Args: {
-          user_id: string
-        }
-        Returns: {
-          profile_id: string
-          follower_counter: number
-          following_counter: number
-        }[]
-      }
-      select_following_of_user: {
-        Args: Record<PropertyKey, never>
-        Returns: {
-          id: string
-          profile_image: string
-          first_name: string
-          last_name: string
-        }[]
-      }
-      select_notifications_of_users: {
-        Args: Record<PropertyKey, never>
-        Returns: {
-          type_of_notification: Database["public"]["Enums"]["notifications_enum"]
-          read_by_receiver: boolean
-          created_at: string
-          first_name: string
-          last_name: string
-          profile_image: string
-        }[]
-      }
       select_unread_notifications_counter: {
         Args: Record<PropertyKey, never>
         Returns: {
           profile_id: string
           unread_notifications_counter: number
-        }[]
-      }
-      select_user: {
-        Args: {
-          user_id: string
-        }
-        Returns: {
-          id: string
-          first_name: string
-          last_name: string
-          profile_image: string
-        }[]
-      }
-      select_user_notification_settings: {
-        Args: Record<PropertyKey, never>
-        Returns: {
-          receive_follow_notifications: boolean
         }[]
       }
       set_limit: {

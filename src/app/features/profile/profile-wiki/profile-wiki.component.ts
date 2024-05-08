@@ -24,8 +24,8 @@ export class ProfileWikiComponent {
     protected isProfileLoading: WritableSignal<boolean> = signal(true);
     protected isProfileCounterLoading: WritableSignal<boolean> = signal(true);
     protected isFollowingCheckLoading: WritableSignal<boolean> = signal(true);
-    protected profile: Signal<SupabaseObjectReturn<'select_user'> | null>;
-    protected profileCounter: WritableSignal<SupabaseObjectReturn<'select_following_counter'> | null> = signal(null);
+    protected profile: Signal<SupabaseObjectReturn<'read_user'> | null>;
+    protected profileCounter: WritableSignal<SupabaseObjectReturn<'read_following_counter'> | null> = signal(null);
     protected isOwner: WritableSignal<boolean>;
     protected isFollowing: WritableSignal<boolean>;
 

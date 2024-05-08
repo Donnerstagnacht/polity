@@ -6,9 +6,9 @@ import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.short
     providedIn: 'root'
 })
 export class NotificationSettingsStoreService {
-    public notificationSettings: ObjectStoreService<SupabaseObjectReturn<'select_user_notification_settings'>>
+    public notificationSettings: ObjectStoreService<SupabaseObjectReturn<'read_user_notification_settings'>>
 
     constructor() {
-        this.notificationSettings = new ObjectStoreService<SupabaseObjectReturn<'select_user_notification_settings'>>();
+        this.notificationSettings = new ObjectStoreService<SupabaseObjectReturn<'read_user_notification_settings'>>();
     }
 }

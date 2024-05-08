@@ -1,7 +1,7 @@
-DROP FUNCTION IF EXISTS public.select_following_counter(
+DROP FUNCTION IF EXISTS public.read_following_counter(
     user_id uuid
 );
-CREATE OR REPLACE FUNCTION public.select_following_counter(
+CREATE OR REPLACE FUNCTION public.read_following_counter(
     user_id uuid
 )
     RETURNS table

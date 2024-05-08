@@ -6,9 +6,9 @@ import {ArrayStoreService} from "../../../signal-store/array-store.service";
     providedIn: 'root'
 })
 export class FollowingOfUserStoreService {
-    public followingOfUser: ArrayStoreService<SupabaseObjectReturn<'select_following_of_user'>>;
+    public followingOfUser: ArrayStoreService<SupabaseObjectReturn<'read_following_of_user'>>;
 
     constructor() {
-        this.followingOfUser = new ArrayStoreService<SupabaseObjectReturn<'select_following_of_user'>>();
+        this.followingOfUser = new ArrayStoreService<SupabaseObjectReturn<'read_following_of_user'>>();
     }
 }
