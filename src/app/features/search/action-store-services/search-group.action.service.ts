@@ -3,7 +3,7 @@ import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modifi
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {supabaseClient} from "../../../auth/supabase-client";
 import {SearchGroupStoreService} from "./search-group.store.service";
-import {SupabaseFunctionTableReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseArrayReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 
 @Injectable({
     providedIn: 'root'
@@ -25,7 +25,7 @@ export class SearchGroupActionService {
     public async searchGroup(searchTerm: string): Promise<void> {
         this.searchStoreService.groupSearchResults.resetObjects()
         await this.searchStoreService.groupSearchResults.wrapSelectFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseFunctionTableReturn<'search_group'>> = await this.supabaseClient.rpc(
+            const response: PostgrestSingleResponse<SupabaseArrayReturn<'search_group'>> = await this.supabaseClient.rpc(
                 'search_group',
                 {search_term: searchTerm}
             ).throwOnError()

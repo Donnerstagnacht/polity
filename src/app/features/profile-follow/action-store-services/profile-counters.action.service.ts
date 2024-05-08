@@ -3,8 +3,8 @@ import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
 import {ProfileCountersStoreService} from "./profile-counters.store.service";
 import {
-    FunctionSingleReturn,
-    SupabaseFunctionTableReturn
+    SupabaseArrayReturn,
+    SupabaseArrayReturnConditional
 } from "../../../../../supabase/types/supabase.shorthand-types";
 import {supabaseClient} from "../../../auth/supabase-client";
 import {ProfileStoreService} from "../../profile/action-store-services/profile.store.service";
@@ -23,7 +23,7 @@ export class ProfileCountersActionService {
 
     public async selectProfileCounter(userId: string): Promise<void> {
         await this.profileCountersStoreService.profileCounters.wrapSelectFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<FunctionSingleReturn<'select_following_counter'>> = await this.supabaseClient.rpc(
+            const response: PostgrestSingleResponse<SupabaseArrayReturnConditional<'select_following_counter'>> = await this.supabaseClient.rpc(
                 'select_following_counter',
                 {user_id: userId}
             )
@@ -40,7 +40,7 @@ export class ProfileCountersActionService {
 
         await this.profileCountersStoreService.profileCounters.wrapSelectFunction(async (): Promise<void> => {
             this.profileStoreService.profile.uiFlagStore.setUiFlagTrue('isFollowingCheckLoading')
-            const response: PostgrestSingleResponse<SupabaseFunctionTableReturn<'check_if_following'>> = await this.supabaseClient.rpc(
+            const response: PostgrestSingleResponse<SupabaseArrayReturn<'check_if_following'>> = await this.supabaseClient.rpc(
                 'check_if_following',
                 {
                     following_id: followingId as string
@@ -61,7 +61,7 @@ export class ProfileCountersActionService {
     public async followProfile(): Promise<void> {
         const followingId: string = this.profileCountersStoreService.profileCounters.getValueByKey('profile_id');
         await this.profileCountersStoreService.profileCounters.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseFunctionTableReturn<'follow_transaction'>> = await this.supabaseClient.rpc(
+            const response: PostgrestSingleResponse<SupabaseArrayReturn<'follow_transaction'>> = await this.supabaseClient.rpc(
                 'follow_transaction',
                 {
                     following_id: followingId
@@ -76,7 +76,7 @@ export class ProfileCountersActionService {
     public async unFollowProfile(): Promise<void> {
         const followingId = this.profileCountersStoreService.profileCounters.getValueByKey('profile_id');
         await this.profileCountersStoreService.profileCounters.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseFunctionTableReturn<'unfollow_transaction'>> = await this.supabaseClient.rpc(
+            const response: PostgrestSingleResponse<SupabaseArrayReturn<'unfollow_transaction'>> = await this.supabaseClient.rpc(
                 'unfollow_transaction',
                 {
                     following_id: followingId

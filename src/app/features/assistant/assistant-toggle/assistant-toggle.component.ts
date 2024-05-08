@@ -1,6 +1,6 @@
 import {Component, effect, signal, WritableSignal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {FunctionSingleReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseArrayReturnConditional} from "../../../../../supabase/types/supabase.shorthand-types";
 import {TuiToggleModule} from "@taiga-ui/kit";
 import {AssistantActionService} from "../action-stores-services/assistant.action.service";
 import {AssistantStoreService} from "../action-stores-services/assistant.store.service";
@@ -22,7 +22,7 @@ export class AssistantToggleComponent {
     }> = new FormGroup({
         showAssistant: new FormControl(false),
     });
-    private assistant: WritableSignal<FunctionSingleReturn<'select_assistant'> | null> = signal(null);
+    private assistant: WritableSignal<SupabaseArrayReturnConditional<'select_assistant'> | null> = signal(null);
 
     constructor(
         private readonly assistantService: AssistantActionService,

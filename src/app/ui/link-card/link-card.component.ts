@@ -1,7 +1,6 @@
 import {Component, Input, signal, WritableSignal} from '@angular/core';
 import {Router} from "@angular/router";
 import {TuiIslandModule} from "@taiga-ui/kit";
-import {FunctionSingleReturn} from "../../../../supabase/types/supabase.shorthand-types";
 
 @Component({
     selector: 'polity-link-card',
@@ -14,18 +13,21 @@ import {FunctionSingleReturn} from "../../../../supabase/types/supabase.shorthan
 })
 export class LinkCardComponent {
     /**
-     * Takes the sessionId as input to display a profile link
+     * Linked url which can be navigated to on click of the card.
      *
-     * @Input sessionId - string |null.
+     * @Input linkUrl - string |null.
      */
-    @Input({required: true}) public sessionId: string | null = null;
-    @Input({required: true}) public isLoading: WritableSignal<boolean> = signal(true);
-    @Input({required: true}) public profile: WritableSignal<
-        FunctionSingleReturn<'select_user'> | null | undefined
-    > = signal(
-        null
-    )
-    @Input() public dataCyTag: string = 'link-card';
+    @Input({required: true}) public linkUrl: string | null = null;
+    /**
+     * Card title which should be displayed.
+     *
+     * @Input linkUrl - string |null.
+     */
+    @Input({required: true}) public cardTitle: string | null = null;
+    @Input() public dataCyTag: string = 'profile-link-card';
+
+    @Input() public isLoading: WritableSignal<boolean> = signal(false);
+    protected readonly history = history;
 
     constructor(
         private readonly router: Router,
@@ -33,7 +35,7 @@ export class LinkCardComponent {
     }
 
     protected async onClick(): Promise<void> {
-        await this.router.navigate(['/profile/', this.sessionId]);
+        console.log(this.linkUrl);
+        await this.router.navigate([this.linkUrl]);
     }
-
 }

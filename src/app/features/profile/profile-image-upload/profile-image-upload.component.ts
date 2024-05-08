@@ -5,7 +5,7 @@ import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {ProfileActionService} from "../action-store-services/profile.action.service";
 import {ProfileStoreService} from "../action-store-services/profile.store.service";
-import {FunctionSingleReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseArrayReturnConditional} from "../../../../../supabase/types/supabase.shorthand-types";
 
 @Component({
     selector: 'polity-profile-image-upload',
@@ -26,7 +26,7 @@ export class ProfileImageUploadComponent {
     protected loadedFiles$: Observable<TuiFileLike | null> = this.imageControl.valueChanges.pipe(
         switchMap(file => (file ? this.returnRequestAsObservable(file) : of(null))),
     );
-    protected profileWriteable: WritableSignal<FunctionSingleReturn<'select_user'> | null | undefined>;
+    protected profileWriteable: WritableSignal<SupabaseArrayReturnConditional<'select_user'> | null | undefined>;
     private avatarUrl: string = '';
 
     constructor(
@@ -65,9 +65,9 @@ export class ProfileImageUploadComponent {
                         await this.profileService.updateProfileImage(response.data.path);
                     } catch (error) {
                     } finally {
-                        const profile: FunctionSingleReturn<"select_user"> = {
+                        const profile: SupabaseArrayReturnConditional<"select_user"> = {
                             profile_image: privateUrl
-                        } as FunctionSingleReturn<'select_user'>;
+                        } as SupabaseArrayReturnConditional<'select_user'>;
                         this.profileStoreService.profile.mutateObject(profile);
                     }
                 } catch (error) {

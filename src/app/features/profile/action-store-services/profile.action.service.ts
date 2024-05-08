@@ -4,7 +4,7 @@ import {ProfileStoreService} from "./profile.store.service";
 import {TuiFileLike} from "@taiga-ui/kit";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
 import {supabaseClient} from "../../../auth/supabase-client";
-import {FunctionSingleReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseArrayReturnConditional} from "../../../../../supabase/types/supabase.shorthand-types";
 
 @Injectable({
     providedIn: 'root'
@@ -25,7 +25,7 @@ export class ProfileActionService {
      */
     public async selectProfile(id: string): Promise<void> {
         await this.profileStoreService.profile.wrapSelectFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<FunctionSingleReturn<'select_user'>> = await this.supabase
+            const response: PostgrestSingleResponse<SupabaseArrayReturnConditional<'select_user'>> = await this.supabase
             .rpc('select_user', {user_id: id})
             .single()
             .throwOnError()
@@ -43,9 +43,9 @@ export class ProfileActionService {
      * @param {Profile} profile - The profile object containing the updated information.
      * @return {Promise<void>}
      */
-    public async updateProfile(profile: FunctionSingleReturn<'select_user'>): Promise<void> {
+    public async updateProfile(profile: SupabaseArrayReturnConditional<'select_user'>): Promise<void> {
         await this.profileStoreService.profile.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<FunctionSingleReturn<'update_user'>> = await this.supabase
+            const response: PostgrestSingleResponse<SupabaseArrayReturnConditional<'update_user'>> = await this.supabase
             .rpc('update_user', {
                 first_name_in: profile.first_name as string,
                 last_name_in: profile.last_name as string,
@@ -66,7 +66,7 @@ export class ProfileActionService {
      */
     async updateProfileImage(imageUrl: string): Promise<void> {
         await this.profileStoreService.profile.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<FunctionSingleReturn<'update_user'>> = await this.supabase
+            const response: PostgrestSingleResponse<SupabaseArrayReturnConditional<'update_user'>> = await this.supabase
             .rpc('update_user', {
                 profile_image_in: imageUrl
             })

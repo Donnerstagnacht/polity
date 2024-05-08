@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
-import {FunctionSingleReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseArrayReturnConditional} from "../../../../../supabase/types/supabase.shorthand-types";
 import {AssistantStoreService} from "./assistant.store.service";
 import {supabaseClient} from "../../../auth/supabase-client";
 
@@ -24,7 +24,7 @@ export class AssistantActionService {
      */
     public async selectAssistant(): Promise<void> {
         await this.assistantStoreService.assistant.wrapSelectFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<FunctionSingleReturn<'select_assistant'>> = await this.supabaseClient
+            const response: PostgrestSingleResponse<SupabaseArrayReturnConditional<'select_assistant'>> = await this.supabaseClient
             .rpc('select_assistant')
             .single()
             .throwOnError();
@@ -46,9 +46,9 @@ export class AssistantActionService {
             .rpc('update_first_sign_in', {new_status: newStatus})
             .throwOnError()
 
-            const updatedAssistant: FunctionSingleReturn<'select_assistant'> = {
+            const updatedAssistant: SupabaseArrayReturnConditional<'select_assistant'> = {
                 first_sign_in: newStatus,
-            } as FunctionSingleReturn<'select_assistant'>
+            } as SupabaseArrayReturnConditional<'select_assistant'>
             this.assistantStoreService.assistant.mutateObject(updatedAssistant)
         }, false)
     }
@@ -65,9 +65,9 @@ export class AssistantActionService {
             .rpc('update_skip_tutorial', {new_status: newStatus})
             .throwOnError()
 
-            const updatedAssistant: FunctionSingleReturn<'select_assistant'> = {
+            const updatedAssistant: SupabaseArrayReturnConditional<'select_assistant'> = {
                 skip_tutorial: newStatus,
-            } as FunctionSingleReturn<'select_assistant'>
+            } as SupabaseArrayReturnConditional<'select_assistant'>
             this.assistantStoreService.assistant.mutateObject(updatedAssistant)
         }, true, 'You can reactivate your tutorials in your profile settings!')
     }
@@ -84,9 +84,9 @@ export class AssistantActionService {
             .rpc('update_last_tutorial', {new_status: last_tutorial})
             .throwOnError()
 
-            const updatedAssistant: FunctionSingleReturn<'select_assistant'> = {
+            const updatedAssistant: SupabaseArrayReturnConditional<'select_assistant'> = {
                 last_tutorial: last_tutorial,
-            } as FunctionSingleReturn<'select_assistant'>
+            } as SupabaseArrayReturnConditional<'select_assistant'>
             this.assistantStoreService.assistant.mutateObject(updatedAssistant)
         }, false)
     }

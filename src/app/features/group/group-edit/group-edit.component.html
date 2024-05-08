@@ -1,1 +1,25 @@
-<p>group-edit works!</p>
+<h1
+    [attr.data-cy]="'home-instruction'"
+>
+    Dein Profil und Gruppen.
+</h1>
+<div class="tui-space_top-3">
+    <polity-link-card
+        [cardTitle]="'Edit Group settings'"
+        [linkUrl]="this.editGroupUrl">
+    </polity-link-card>
+</div>
+
+<div class="tui-space_top-3">
+    <polity-link-card
+        [cardTitle]="'Edit Group Member'"
+        [linkUrl]="this.editGroupMemberUrl">
+    </polity-link-card>
+</div>
+
+<div class="tui-space_top-3">
+    <polity-link-card
+        [cardTitle]="'Edit Group Follower'"
+        [linkUrl]="this.editGroupFollowerUrl">
+    </polity-link-card>
+</div>

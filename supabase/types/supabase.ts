@@ -117,6 +117,17 @@ export type Database = {
           last_name: string
         }[]
       }
+      read_following_of_group: {
+        Args: {
+          group_id_in: string
+        }
+        Returns: {
+          id: string
+          profile_image: string
+          first_name: string
+          last_name: string
+        }[]
+      }
       read_group_columns: {
         Args: {
           group_id: string
@@ -179,8 +190,9 @@ export type Database = {
           group_id: string
           member_id: string
           member_type: Database["public"]["Enums"]["group_member"]
-          created_at: string
-          updated_at: string
+          first_name: string
+          last_name: string
+          profile_image: string
         }[]
       }
       read_group_record: {
@@ -198,6 +210,7 @@ export type Database = {
       remove_group_follower_transaction: {
         Args: {
           follower_id: string
+          group_id_in: string
         }
         Returns: undefined
       }
@@ -265,17 +278,6 @@ export type Database = {
           profile_id: string
           follower_counter: number
           following_counter: number
-        }[]
-      }
-      select_following_of_group: {
-        Args: {
-          group_id_in: string
-        }
-        Returns: {
-          id: string
-          profile_image: string
-          first_name: string
-          last_name: string
         }[]
       }
       select_following_of_user: {

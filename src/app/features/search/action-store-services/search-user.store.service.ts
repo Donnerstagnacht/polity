@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {FunctionSingleReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseArrayReturnConditional} from "../../../../../supabase/types/supabase.shorthand-types";
 import {ArrayStoreService} from "../../../signal-store/array-store.service";
 
 
@@ -7,9 +7,9 @@ import {ArrayStoreService} from "../../../signal-store/array-store.service";
     providedIn: 'root'
 })
 export class SearchUserStoreService {
-    public profilSearchResults: ArrayStoreService<FunctionSingleReturn<'search_user'>>;
+    public profilSearchResults: ArrayStoreService<SupabaseArrayReturnConditional<'search_user'>>;
 
     constructor() {
-        this.profilSearchResults = new ArrayStoreService<FunctionSingleReturn<'search_user'>>;
+        this.profilSearchResults = new ArrayStoreService<SupabaseArrayReturnConditional<'search_user'>>;
     }
 }

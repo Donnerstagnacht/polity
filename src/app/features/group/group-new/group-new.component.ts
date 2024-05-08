@@ -30,9 +30,9 @@ import {StepperItem} from "../../../navigation/types-and-interfaces/stepper-item
 import {CreateGroupService} from "../../new/action-store-services/create-group.service";
 import {SearchUserActionService} from "../../search/action-store-services/search-user.action.service";
 import {
-    FunctionTableSingleReturn,
+    SupabaseArrayReturn,
     SupabaseEnum,
-    SupabaseFunctionTableReturn
+    SupabaseObjectReturn
 } from "../../../../../supabase/types/supabase.shorthand-types";
 import {SearchUserStoreService} from "../../search/action-store-services/search-user.store.service";
 import {
@@ -77,8 +77,8 @@ import {GroupNew} from "../../new/types/group-new";
 })
 export class GroupNewComponent {
     value = [];
-    selectedUsers: SupabaseFunctionTableReturn<'search_user'> = []
-    selectedUsersAsSignal: WritableSignal<SupabaseFunctionTableReturn<'search_user'>> = signal([])
+    selectedUsers: SupabaseArrayReturn<'search_user'> = []
+    selectedUsersAsSignal: WritableSignal<SupabaseArrayReturn<'search_user'>> = signal([])
     protected createGroupForm: FormGroup<{
         name: FormControl<string | null>,
         level: FormControl<string | null>
@@ -91,7 +91,7 @@ export class GroupNewComponent {
         members: new FormControl('')
     })
     protected menuItems: StepperItem[] = CREATE_GROUP_STEPPER_ITEMS;
-    protected searchResults: WritableSignal<SupabaseFunctionTableReturn<'search_user'>> = signal([]);
+    protected searchResults: WritableSignal<SupabaseArrayReturn<'search_user'>> = signal([]);
     protected readonly signal = signal;
 
     constructor(
@@ -113,13 +113,13 @@ export class GroupNewComponent {
 
         this.createGroupForm.controls['members'].valueChanges.subscribe((value: any): void => {
             if (value) {
-                const choosenObject: FunctionTableSingleReturn<'search_user'> | undefined = this.searchResults().find((searchResult: FunctionTableSingleReturn<'search_user'>): boolean => {
+                const choosenObject: SupabaseObjectReturn<'search_user'> | undefined = this.searchResults().find((searchResult: SupabaseObjectReturn<'search_user'>): boolean => {
                     return value.id === searchResult.id
                 })
 
-                if (choosenObject && !this.selectedUsers.some((item: FunctionTableSingleReturn<'search_user'>): boolean => item.id === choosenObject.id)) {
+                if (choosenObject && !this.selectedUsers.some((item: SupabaseObjectReturn<'search_user'>): boolean => item.id === choosenObject.id)) {
                     this.selectedUsers.push(choosenObject);
-                    this.selectedUsersAsSignal.update((selectedUser: SupabaseFunctionTableReturn<'search_user'>) => ([...selectedUser, choosenObject]))
+                    this.selectedUsersAsSignal.update((selectedUser: SupabaseArrayReturn<'search_user'>) => ([...selectedUser, choosenObject]))
                     this.createGroupForm.controls['members'].setValue(null);
                 } else {
                     this.createGroupForm.controls['members'].setValue(null);
@@ -135,7 +135,7 @@ export class GroupNewComponent {
     }
 
     protected onRemove(id: string): void {
-        this.selectedUsers = this.selectedUsers.filter((item: FunctionTableSingleReturn<'search_user'>): boolean => item.id !== id);
+        this.selectedUsers = this.selectedUsers.filter((item: SupabaseObjectReturn<'search_user'>): boolean => item.id !== id);
         this.selectedUsersAsSignal.set(this.selectedUsers);
     }
 
@@ -152,7 +152,7 @@ export class GroupNewComponent {
             name: this.createGroupForm.value.name as string,
             level: this.createGroupForm.value.level as SupabaseEnum<'group_level'>,
             description: this.createGroupForm.value.description as string,
-            invited_members: this.selectedUsers.map((item: FunctionTableSingleReturn<'search_user'>): string => item.id)
+            invited_members: this.selectedUsers.map((item: SupabaseObjectReturn<'search_user'>): string => item.id)
         }
         await this.createGroupService.createGroup(newGroup);
         this.createGroupForm.reset()

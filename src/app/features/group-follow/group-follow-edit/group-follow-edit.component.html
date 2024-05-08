@@ -1,1 +1,63 @@
-<p>group-follow-edit works!</p>
+<div>
+    <polity-filter-headline
+        (showFilter)="toggleShowFilter()"
+        [dataCyTag]="'edit-follower-and-followings'"
+        [headline]="'Deine Follower & Followings'"></polity-filter-headline>
+    @if (showFilter) {
+        <ng-container [formGroup]="combinedForm">
+            <polity-filter-string formGroupName="filterStringForm">
+            </polity-filter-string>
+        </ng-container>
+    }
+
+    <polity-filter-clear (clearFilter)="clearFilter()">
+    </polity-filter-clear>
+
+</div>
+
+<tui-tabs [(activeItemIndex)]="activeItemIndex">
+    <button
+        (click)="showFollowerList()"
+        [attr.data-cy]="'show-follower'"
+        tuiTab
+    >
+        Followers
+    </button>
+    <button
+        (click)="showFollowingList()"
+        [attr.data-cy]="'show-followings'"
+        tuiTab
+    >
+        Following
+    </button>
+</tui-tabs>
+@if (showFollowers) {
+    <polity-table-three-icon-text-delete
+        (remove)="removeFollower($event)"
+
+        [bonusKeys]="['last_name']"
+        [dataCyTags]="['follower_profile_image', 'follower_first_name', 'follower_remove']"
+        [dataCyTagsHeadline]="['follower_profile_image_headline', 'follower_first_name_headline',
+        'follower_remove_headline']"
+        [dataKeysForColumns]="['profile_image', 'first_name', 'id']"
+        [data]="followersOfGroup"
+        [headings]="['Foto', 'test', 'Entfernen']"
+        [isLoading]="isFollowersLoading"
+    >
+    </polity-table-three-icon-text-delete>
+}
+
+@if (!showFollowers) {
+    <polity-table-three-icon-text-delete
+        (remove)="removeFollowing($event)"
+        [bonusKeys]="['last_name']"
+        [dataCyTags]="['following_profile_image', 'following_first_name', 'following_remove']"
+        [dataCyTagsHeadline]="['following_profile_image_headline', 'following_first_name_headline',
+        'following_remove_headline']"
+        [dataKeysForColumns]="['profile_image', 'first_name', 'id']"
+        [data]="followingsOfGroup"
+        [headings]="['Foto', 'Name', 'Entfernen']"
+        [isLoading]="isFollowingLoading"
+    >
+    </polity-table-three-icon-text-delete>
+}

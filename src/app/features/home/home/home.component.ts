@@ -1,9 +1,9 @@
 import {Component, signal, WritableSignal} from '@angular/core';
 import {SessionStoreService} from "../../../auth/services/session.store.service";
-import {LinkCardComponent} from "../../../ui/link-card/link-card.component";
 import {ProfileActionService} from "../../profile/action-store-services/profile.action.service";
 import {ProfileStoreService} from "../../profile/action-store-services/profile.store.service";
-import {FunctionSingleReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseArrayReturnConditional} from "../../../../../supabase/types/supabase.shorthand-types";
+import {ProfileLinkCardComponent} from "../../../ui/profile-link-card/profile-link-card.component";
 
 @Component({
     selector: 'polity-home',
@@ -11,13 +11,12 @@ import {FunctionSingleReturn} from "../../../../../supabase/types/supabase.short
     styleUrls: ['./home.component.less'],
     standalone: true,
     imports: [
-        LinkCardComponent
-
+        ProfileLinkCardComponent
     ]
 })
 export class HomeComponent {
     protected sessionId: string | null;
-    protected profile: WritableSignal<FunctionSingleReturn<'select_user'> | null> = signal(null)
+    protected profile: WritableSignal<SupabaseArrayReturnConditional<'select_user'> | null> = signal(null)
     protected isProfileLoading: WritableSignal<boolean> = signal(true)
 
     constructor(

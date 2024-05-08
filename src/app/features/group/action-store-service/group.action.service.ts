@@ -3,7 +3,7 @@ import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modifi
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {supabaseClient} from "../../../auth/supabase-client";
 import {GroupStoreService} from "./group.store.service";
-import {FunctionSingleReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseArrayReturnConditional} from "../../../../../supabase/types/supabase.shorthand-types";
 
 @Injectable({
     providedIn: 'root'
@@ -25,7 +25,7 @@ export class GroupActionService {
     public async readGroup(id: string): Promise<void> {
         console.log(id)
         await this.groupStoreService.group.wrapSelectFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<FunctionSingleReturn<'read_group_columns'>> = await this.supabase
+            const response: PostgrestSingleResponse<SupabaseArrayReturnConditional<'read_group_columns'>> = await this.supabase
             .rpc('read_group_columns', {group_id: id})
             .single()
             .throwOnError()

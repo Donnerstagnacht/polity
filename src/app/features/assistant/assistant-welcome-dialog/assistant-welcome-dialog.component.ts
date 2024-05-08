@@ -11,7 +11,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/
 import {SessionStoreService} from "../../../auth/services/session.store.service";
 import {Router} from "@angular/router";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
-import {FunctionSingleReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseArrayReturnConditional} from "../../../../../supabase/types/supabase.shorthand-types";
 import {TuiCarouselModule, TuiFieldErrorPipeModule, TuiInputModule} from "@taiga-ui/kit";
 import {CommonModule} from "@angular/common";
 import {ProfileActionService} from "../../profile/action-store-services/profile.action.service";
@@ -46,7 +46,7 @@ export class AssistantWelcomeDialogComponent {
     protected name: string = '';
     protected index: number = 0;
     private readonly sessionId: string | null = null;
-    private assistant: WritableSignal<FunctionSingleReturn<'select_assistant'> | null> = signal(null);
+    private assistant: WritableSignal<SupabaseArrayReturnConditional<'select_assistant'> | null> = signal(null);
 
     constructor(
         @Inject(POLYMORPHEUS_CONTEXT) private readonly dialogContext: TuiDialogContext<boolean>,
@@ -129,10 +129,10 @@ export class AssistantWelcomeDialogComponent {
 
     private async updateProfileName(): Promise<void> {
         this.name = this.welcomeForm.value.firstName + ' ' + this.welcomeForm.value.lastName;
-        const profile: FunctionSingleReturn<'select_user'> = {
+        const profile: SupabaseArrayReturnConditional<'select_user'> = {
             first_name: this.welcomeForm.value.firstName as string,
             last_name: this.welcomeForm.value.lastName as string
-        } as FunctionSingleReturn<'select_user'>
+        } as SupabaseArrayReturnConditional<'select_user'>
         await Promise.all([
             this.profilService.updateProfile(profile),
             this.assistantService.updateLastTutorial('profile')

@@ -1,5 +1,5 @@
 import {Injectable, signal, WritableSignal} from '@angular/core';
-import {FunctionSingleReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseArrayReturnConditional} from "../../../../../supabase/types/supabase.shorthand-types";
 import {ObjectStoreService} from "../../../signal-store/object-store.service";
 
 export type groupUiFlags = {
@@ -14,7 +14,7 @@ export type groupUiFlags = {
     providedIn: 'root'
 })
 export class GroupStoreService {
-    public group: ObjectStoreService<FunctionSingleReturn<'read_group_columns'>>
+    public group: ObjectStoreService<SupabaseArrayReturnConditional<'read_group_columns'>>
     private uiFlags: groupUiFlags = {
         isMember: signal(false),
         isBoardMember: signal(false),
@@ -24,6 +24,6 @@ export class GroupStoreService {
     }
 
     constructor() {
-        this.group = new ObjectStoreService<FunctionSingleReturn<'read_group_columns'>>(this.uiFlags);
+        this.group = new ObjectStoreService<SupabaseArrayReturnConditional<'read_group_columns'>>(this.uiFlags);
     }
 }

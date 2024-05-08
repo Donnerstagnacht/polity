@@ -1,7 +1,7 @@
 import {Component, signal, WritableSignal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {debounceTime} from "rxjs";
-import {SupabaseFunctionTableReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseArrayReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {TuiFieldErrorPipeModule, TuiInputModule} from "@taiga-ui/kit";
 import {TuiErrorModule} from "@taiga-ui/core";
 import {SearchProfileResult} from "../search-profile-result/search-profile-result.component";
@@ -29,8 +29,8 @@ import {SearchGroupResultComponent} from "../search-group-result/search-group-re
 })
 export class SearchUserComponent {
     loading: WritableSignal<boolean> = signal(false);
-    protected searchUserResults: WritableSignal<SupabaseFunctionTableReturn<'search_user'>> = signal([]);
-    protected searchGroupResults: WritableSignal<SupabaseFunctionTableReturn<'search_group'>> = signal([]);
+    protected searchUserResults: WritableSignal<SupabaseArrayReturn<'search_user'>> = signal([]);
+    protected searchGroupResults: WritableSignal<SupabaseArrayReturn<'search_group'>> = signal([]);
     protected searchForm: FormGroup<{
         search: FormControl<string | null>
     }> = new FormGroup({

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {PostgrestError, PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
-import {SupabaseFunctionTableReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseArrayReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {FollowingOfUserStoreService} from "./following-of-user.store.service";
 import {ProfileCountersStoreService} from "./profile-counters.store.service";
 import {supabaseClient} from "../../../auth/supabase-client";
@@ -23,12 +23,12 @@ export class FollowingOfUserActionService {
 
     public async selectFollowingsOfUser(): Promise<any> {
         await this.followingOfUserStoreService.followingOfUser.wrapSelectFunction(async (): Promise<void> => {
-            const followingResponse: PostgrestSingleResponse<SupabaseFunctionTableReturn<'select_following_of_user'>> = await this.supabaseClient.rpc(
+            const followingResponse: PostgrestSingleResponse<SupabaseArrayReturn<'select_following_of_user'>> = await this.supabaseClient.rpc(
                 'select_following_of_user'
             )
             .throwOnError()
             if (followingResponse.data) {
-                const finalArray: SupabaseFunctionTableReturn<'select_following_of_user'> = await this.profileActionService.transformImageNamesToUrls(followingResponse.data, 'profile_image')
+                const finalArray: SupabaseArrayReturn<'select_following_of_user'> = await this.profileActionService.transformImageNamesToUrls(followingResponse.data, 'profile_image')
                 this.followingOfUserStoreService.followingOfUser.setObjects(finalArray)
             }
         })

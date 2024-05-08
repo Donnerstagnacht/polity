@@ -8,7 +8,7 @@ import {CommonModule} from "@angular/common";
 import {ProfileImageUploadComponent} from "../profile-image-upload/profile-image-upload.component";
 import {ProfileStoreService} from "../action-store-services/profile.store.service";
 import {ProfileActionService} from "../action-store-services/profile.action.service";
-import {FunctionSingleReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseArrayReturnConditional} from "../../../../../supabase/types/supabase.shorthand-types";
 import {
     NotficationsFromFollowToggleComponent
 } from "../../notifications/notfications-from-follow-toggle/notfications-from-follow-toggle.component";
@@ -46,7 +46,7 @@ import {UpdatePasswordComponent} from "../../../auth/update-password/update-pass
     ]
 })
 export class ProfileEditComponent {
-    protected profile: WritableSignal<FunctionSingleReturn<'select_user'> | null> = signal(null);
+    protected profile: WritableSignal<SupabaseArrayReturnConditional<'select_user'> | null> = signal(null);
     protected editProfileForm: FormGroup<{
         firstName: FormControl<string | null>,
         lastName: FormControl<string | null>
@@ -73,11 +73,11 @@ export class ProfileEditComponent {
 
 
     protected async onEdit(): Promise<void> {
-        const profile: FunctionSingleReturn<'select_user'> =
+        const profile: SupabaseArrayReturnConditional<'select_user'> =
             {
                 first_name: this.editProfileForm.value.firstName as string,
                 last_name: this.editProfileForm.value.lastName as string
-            } as FunctionSingleReturn<'select_user'>
+            } as SupabaseArrayReturnConditional<'select_user'>
         await this.profileService.updateProfile(profile);
     }
 }

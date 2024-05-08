@@ -5,7 +5,7 @@ import {PushSubscriptionStringifies} from "../pushSubscription";
 import {supabaseClient} from "../../../auth/supabase-client";
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
-import {FunctionSingleReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseArrayReturnConditional} from "../../../../../supabase/types/supabase.shorthand-types";
 import {TuiAlertService} from "@taiga-ui/core";
 
 @Injectable({
@@ -22,7 +22,7 @@ export class PushActionService {
     }
 
     public async addPushSubscriber(pushSubscriptionStringifies: PushSubscriptionStringifies): Promise<void> {
-        const response: PostgrestSingleResponse<FunctionSingleReturn<'upsert_push_subscription'>> = await this.supabaseClient.rpc('upsert_push_subscription', {
+        const response: PostgrestSingleResponse<SupabaseArrayReturnConditional<'upsert_push_subscription'>> = await this.supabaseClient.rpc('upsert_push_subscription', {
             endpoint: pushSubscriptionStringifies.endpoint,
             expirationtime: pushSubscriptionStringifies.expirationTime as string,
             auth: pushSubscriptionStringifies.keys.auth,

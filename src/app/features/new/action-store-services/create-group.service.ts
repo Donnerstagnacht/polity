@@ -3,7 +3,7 @@ import {Router} from "@angular/router";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
 import {supabaseClient} from "../../../auth/supabase-client";
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
-import {SupabaseFunctionTableReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseArrayReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {GroupNew} from "../types/group-new";
 
 @Injectable({
@@ -18,7 +18,7 @@ export class CreateGroupService {
     public async createGroup(group: GroupNew): Promise<void> {
         console.log(group)
         this.router.navigate(['/group']);
-        const response: PostgrestSingleResponse<SupabaseFunctionTableReturn<'create_group_transaction'>> = await this.supabaseClient
+        const response: PostgrestSingleResponse<SupabaseArrayReturn<'create_group_transaction'>> = await this.supabaseClient
         .rpc('create_group_transaction', {
             name: group.name,
             level: group.level,

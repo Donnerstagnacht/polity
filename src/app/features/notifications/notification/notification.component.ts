@@ -1,6 +1,6 @@
 import {Component, effect, signal, WritableSignal} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {SupabaseFunctionTableReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseArrayReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {TuiDay} from "@taiga-ui/cdk";
 import {IInfiniteScrollEvent, InfiniteScrollModule} from "ngx-infinite-scroll";
 import {CommonModule} from "@angular/common";
@@ -38,7 +38,7 @@ export class NotificationComponent {
     protected throttle: number = 300;
     protected scrollDistance: number = 1;
     protected scrollUpDistance: number = 2;
-    protected notifications: WritableSignal<SupabaseFunctionTableReturn<'select_notifications_of_users'>> = signal([]);
+    protected notifications: WritableSignal<SupabaseArrayReturn<'select_notifications_of_users'>> = signal([]);
     protected isNotificationsLoading: WritableSignal<boolean> = signal(true);
     protected showFilter: boolean = true;
     protected readonly filterTypes: filterTag[] = Filter_TYPES;

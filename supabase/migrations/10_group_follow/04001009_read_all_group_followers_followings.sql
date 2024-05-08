@@ -32,10 +32,10 @@ BEGIN
 END
 $$;
 
-DROP FUNCTION IF EXISTS public.select_following_of_group(
+DROP FUNCTION IF EXISTS public.read_following_of_group(
     group_id_in uuid
 );
-CREATE OR REPLACE FUNCTION public.select_following_of_group(
+CREATE OR REPLACE FUNCTION public.read_following_of_group(
     group_id_in uuid
 )
     RETURNS table

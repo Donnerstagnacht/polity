@@ -1,14 +1,14 @@
 <h1
-		[attr.data-cy]="'home-instruction'"
+    [attr.data-cy]="'home-instruction'"
 >
-	Dein Profil und Gruppen.
+    Dein Profil und Gruppen.
 </h1>
-<polity-link-card
-		[attr.data-cy]="'home-to-profile'"
-		[class.tui-skeleton]="isProfileLoading()"
-		[dataCyTag]="'home-first-name'"
-		[isLoading]="this.isProfileLoading"
-		[profile]="profile"
-		[sessionId]="this.sessionId"
-></polity-link-card>
+<polity-profile-link-card
+    [attr.data-cy]="'home-to-profile'"
+    [class.tui-skeleton]="isProfileLoading()"
+    [dataCyTag]="'home-first-name'"
+    [isLoading]="this.isProfileLoading"
+    [profile]="profile"
+    [sessionId]="this.sessionId"
+></polity-profile-link-card>
 

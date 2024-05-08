@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
-import {FunctionSingleReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseArrayReturnConditional} from "../../../../../supabase/types/supabase.shorthand-types";
 import {ArrayStoreService} from "../../../signal-store/array-store.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class FollowerOfGroupStoreService {
-    public followersOfGroup: ArrayStoreService<FunctionSingleReturn<'read_follower_of_group'>>
+    public followersOfGroup: ArrayStoreService<SupabaseArrayReturnConditional<'read_follower_of_group'>>
 
     constructor() {
-        this.followersOfGroup = new ArrayStoreService<FunctionSingleReturn<'read_follower_of_group'>>();
+        this.followersOfGroup = new ArrayStoreService<SupabaseArrayReturnConditional<'read_follower_of_group'>>();
     }
 }

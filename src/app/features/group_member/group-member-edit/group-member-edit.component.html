@@ -1,1 +1,56 @@
-<p>group-member-edit works!</p>
+<div>
+    <polity-filter-headline
+        (showFilter)="toggleShowFilter()"
+        [dataCyTag]="'edit-member-and-followings'"
+        [headline]="'Group Members'"></polity-filter-headline>
+    @if (showFilter) {
+        <ng-container [formGroup]="combinedForm">
+            <polity-filter-string formGroupName="filterStringForm">
+            </polity-filter-string>
+        </ng-container>
+    }
+
+    <polity-filter-clear (clearFilter)="clearFilter()">
+    </polity-filter-clear>
+
+</div>
+
+<tui-tabs [(activeItemIndex)]="activeItemIndex">
+    <button
+        [attr.data-cy]="'show-member'"
+        tuiTab
+    >
+        Followers
+    </button>
+</tui-tabs>
+@if (showGroupMembers) {
+    <polity-table-three-icon-text-delete
+        (remove)="removeGroupMember($event)"
+
+        [bonusKeys]="['last_name']"
+        [dataCyTags]="['member_profile_image', 'member_first_name', 'member_remove']"
+        [dataCyTagsHeadline]="['member_profile_image_headline', 'member_first_name_headline',
+        'member_remove_headline']"
+        [dataKeysForColumns]="['profile_image', 'first_name', 'id']"
+        [data]="groupMembers"
+        [headings]="['Foto', 'Name', 'Entfernen']"
+        [isLoading]="isGroupMembersLoading"
+    >
+    </polity-table-three-icon-text-delete>
+}
+
+<!--@if (showGroupMembers) {-->
+<!--    <polity-table-three-icon-text-delete-->
+<!--        (remove)="removeGroupMember($event)"-->
+
+<!--        [bonusKeys]="['last_name']"-->
+<!--        [dataCyTags]="['member_profile_image', 'member_first_name', 'member_remove']"-->
+<!--        [dataCyTagsHeadline]="['member_profile_image_headline', 'member_first_name_headline',-->
+<!--        'member_remove_headline']"-->
+<!--        [dataKeysForColumns]="['profile_image', 'first_name', 'id']"-->
+<!--        [data]="groupMembers"-->
+<!--        [headings]="['Foto', 'test', 'Entfernen']"-->
+<!--        [isLoading]="isFollowersLoading"-->
+<!--    >-->
+<!--    </polity-table-three-icon-text-delete>-->
+<!--}-->
