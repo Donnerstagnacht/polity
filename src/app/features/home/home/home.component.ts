@@ -2,7 +2,7 @@ import {Component, signal, WritableSignal} from '@angular/core';
 import {SessionStoreService} from "../../../auth/services/session.store.service";
 import {ProfileActionService} from "../../profile/action-store-services/profile.action.service";
 import {ProfileStoreService} from "../../profile/action-store-services/profile.store.service";
-import {SupabaseArrayReturnConditional} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {ProfileLinkCardComponent} from "../../../ui/profile-link-card/profile-link-card.component";
 
 @Component({
@@ -16,7 +16,7 @@ import {ProfileLinkCardComponent} from "../../../ui/profile-link-card/profile-li
 })
 export class HomeComponent {
     protected sessionId: string | null;
-    protected profile: WritableSignal<SupabaseArrayReturnConditional<'select_user'> | null> = signal(null)
+    protected profile: WritableSignal<SupabaseObjectReturn<'select_user'> | null> = signal(null)
     protected isProfileLoading: WritableSignal<boolean> = signal(true)
 
     constructor(

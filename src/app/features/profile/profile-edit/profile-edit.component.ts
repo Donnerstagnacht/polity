@@ -8,7 +8,10 @@ import {CommonModule} from "@angular/common";
 import {ProfileImageUploadComponent} from "../profile-image-upload/profile-image-upload.component";
 import {ProfileStoreService} from "../action-store-services/profile.store.service";
 import {ProfileActionService} from "../action-store-services/profile.action.service";
-import {SupabaseArrayReturnConditional} from "../../../../../supabase/types/supabase.shorthand-types";
+import {
+    SupabaseArrayReturnConditional,
+    SupabaseObjectReturn
+} from "../../../../../supabase/types/supabase.shorthand-types";
 import {
     NotficationsFromFollowToggleComponent
 } from "../../notifications/notfications-from-follow-toggle/notfications-from-follow-toggle.component";
@@ -46,7 +49,7 @@ import {UpdatePasswordComponent} from "../../../auth/update-password/update-pass
     ]
 })
 export class ProfileEditComponent {
-    protected profile: WritableSignal<SupabaseArrayReturnConditional<'select_user'> | null> = signal(null);
+    protected profile: WritableSignal<SupabaseObjectReturn<'select_user'> | null> = signal(null);
     protected editProfileForm: FormGroup<{
         firstName: FormControl<string | null>,
         lastName: FormControl<string | null>

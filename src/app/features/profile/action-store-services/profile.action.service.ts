@@ -4,7 +4,10 @@ import {ProfileStoreService} from "./profile.store.service";
 import {TuiFileLike} from "@taiga-ui/kit";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
 import {supabaseClient} from "../../../auth/supabase-client";
-import {SupabaseArrayReturnConditional} from "../../../../../supabase/types/supabase.shorthand-types";
+import {
+    SupabaseArrayReturnConditional,
+    SupabaseObjectReturn
+} from "../../../../../supabase/types/supabase.shorthand-types";
 
 @Injectable({
     providedIn: 'root'
@@ -25,7 +28,7 @@ export class ProfileActionService {
      */
     public async selectProfile(id: string): Promise<void> {
         await this.profileStoreService.profile.wrapSelectFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseArrayReturnConditional<'select_user'>> = await this.supabase
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'select_user'>> = await this.supabase
             .rpc('select_user', {user_id: id})
             .single()
             .throwOnError()
