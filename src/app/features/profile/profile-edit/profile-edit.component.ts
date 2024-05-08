@@ -8,10 +8,7 @@ import {CommonModule} from "@angular/common";
 import {ProfileImageUploadComponent} from "../profile-image-upload/profile-image-upload.component";
 import {ProfileStoreService} from "../action-store-services/profile.store.service";
 import {ProfileActionService} from "../action-store-services/profile.action.service";
-import {
-    SupabaseArrayReturnConditional,
-    SupabaseObjectReturn
-} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {
     NotficationsFromFollowToggleComponent
 } from "../../notifications/notfications-from-follow-toggle/notfications-from-follow-toggle.component";
@@ -76,11 +73,11 @@ export class ProfileEditComponent {
 
 
     protected async onEdit(): Promise<void> {
-        const profile: SupabaseArrayReturnConditional<'select_user'> =
+        const profile: SupabaseObjectReturn<'select_user'> =
             {
                 first_name: this.editProfileForm.value.firstName as string,
                 last_name: this.editProfileForm.value.lastName as string
-            } as SupabaseArrayReturnConditional<'select_user'>
+            } as SupabaseObjectReturn<'select_user'>
         await this.profileService.updateProfile(profile);
     }
 }

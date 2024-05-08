@@ -1,5 +1,5 @@
 import {Component, signal, WritableSignal} from '@angular/core';
-import {SupabaseArrayReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {
@@ -31,8 +31,8 @@ import {FollowingOfUserActionService} from "../action-store-services/following-o
 
 })
 export class ProfileFollowEditComponent {
-    protected followersOfUser: WritableSignal<SupabaseArrayReturn<'select_follower_of_user'>> = signal([]);
-    protected followingsOfUser: WritableSignal<SupabaseArrayReturn<'select_following_of_user'>> = signal([]);
+    protected followersOfUser: WritableSignal<SupabaseObjectReturn<'select_follower_of_user'>[]> = signal([]);
+    protected followingsOfUser: WritableSignal<SupabaseObjectReturn<'select_following_of_user'>[]> = signal([]);
     protected isFollowersLoading: WritableSignal<boolean> = signal(true);
     protected isFollowingLoading: WritableSignal<boolean> = signal(true);
     protected readonly columns: string[] = ['first_name', 'last_name', 'actions'];

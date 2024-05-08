@@ -11,10 +11,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/
 import {SessionStoreService} from "../../../auth/services/session.store.service";
 import {Router} from "@angular/router";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
-import {
-    SupabaseArrayReturnConditional,
-    SupabaseObjectReturn
-} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {TuiCarouselModule, TuiFieldErrorPipeModule, TuiInputModule} from "@taiga-ui/kit";
 import {CommonModule} from "@angular/common";
 import {ProfileActionService} from "../../profile/action-store-services/profile.action.service";
@@ -132,10 +129,10 @@ export class AssistantWelcomeDialogComponent {
 
     private async updateProfileName(): Promise<void> {
         this.name = this.welcomeForm.value.firstName + ' ' + this.welcomeForm.value.lastName;
-        const profile: SupabaseArrayReturnConditional<'select_user'> = {
+        const profile: SupabaseObjectReturn<'select_user'> = {
             first_name: this.welcomeForm.value.firstName as string,
             last_name: this.welcomeForm.value.lastName as string
-        } as SupabaseArrayReturnConditional<'select_user'>
+        } as SupabaseObjectReturn<'select_user'>
         await Promise.all([
             this.profilService.updateProfile(profile),
             this.assistantService.updateLastTutorial('profile')

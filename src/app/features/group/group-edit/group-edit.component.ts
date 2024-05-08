@@ -1,7 +1,7 @@
 import {Component, WritableSignal} from '@angular/core';
 import {LinkCardComponent} from "../../../ui/link-card/link-card.component";
 import {GroupStoreService} from "../action-store-service/group.store.service";
-import {SupabaseArrayReturnConditional} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 
 @Component({
     selector: 'polity-group-edit',
@@ -23,7 +23,7 @@ export class GroupEditComponent {
     }
 
     ngOnInit(): void {
-        const group: WritableSignal<SupabaseArrayReturnConditional<'read_group_columns'> | null> = this.groupStoreService.group.getObject()
+        const group: WritableSignal<SupabaseObjectReturn<'read_group_columns'> | null> = this.groupStoreService.group.getObject()
         const urlId: string | undefined = group()?.id
         this.editGroupUrl = 'group/' + urlId + '/settings/edit';
         this.editGroupMemberUrl = 'group/' + urlId + '/member/edit';

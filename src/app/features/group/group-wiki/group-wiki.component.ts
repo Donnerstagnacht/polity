@@ -3,7 +3,7 @@ import {CounterComponent} from "../../../ui/polity-wiki/counter/counter.componen
 import {FollowButton} from "../../../ui/polity-wiki/follow-button/follow-button.component";
 import {RequestButton} from "../../../ui/polity-wiki/request-button/request-button.component";
 import {WikiHeadlineComponent} from "../../../ui/polity-wiki/wiki-headline/wiki-headline.component";
-import {SupabaseArrayReturnConditional} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {GroupStoreService} from "../action-store-service/group.store.service";
 import {GroupCountersActionService} from "../../group-follow/action-store-services/group-counters.action.service";
 import {GroupCountersStoreService} from "../../group-follow/action-store-services/group-counters.store.service";
@@ -21,11 +21,11 @@ import {GroupCountersStoreService} from "../../group-follow/action-store-service
     styleUrl: './group-wiki.component.less'
 })
 export class GroupWikiComponent {
-    protected group: Signal<SupabaseArrayReturnConditional<'read_group_columns'> | null> = signal(null);
+    protected group: Signal<SupabaseObjectReturn<'read_group_columns'> | null> = signal(null);
     protected isGroupLoading: WritableSignal<boolean> = signal(true);
     protected isGroupMemberLoading: WritableSignal<boolean> = signal(false);
 
-    protected groupCounter: WritableSignal<SupabaseArrayReturnConditional<'read_group_following_counter'> | null> = signal(null);
+    protected groupCounter: WritableSignal<SupabaseObjectReturn<'read_group_following_counter'> | null> = signal(null);
     protected isGroupCounterLoading: WritableSignal<boolean> = signal(true);
 
     protected isFollowingCheckLoading: WritableSignal<boolean> = signal(false);

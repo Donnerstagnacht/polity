@@ -29,11 +29,7 @@ import {AutoscrollDirective} from "../../../navigation/autoscroll.directive";
 import {StepperItem} from "../../../navigation/types-and-interfaces/stepper-item";
 import {CreateGroupService} from "../../new/action-store-services/create-group.service";
 import {SearchUserActionService} from "../../search/action-store-services/search-user.action.service";
-import {
-    SupabaseArrayReturn,
-    SupabaseEnum,
-    SupabaseObjectReturn
-} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseEnum, SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {SearchUserStoreService} from "../../search/action-store-services/search-user.store.service";
 import {
     TableThreeIconTextDeleteComponent
@@ -76,9 +72,8 @@ import {GroupNew} from "../../new/types/group-new";
     styleUrl: './group-new.component.less'
 })
 export class GroupNewComponent {
-    value = [];
-    selectedUsers: SupabaseArrayReturn<'search_user'> = []
-    selectedUsersAsSignal: WritableSignal<SupabaseArrayReturn<'search_user'>> = signal([])
+    selectedUsers: SupabaseObjectReturn<'search_user'>[] = []
+    selectedUsersAsSignal: WritableSignal<SupabaseObjectReturn<'search_user'>[]> = signal([])
     protected createGroupForm: FormGroup<{
         name: FormControl<string | null>,
         level: FormControl<string | null>
@@ -91,7 +86,7 @@ export class GroupNewComponent {
         members: new FormControl('')
     })
     protected menuItems: StepperItem[] = CREATE_GROUP_STEPPER_ITEMS;
-    protected searchResults: WritableSignal<SupabaseArrayReturn<'search_user'>> = signal([]);
+    protected searchResults: WritableSignal<SupabaseObjectReturn<'search_user'>[]> = signal([]);
     protected readonly signal = signal;
 
     constructor(
@@ -119,7 +114,7 @@ export class GroupNewComponent {
 
                 if (choosenObject && !this.selectedUsers.some((item: SupabaseObjectReturn<'search_user'>): boolean => item.id === choosenObject.id)) {
                     this.selectedUsers.push(choosenObject);
-                    this.selectedUsersAsSignal.update((selectedUser: SupabaseArrayReturn<'search_user'>) => ([...selectedUser, choosenObject]))
+                    this.selectedUsersAsSignal.update((selectedUser: SupabaseObjectReturn<'search_user'>[]) => ([...selectedUser, choosenObject]))
                     this.createGroupForm.controls['members'].setValue(null);
                 } else {
                     this.createGroupForm.controls['members'].setValue(null);

@@ -1,10 +1,7 @@
 import {Injectable} from '@angular/core';
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
-import {
-    SupabaseArrayReturnConditional,
-    SupabaseObjectReturn
-} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {AssistantStoreService} from "./assistant.store.service";
 import {supabaseClient} from "../../../auth/supabase-client";
 
@@ -51,7 +48,7 @@ export class AssistantActionService {
 
             const updatedAssistant: SupabaseObjectReturn<'select_assistant'> = {
                 first_sign_in: newStatus,
-            } as SupabaseArrayReturnConditional<'select_assistant'>
+            } as SupabaseObjectReturn<'select_assistant'>
             this.assistantStoreService.assistant.mutateObject(updatedAssistant)
         }, false)
     }
@@ -70,7 +67,7 @@ export class AssistantActionService {
 
             const updatedAssistant: SupabaseObjectReturn<'select_assistant'> = {
                 skip_tutorial: newStatus,
-            } as SupabaseArrayReturnConditional<'select_assistant'>
+            } as SupabaseObjectReturn<'select_assistant'>
             this.assistantStoreService.assistant.mutateObject(updatedAssistant)
         }, true, 'You can reactivate your tutorials in your profile settings!')
     }
@@ -89,7 +86,7 @@ export class AssistantActionService {
 
             const updatedAssistant: SupabaseObjectReturn<'select_assistant'> = {
                 last_tutorial: last_tutorial,
-            } as SupabaseArrayReturnConditional<'select_assistant'>
+            } as SupabaseObjectReturn<'select_assistant'>
             this.assistantStoreService.assistant.mutateObject(updatedAssistant)
         }, false)
     }

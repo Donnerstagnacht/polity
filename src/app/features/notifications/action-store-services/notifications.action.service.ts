@@ -7,11 +7,7 @@ import {
 } from "@supabase/supabase-js";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
 import {NotificationsStoreService} from "./notifications.store.service";
-import {
-    SupabaseArrayReturn,
-    SupabaseArrayReturnConditional,
-    SupabaseTable
-} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn, SupabaseTable} from "../../../../../supabase/types/supabase.shorthand-types";
 import {supabaseClient} from "../../../auth/supabase-client";
 import {SessionStoreService} from "../../../auth/services/session.store.service";
 import {ProfileActionService} from "../../profile/action-store-services/profile.action.service";
@@ -32,11 +28,11 @@ export class NotificationsActionService {
 
     public async selectNotifications(): Promise<void> {
         await this.notificationStoreService.notifications.wrapSelectFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseArrayReturn<'select_notifications_of_users'>> = await this.supabaseClient
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'select_notifications_of_users'>[]> = await this.supabaseClient
             .rpc('select_notifications_of_users')
             .throwOnError()
             if (response.data) {
-                const finalArray: SupabaseArrayReturn<'select_notifications_of_users'> = await this.profileActionService.transformImageNamesToUrls(response.data, 'profile_image')
+                const finalArray: SupabaseObjectReturn<'select_notifications_of_users'>[] = await this.profileActionService.transformImageNamesToUrls(response.data, 'profile_image')
                 this.notificationStoreService.notifications.setObjects(finalArray);
             }
         })
@@ -61,7 +57,7 @@ export class NotificationsActionService {
 
     public async resetNotificationCounter(): Promise<void> {
         await this.notificationStoreService.notifications.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseArrayReturnConditional<'reset_notification_counter'>> = await this.supabaseClient
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'reset_notification_counter'>> = await this.supabaseClient
             .rpc('reset_notification_counter')
             .single()
             .throwOnError()
@@ -70,7 +66,7 @@ export class NotificationsActionService {
 
     public async updateReceiveFollowNotificationStatus(): Promise<void> {
         await this.notificationStoreService.notifications.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseArrayReturnConditional<'update_receive_notifications_from_follow'>> = await this.supabaseClient
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'update_receive_notifications_from_follow'>> = await this.supabaseClient
             .rpc('update_receive_notifications_from_follow', {
                 new_status: true
             })
@@ -104,7 +100,7 @@ export class NotificationsActionService {
             async (payload: RealtimePostgresInsertPayload<SupabaseTable<any>>): Promise<void> => {
 
                 // WORKING SOLUTION
-                const response: PostgrestSingleResponse<SupabaseArrayReturn<'select_notifications_of_users'>> = await this.supabaseClient
+                const response: PostgrestSingleResponse<SupabaseObjectReturn<'select_notifications_of_users'>[]> = await this.supabaseClient
                 .rpc('select_notifications_of_users')
 
                 if (response.data) {

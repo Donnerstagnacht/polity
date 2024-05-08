@@ -1,6 +1,6 @@
 import {Component, signal, WritableSignal} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {SupabaseArrayReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {FollowerOfGroupActionService} from "../action-store-services/follower-of-group.action.service";
 import {FollowingOfGroupActionService} from "../action-store-services/following-of-group.action.service";
 import {FollowerOfGroupStoreService} from "../action-store-services/follower-of-group.store.service";
@@ -28,8 +28,8 @@ import {TuiTabsModule} from "@taiga-ui/kit";
     styleUrl: './group-follow-edit.component.less'
 })
 export class GroupFollowEditComponent {
-    protected followersOfGroup: WritableSignal<SupabaseArrayReturn<'read_follower_of_group'>> = signal([]);
-    protected followingsOfGroup: WritableSignal<SupabaseArrayReturn<'read_following_of_group'>> = signal([]);
+    protected followersOfGroup: WritableSignal<SupabaseObjectReturn<'read_follower_of_group'>[]> = signal([]);
+    protected followingsOfGroup: WritableSignal<SupabaseObjectReturn<'read_following_of_group'>[]> = signal([]);
     protected isFollowersLoading: WritableSignal<boolean> = signal(true);
     protected isFollowingLoading: WritableSignal<boolean> = signal(true);
     protected readonly columns: string[] = ['first_name', 'last_name', 'actions'];

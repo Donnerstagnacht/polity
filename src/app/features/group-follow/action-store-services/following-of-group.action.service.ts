@@ -5,7 +5,7 @@ import {supabaseClient} from "../../../auth/supabase-client";
 import {GroupCountersStoreService} from "./group-counters.store.service";
 import {FollowingOfGroupStoreService} from "./following-of-group.store.service";
 import {GroupActionService} from "../../group/action-store-service/group.action.service";
-import {SupabaseArrayReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {GroupStoreService} from "../../group/action-store-service/group.store.service";
 
 @Injectable({
@@ -25,7 +25,7 @@ export class FollowingOfGroupActionService {
     public async readFollowingsOfGroup(): Promise<any> {
         await this.followingOfGroupStoreService.followingOfGroup.wrapSelectFunction(async (): Promise<void> => {
             const groupId: string = this.groupStoreService.group.getValueByKey('id');
-            const followingResponse: PostgrestSingleResponse<SupabaseArrayReturn<'read_following_of_group'>> = await this.supabaseClient.rpc(
+            const followingResponse: PostgrestSingleResponse<SupabaseObjectReturn<'read_following_of_group'>[]> = await this.supabaseClient.rpc(
                 'read_following_of_group',
                 {
                     group_id_in: groupId
@@ -33,7 +33,7 @@ export class FollowingOfGroupActionService {
             )
             .throwOnError()
             if (followingResponse.data) {
-                const finalArray: SupabaseArrayReturn<'select_following_of_user'> = await this.groupActionService.transformImageNamesToUrls(followingResponse.data, 'profile_image')
+                const finalArray: SupabaseObjectReturn<'select_following_of_user'>[] = await this.groupActionService.transformImageNamesToUrls(followingResponse.data, 'profile_image')
                 this.followingOfGroupStoreService.followingOfGroup.setObjects(finalArray)
             }
         })

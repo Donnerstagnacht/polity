@@ -1,5 +1,5 @@
 import {Component, signal, WritableSignal} from '@angular/core';
-import {SupabaseArrayReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {GroupMemberStoreService} from "../action-store-services/group-member.store.service";
 import {GroupMemberActionService} from "../action-store-services/group-member.action.service";
@@ -27,7 +27,7 @@ import {TuiTabsModule} from "@taiga-ui/kit";
     styleUrl: './group-member-edit.component.less'
 })
 export class GroupMemberEditComponent {
-    protected groupMembers: WritableSignal<SupabaseArrayReturn<'read_group_members'>> = signal([]);
+    protected groupMembers: WritableSignal<SupabaseObjectReturn<'read_group_members'>[]> = signal([]);
     protected isGroupMembersLoading: WritableSignal<boolean> = signal(true);
     protected readonly columns: string[] = ['first_name', 'last_name', 'actions'];
     protected activeItemIndex: number = 0;

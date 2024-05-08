@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {SearchUserStoreService} from "./search-user.store.service";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
-import {SupabaseArrayReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {supabaseClient} from "../../../auth/supabase-client";
 
 @Injectable({
@@ -25,7 +25,7 @@ export class SearchUserActionService {
     public async searchUser(searchTerm: string): Promise<void> {
         this.searchStoreService.profilSearchResults.resetObjects()
         await this.searchStoreService.profilSearchResults.wrapSelectFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseArrayReturn<'search_user'>> = await this.supabaseClient.rpc(
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'search_user'>[]> = await this.supabaseClient.rpc(
                 'search_user',
                 {search_term: searchTerm}
             ).throwOnError()

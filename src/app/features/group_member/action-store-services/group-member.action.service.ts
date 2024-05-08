@@ -2,10 +2,7 @@ import {Injectable} from '@angular/core';
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {supabaseClient} from "../../../auth/supabase-client";
-import {
-    SupabaseArrayReturn,
-    SupabaseArrayReturnConditional
-} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn,} from "../../../../../supabase/types/supabase.shorthand-types";
 import {GroupMemberStoreService} from "./group-member.store.service";
 import {GroupStoreService} from "../../group/action-store-service/group.store.service";
 import {GroupCountersStoreService} from "../../group-follow/action-store-services/group-counters.store.service";
@@ -31,7 +28,7 @@ export class GroupMemberActionService {
 
         await this.groupMembersStoreService.groupMembers.wrapSelectFunction(async (): Promise<void> => {
             this.groupStoreService.group.uiFlagStore.setUiFlagTrue('isGroupMemberLoading')
-            const response: PostgrestSingleResponse<SupabaseArrayReturnConditional<'check_group_membership_status'>> = await this.supabaseClient.rpc(
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'check_group_membership_status'>> = await this.supabaseClient.rpc(
                 'check_group_membership_status',
                 {
                     group_id_in: group_id as string
@@ -55,7 +52,7 @@ export class GroupMemberActionService {
     public async readGroupMembers(): Promise<any> {
         await this.groupMembersStoreService.groupMembers.wrapSelectFunction(async (): Promise<void> => {
             const groupId: string = this.groupStoreService.group.getValueByKey('id');
-            const response: PostgrestSingleResponse<SupabaseArrayReturn<'read_group_members'>> = await this.supabaseClient.rpc(
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_group_members'>[]> = await this.supabaseClient.rpc(
                 'read_group_members',
                 {
                     group_id_in: groupId
@@ -63,7 +60,7 @@ export class GroupMemberActionService {
             )
             .throwOnError()
             if (response.data) {
-                const finalArray: SupabaseArrayReturn<'read_group_members'> = await this.groupActionService.transformImageNamesToUrls(response.data, 'profile_image')
+                const finalArray: SupabaseObjectReturn<'read_group_members'>[] = await this.groupActionService.transformImageNamesToUrls(response.data, 'profile_image')
                 this.groupMembersStoreService.groupMembers.setObjects(finalArray)
             }
         })

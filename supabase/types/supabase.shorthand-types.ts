@@ -3,56 +3,8 @@ import {DatabaseOverwritten} from "./supabase.modified";
 // Commonly used types
 // from functions
 /**
- * Type that represents the table return of a postgres function as array. It assumes that the return from the
- * postgres function can include multiple rows
- * @example
- * If a postgres function "find_user()" returns
- *
- * RETURNS table (
- *   id: string,
- *   name: string
- * )
- *
- * supabase-JS generated types will be
- *
- * {
- *   id: string,
- *   name: string
- * }[]
- */
-export type SupabaseArrayReturn<T extends keyof DatabaseOverwritten['public']['Functions']> =
-    DatabaseOverwritten['public']['Functions'][T]['Returns']
-
-/**
- * Generic type that takes a database function in and returns the function's return type as plain object type.
- * @example
- * If a postgres function "find_user()" returns
- *
- * RETURNS table (
- *   id: string,
- *   name: string
- * )
- *
- * supabase-JS generated types will be an array of objects
- *
- * {
- *   id: string,
- *   name: string
- * }[]
- *
- * and the PlainFunctions<'find_user'> will be without the array tag
- *
- * {
- *   id: string,
- *   name: string
- * }
- */
-export type SupabaseArrayReturnConditional<T extends keyof DatabaseOverwritten['public']['Functions']> =
-    SupabaseArrayElement<DatabaseOverwritten['public']['Functions'][T]['Returns']>;
-
-/**
- * Type that represents the table return of a postgres function as object e.g. a single row. It assumes that the
- * return from the postgres function can only include one row
+ * Type that represents the table return of a postgres function as object e.g. a single row. If the postgres
+ * function does not return a table, it simply returns the return type directly
  * @example
  * If a postgres function "find_user()" returns
  *
@@ -68,11 +20,36 @@ export type SupabaseArrayReturnConditional<T extends keyof DatabaseOverwritten['
  *   name: string
  * }
  * even this is not indicated by hovering on the [T]
+ *
+ * It can be used to create an array of objects using typescript array notation:
+ * protected notifications: WritableSignal<SupabaseObjectReturn<'select_notifications_of_users'>[]> = signal([]);
  * */
 export type SupabaseObjectReturn<T extends keyof DatabaseOverwritten['public']['Functions']> =
-    DatabaseOverwritten['public']['Functions'][T] extends { Returns: (infer R)[] }
-        ? R
+    DatabaseOverwritten['public']['Functions'][T] extends { Returns: infer R } // Infer the return type
+        ? R extends any[] // Check if the return type is an array
+            ? R[number]  // In case 'Returns' is an array, infer the element type
+            : R          // Otherwise, infer the return type directly
         : never;
+/**
+ * Type that represents the table return of a postgres function as array. If the postgres function is not returning a table,
+ * then it returns the return type directly
+ * @example
+ * If a postgres function "find_user()" returns
+ *
+ * RETURNS table (
+ *   id: string,
+ *   name: string
+ * )
+ *
+ * supabase-JS generated types will be
+ *
+ * {
+ *   id: string,
+ *   name: string
+ * }[]
+ */
+// export type SupabaseReturn<T extends keyof DatabaseOverwritten['public']['Functions']> =
+//     DatabaseOverwritten['public']['Functions'][T]['Returns']
 
 
 // other postgres objects
@@ -134,4 +111,31 @@ export type SupabaseResult<T> = T extends PromiseLike<infer U> ? U : never
 export type SupabaseResultOk<T> = T extends PromiseLike<{ data: infer U }> ? Exclude<U, null> : never
 
 
+// old types
+/**
+ * Generic type that takes a database function in and returns the function's return type as plain object type.
+ * @example
+ * If a postgres function "find_user()" returns
+ *
+ * RETURNS table (
+ *   id: string,
+ *   name: string
+ * )
+ *
+ * supabase-JS generated types will be an array of objects
+ *
+ * {
+ *   id: string,
+ *   name: string
+ * }[]
+ *
+ * and the PlainFunctions<'find_user'> will be without the array tag
+ *
+ * {
+ *   id: string,
+ *   name: string
+ * }
+ */
+// export type SupabaseArrayReturnConditional<T extends keyof DatabaseOverwritten['public']['Functions']> =
+//     SupabaseArrayElement<DatabaseOverwritten['public']['Functions'][T]['Returns']>;
 

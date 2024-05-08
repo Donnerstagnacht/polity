@@ -4,7 +4,7 @@ import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {TuiToggleModule} from "@taiga-ui/kit";
 import {NotificationSettingsStoreService} from "../action-store-services/notification-settings.store.service";
 import {NotificationSettingsActionService} from "../action-store-services/notification-settings.action.service";
-import {SupabaseArrayReturnConditional} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 
 @Component({
     selector: 'polity-notfications-from-follow-toggle',
@@ -20,7 +20,7 @@ export class NotficationsFromFollowToggleComponent {
     }> = new FormGroup({
         showFollowNotifications: new FormControl(false),
     });
-    private notificationSettings: WritableSignal<SupabaseArrayReturnConditional<'select_user_notification_settings'> | null> = signal(null);
+    private notificationSettings: WritableSignal<SupabaseObjectReturn<'select_user_notification_settings'> | null> = signal(null);
 
     constructor(
         private notificationSettingsStore: NotificationSettingsStoreService,

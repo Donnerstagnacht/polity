@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
-import {SupabaseArrayReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
 import {supabaseClient} from "../../../auth/supabase-client";
 import {GroupActionService} from "../../group/action-store-service/group.action.service";
@@ -25,7 +25,7 @@ export class FollowerOfGroupActionService {
     public async readFollowersOfGroup(): Promise<any> {
         await this.followersOfGroupStoreService.followersOfGroup.wrapSelectFunction(async (): Promise<void> => {
             const groupId: string = this.groupStoreService.group.getValueByKey('id');
-            const followerResponse: PostgrestSingleResponse<SupabaseArrayReturn<'read_follower_of_group'>> = await this.supabaseClient.rpc(
+            const followerResponse: PostgrestSingleResponse<SupabaseObjectReturn<'read_follower_of_group'>[]> = await this.supabaseClient.rpc(
                 'read_follower_of_group',
                 {
                     group_id_in: groupId
@@ -33,7 +33,7 @@ export class FollowerOfGroupActionService {
             )
             .throwOnError()
             if (followerResponse.data) {
-                const finalArray: SupabaseArrayReturn<'select_follower_of_user'> = await this.groupActionService.transformImageNamesToUrls(followerResponse.data, 'profile_image')
+                const finalArray: SupabaseObjectReturn<'select_follower_of_user'>[] = await this.groupActionService.transformImageNamesToUrls(followerResponse.data, 'profile_image')
                 this.followersOfGroupStoreService.followersOfGroup.setObjects(finalArray)
             }
         })
@@ -42,7 +42,7 @@ export class FollowerOfGroupActionService {
     public async removeFollowerOfGroup(userId: string): Promise<any> {
         await this.followersOfGroupStoreService.followersOfGroup.wrapUpdateFunction(async (): Promise<void> => {
             const groupId: string = this.groupStoreService.group.getValueByKey('id');
-            const response: PostgrestSingleResponse<SupabaseArrayReturn<'remove_group_follower_transaction'>> = await this.supabaseClient.rpc(
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'remove_group_follower_transaction'>[]> = await this.supabaseClient.rpc(
                 'remove_group_follower_transaction',
                 {
                     follower_id: userId,

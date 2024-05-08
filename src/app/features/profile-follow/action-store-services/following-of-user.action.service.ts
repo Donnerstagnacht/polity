@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {PostgrestError, PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
+import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
-import {SupabaseArrayReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {FollowingOfUserStoreService} from "./following-of-user.store.service";
 import {ProfileCountersStoreService} from "./profile-counters.store.service";
 import {supabaseClient} from "../../../auth/supabase-client";
@@ -23,12 +23,12 @@ export class FollowingOfUserActionService {
 
     public async selectFollowingsOfUser(): Promise<any> {
         await this.followingOfUserStoreService.followingOfUser.wrapSelectFunction(async (): Promise<void> => {
-            const followingResponse: PostgrestSingleResponse<SupabaseArrayReturn<'select_following_of_user'>> = await this.supabaseClient.rpc(
+            const followingResponse: PostgrestSingleResponse<SupabaseObjectReturn<'select_following_of_user'>[]> = await this.supabaseClient.rpc(
                 'select_following_of_user'
             )
             .throwOnError()
             if (followingResponse.data) {
-                const finalArray: SupabaseArrayReturn<'select_following_of_user'> = await this.profileActionService.transformImageNamesToUrls(followingResponse.data, 'profile_image')
+                const finalArray: SupabaseObjectReturn<'select_following_of_user'>[] = await this.profileActionService.transformImageNamesToUrls(followingResponse.data, 'profile_image')
                 this.followingOfUserStoreService.followingOfUser.setObjects(finalArray)
             }
         })
@@ -36,7 +36,7 @@ export class FollowingOfUserActionService {
 
     public async removeFollowingOfUser(userId: string): Promise<any> {
         await this.followingOfUserStoreService.followingOfUser.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<void | PostgrestError> = await this.supabaseClient.rpc(
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'unfollow_transaction'>> = await this.supabaseClient.rpc(
                 'unfollow_transaction',
                 {
                     following_id: userId

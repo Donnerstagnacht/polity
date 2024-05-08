@@ -1,5 +1,5 @@
 import {Component, Input, signal, WritableSignal} from '@angular/core';
-import {SupabaseArrayReturnConditional} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {Router} from "@angular/router";
 import {TuiIslandModule} from "@taiga-ui/kit";
 
@@ -18,7 +18,7 @@ export class SearchGroupResultComponent {
      *
      * @Input profile: Profile | null.
      */
-    @Input({required: true}) public group: SupabaseArrayReturnConditional<'search_group'> | null = null;
+    @Input({required: true}) public group: SupabaseObjectReturn<'search_group'> | null = null;
     @Input({required: true}) public isLoading: WritableSignal<boolean> = signal(true);
 
     constructor(private readonly router: Router) {
