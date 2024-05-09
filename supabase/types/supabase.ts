@@ -15,18 +15,23 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      accept_group_invitation_transaction: {
+        Args: {
+          invitation_id: string
+        }
+        Returns: undefined
+      }
+      accept_group_membership_request_transaction: {
+        Args: {
+          request_id: string
+        }
+        Returns: undefined
+      }
       check_group_membership_status: {
         Args: {
           group_id_in: string
         }
-        Returns: {
-          id: string
-          group_id: string
-          member_id: string
-          member_type: Database["public"]["Enums"]["group_member"]
-          created_at: string
-          updated_at: string
-        }[]
+        Returns: string
       }
       check_if_following: {
         Args: {
@@ -39,6 +44,19 @@ export type Database = {
           following_id: string
         }
         Returns: boolean
+      }
+      create_group_member_invitation: {
+        Args: {
+          group_id: string
+          member_id: string
+        }
+        Returns: undefined
+      }
+      create_group_member_request: {
+        Args: {
+          group_id: string
+        }
+        Returns: undefined
       }
       create_group_relation: {
         Args: {
@@ -63,6 +81,30 @@ export type Database = {
           invited_members: string[]
         }
         Returns: undefined
+      }
+      delete_group_member_by_id: {
+        Args: {
+          membership_id: string
+        }
+        Returns: undefined
+      }
+      delete_group_member_invitation: {
+        Args: {
+          invitation_id: string
+        }
+        Returns: {
+          group_id: string
+          member_id: string
+        }[]
+      }
+      delete_group_member_request: {
+        Args: {
+          request_id: string
+        }
+        Returns: {
+          group_id: string
+          member_id: string
+        }[]
       }
       follow_group_transaction: {
         Args: {
@@ -105,6 +147,12 @@ export type Database = {
           "": unknown
         }
         Returns: unknown
+      }
+      leave_group_member_transaction: {
+        Args: {
+          group_id_in: string
+        }
+        Returns: undefined
       }
       read_assistant: {
         Args: Record<PropertyKey, never>

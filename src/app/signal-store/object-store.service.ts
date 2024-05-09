@@ -23,6 +23,7 @@ type pathsToValues<StoredObject> = StoredObject extends Record<string, unknown>
 })
 export class ObjectStoreService<StoredObject> extends WrapperStoreService {
     private storedObject: WritableSignal<StoredObject | null> = signal(null);
+    private objectId: string | null = null;
 
     constructor(@Inject({}) private uiFlags: DictionaryOfBooleans = {}) {
         super(uiFlags);
@@ -104,6 +105,25 @@ export class ObjectStoreService<StoredObject> extends WrapperStoreService {
     public getValueByKey(key: keyof StoredObject | pathsToValues<StoredObject>): any {
         const keyAsString: string = key.toString()
         return this.getValueRecursive(this.storedObject(), keyAsString.split('.'));
+    }
+
+    /**
+     * Sets the id of the stored object manually (for example to store an url fragment/id.
+     *
+     * @param {objectId} string - The object id to be stored.
+     * @return {void}
+     */
+    public setObjectId(objectId: string): void {
+        this.objectId = objectId;
+    }
+
+    /**
+     * Retrieve the stored object id.
+     *
+     * @return string | null The stored object id.
+     */
+    public getObjectId(): string | null {
+        return this.objectId;
     }
 
     private getValueRecursive(obj: StoredObject | any, keys: string[]): any {

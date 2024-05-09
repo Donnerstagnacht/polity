@@ -32,9 +32,9 @@
 
     <div class="tui-space_bottom-4">
         <polity-request-button
-            (toggledFollowing)="toggleFollow($event)"
+            (toggledFollowing)="toggleMembership($event)"
             [isLoading]="this.isFollowingCheckLoading"
-            [isRequested]="isFollowing()"
+            [isRequested]="isGroupMember()"
             [requestTitle]="'MEMBERSHIP REQUESTED'"
             [toggledTitle]="'REQUEST MEMBERSHIP'"
         ></polity-request-button>

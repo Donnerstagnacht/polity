@@ -419,18 +419,21 @@ export type Database = {
         Row: {
           follower_counter: number
           following_counter: number
+          group_member_counter: number
           id: string
           unread_notifications_counter: number
         }
         Insert: {
           follower_counter?: number
           following_counter?: number
+          group_member_counter?: number
           id: string
           unread_notifications_counter?: number
         }
         Update: {
           follower_counter?: number
           following_counter?: number
+          group_member_counter?: number
           id?: string
           unread_notifications_counter?: number
         }
@@ -645,18 +648,21 @@ export type Database = {
         Row: {
           follower_counter: number
           following_counter: number
+          group_membership_counter: number
           id: string
           unread_notifications_counter: number
         }
         Insert: {
           follower_counter?: number
           following_counter?: number
+          group_membership_counter?: number
           id: string
           unread_notifications_counter?: number
         }
         Update: {
           follower_counter?: number
           following_counter?: number
+          group_membership_counter?: number
           id?: string
           unread_notifications_counter?: number
         }
@@ -753,22 +759,6 @@ export type Database = {
         }
         Returns: undefined
       }
-      create_group_member_invitation: {
-        Args: {
-          group_id: string
-          member_id: string
-          member_type: "member" | "board_member" | "board_president"
-        }
-        Returns: undefined
-      }
-      create_group_member_request: {
-        Args: {
-          group_id: string
-          member_id: string
-          member_type: "member" | "board_member" | "board_president"
-        }
-        Returns: undefined
-      }
       create_group_requested_relation: {
         Args: {
           group_id: string
@@ -836,6 +826,18 @@ export type Database = {
         }
         Returns: undefined
       }
+      decrement_group_member_counter: {
+        Args: {
+          group_id: string
+        }
+        Returns: undefined
+      }
+      decrement_profile_group_membership_counter: {
+        Args: {
+          user_id: string
+        }
+        Returns: undefined
+      }
       delete_following_follower_relationship: {
         Args: {
           follower_id: string
@@ -858,19 +860,8 @@ export type Database = {
       }
       delete_group_member: {
         Args: {
-          membership_id: string
-        }
-        Returns: undefined
-      }
-      delete_group_member_invitation: {
-        Args: {
-          invitation_id: string
-        }
-        Returns: undefined
-      }
-      delete_group_member_request: {
-        Args: {
-          request_id: string
+          user_id_in: string
+          group_id_in: string
         }
         Returns: undefined
       }
@@ -912,7 +903,19 @@ export type Database = {
         }
         Returns: undefined
       }
+      increment_group_member_counter: {
+        Args: {
+          group_id: string
+        }
+        Returns: undefined
+      }
       increment_notification_counter: {
+        Args: {
+          user_id: string
+        }
+        Returns: undefined
+      }
+      increment_profile_group_membership_counter: {
         Args: {
           user_id: string
         }
@@ -959,6 +962,7 @@ export type Database = {
       read_group_member_invitation: {
         Args: {
           group_member_invitation_id: string
+          user_id: string
         }
         Returns: {
           id: string
@@ -972,6 +976,7 @@ export type Database = {
       read_group_member_request: {
         Args: {
           group_member_request_id: string
+          user_id: string
         }
         Returns: {
           id: string

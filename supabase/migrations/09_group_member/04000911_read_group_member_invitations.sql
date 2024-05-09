@@ -20,8 +20,8 @@ BEGIN
     RETURN QUERY
         SELECT *
         FROM
-            group_member_invitations
+            authenticated_access.group_member_invitations
         WHERE
-            authenticated_access.group_id = group_id_in;
+            group_id = group_id_in;
 END;
 $$;

@@ -11,6 +11,9 @@ import {ProfileCountersStoreService} from "../../profile-follow/action-store-ser
 import {ProfileCountersActionService} from "../../profile-follow/action-store-services/profile-counters.action.service";
 import {NAVIGATION_ITEMS_PROFILE} from "../profile-navigation-signed-in";
 import {NAVIGATION_ITEMS_PROFILE_OWNER} from "../profile-navigation-owner";
+import {
+    FollowersOfUserActionService
+} from "../../profile-follow/action-store-services/followers-of-user.action.service";
 
 @Component({
     selector: 'polity-profile',
@@ -33,7 +36,8 @@ export class ProfileComponent {
         private readonly profileService: ProfileActionService,
         private route: ActivatedRoute,
         private readonly profileCounterService: ProfileCountersActionService,
-        private readonly profileCountersStoreService: ProfileCountersStoreService
+        private readonly profileCountersStoreService: ProfileCountersStoreService,
+        private readonly followersOfUserActionService: FollowersOfUserActionService
     ) {
     }
 
@@ -46,7 +50,7 @@ export class ProfileComponent {
             this.profileService.readProfile(urlId),
             this.profileCounterService.selectProfileCounter(urlId)
         ])
-        await this.profileCounterService.checkIfFollowing();
+        await this.followersOfUserActionService.checkIfFollowing();
     }
 
     ngOnDestroy(): void {

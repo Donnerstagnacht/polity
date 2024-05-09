@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, signal, WritableSignal} from '@angular/core';
 import {GroupActionService} from "../action-store-service/group.action.service";
 import {ActivatedRoute, RouterOutlet} from "@angular/router";
 import {WikiHeadlineComponent} from "../../../ui/polity-wiki/wiki-headline/wiki-headline.component";
@@ -14,6 +14,7 @@ import {SecondBarRightComponent} from "../../../navigation/second-bar-right/seco
 import {NavigationItem} from "../../../navigation/types-and-interfaces/navigationItem";
 import {NAVIGATION_ITEMS_GROUP} from "../group-navigation-signed-in";
 import {NAVIGATION_ITEMS_GROUP_BOARD_MEMBER} from "../group-navigation-board-member";
+import {GroupMemberActionService} from "../../group_member/action-store-services/group-member.action.service";
 
 @Component({
     selector: 'polity-group',
@@ -33,12 +34,14 @@ import {NAVIGATION_ITEMS_GROUP_BOARD_MEMBER} from "../group-navigation-board-mem
 })
 export class GroupComponent {
     protected menuItemsGroup: NavigationItem[] = NAVIGATION_ITEMS_GROUP;
+    protected isBoardMember: WritableSignal<boolean> = signal(true);
 
     constructor(
         private groupActionService: GroupActionService,
         private groupCountersActionService: GroupCountersActionService,
         private groupStoreService: GroupStoreService,
         private groupCountersStoreService: GroupCountersStoreService,
+        private groupMemberActionService: GroupMemberActionService,
         private route: ActivatedRoute
     ) {
 
@@ -46,9 +49,10 @@ export class GroupComponent {
 
     async ngOnInit(): Promise<void> {
         const urlId: string = this.route.snapshot.params['id'];
+        this.isBoardMember = this.groupStoreService.group.uiFlagStore.getUiFlag('isBoardMember');
+        this.groupStoreService.group.setObjectId(urlId);
         this.menuItemsGroup[0].link = '/group/' + urlId;
-        this.checkIfBoardMember(urlId);
-
+        this.checkMemberStatus(urlId);
         await Promise.all([
             this.groupActionService.readGroup(urlId),
             this.groupCountersActionService.selectGroupCounter(urlId)
@@ -62,9 +66,10 @@ export class GroupComponent {
         this.groupCountersStoreService.groupCounters.resetObject()
     }
 
-    private checkIfBoardMember(urlId: string): void {
+    private checkMemberStatus(urlId: string): void {
         // TODO
-        if (true) {
+        this.groupMemberActionService.checkMemberStatus()
+        if (this.isBoardMember()) {
             this.menuItemsGroup = NAVIGATION_ITEMS_GROUP_BOARD_MEMBER
             this.menuItemsGroup[0].link = '/group/' + urlId
             this.menuItemsGroup[1].link = '/group/' + urlId + '/edit'

@@ -1,20 +1,19 @@
-DROP FUNCTION IF EXISTS create_group_member_request(
-    group_id uuid,
-    member_id uuid,
-    member_type group_member
+DROP FUNCTION IF EXISTS public.create_group_member_request(
+    group_id uuid
 );
 
-CREATE OR REPLACE FUNCTION authenticated_access.create_group_member_request(
-    group_id uuid,
-    member_id uuid,
-    member_type group_member
+CREATE OR REPLACE FUNCTION public.create_group_member_request(
+    group_id uuid
 )
     RETURNS void
     LANGUAGE plpgsql
     SECURITY INVOKER
 AS
 $$
+DECLARE
+    auth_user_id uuid;
 BEGIN
+    auth_user_id = auth.uid();
     INSERT INTO
         authenticated_access.group_member_request
     (group_id,
@@ -22,7 +21,7 @@ BEGIN
      member_type)
     VALUES
         (group_id,
-         member_id,
-         member_type);
+         auth_user_id,
+         'member');
 END;
 $$;

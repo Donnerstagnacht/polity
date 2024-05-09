@@ -29,9 +29,7 @@ export class GroupActionService {
             .rpc('read_group_columns', {group_id: id})
             .single()
             .throwOnError()
-            console.log('response', response)
             if (response.data) {
-                console.log('response data', response.data)
                 // const imgPath = await this.supabase.storage.from('profile_images').createSignedUrl(response.data.profile_image, 3600 * 24 * 7);
                 // response.data.profile_image = imgPath.data?.signedUrl as string;
                 if (response.data) {

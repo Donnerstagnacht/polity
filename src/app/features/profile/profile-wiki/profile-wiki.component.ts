@@ -5,8 +5,10 @@ import {CounterComponent} from "../../../ui/polity-wiki/counter/counter.componen
 import {FollowButton} from "../../../ui/polity-wiki/follow-button/follow-button.component";
 import {WikiImageComponent} from "../../../ui/polity-wiki/wiki-image/wiki-image.component";
 import {ProfileStoreService} from "../action-store-services/profile.store.service";
-import {ProfileCountersActionService} from "../../profile-follow/action-store-services/profile-counters.action.service";
 import {ProfileCountersStoreService} from "../../profile-follow/action-store-services/profile-counters.store.service";
+import {
+    FollowersOfUserActionService
+} from "../../profile-follow/action-store-services/followers-of-user.action.service";
 
 @Component({
     selector: 'polity-profile-wiki',
@@ -31,8 +33,8 @@ export class ProfileWikiComponent {
 
     constructor(
         private readonly profileStoreService: ProfileStoreService,
-        private readonly profileCounterActionService: ProfileCountersActionService,
-        private readonly profileCountersStoreService: ProfileCountersStoreService
+        private readonly profileCountersStoreService: ProfileCountersStoreService,
+        private readonly followersOfUserActionService: FollowersOfUserActionService
     ) {
         this.isFollowingCheckLoading = this.profileStoreService.profile.uiFlagStore.getUiFlag('isFollowingCheckLoading')
         this.isProfileLoading = this.profileStoreService.profile.loading.getLoading()
@@ -45,9 +47,9 @@ export class ProfileWikiComponent {
 
     async toggleFollow(newIsFollowing: boolean): Promise<void> {
         if (newIsFollowing) {
-            await this.profileCounterActionService.followProfile();
+            await this.followersOfUserActionService.followProfile();
         } else {
-            await this.profileCounterActionService.unFollowProfile();
+            await this.followersOfUserActionService.unFollowProfile();
         }
     }
 }

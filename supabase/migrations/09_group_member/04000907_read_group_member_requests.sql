@@ -22,6 +22,6 @@ BEGIN
         FROM
             authenticated_access.group_member_requests
         WHERE
-            authenticated_access.group_id = group_id_in;
+            group_id = group_id_in;
 END;
 $$;

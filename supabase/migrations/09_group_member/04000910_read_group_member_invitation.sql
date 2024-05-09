@@ -1,7 +1,11 @@
-DROP FUNCTION IF EXISTS authenticated_access.read_group_member_invitation(uuid);
+DROP FUNCTION IF EXISTS authenticated_access.read_group_member_invitation(
+    group_member_invitation_id uuid,
+    user_id uuid
+);
 
 CREATE OR REPLACE FUNCTION authenticated_access.read_group_member_invitation(
-    group_member_invitation_id uuid
+    group_member_invitation_id uuid,
+    user_id uuid
 )
     RETURNS table
             (
@@ -20,8 +24,9 @@ BEGIN
     RETURN QUERY
         SELECT *
         FROM
-            group_member_invitations
+            authenticated_access.group_invited_members
         WHERE
-            id = group_member_invitation_id;
+              authenticated_access.group_invited_members.id = group_member_invitation_id
+          AND authenticated_access.group_invited_members.member_id = user_id;
 END;
 $$;

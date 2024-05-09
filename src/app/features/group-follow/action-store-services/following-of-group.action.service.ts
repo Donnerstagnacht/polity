@@ -24,17 +24,19 @@ export class FollowingOfGroupActionService {
 
     public async readFollowingsOfGroup(): Promise<any> {
         await this.followingOfGroupStoreService.followingOfGroup.wrapSelectFunction(async (): Promise<void> => {
-            const groupId: string = this.groupStoreService.group.getValueByKey('id');
-            const followingResponse: PostgrestSingleResponse<SupabaseObjectReturn<'read_following_of_group'>[]> = await this.supabaseClient.rpc(
-                'read_following_of_group',
-                {
-                    group_id_in: groupId
+            const groupId: string | null = this.groupStoreService.group.getObjectId();
+            if (groupId) {
+                const followingResponse: PostgrestSingleResponse<SupabaseObjectReturn<'read_following_of_group'>[]> = await this.supabaseClient.rpc(
+                    'read_following_of_group',
+                    {
+                        group_id_in: groupId
+                    }
+                )
+                .throwOnError()
+                if (followingResponse.data) {
+                    const finalArray: SupabaseObjectReturn<'read_following_of_user'>[] = await this.groupActionService.transformImageNamesToUrls(followingResponse.data, 'profile_image')
+                    this.followingOfGroupStoreService.followingOfGroup.setObjects(finalArray)
                 }
-            )
-            .throwOnError()
-            if (followingResponse.data) {
-                const finalArray: SupabaseObjectReturn<'read_following_of_user'>[] = await this.groupActionService.transformImageNamesToUrls(followingResponse.data, 'profile_image')
-                this.followingOfGroupStoreService.followingOfGroup.setObjects(finalArray)
             }
         })
     }

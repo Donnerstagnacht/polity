@@ -4,7 +4,6 @@ import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modifi
 import {ProfileCountersStoreService} from "./profile-counters.store.service";
 import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {supabaseClient} from "../../../auth/supabase-client";
-import {ProfileStoreService} from "../../profile/action-store-services/profile.store.service";
 
 @Injectable({
     providedIn: 'root'
@@ -13,8 +12,7 @@ export class ProfileCountersActionService {
     private readonly supabaseClient: SupabaseClient<DatabaseOverwritten> = supabaseClient;
 
     constructor(
-        private readonly profileCountersStoreService: ProfileCountersStoreService,
-        private readonly profileStoreService: ProfileStoreService
+        private readonly profileCountersStoreService: ProfileCountersStoreService
     ) {
     }
 
@@ -30,59 +28,6 @@ export class ProfileCountersActionService {
                 this.profileCountersStoreService.profileCounters.setObject(response.data);
             }
         })
-    }
-
-    public async checkIfFollowing(): Promise<void> {
-        const followingId: string = this.profileCountersStoreService.profileCounters.getValueByKey('profile_id')
-
-        await this.profileCountersStoreService.profileCounters.wrapSelectFunction(async (): Promise<void> => {
-            this.profileStoreService.profile.uiFlagStore.setUiFlagTrue('isFollowingCheckLoading')
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'check_if_following'>> = await this.supabaseClient.rpc(
-                'check_if_following',
-                {
-                    following_id: followingId as string
-                }
-            )
-            .single()
-            .throwOnError();
-
-            if (response.data) {
-                this.profileStoreService.profile.uiFlagStore.setUiFlagTrue('isFollowing')
-            } else {
-                this.profileStoreService.profile.uiFlagStore.setUiFlagFalse('isFollowing')
-            }
-            this.profileStoreService.profile.uiFlagStore.setUiFlagFalse('isFollowingCheckLoading')
-        })
-    }
-
-    public async followProfile(): Promise<void> {
-        const followingId: string = this.profileCountersStoreService.profileCounters.getValueByKey('profile_id');
-        await this.profileCountersStoreService.profileCounters.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'follow_transaction'>> = await this.supabaseClient.rpc(
-                'follow_transaction',
-                {
-                    following_id: followingId
-                }
-            ).throwOnError()
-
-            this.profileStoreService.profile.uiFlagStore.setUiFlagTrue('isFollowing')
-            this.profileCountersStoreService.profileCounters.incrementKey('follower_counter')
-        }, true, 'Successful followed!')
-    }
-
-    public async unFollowProfile(): Promise<void> {
-        const followingId = this.profileCountersStoreService.profileCounters.getValueByKey('profile_id');
-        await this.profileCountersStoreService.profileCounters.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'unfollow_transaction'>> = await this.supabaseClient.rpc(
-                'unfollow_transaction',
-                {
-                    following_id: followingId
-                }
-            ).throwOnError()
-
-            this.profileStoreService.profile.uiFlagStore.setUiFlagFalse('isFollowing')
-            this.profileCountersStoreService.profileCounters.decrementKey('follower_counter')
-        }, true, 'Successful unfollowed!')
     }
 
 }
