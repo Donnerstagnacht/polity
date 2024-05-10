@@ -66,14 +66,13 @@ export class GroupComponent {
         this.groupCountersStoreService.groupCounters.resetObject()
     }
 
-    private checkMemberStatus(urlId: string): void {
+    private async checkMemberStatus(urlId: string): Promise<void> {
         // TODO
-        this.groupMemberActionService.checkMemberStatus()
+        await this.groupMemberActionService.checkMemberStatus()
         if (this.isBoardMember()) {
             this.menuItemsGroup = NAVIGATION_ITEMS_GROUP_BOARD_MEMBER
             this.menuItemsGroup[0].link = '/group/' + urlId
             this.menuItemsGroup[1].link = '/group/' + urlId + '/edit'
-            this.menuItemsGroup[2].link = '/group/' + urlId + '/follower/edit'
         } else {
             this.menuItemsGroup = NAVIGATION_ITEMS_GROUP
             this.menuItemsGroup[0].link = '/group/' + urlId

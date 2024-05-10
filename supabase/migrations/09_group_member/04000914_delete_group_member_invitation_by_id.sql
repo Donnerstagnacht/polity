@@ -1,7 +1,7 @@
-DROP FUNCTION IF EXISTS public.delete_group_member_invitation(
+DROP FUNCTION IF EXISTS public.delete_group_member_invitation_by_id(
     invitation_id uuid);
 
-CREATE OR REPLACE FUNCTION public.delete_group_member_invitation(
+CREATE OR REPLACE FUNCTION public.delete_group_member_invitation_by_id(
     invitation_id uuid
 )
     RETURNS table

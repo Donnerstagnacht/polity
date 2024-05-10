@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS authenticated_access.group_member_requests
 (
-    id          uuid                                   NOT NULL,
+    id          uuid                                   NOT NULL DEFAULT uuid_generate_v4(),
     group_id    uuid                                   NOT NULL,
     member_id   uuid                                   NOT NULL,
     member_type group_member,

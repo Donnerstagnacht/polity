@@ -1,9 +1,9 @@
 DROP FUNCTION IF EXISTS public.delete_group_member_request(
-    request_id uuid
+    group_id_in uuid
 );
 
 CREATE OR REPLACE FUNCTION public.delete_group_member_request(
-    request_id uuid
+    group_id_in uuid
 )
     RETURNS table
             (
@@ -14,12 +14,16 @@ CREATE OR REPLACE FUNCTION public.delete_group_member_request(
     SECURITY INVOKER
 AS
 $$
+DECLARE
+    auth_user_id uuid;
 BEGIN
+    auth_user_id = auth.uid();
     DELETE
     FROM
         authenticated_access.group_member_requests
     WHERE
-        id = request_id
+          group_id = group_id_in
+      AND member_id = auth_user_id
     RETURNING
         group_id,
         member_id

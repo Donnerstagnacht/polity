@@ -15,11 +15,11 @@ export const NAVIGATION_ITEMS_GROUP_BOARD_MEMBER: NavigationItem[] = [
         dataCy: 'nav-group-edit',
         dataCyDesktop: 'nav-group-edit-desktop'
     },
-    {
-        text: 'EDIT',
-        icon: 'tuiIconUsers',
-        link: '/group/id/follower/edit',
-        dataCy: 'nav-follower-edit',
-        dataCyDesktop: 'nav-follower-edit-desktop'
-    }
+    // {
+    //     text: 'EDIT',
+    //     icon: 'tuiIconUsers',
+    //     link: '/group/id/follower/edit',
+    //     dataCy: 'nav-follower-edit',
+    //     dataCyDesktop: 'nav-follower-edit-desktop'
+    // }
 ]

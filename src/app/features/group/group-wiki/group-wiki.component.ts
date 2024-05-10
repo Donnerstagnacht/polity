@@ -1,4 +1,4 @@
-import {Component, signal, Signal, WritableSignal} from '@angular/core';
+import {Component, effect, signal, Signal, WritableSignal} from '@angular/core';
 import {CounterComponent} from "../../../ui/polity-wiki/counter/counter.component";
 import {FollowButton} from "../../../ui/polity-wiki/follow-button/follow-button.component";
 import {RequestButton} from "../../../ui/polity-wiki/request-button/request-button.component";
@@ -31,6 +31,8 @@ export class GroupWikiComponent {
 
     protected isFollowingCheckLoading: WritableSignal<boolean> = signal(false);
     protected isFollowing: WritableSignal<boolean> = signal(false);
+    protected memberStatus: WritableSignal<string> = signal('no_member');
+    protected buttonText: string = 'Request Membership';
 
     constructor(
         private groupStoreService: GroupStoreService,
@@ -38,12 +40,27 @@ export class GroupWikiComponent {
         private groupCountersActionService: GroupCountersActionService,
         private groupMemberActionService: GroupMemberActionService
     ) {
-
+        effect((): void => {
+            console.log('status', this.memberStatus())
+            console.log(this.buttonText)
+            if (this.memberStatus() === 'member' || this.memberStatus() === 'board_member') {
+                this.buttonText = 'Leave Group';
+            } else if (this.memberStatus() === 'requested') {
+                console.log('requested')
+                this.buttonText = 'Withdraw request';
+                console.log(this.buttonText)
+            } else if (this.memberStatus() === 'invited') {
+                this.buttonText = 'Accept invitation';
+            } else {
+                this.buttonText = 'Request Membership';
+            }
+        });
     }
 
     async ngOnInit(): Promise<void> {
         this.group = this.groupStoreService.group.getObject();
         this.groupCounter = this.groupCountersStoreService.groupCounters.getObject();
+        this.memberStatus = this.groupStoreService.groupMemberStatus;
 
         this.isGroupLoading = this.groupStoreService.group.loading.getLoading();
         this.isGroupCounterLoading = this.groupCountersStoreService.groupCounters.loading.getLoading();
@@ -65,15 +82,14 @@ export class GroupWikiComponent {
     }
 
     async toggleMembership(newIsMember: boolean): Promise<void> {
-        if (newIsMember) {
-            console.log('join')
-            this.isGroupMember.set(true);
+        if (this.memberStatus() === 'no_member') {
             await this.groupMemberActionService.requestGroupMembership();
-        } else {
-            console.log('leave')
-            this.isGroupMember.set(false);
+        } else if (this.memberStatus() === 'requested') {
+            await this.groupMemberActionService.withDrawGroupRequest();
+        } else if (this.memberStatus() === 'invited') {
+            await this.groupMemberActionService.declineGroupInvitation();
+        } else if (this.memberStatus() === 'board_member' || this.memberStatus() === 'member') {
             await this.groupMemberActionService.leaveGroup();
         }
     }
-
 }

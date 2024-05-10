@@ -15,6 +15,7 @@ export type groupUiFlags = {
 })
 export class GroupStoreService {
     public group: ObjectStoreService<SupabaseObjectReturn<'read_group_columns'>>
+    public groupMemberStatus: WritableSignal<string> = signal('no_member')
     private uiFlags: groupUiFlags = {
         isMember: signal(false),
         isBoardMember: signal(false),

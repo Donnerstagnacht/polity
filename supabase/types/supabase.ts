@@ -54,7 +54,7 @@ export type Database = {
       }
       create_group_member_request: {
         Args: {
-          group_id: string
+          group_id_in: string
         }
         Returns: undefined
       }
@@ -90,6 +90,15 @@ export type Database = {
       }
       delete_group_member_invitation: {
         Args: {
+          group_id_in: string
+        }
+        Returns: {
+          group_id: string
+          member_id: string
+        }[]
+      }
+      delete_group_member_invitation_by_id: {
+        Args: {
           invitation_id: string
         }
         Returns: {
@@ -98,6 +107,15 @@ export type Database = {
         }[]
       }
       delete_group_member_request: {
+        Args: {
+          group_id_in: string
+        }
+        Returns: {
+          group_id: string
+          member_id: string
+        }[]
+      }
+      delete_group_member_request_by_id: {
         Args: {
           request_id: string
         }

@@ -43,11 +43,26 @@ export class GroupMemberActionService {
                 console.log(response.data)
 
                 if (response.data) {
-                    this.groupStoreService.group.uiFlagStore.setUiFlagTrue('isMember')
-                    if (response.data === 'board_member') {
-                        this.groupStoreService.group.uiFlagStore.setUiFlagTrue('isBoardMember')
-                    } else {
+                    if (response.data === 'member') {
+                        this.groupStoreService.group.uiFlagStore.setUiFlagTrue('isMember')
                         this.groupStoreService.group.uiFlagStore.setUiFlagFalse('isBoardMember')
+                        this.groupStoreService.groupMemberStatus.set('member')
+                    } else if (response.data === 'board_member') {
+                        this.groupStoreService.group.uiFlagStore.setUiFlagTrue('isMember')
+                        this.groupStoreService.group.uiFlagStore.setUiFlagTrue('isBoardMember')
+                        this.groupStoreService.groupMemberStatus.set('board_member')
+                    } else if (response.data === 'requested') {
+                        this.groupStoreService.group.uiFlagStore.setUiFlagFalse('isMember')
+                        this.groupStoreService.group.uiFlagStore.setUiFlagFalse('isBoardMember')
+                        this.groupStoreService.groupMemberStatus.set('requested')
+                    } else if (response.data === 'invited') {
+                        this.groupStoreService.group.uiFlagStore.setUiFlagFalse('isMember')
+                        this.groupStoreService.group.uiFlagStore.setUiFlagFalse('isBoardMember')
+                        this.groupStoreService.groupMemberStatus.set('invited')
+                    } else {
+                        this.groupStoreService.group.uiFlagStore.setUiFlagFalse('isMember')
+                        this.groupStoreService.group.uiFlagStore.setUiFlagFalse('isBoardMember')
+                        this.groupStoreService.groupMemberStatus.set('no_member')
                     }
                 } else {
                     console.log(response.error)
@@ -84,15 +99,20 @@ export class GroupMemberActionService {
     public async requestGroupMembership(): Promise<void> {
         await this.groupCountersStoreService.groupCounters.wrapUpdateFunction(async (): Promise<void> => {
             const groupId: string | null = this.groupStoreService.group.getObjectId();
+            console.log(groupId)
             if (groupId) {
                 const response: PostgrestSingleResponse<SupabaseObjectReturn<'create_group_member_request'>> = await this.supabaseClient.rpc(
                     'create_group_member_request',
                     {
-                        group_id: groupId
+                        group_id_in: groupId
                     }
                 )
                 .throwOnError()
-                this.groupCountersStoreService.groupCounters.incrementKey('member_counter')
+                console.log(response, response.error)
+                if (!response.error) {
+                    console.log('no error')
+                    this.groupStoreService.groupMemberStatus.set('requested');
+                }
             }
         }, true, 'Successful requested group membership!')
 
@@ -116,7 +136,7 @@ export class GroupMemberActionService {
             const response: PostgrestSingleResponse<SupabaseObjectReturn<'delete_group_member_request'>[]> = await this.supabaseClient.rpc(
                 'delete_group_member_request',
                 {
-                    request_id: membershipRequest
+                    group_id_in: membershipRequest
                 }
             )
             .throwOnError()
@@ -155,18 +175,49 @@ export class GroupMemberActionService {
         }, true, 'Successful accepted group membership!')
     }
 
-    public async declineGroupInvitation(invitation_id: string): Promise<void> {
+    public async removeGroupInvitation(invitation_id: string): Promise<void> {
         await this.groupCountersStoreService.groupCounters.wrapUpdateFunction(async (): Promise<void> => {
             const groupId: string | null = this.groupStoreService.group.getObjectId();
             if (groupId) {
-                const response: PostgrestSingleResponse<SupabaseObjectReturn<'delete_group_member_invitation'>[]> = await this.supabaseClient.rpc(
-                    'delete_group_member_invitation',
+                const response: PostgrestSingleResponse<SupabaseObjectReturn<'delete_group_member_invitation_by_id'>[]> = await this.supabaseClient.rpc(
+                    'delete_group_member_invitation_by_id',
                     {
                         invitation_id: invitation_id
                     }
                 )
                 .throwOnError()
                 this.groupCountersStoreService.groupCounters.decrementKey('member_counter')
+            }
+        })
+    }
+
+    public async declineGroupInvitation(): Promise<void> {
+        await this.groupCountersStoreService.groupCounters.wrapUpdateFunction(async (): Promise<void> => {
+            const groupId: string | null = this.groupStoreService.group.getObjectId();
+            if (groupId) {
+                const response: PostgrestSingleResponse<SupabaseObjectReturn<'delete_group_member_invitation'>[]> = await this.supabaseClient.rpc(
+                    'delete_group_member_invitation',
+                    {
+                        group_id_in: groupId
+                    }
+                )
+                .throwOnError()
+                this.groupCountersStoreService.groupCounters.decrementKey('member_counter')
+            }
+        })
+    }
+
+    public async withDrawGroupRequest(): Promise<void> {
+        await this.groupCountersStoreService.groupCounters.wrapUpdateFunction(async (): Promise<void> => {
+            const groupId: string | null = this.groupStoreService.group.getObjectId();
+            if (groupId) {
+                const response: PostgrestSingleResponse<SupabaseObjectReturn<'delete_group_member_request'>[]> = await this.supabaseClient.rpc(
+                    'delete_group_member_request',
+                    {
+                        group_id_in: groupId
+                    }
+                )
+                .throwOnError()
             }
         })
     }

@@ -185,7 +185,7 @@ export type Database = {
         Insert: {
           created_at?: string
           group_id: string
-          id: string
+          id?: string
           member_id: string
           member_type?: "member" | "board_member" | "board_president" | null
           updated_at?: string
