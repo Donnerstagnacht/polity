@@ -35,6 +35,7 @@
             (toggledFollowing)="toggleMembership($event)"
             [isLoading]="this.isFollowingCheckLoading"
             [isRequested]="isGroupMember()"
+            [requestTitleString]="buttonTextString"
             [requestTitle]="buttonText"
             [toggledTitle]="'REQUEST MEMBERSHIP'"
         ></polity-request-button>

@@ -7,8 +7,8 @@ CREATE OR REPLACE FUNCTION public.delete_group_member_request(
 )
     RETURNS table
             (
-                group_id  uuid,
-                member_id uuid
+                group_id_out  uuid,
+                member_id_out uuid
             )
     LANGUAGE plpgsql
     SECURITY INVOKER
@@ -28,7 +28,7 @@ BEGIN
         group_id,
         member_id
         INTO
-            group_id,
-            member_id;
+            group_id_out,
+            member_id_out;
 END;
 $$;

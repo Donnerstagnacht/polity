@@ -32,7 +32,8 @@ export class RequestButton {
     /**
      * The request title to display.
      */
-    @Input() public requestTitle: string = '';
+    @Input() public requestTitle: WritableSignal<string> = signal('');
+    @Input() public requestTitleString: string = '';
 
     /**
      * The title to display when the button is toggled.

@@ -111,8 +111,8 @@ export type Database = {
           group_id_in: string
         }
         Returns: {
-          group_id: string
-          member_id: string
+          group_id_out: string
+          member_id_out: string
         }[]
       }
       delete_group_member_request_by_id: {

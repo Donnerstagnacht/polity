@@ -70,6 +70,7 @@ export class GroupMemberActionService {
                     this.groupStoreService.group.uiFlagStore.setUiFlagFalse('isBoardMember')
                 }
                 console.log(this.groupStoreService.group.uiFlagStore.getUiFlag('isMember')())
+                this.groupStoreService.group.uiFlagStore.getUiFlag('ano')
                 console.log(this.groupStoreService.group.uiFlagStore.getUiFlag('isBoardMember')())
                 this.groupStoreService.group.uiFlagStore.setUiFlagFalse('isFollowingCheckLoading')
             })
@@ -202,7 +203,10 @@ export class GroupMemberActionService {
                     }
                 )
                 .throwOnError()
-                this.groupCountersStoreService.groupCounters.decrementKey('member_counter')
+                if (!response.error) {
+                    console.log('no error')
+                    this.groupStoreService.groupMemberStatus.set('no_member');
+                }
             }
         })
     }
@@ -218,6 +222,10 @@ export class GroupMemberActionService {
                     }
                 )
                 .throwOnError()
+                if (!response.error) {
+                    console.log('no error')
+                    this.groupStoreService.groupMemberStatus.set('no_member');
+                }
             }
         })
     }
@@ -254,6 +262,10 @@ export class GroupMemberActionService {
 
                 this.groupStoreService.group.uiFlagStore.setUiFlagFalse('isMember')
                 this.groupCountersStoreService.groupCounters.decrementKey('member_counter')
+                if (!response.error) {
+                    console.log('no error')
+                    this.groupStoreService.groupMemberStatus.set('no_member');
+                }
             }
         }, true, 'Successful left group!')
 

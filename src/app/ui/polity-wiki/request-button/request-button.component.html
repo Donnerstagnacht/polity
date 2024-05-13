@@ -1,4 +1,14 @@
 @if (!requestNotPossible) {
+    <!--    <button-->
+    <!--        (click)="toggleFollow()"-->
+    <!--        [attr.data-cy]="'followButton'"-->
+    <!--        [class.tui-skeleton]="isLoading()"-->
+    <!--        class="tui-form__button"-->
+    <!--        size="l"-->
+    <!--        tuiButton-->
+    <!--        type="button"-->
+    <!--    >{{ isRequested ? requestTitle() : toggledTitle }}-->
+    <!--    </button>-->
     <button
         (click)="toggleFollow()"
         [attr.data-cy]="'followButton'"
@@ -7,6 +17,6 @@
         size="l"
         tuiButton
         type="button"
-    >{{ isRequested ? requestTitle : toggledTitle }}
+    >{{ requestTitleString }}
     </button>
 }

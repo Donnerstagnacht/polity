@@ -32,7 +32,9 @@ export class GroupWikiComponent {
     protected isFollowingCheckLoading: WritableSignal<boolean> = signal(false);
     protected isFollowing: WritableSignal<boolean> = signal(false);
     protected memberStatus: WritableSignal<string> = signal('no_member');
-    protected buttonText: string = 'Request Membership';
+    protected buttonText: WritableSignal<string> = signal('Request Membership');
+    protected buttonTextString: string = 'Request Membership';
+    protected readonly signal = signal;
 
     constructor(
         private groupStoreService: GroupStoreService,
@@ -42,17 +44,22 @@ export class GroupWikiComponent {
     ) {
         effect((): void => {
             console.log('status', this.memberStatus())
-            console.log(this.buttonText)
+            console.log('before update', this.buttonText())
             if (this.memberStatus() === 'member' || this.memberStatus() === 'board_member') {
-                this.buttonText = 'Leave Group';
+                // this.buttonText.set('Leave Group');
+                this.buttonTextString = 'Leave Group';
             } else if (this.memberStatus() === 'requested') {
                 console.log('requested')
-                this.buttonText = 'Withdraw request';
-                console.log(this.buttonText)
+                // this.buttonText.set('Withdraw request');
+                this.buttonTextString = 'Withdraw request';
+                console.log('after update', this.buttonTextString)
             } else if (this.memberStatus() === 'invited') {
-                this.buttonText = 'Accept invitation';
+                // this.buttonText.set('Accept invitation');
+                this.buttonTextString = 'Accept invitation';
             } else {
-                this.buttonText = 'Request Membership';
+                // this.buttonText.set('Request Membership');
+                this.buttonTextString = 'Request Membership';
+                console.log(this.buttonText())
             }
         });
     }
