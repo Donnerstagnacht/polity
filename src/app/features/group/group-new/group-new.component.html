@@ -5,7 +5,6 @@
 ></polity-stepper-top>
 <h1 class="tui-text_h1">Create a new group</h1>
 
-
 <form
     (ngSubmit)="onCreateGroup()"
     [formGroup]="createGroupForm"
@@ -41,6 +40,7 @@
         tuiGroup
     >
         <tui-radio-block
+            [attr.data-cy]="'levelLocal'"
             contentAlign="right"
             formControlName="level"
             item="local"
@@ -54,6 +54,7 @@
             </div>
         </tui-radio-block>
         <tui-radio-block
+            [attr.data-cy]="'levelRegional'"
             contentAlign="right"
             formControlName="level"
             item="regional"
@@ -67,6 +68,7 @@
             </div>
         </tui-radio-block>
         <tui-radio-block
+            [attr.data-cy]="'levelNational'"
             contentAlign="right"
             formControlName="level"
             item="national"
@@ -108,6 +110,7 @@
     </div>
     <tui-combo-box
         (searchChange)="onSearchChange($event)"
+        [attr.data-cy]="'inviteMemberToNewGroup'"
         [stringify]="stringify"
         [tuiTextfieldLabelOutside]="true"
         formControlName="members"
@@ -115,6 +118,7 @@
         Lade ein neues Mitglied ein.
         <tui-data-list-wrapper
             *tuiDataList
+            [attr.data-cy]="'inviteMemberSearchResult'"
             [itemContent]="stringify | tuiStringifyContent"
             [items]="searchResults() | tuiFilterByInputWith: stringify"
         ></tui-data-list-wrapper>
@@ -125,7 +129,7 @@
         [bonusKeys]="['last_name']"
         [dataCyTagsHeadline]="['user_image_title', 'user_first_name_title', 'remove_invitation_title']"
         [dataCyTags]="['user_image', 'user_first_name', 'follower_remove']"
-        [dataKeysForColumns]="['first_name', 'last_name', 'id']"
+        [dataKeysForColumns]="['last_name', 'first_name', 'id']"
         [data]="selectedUsersAsSignal"
         [headings]="['Foto', 'Name', 'Entfernen']"
         [isLoading]="signal(false)"

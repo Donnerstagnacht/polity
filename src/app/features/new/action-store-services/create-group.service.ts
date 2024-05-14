@@ -17,7 +17,6 @@ export class CreateGroupService {
 
     public async createGroup(group: GroupNew): Promise<void> {
         console.log(group)
-        this.router.navigate(['/group']);
         const response: PostgrestSingleResponse<SupabaseObjectReturn<'create_group_transaction'>> = await this.supabaseClient
         .rpc('create_group_transaction', {
             name: group.name,
@@ -28,6 +27,8 @@ export class CreateGroupService {
         .throwOnError()
         if (response.error) {
             console.log(response.error)
+        } else {
+            this.router.navigate(['/home']);
         }
     }
 }
