@@ -17,7 +17,7 @@ export type Database = {
     Functions: {
       accept_group_invitation_transaction: {
         Args: {
-          invitation_id: string
+          group_id_in: string
         }
         Returns: undefined
       }
@@ -92,10 +92,7 @@ export type Database = {
         Args: {
           group_id_in: string
         }
-        Returns: {
-          group_id: string
-          member_id: string
-        }[]
+        Returns: Database["public"]["CompositeTypes"]["delete_group"]
       }
       delete_group_member_invitation_by_id: {
         Args: {
@@ -260,11 +257,11 @@ export type Database = {
       }
       read_group_member_invitations: {
         Args: {
-          group_id: string
+          group_id_in: string
         }
         Returns: {
           id: string
-          group_id_in: string
+          group_id: string
           member_id: string
           member_type: Database["public"]["Enums"]["group_member"]
           created_at: string
@@ -472,7 +469,10 @@ export type Database = {
       tutorial_enum: "welcome" | "profile" | "search"
     }
     CompositeTypes: {
-      [_ in never]: never
+      delete_group: {
+        group_id: string | null
+        member_id: string | null
+      }
     }
   }
 }

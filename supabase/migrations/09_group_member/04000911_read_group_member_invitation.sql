@@ -26,7 +26,7 @@ BEGIN
         FROM
             authenticated_access.group_invited_members
         WHERE
-              authenticated_access.group_invited_members.id = group_member_invitation_id
+              authenticated_access.group_invited_members.group_id = group_member_invitation_id
           AND authenticated_access.group_invited_members.member_id = user_id;
 END;
 $$;

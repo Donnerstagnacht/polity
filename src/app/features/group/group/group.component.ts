@@ -49,7 +49,7 @@ export class GroupComponent {
 
     async ngOnInit(): Promise<void> {
         const urlId: string = this.route.snapshot.params['id'];
-        this.isBoardMember = this.groupStoreService.group.uiFlagStore.getUiFlag('isBoardMember');
+        this.isBoardMember = this.groupStoreService.group.uiFlagStore.getFlag('isBoardMember');
         this.groupStoreService.group.setObjectId(urlId);
         this.menuItemsGroup[0].link = '/group/' + urlId;
         this.checkMemberStatus(urlId);

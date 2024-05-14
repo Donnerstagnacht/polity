@@ -79,6 +79,24 @@ export type SupabaseTable<T extends keyof DatabaseOverwritten['public']['Tables'
  */
 export type SupabaseEnum<T extends keyof DatabaseOverwritten['public']['Enums']> = DatabaseOverwritten['public']['Enums'][T];
 
+/**
+ *  Type that represents the definition of a postgres composite type in the database as typescript object.
+ *  @example
+ *  If a database composite type is defined as
+ *
+ *  CREATE TYPE delete_group AS
+ * (
+ *     group_id  uuid,
+ *     member_id uuid
+ * );
+ *
+ * the typescript type will be:
+ * SupabaseCompositeType<'delete_group'> = {
+ *     group_id: string
+ *     member_id: string
+ * }
+ */
+export type SupabaseCompositeType<T extends keyof DatabaseOverwritten['public']['CompositeTypes']> = DatabaseOverwritten['public']['CompositeTypes'][T];
 
 // helper types - used in SupabaseArrayReturn type
 /**

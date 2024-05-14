@@ -22,7 +22,7 @@ export class FlagStoreService<FlagKeyList extends string = string> {
      * @param {keyof FlagKeyList} key - The key of the flag to set.
      * @return {void}
      */
-    setUiFlagTrue(key: FlagKeyList): void {
+    setFlagTrue(key: FlagKeyList): void {
         const flag: WritableSignal<boolean> = this.uiFlags[key];
         flag.set(true)
     }
@@ -33,7 +33,7 @@ export class FlagStoreService<FlagKeyList extends string = string> {
      * @param {key of FlagKeyList} key - The key of the flag to be set.
      * @return {void}
      */
-    setUiFlagFalse(key: FlagKeyList): void {
+    setFlagFalse(key: FlagKeyList): void {
         const flag: WritableSignal<boolean> = this.uiFlags[key];
         flag.set(false)
     }
@@ -44,7 +44,7 @@ export class FlagStoreService<FlagKeyList extends string = string> {
      * @param {key of FlagKeyList} key - The key of the UI flag to retrieve.
      * @return {WritableSignal<boolean>} - The value of the UI flag as signal that notifies consumers of UI flag changes
      */
-    getUiFlag(key: FlagKeyList): WritableSignal<boolean> {
+    getFlag(key: FlagKeyList): WritableSignal<boolean> {
         return this.uiFlags[key];
     }
 }

@@ -22,19 +22,22 @@ import {GroupMemberActionService} from "../../group_member/action-store-services
     styleUrl: './group-wiki.component.less'
 })
 export class GroupWikiComponent {
-    protected group: Signal<SupabaseObjectReturn<'read_group_columns'> | null> = signal(null);
     protected isGroupLoading: WritableSignal<boolean> = signal(true);
-    protected isGroupMemberLoading: WritableSignal<boolean> = signal(false);
-    protected isGroupMember: WritableSignal<boolean> = signal(false);
-    protected groupCounter: WritableSignal<SupabaseObjectReturn<'read_group_following_counter'> | null> = signal(null);
+    protected group: Signal<SupabaseObjectReturn<'read_group_columns'> | null> = signal(null);
+
     protected isGroupCounterLoading: WritableSignal<boolean> = signal(true);
+    protected groupCounter: WritableSignal<SupabaseObjectReturn<'read_group_following_counter'> | null> = signal(null);
 
     protected isFollowingCheckLoading: WritableSignal<boolean> = signal(false);
     protected isFollowing: WritableSignal<boolean> = signal(false);
-    protected memberStatus: WritableSignal<string> = signal('no_member');
-    protected buttonText: WritableSignal<string> = signal('Request Membership');
+
+    protected isGroupMembershipStatusLoading: WritableSignal<boolean> = signal(false);
+    protected isMember: WritableSignal<boolean> = signal(false);
+    protected isBoardMember: WritableSignal<boolean> = signal(false);
+    protected isRequested: WritableSignal<boolean> = signal(false);
+    protected isInvited: WritableSignal<boolean> = signal(false);
+    protected isNoMember: WritableSignal<boolean> = signal(true);
     protected buttonTextString: string = 'Request Membership';
-    protected readonly signal = signal;
 
     constructor(
         private groupStoreService: GroupStoreService,
@@ -43,37 +46,34 @@ export class GroupWikiComponent {
         private groupMemberActionService: GroupMemberActionService
     ) {
         effect((): void => {
-            console.log('status', this.memberStatus())
-            console.log('before update', this.buttonText())
-            if (this.memberStatus() === 'member' || this.memberStatus() === 'board_member') {
-                // this.buttonText.set('Leave Group');
-                this.buttonTextString = 'Leave Group';
-            } else if (this.memberStatus() === 'requested') {
-                console.log('requested')
-                // this.buttonText.set('Withdraw request');
-                this.buttonTextString = 'Withdraw request';
-                console.log('after update', this.buttonTextString)
-            } else if (this.memberStatus() === 'invited') {
-                // this.buttonText.set('Accept invitation');
-                this.buttonTextString = 'Accept invitation';
-            } else {
-                // this.buttonText.set('Request Membership');
+            if (this.isNoMember()) {
                 this.buttonTextString = 'Request Membership';
-                console.log(this.buttonText())
+            } else if (this.isMember() || this.isBoardMember()) {
+                this.buttonTextString = 'Leave Group';
+            } else if (this.isRequested()) {
+                this.buttonTextString = 'Withdraw request';
+            } else if (this.isInvited()) {
+                this.buttonTextString = 'Accept invitation';
             }
         });
     }
 
     async ngOnInit(): Promise<void> {
-        this.group = this.groupStoreService.group.getObject();
-        this.groupCounter = this.groupCountersStoreService.groupCounters.getObject();
-        this.memberStatus = this.groupStoreService.groupMemberStatus;
-
         this.isGroupLoading = this.groupStoreService.group.loading.getLoading();
+        this.group = this.groupStoreService.group.getObject();
+
+        this.isFollowingCheckLoading = this.groupStoreService.group.uiFlagStore.getFlag('isFollowingCheckLoading');
+        this.isFollowing = this.groupStoreService.group.uiFlagStore.getFlag('isFollowing');
+
         this.isGroupCounterLoading = this.groupCountersStoreService.groupCounters.loading.getLoading();
-        this.isFollowingCheckLoading = this.groupStoreService.group.uiFlagStore.getUiFlag('isFollowingCheckLoading');
-        this.isFollowing = this.groupStoreService.group.uiFlagStore.getUiFlag('isFollowing');
-        this.isGroupMember = this.groupStoreService.group.uiFlagStore.getUiFlag('isMember');
+        this.groupCounter = this.groupCountersStoreService.groupCounters.getObject();
+
+        this.isGroupMembershipStatusLoading = this.groupStoreService.group.uiFlagStore.getFlag('isGroupMembershipStatusLoading');
+        this.isMember = this.groupStoreService.group.uiFlagStore.getFlag('isMember');
+        this.isBoardMember = this.groupStoreService.group.uiFlagStore.getFlag('isBoardMember');
+        this.isRequested = this.groupStoreService.group.uiFlagStore.getFlag('isRequested');
+        this.isInvited = this.groupStoreService.group.uiFlagStore.getFlag('isInvited');
+        this.isNoMember = this.groupStoreService.group.uiFlagStore.getFlag('isNotMember');
     }
 
     async toggleFollow(newIsFollowing: boolean): Promise<void> {
@@ -89,14 +89,14 @@ export class GroupWikiComponent {
     }
 
     async toggleMembership(newIsMember: boolean): Promise<void> {
-        if (this.memberStatus() === 'no_member') {
+        if (this.isNoMember()) {
             await this.groupMemberActionService.requestGroupMembership();
-        } else if (this.memberStatus() === 'requested') {
-            await this.groupMemberActionService.withDrawGroupRequest();
-        } else if (this.memberStatus() === 'invited') {
-            await this.groupMemberActionService.declineGroupInvitation();
-        } else if (this.memberStatus() === 'board_member' || this.memberStatus() === 'member') {
+        } else if (this.isMember() || this.isBoardMember()) {
             await this.groupMemberActionService.leaveGroup();
+        } else if (this.isRequested()) {
+            await this.groupMemberActionService.withDrawGroupRequest();
+        } else if (this.isInvited()) {
+            await this.groupMemberActionService.accceptGroupInvitation();
         }
     }
 }

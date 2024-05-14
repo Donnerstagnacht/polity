@@ -5,9 +5,12 @@ import {ObjectStoreService} from "../../../signal-store/object-store.service";
 type GroupUIFlags =
     'isMember' |
     'isBoardMember' |
+    'isInvited' |
+    'isRequested' |
+    'isNotMember' |
     'isFollowing' |
     'isFollowingCheckLoading' |
-    'isGroupMemberLoading';
+    'isGroupMembershipStatusLoading';
 
 @Injectable({
     providedIn: 'root'
@@ -18,9 +21,12 @@ export class GroupStoreService {
     private uiFlags = {
         isMember: signal(false),
         isBoardMember: signal(false),
+        isInvited: signal(false),
+        isRequested: signal(false),
+        isNotMember: signal(false),
         isFollowing: signal(false),
         isFollowingCheckLoading: signal(true),
-        isGroupMemberLoading: signal(true),
+        isGroupMembershipStatusLoading: signal(true),
     }
 
     constructor() {

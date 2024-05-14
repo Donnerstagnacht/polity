@@ -1,4 +1,5 @@
-DROP FUNCTION IF EXISTS public.read_group_member_requests(uuid);
+DROP FUNCTION IF EXISTS public.read_group_member_requests(
+    group_id_in uuid);
 
 CREATE OR REPLACE FUNCTION public.read_group_member_requests(
     group_id_in uuid

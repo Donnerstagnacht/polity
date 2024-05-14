@@ -23,14 +23,12 @@ export class GroupMemberActionService {
     }
 
     public async checkMemberStatus(): Promise<void> {
-        this.groupStoreService.group.uiFlagStore.setUiFlagTrue('isFollowingCheckLoading')
-        console.log('check member status')
+        this.groupStoreService.group.uiFlagStore.setFlagTrue('isGroupMembershipStatusLoading')
         const group_id: string | null = this.groupStoreService.group.getObjectId() // this.groupStoreService.group.getValueByKey('id')
-        console.log(group_id)
+        console.log('requested group id', group_id)
 
         if (group_id) {
             await this.groupMembersStoreService.groupMembers.wrapSelectFunction(async (): Promise<void> => {
-                this.groupStoreService.group.uiFlagStore.setUiFlagTrue('isGroupMemberLoading')
                 const response: PostgrestSingleResponse<SupabaseObjectReturn<'check_group_membership_status'>> = await this.supabaseClient.rpc(
                     'check_group_membership_status',
                     {
@@ -40,41 +38,57 @@ export class GroupMemberActionService {
                 .single()
                 .throwOnError();
 
-                console.log(response.data)
+                console.log('check member status', response.data)
 
                 if (response.data) {
                     if (response.data === 'member') {
-                        this.groupStoreService.group.uiFlagStore.setUiFlagTrue('isMember')
-                        this.groupStoreService.group.uiFlagStore.setUiFlagFalse('isBoardMember')
+                        this.groupStoreService.group.uiFlagStore.setFlagTrue('isMember')
+                        this.groupStoreService.group.uiFlagStore.setFlagFalse('isBoardMember')
+                        this.groupStoreService.group.uiFlagStore.setFlagFalse('isInvited')
+                        this.groupStoreService.group.uiFlagStore.setFlagFalse('isRequested')
+                        this.groupStoreService.group.uiFlagStore.setFlagFalse('isNotMember')
                         this.groupStoreService.groupMemberStatus.set('member')
                     } else if (response.data === 'board_member') {
-                        this.groupStoreService.group.uiFlagStore.setUiFlagTrue('isMember')
-                        this.groupStoreService.group.uiFlagStore.setUiFlagTrue('isBoardMember')
+                        this.groupStoreService.group.uiFlagStore.setFlagTrue('isMember')
+                        this.groupStoreService.group.uiFlagStore.setFlagTrue('isBoardMember')
+                        this.groupStoreService.group.uiFlagStore.setFlagFalse('isInvited')
+                        this.groupStoreService.group.uiFlagStore.setFlagFalse('isRequested')
+                        this.groupStoreService.group.uiFlagStore.setFlagFalse('isNotMember')
                         this.groupStoreService.groupMemberStatus.set('board_member')
                     } else if (response.data === 'requested') {
-                        this.groupStoreService.group.uiFlagStore.setUiFlagFalse('isMember')
-                        this.groupStoreService.group.uiFlagStore.setUiFlagFalse('isBoardMember')
+                        this.groupStoreService.group.uiFlagStore.setFlagFalse('isMember')
+                        this.groupStoreService.group.uiFlagStore.setFlagFalse('isBoardMember')
+                        this.groupStoreService.group.uiFlagStore.setFlagFalse('isInvited')
+                        this.groupStoreService.group.uiFlagStore.setFlagTrue('isRequested')
+                        this.groupStoreService.group.uiFlagStore.setFlagFalse('isNotMember')
                         this.groupStoreService.groupMemberStatus.set('requested')
                     } else if (response.data === 'invited') {
-                        this.groupStoreService.group.uiFlagStore.setUiFlagFalse('isMember')
-                        this.groupStoreService.group.uiFlagStore.setUiFlagFalse('isBoardMember')
+                        this.groupStoreService.group.uiFlagStore.setFlagFalse('isMember')
+                        this.groupStoreService.group.uiFlagStore.setFlagFalse('isBoardMember')
+                        this.groupStoreService.group.uiFlagStore.setFlagTrue('isInvited')
+                        this.groupStoreService.group.uiFlagStore.setFlagFalse('isRequested')
+                        this.groupStoreService.group.uiFlagStore.setFlagFalse('isNotMember')
                         this.groupStoreService.groupMemberStatus.set('invited')
                     } else {
-                        this.groupStoreService.group.uiFlagStore.setUiFlagFalse('isMember')
-                        this.groupStoreService.group.uiFlagStore.setUiFlagFalse('isBoardMember')
+                        this.groupStoreService.group.uiFlagStore.setFlagFalse('isMember')
+                        this.groupStoreService.group.uiFlagStore.setFlagFalse('isBoardMember')
+                        this.groupStoreService.group.uiFlagStore.setFlagFalse('isInvited')
+                        this.groupStoreService.group.uiFlagStore.setFlagFalse('isRequested')
+                        this.groupStoreService.group.uiFlagStore.setFlagTrue('isNotMember')
                         this.groupStoreService.groupMemberStatus.set('no_member')
                     }
                 } else {
                     console.log(response.error)
-                    this.groupStoreService.group.uiFlagStore.setUiFlagFalse('isMember')
-                    this.groupStoreService.group.uiFlagStore.setUiFlagFalse('isBoardMember')
+                    this.groupStoreService.group.uiFlagStore.setFlagFalse('isMember')
+                    this.groupStoreService.group.uiFlagStore.setFlagFalse('isBoardMember')
+                    this.groupStoreService.group.uiFlagStore.setFlagFalse('isInvited')
+                    this.groupStoreService.group.uiFlagStore.setFlagFalse('isRequested')
+                    this.groupStoreService.group.uiFlagStore.setFlagTrue('isNotMember')
+                    this.groupStoreService.groupMemberStatus.set('no_member')
                 }
-                console.log(this.groupStoreService.group.uiFlagStore.getUiFlag('isMember')())
-                console.log(this.groupStoreService.group.uiFlagStore.getUiFlag('isBoardMember')())
-                this.groupStoreService.group.uiFlagStore.setUiFlagFalse('isFollowingCheckLoading')
+                this.groupStoreService.group.uiFlagStore.setFlagFalse('isGroupMembershipStatusLoading')
             })
         }
-
     }
 
     public async readGroupMembers(): Promise<any> {
@@ -99,7 +113,6 @@ export class GroupMemberActionService {
     public async requestGroupMembership(): Promise<void> {
         await this.groupCountersStoreService.groupCounters.wrapUpdateFunction(async (): Promise<void> => {
             const groupId: string | null = this.groupStoreService.group.getObjectId();
-            console.log(groupId)
             if (groupId) {
                 const response: PostgrestSingleResponse<SupabaseObjectReturn<'create_group_member_request'>> = await this.supabaseClient.rpc(
                     'create_group_member_request',
@@ -108,10 +121,13 @@ export class GroupMemberActionService {
                     }
                 )
                 .throwOnError()
-                console.log(response, response.error)
                 if (!response.error) {
-                    console.log('no error')
-                    this.groupStoreService.groupMemberStatus.set('requested');
+                    this.groupStoreService.group.uiFlagStore.setFlagFalse('isMember')
+                    this.groupStoreService.group.uiFlagStore.setFlagFalse('isBoardMember')
+                    this.groupStoreService.group.uiFlagStore.setFlagFalse('isInvited')
+                    this.groupStoreService.group.uiFlagStore.setFlagTrue('isRequested')
+                    this.groupStoreService.group.uiFlagStore.setFlagFalse('isNotMember')
+                    this.groupStoreService.groupMemberStatus.set('requested')
                 }
             }
         }, true, 'Successful requested group membership!')
@@ -140,7 +156,14 @@ export class GroupMemberActionService {
                 }
             )
             .throwOnError()
-            this.groupCountersStoreService.groupCounters.decrementKey('member_counter')
+            if (!response.error) {
+                this.groupStoreService.group.uiFlagStore.setFlagFalse('isMember')
+                this.groupStoreService.group.uiFlagStore.setFlagFalse('isBoardMember')
+                this.groupStoreService.group.uiFlagStore.setFlagFalse('isInvited')
+                this.groupStoreService.group.uiFlagStore.setFlagFalse('isRequested')
+                this.groupStoreService.group.uiFlagStore.setFlagTrue('isNotMember')
+                this.groupStoreService.groupMemberStatus.set('no_member')
+            }
         }, true, 'Successful declined group membership!')
 
     }
@@ -157,21 +180,31 @@ export class GroupMemberActionService {
                     }
                 )
                 .throwOnError()
-                this.groupCountersStoreService.groupCounters.incrementKey('member_counter')
             }
         }, true, 'Successful requested group membership!')
     }
 
-    public async accceptGroupInvitation(invitation_id: string): Promise<void> {
+    public async accceptGroupInvitation(): Promise<void> {
         await this.groupCountersStoreService.groupCounters.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'accept_group_invitation_transaction'>> = await this.supabaseClient.rpc(
-                'accept_group_invitation_transaction',
-                {
-                    invitation_id: invitation_id
+            const groupId: string | null = this.groupStoreService.group.getObjectId();
+            if (groupId) {
+                const response: PostgrestSingleResponse<SupabaseObjectReturn<'accept_group_invitation_transaction'>> = await this.supabaseClient.rpc(
+                    'accept_group_invitation_transaction',
+                    {
+                        group_id_in: groupId
+                    }
+                )
+                .throwOnError()
+                if (!response.error) {
+                    this.groupCountersStoreService.groupCounters.incrementKey('member_counter')
+                    this.groupStoreService.group.uiFlagStore.setFlagTrue('isMember')
+                    this.groupStoreService.group.uiFlagStore.setFlagFalse('isBoardMember')
+                    this.groupStoreService.group.uiFlagStore.setFlagFalse('isInvited')
+                    this.groupStoreService.group.uiFlagStore.setFlagFalse('isRequested')
+                    this.groupStoreService.group.uiFlagStore.setFlagFalse('isNotMember')
+                    this.groupStoreService.groupMemberStatus.set('member')
                 }
-            )
-            .throwOnError()
-            this.groupCountersStoreService.groupCounters.incrementKey('member_counter')
+            }
         }, true, 'Successful accepted group membership!')
     }
 
@@ -195,7 +228,7 @@ export class GroupMemberActionService {
         await this.groupCountersStoreService.groupCounters.wrapUpdateFunction(async (): Promise<void> => {
             const groupId: string | null = this.groupStoreService.group.getObjectId();
             if (groupId) {
-                const response: PostgrestSingleResponse<SupabaseObjectReturn<'delete_group_member_invitation'>[]> = await this.supabaseClient.rpc(
+                const response: PostgrestSingleResponse<SupabaseObjectReturn<'delete_group_member_invitation'>> = await this.supabaseClient.rpc(
                     'delete_group_member_invitation',
                     {
                         group_id_in: groupId
@@ -203,8 +236,12 @@ export class GroupMemberActionService {
                 )
                 .throwOnError()
                 if (!response.error) {
-                    console.log('no error')
-                    this.groupStoreService.groupMemberStatus.set('no_member');
+                    this.groupStoreService.group.uiFlagStore.setFlagFalse('isMember')
+                    this.groupStoreService.group.uiFlagStore.setFlagFalse('isBoardMember')
+                    this.groupStoreService.group.uiFlagStore.setFlagFalse('isInvited')
+                    this.groupStoreService.group.uiFlagStore.setFlagFalse('isRequested')
+                    this.groupStoreService.group.uiFlagStore.setFlagTrue('isNotMember')
+                    this.groupStoreService.groupMemberStatus.set('no_member')
                 }
             }
         })
@@ -222,8 +259,12 @@ export class GroupMemberActionService {
                 )
                 .throwOnError()
                 if (!response.error) {
-                    console.log('no error')
-                    this.groupStoreService.groupMemberStatus.set('no_member');
+                    this.groupStoreService.group.uiFlagStore.setFlagFalse('isMember')
+                    this.groupStoreService.group.uiFlagStore.setFlagFalse('isBoardMember')
+                    this.groupStoreService.group.uiFlagStore.setFlagFalse('isInvited')
+                    this.groupStoreService.group.uiFlagStore.setFlagFalse('isRequested')
+                    this.groupStoreService.group.uiFlagStore.setFlagTrue('isNotMember')
+                    this.groupStoreService.groupMemberStatus.set('no_member')
                 }
             }
         })
@@ -259,14 +300,16 @@ export class GroupMemberActionService {
                 )
                 .throwOnError()
 
-                this.groupStoreService.group.uiFlagStore.setUiFlagFalse('isMember')
-                this.groupCountersStoreService.groupCounters.decrementKey('member_counter')
                 if (!response.error) {
-                    console.log('no error')
-                    this.groupStoreService.groupMemberStatus.set('no_member');
+                    this.groupCountersStoreService.groupCounters.decrementKey('member_counter')
+                    this.groupStoreService.group.uiFlagStore.setFlagFalse('isMember')
+                    this.groupStoreService.group.uiFlagStore.setFlagFalse('isBoardMember')
+                    this.groupStoreService.group.uiFlagStore.setFlagFalse('isInvited')
+                    this.groupStoreService.group.uiFlagStore.setFlagFalse('isRequested')
+                    this.groupStoreService.group.uiFlagStore.setFlagTrue('isNotMember')
+                    this.groupStoreService.groupMemberStatus.set('no_member')
                 }
             }
         }, true, 'Successful left group!')
-
     }
 }

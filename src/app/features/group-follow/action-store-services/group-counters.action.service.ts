@@ -36,7 +36,7 @@ export class GroupCountersActionService {
         const followingId: string = this.groupStoreService.group.getValueByKey('id')
 
         await this.groupCountersStoreService.groupCounters.wrapSelectFunction(async (): Promise<void> => {
-            this.groupStoreService.group.uiFlagStore.setUiFlagTrue('isFollowingCheckLoading')
+            this.groupStoreService.group.uiFlagStore.setFlagTrue('isFollowingCheckLoading')
             const response: PostgrestSingleResponse<SupabaseObjectReturn<'check_if_following_group'>> = await this.supabaseClient.rpc(
                 'check_if_following_group',
                 {
@@ -47,12 +47,12 @@ export class GroupCountersActionService {
             .throwOnError();
 
             if (response.data) {
-                this.groupStoreService.group.uiFlagStore.setUiFlagTrue('isFollowing')
+                this.groupStoreService.group.uiFlagStore.setFlagTrue('isFollowing')
             } else {
                 console.log(response.error)
-                this.groupStoreService.group.uiFlagStore.setUiFlagFalse('isFollowing')
+                this.groupStoreService.group.uiFlagStore.setFlagFalse('isFollowing')
             }
-            this.groupStoreService.group.uiFlagStore.setUiFlagFalse('isFollowingCheckLoading')
+            this.groupStoreService.group.uiFlagStore.setFlagFalse('isFollowingCheckLoading')
         })
     }
 
@@ -66,7 +66,7 @@ export class GroupCountersActionService {
                 }
             ).throwOnError()
 
-            this.groupStoreService.group.uiFlagStore.setUiFlagTrue('isFollowing')
+            this.groupStoreService.group.uiFlagStore.setFlagTrue('isFollowing')
             this.groupCountersStoreService.groupCounters.incrementKey('follower_counter')
         }, true, 'Successful followed!')
     }
@@ -81,7 +81,7 @@ export class GroupCountersActionService {
                 }
             ).throwOnError()
 
-            this.groupStoreService.group.uiFlagStore.setUiFlagFalse('isFollowing')
+            this.groupStoreService.group.uiFlagStore.setFlagFalse('isFollowing')
             this.groupCountersStoreService.groupCounters.decrementKey('follower_counter')
         }, true, 'Successful unfollowed!')
     }

@@ -60,13 +60,13 @@ export class ProfileComponent {
 
     private checkIsOwner(urlId: string, sessionId: string | null): void {
         if (sessionId == urlId) {
-            this.profileStoreService.profile.uiFlagStore.setUiFlagTrue('isOwner')
+            this.profileStoreService.profile.uiFlagStore.setFlagTrue('isOwner')
             this.menuItemsProfile = NAVIGATION_ITEMS_PROFILE_OWNER;
             this.menuItemsProfile[0].link = '/profile/' + urlId
             this.menuItemsProfile[1].link = '/profile/' + urlId + '/edit'
             this.menuItemsProfile[2].link = '/profile/' + urlId + '/follower/edit'
         } else {
-            this.profileStoreService.profile.uiFlagStore.setUiFlagFalse('isOwner')
+            this.profileStoreService.profile.uiFlagStore.setFlagFalse('isOwner')
             this.menuItemsProfile = NAVIGATION_ITEMS_PROFILE;
             this.menuItemsProfile[0].link = '/profile/' + urlId
         }

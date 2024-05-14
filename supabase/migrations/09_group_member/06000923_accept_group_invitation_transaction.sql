@@ -1,8 +1,8 @@
 DROP FUNCTION IF EXISTS public.accept_group_invitation_transaction(
-    invitation_id uuid
+    group_id_in uuid
 );
 CREATE OR REPLACE FUNCTION public.accept_group_invitation_transaction(
-    invitation_id uuid
+    group_id_in uuid
 )
     RETURNS void
     LANGUAGE plpgsql
@@ -10,32 +10,24 @@ CREATE OR REPLACE FUNCTION public.accept_group_invitation_transaction(
 AS
 $$
 DECLARE
-    group_id  uuid;
-    member_id uuid;
+    deleted_group delete_group;
 BEGIN
-    SELECT
-        group_id,
-        member_id
-    INTO
-        group_id,
-        member_id
-    FROM
-        authenticated_access.delete_group_member_invitation(
-            invitation_id
-        );
+    deleted_group := public.delete_group_member_invitation(
+        group_id_in
+                     );
 
     PERFORM authenticated_access.create_group_member(
-        group_id,
-        member_id,
+        deleted_group.group_id,
+        deleted_group.member_id,
         'member'
             );
 
     PERFORM authenticated_access.increment_group_member_counter(
-        group_id
+        deleted_group.group_id
             );
 
     PERFORM authenticated_access.increment_profile_group_membership_counter(
-        member_id
+        deleted_group.member_id
             );
 END
 $$

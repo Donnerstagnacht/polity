@@ -59,7 +59,7 @@ export class FollowersOfUserActionService {
         const followingId: string = this.profileCountersStoreService.profileCounters.getValueByKey('profile_id')
 
         await this.profileCountersStoreService.profileCounters.wrapSelectFunction(async (): Promise<void> => {
-            this.profileStoreService.profile.uiFlagStore.setUiFlagTrue('isFollowingCheckLoading')
+            this.profileStoreService.profile.uiFlagStore.setFlagTrue('isFollowingCheckLoading')
             const response: PostgrestSingleResponse<SupabaseObjectReturn<'check_if_following'>> = await this.supabaseClient.rpc(
                 'check_if_following',
                 {
@@ -70,11 +70,11 @@ export class FollowersOfUserActionService {
             .throwOnError();
 
             if (response.data) {
-                this.profileStoreService.profile.uiFlagStore.setUiFlagTrue('isFollowing')
+                this.profileStoreService.profile.uiFlagStore.setFlagTrue('isFollowing')
             } else {
-                this.profileStoreService.profile.uiFlagStore.setUiFlagFalse('isFollowing')
+                this.profileStoreService.profile.uiFlagStore.setFlagFalse('isFollowing')
             }
-            this.profileStoreService.profile.uiFlagStore.setUiFlagFalse('isFollowingCheckLoading')
+            this.profileStoreService.profile.uiFlagStore.setFlagFalse('isFollowingCheckLoading')
         })
     }
 
@@ -88,7 +88,7 @@ export class FollowersOfUserActionService {
                 }
             ).throwOnError()
 
-            this.profileStoreService.profile.uiFlagStore.setUiFlagTrue('isFollowing')
+            this.profileStoreService.profile.uiFlagStore.setFlagTrue('isFollowing')
             this.profileCountersStoreService.profileCounters.incrementKey('follower_counter')
         }, true, 'Successful followed!')
     }
@@ -103,7 +103,7 @@ export class FollowersOfUserActionService {
                 }
             ).throwOnError()
 
-            this.profileStoreService.profile.uiFlagStore.setUiFlagFalse('isFollowing')
+            this.profileStoreService.profile.uiFlagStore.setFlagFalse('isFollowing')
             this.profileCountersStoreService.profileCounters.decrementKey('follower_counter')
         }, true, 'Successful unfollowed!')
     }

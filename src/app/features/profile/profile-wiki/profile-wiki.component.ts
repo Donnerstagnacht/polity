@@ -36,13 +36,13 @@ export class ProfileWikiComponent {
         private readonly profileCountersStoreService: ProfileCountersStoreService,
         private readonly followersOfUserActionService: FollowersOfUserActionService
     ) {
-        this.isFollowingCheckLoading = this.profileStoreService.profile.uiFlagStore.getUiFlag('isFollowingCheckLoading')
+        this.isFollowingCheckLoading = this.profileStoreService.profile.uiFlagStore.getFlag('isFollowingCheckLoading')
         this.isProfileLoading = this.profileStoreService.profile.loading.getLoading()
         this.isProfileCounterLoading = this.profileCountersStoreService.profileCounters.loading.getLoading()
         this.profileCounter = this.profileCountersStoreService.profileCounters.getObject()
         this.profile = this.profileStoreService.profile.getObject()
-        this.isOwner = this.profileStoreService.profile.uiFlagStore.getUiFlag('isOwner')
-        this.isFollowing = this.profileStoreService.profile.uiFlagStore.getUiFlag('isFollowing')
+        this.isOwner = this.profileStoreService.profile.uiFlagStore.getFlag('isOwner')
+        this.isFollowing = this.profileStoreService.profile.uiFlagStore.getFlag('isFollowing')
     }
 
     async toggleFollow(newIsFollowing: boolean): Promise<void> {

@@ -10,14 +10,14 @@
             [counterTitle]="'Member'"
             [counterValue]="10"
             [dataCyTag]="'memberCounter'"
-            [isLoading]="isGroupMemberLoading"
+            [isLoading]="isGroupMembershipStatusLoading"
             class="polity-flex-item-first"
         ></polity-counter>
         <polity-counter
             [counterTitle]="'Follower'"
             [counterValue]="this.groupCounter()?.follower_counter"
             [dataCyTag]="'memberCounter'"
-            [isLoading]="isGroupMemberLoading"
+            [isLoading]="isGroupMembershipStatusLoading"
             class="polity-flex-item-first"
         ></polity-counter>
     </div>
@@ -34,9 +34,8 @@
         <polity-request-button
             (toggledFollowing)="toggleMembership($event)"
             [isLoading]="this.isFollowingCheckLoading"
-            [isRequested]="isGroupMember()"
+            [isRequested]="isMember()"
             [requestTitleString]="buttonTextString"
-            [requestTitle]="buttonText"
             [toggledTitle]="'REQUEST MEMBERSHIP'"
         ></polity-request-button>
     </div>
