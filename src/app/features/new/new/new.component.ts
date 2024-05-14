@@ -17,6 +17,6 @@ export class NewComponent {
     }
 
     protected async onCreateGroup(): Promise<void> {
-        await this.router.navigate(['/group/new']);
+        await this.router.navigate(['new/group']);
     }
 }

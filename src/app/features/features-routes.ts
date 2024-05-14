@@ -2,9 +2,9 @@ import {Routes} from "@angular/router";
 import {ProfileComponent} from "./profile/profile/profile.component";
 import {HomeComponent} from "./home/home/home.component";
 import {SearchComponent} from "./search/search/search.component";
-import {NewComponent} from "./new/new/new.component";
 import {OfficeComponent} from "./office/office/office.component";
 import {GroupComponent} from "./group/group/group.component";
+import {NewHomeComponent} from "./new/new-home/new-home.component";
 
 export const FEATURE_ROUTES: Routes = [
     {
@@ -29,7 +29,7 @@ export const FEATURE_ROUTES: Routes = [
     },
     {
         path: 'new',
-        component: NewComponent,
+        component: NewHomeComponent,
         loadChildren: () => import('./new/new-routes').then(m => m.NEW_ROUTES)
     },
     {

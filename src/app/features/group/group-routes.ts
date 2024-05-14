@@ -1,5 +1,4 @@
 import {Routes} from "@angular/router";
-import {GroupNewComponent} from "./group-new/group-new.component";
 import {GroupWikiComponent} from "./group-wiki/group-wiki.component";
 import {GroupEditComponent} from "./group-edit/group-edit.component";
 import {GroupFollowEditComponent} from "../group-follow/group-follow-edit/group-follow-edit.component";
@@ -26,9 +25,5 @@ export const GROUP_ROUTES: Routes = [
     {
         path: 'settings/edit',
         component: GroupEditSettingsComponent
-    },
-    {
-        path: 'new',
-        component: GroupNewComponent
     }
 ]
