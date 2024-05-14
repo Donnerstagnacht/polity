@@ -2,7 +2,7 @@ import {Inject, Injectable, signal, WritableSignal} from '@angular/core';
 import {TuiDay} from "@taiga-ui/cdk";
 import {WrapperStoreService} from "./wrapper-store.service";
 import {PaginationStoreService} from "./pagination-store.service";
-import {DictionaryOfBooleans} from "./ui-flag-store.service";
+import {FlagStoreService} from "./flag-store.service";
 
 /**
  * Constructs a new instance of an Array Store.
@@ -10,24 +10,30 @@ import {DictionaryOfBooleans} from "./ui-flag-store.service";
  * @param {boolean} usePagination - Indicates whether pagination is used. Defaults to false, e.g. no pagination.
  * @param {number} step -  The step determines how many store objects are shown on page load and added each time
  * the user scrolls to the bottom. Defaults to 20.
- *  @param {DictionaryOfBooleans} uiFlags - Optional object that contains UI flags associated with the store.
+ *  @param {uiFlags: Record<FlagKeyList, WritableSignal<boolean>> | null = null} uiFlags - Optional object that contains UI flags associated with the store.
  *  Defaults to an empty object.
  *  @return {ArrayStoreService<StoredObject>}
  */
 @Injectable({
     providedIn: 'root'
 })
-export class ArrayStoreService<StoredObject> extends WrapperStoreService {
+export class ArrayStoreService<StoredObject, FlagKeyList extends string = string> extends WrapperStoreService<FlagKeyList> {
     public readonly pagination: PaginationStoreService;
+    public readonly uiFlagStore: FlagStoreService<FlagKeyList>;
     private displayedObjects: WritableSignal<StoredObject[]> = signal([]);
     private storedObjects: WritableSignal<StoredObject[]> = signal([]);
 
     constructor(
         @Inject(false) private usePagination: boolean = false,
         @Inject(20) private step: number = 20,
-        @Inject({}) private uiFlags: DictionaryOfBooleans = {}
+        @Inject({}) private uiFlags: Record<FlagKeyList, WritableSignal<boolean>> | null = null
     ) {
-        super(uiFlags);
+        super();
+        if (this.uiFlags) {
+            this.uiFlagStore = new FlagStoreService<FlagKeyList>(this.uiFlags);
+        } else {
+            this.uiFlagStore = new FlagStoreService<FlagKeyList | any>({noFlag: signal(false)});
+        }
         this.pagination = new PaginationStoreService(this.step);
     }
 

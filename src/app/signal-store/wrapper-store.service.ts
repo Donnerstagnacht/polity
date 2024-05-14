@@ -1,27 +1,23 @@
-import {Inject, inject, Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {TuiAlertService} from "@taiga-ui/core";
 import {ErrorStoreService} from "./error-store.service";
 import {LoadingStoreService} from "./loading-store.service";
-import {DictionaryOfBooleans, UiFlagStoreService} from "./ui-flag-store.service";
 
 /**
  * Constructs an instance of the WrapperStore.
  *
- * @param {DictionaryOfBooleans} initialUiFlags - uiFlags - Optional object that contains UI flags associated with the store. Defaults to an empty object.
  * @return {WrapperStoreService}
  */
 @Injectable({
     providedIn: 'root'
 })
-export class WrapperStoreService {
+export class WrapperStoreService<FlagKeyList extends string = string> {
     public readonly loading: LoadingStoreService;
-    public readonly uiFlagStore: UiFlagStoreService;
     private readonly tuiAlertService: TuiAlertService = inject(TuiAlertService);
     private readonly errorStoreService: ErrorStoreService = inject(ErrorStoreService);
 
-    constructor(@Inject({}) private readonly initialUiFlags: DictionaryOfBooleans = {}) {
+    constructor() {
         this.loading = new LoadingStoreService();
-        this.uiFlagStore = new UiFlagStoreService(this.initialUiFlags);
     }
 
     /**

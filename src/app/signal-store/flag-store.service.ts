@@ -1,30 +1,28 @@
 import {Inject, Injectable, WritableSignal} from '@angular/core';
 
-export type DictionaryOfBooleans = Record<string, WritableSignal<boolean>>
-
 /**
  * Constructs a new instance UI flag store instance.
  *
  * @param {type} initialUiFlags - A dictionary (key: string, value: WritableSignal<boolean>) of Ui flags
- * @return {UiFlagStoreService}
+ * @return {FlagStoreService}
  */
 @Injectable({
     providedIn: 'root'
 })
-export class UiFlagStoreService {
-    private readonly uiFlags: DictionaryOfBooleans = {};
+export class FlagStoreService<FlagKeyList extends string = string> {
+    private readonly uiFlags: Record<FlagKeyList, WritableSignal<boolean>>;
 
-    constructor(@Inject({}) private readonly initialUiFlags: DictionaryOfBooleans = {}) {
+    constructor(@Inject({}) private readonly initialUiFlags: Record<FlagKeyList, WritableSignal<boolean>>) {
         this.uiFlags = this.initialUiFlags;
     }
 
     /**
      * Set the specified UI flag to true.
      *
-     * @param {keyof DictionaryOfBooleans} key - The key of the flag to set.
+     * @param {keyof FlagKeyList} key - The key of the flag to set.
      * @return {void}
      */
-    setUiFlagTrue(key: keyof DictionaryOfBooleans): void {
+    setUiFlagTrue(key: FlagKeyList): void {
         const flag: WritableSignal<boolean> = this.uiFlags[key];
         flag.set(true)
     }
@@ -32,10 +30,10 @@ export class UiFlagStoreService {
     /**
      * Sets the specified UI flag to false.
      *
-     * @param {keyof DictionaryOfBooleans} key - The key of the flag to be set.
+     * @param {key of FlagKeyList} key - The key of the flag to be set.
      * @return {void}
      */
-    setUiFlagFalse(key: keyof DictionaryOfBooleans): void {
+    setUiFlagFalse(key: FlagKeyList): void {
         const flag: WritableSignal<boolean> = this.uiFlags[key];
         flag.set(false)
     }
@@ -43,11 +41,10 @@ export class UiFlagStoreService {
     /**
      * Gets the value of a specified UI flag.
      *
-     * @param {keyof DictionaryOfBooleans} key - The key of the UI flag to retrieve.
+     * @param {key of FlagKeyList} key - The key of the UI flag to retrieve.
      * @return {WritableSignal<boolean>} - The value of the UI flag as signal that notifies consumers of UI flag changes
      */
-    getUiFlag(key: keyof DictionaryOfBooleans): WritableSignal<boolean> {
+    getUiFlag(key: FlagKeyList): WritableSignal<boolean> {
         return this.uiFlags[key];
     }
-
 }

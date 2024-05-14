@@ -70,7 +70,6 @@ export class GroupMemberActionService {
                     this.groupStoreService.group.uiFlagStore.setUiFlagFalse('isBoardMember')
                 }
                 console.log(this.groupStoreService.group.uiFlagStore.getUiFlag('isMember')())
-                this.groupStoreService.group.uiFlagStore.getUiFlag('ano')
                 console.log(this.groupStoreService.group.uiFlagStore.getUiFlag('isBoardMember')())
                 this.groupStoreService.group.uiFlagStore.setUiFlagFalse('isFollowingCheckLoading')
             })
