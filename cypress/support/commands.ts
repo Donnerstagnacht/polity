@@ -131,7 +131,7 @@ Cypress.Commands.add('navigateToHome', (): void => {
     .click()
     cy.getDataCy('home-instruction')
     .shouldBeVisible()
-    .contains('Dein Profil und Gruppen.')
+    .contains('Dein Profil.')
 })
 
 Cypress.Commands.add('signOut', (signedInUser: AuthData): void => {
