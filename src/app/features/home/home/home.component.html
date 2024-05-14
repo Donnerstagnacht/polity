@@ -1,7 +1,7 @@
 <h1
     [attr.data-cy]="'home-instruction'"
 >
-    Dein Profil und Gruppen.
+    Dein Profil.
 </h1>
 <polity-profile-link-card
     [attr.data-cy]="'home-to-profile'"
@@ -11,4 +11,17 @@
     [profile]="profile"
     [sessionId]="this.sessionId"
 ></polity-profile-link-card>
+
+<h1 class="tui-space_top-4">Deine Gruppen</h1>
+@for (group of groupsOfUser();track group) {
+    <div class="tui-space_top-4">
+        <polity-group-link-card
+            [attr.data-cy]="'to-group-of-user'"
+            [class.tui-skeleton]="areGroupsLoading()"
+            [dataCyTag]="'group-of-user-first-name'"
+            [isLoading]="this.areGroupsLoading"
+            [group]="group"
+        ></polity-group-link-card>
+    </div>
+}
 

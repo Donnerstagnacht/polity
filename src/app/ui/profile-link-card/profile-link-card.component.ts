@@ -17,6 +17,9 @@ export class ProfileLinkCardComponent {
      * Takes the sessionId as input to display a profile link
      *
      * @Input sessionId - string |null.
+     * @Input isLoading - WritableSignal<boolean> - a signal that indicates if the profile is loading
+     * @Input profile - WritableSignal<SupabaseObjectReturn<'read_user'> | null | undefined> - the profile data to
+     * be displayed
      */
     @Input({required: true}) public sessionId: string | null = null;
     @Input({required: true}) public isLoading: WritableSignal<boolean> = signal(true);

@@ -1,0 +1,11 @@
+<tui-island
+    (click)="onClick()"
+    [hoverable]="true"
+>
+    <p
+        [attr.data-cy]="dataCyTag"
+        [class.tui-skeleton]="isLoading()"
+        class="title title_size_s">
+        {{ group?.group_name }} {{ group?.group_level }}
+    </p>
+</tui-island>

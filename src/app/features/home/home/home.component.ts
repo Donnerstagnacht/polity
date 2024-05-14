@@ -4,6 +4,8 @@ import {ProfileActionService} from "../../profile/action-store-services/profile.
 import {ProfileStoreService} from "../../profile/action-store-services/profile.store.service";
 import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {ProfileLinkCardComponent} from "../../../ui/profile-link-card/profile-link-card.component";
+import {GroupActionService} from "../../group/action-store-service/group.action.service";
+import {GroupLinkCardComponent} from "../../../ui/group-link-card/group-link-card.component";
 
 @Component({
     selector: 'polity-home',
@@ -11,29 +13,42 @@ import {ProfileLinkCardComponent} from "../../../ui/profile-link-card/profile-li
     styleUrls: ['./home.component.less'],
     standalone: true,
     imports: [
-        ProfileLinkCardComponent
+        ProfileLinkCardComponent,
+        GroupLinkCardComponent
     ]
 })
 export class HomeComponent {
     protected sessionId: string | null;
-    protected profile: WritableSignal<SupabaseObjectReturn<'read_user'> | null> = signal(null)
+
     protected isProfileLoading: WritableSignal<boolean> = signal(true)
+    protected profile: WritableSignal<SupabaseObjectReturn<'read_user'> | null> = signal(null)
+
+    protected areGroupsLoading: WritableSignal<boolean> = signal(true)
+    protected groupsOfUser: WritableSignal<SupabaseObjectReturn<'read_groups_of_user'>[] | null> = signal(null)
 
     constructor(
         private readonly sessionStoreService: SessionStoreService,
+        private readonly groupActionService: GroupActionService,
         private readonly profileService: ProfileActionService,
         private readonly profileStoreService: ProfileStoreService
     ) {
         this.isProfileLoading = this.profileStoreService.profile.loading.getLoading();
+        this.areGroupsLoading = this.profileStoreService.groupsOfUser.loading.getLoading();
+
         this.sessionId = this.sessionStoreService.getSessionId();
     }
 
     async ngOnInit(): Promise<void> {
-        await this.profileService.readProfile(this.sessionId as string)
+        Promise.all([
+            this.profileService.readProfile(this.sessionId as string),
+            this.groupActionService.readGroupsOfUser()
+        ])
         this.profile = this.profileStoreService.profile.getObject()
+        this.groupsOfUser = this.profileStoreService.groupsOfUser.getObjects()
     }
 
     onDestroy(): void {
         this.profileStoreService.profile.resetObject()
+        this.profileStoreService.groupsOfUser.resetObjects()
     }
 }
