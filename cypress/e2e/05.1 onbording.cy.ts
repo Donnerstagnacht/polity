@@ -25,9 +25,9 @@ Sizes.forEach((size: Size): void => {
         it('see an assistant-welcome-dialog tutorial if they sign in the first time', (): void => {
             cy.resetSupabase()
             cy.signIn(userFirstLoginDoingWelcomeTutorialAuth);
-            cy.interceptSupabaseCall('select_assistant')
+            cy.interceptSupabaseCall('read_assistant')
             .as('loadAssistant')
-            cy.interceptSupabaseCall('select_user')
+            cy.interceptSupabaseCall('read_user')
             .as('loadUser')
             cy.wait(['@loadAssistant', '@loadUser'])
 
@@ -57,9 +57,9 @@ Sizes.forEach((size: Size): void => {
 
         it('can save their tutorial progress and load their progress', (): void => {
             cy.signIn(userFirstLoginDoingWelcomeTutorialAuth);
-            cy.interceptSupabaseCall('select_assistant')
+            cy.interceptSupabaseCall('read_assistant')
             .as('loadAssistant')
-            cy.interceptSupabaseCall('select_user')
+            cy.interceptSupabaseCall('read_user')
             .as('loadUser')
             cy.wait(['@loadAssistant', '@loadUser'])
 
@@ -74,9 +74,9 @@ Sizes.forEach((size: Size): void => {
         it('do a tutorial about their profile settings', (): void => {
             cy.resetSupabase()
             cy.signIn(userDoingProfileTutorialAuth);
-            cy.interceptSupabaseCall('select_assistant')
+            cy.interceptSupabaseCall('read_assistant')
             .as('loadAssistant')
-            cy.interceptSupabaseCall('select_user')
+            cy.interceptSupabaseCall('read_user')
             .as('loadUser')
             cy.wait(['@loadAssistant', '@loadUser'])
 
@@ -104,9 +104,9 @@ Sizes.forEach((size: Size): void => {
         it('do a tutorial about searching users and follow them', (): void => {
             cy.resetSupabase()
             cy.signIn(userDoingSearchTutorialAuth);
-            cy.interceptSupabaseCall('select_assistant')
+            cy.interceptSupabaseCall('read_assistant')
             .as('loadAssistant')
-            cy.interceptSupabaseCall('select_user')
+            cy.interceptSupabaseCall('read_user')
             .as('loadUser')
             cy.wait(['@loadAssistant', '@loadUser'])
 
@@ -135,9 +135,9 @@ Sizes.forEach((size: Size): void => {
         it('can open the tutorial from profile settings again ', (): void => {
             cy.resetSupabase()
             cy.signIn(userRestartingTutorialAuth);
-            cy.interceptSupabaseCall('select_assistant')
+            cy.interceptSupabaseCall('read_assistant')
             .as('loadAssistant')
-            cy.interceptSupabaseCall('select_user')
+            cy.interceptSupabaseCall('read_user')
             .as('loadUser')
             cy.wait(['@loadAssistant', '@loadUser'])
 
@@ -174,9 +174,9 @@ Sizes.forEach((size: Size): void => {
         it('can reject the tutorial and will not see it again ', (): void => {
             cy.resetSupabase()
             cy.signIn(userDoingProfileTutorialAuth);
-            cy.interceptSupabaseCall('select_assistant')
+            cy.interceptSupabaseCall('read_assistant')
             .as('loadAssistant')
-            cy.interceptSupabaseCall('select_user')
+            cy.interceptSupabaseCall('read_user')
             .as('loadUser')
             cy.wait(['@loadAssistant', '@loadUser'])
 

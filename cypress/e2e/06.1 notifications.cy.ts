@@ -43,7 +43,7 @@ Sizes.forEach((size: Size): void => {
         })
 
         it('receives notification once someone follows a user and notification resets if viewed.', (): void => {
-            cy.interceptSupabaseCall('select_notifications_of_users').as('loadNotifications')
+            cy.interceptSupabaseCall('read_notifications_of_users').as('loadNotifications')
 
             cy.getDataCy('nav-office', 'nav-office-desktop')
             .shouldBeVisible()

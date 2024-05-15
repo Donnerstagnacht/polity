@@ -37,7 +37,7 @@ describe(`Negative api tests for the notifications feature show that `, async ()
 
     it('an authenticated user can call the follow transaction but can not call it twice', async (): Promise<void> => {
         const response = await supabaseClient
-        .rpc('select_notifications_of_users', {
+        .rpc('read_notifications_of_users', {
             // @ts-ignore
             user_id: TEST_ID
         })

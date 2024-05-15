@@ -49,7 +49,7 @@ describe(`Negative api tests for profile_counter table show that `, async (): Pr
     it('a non authenticated user can not view profiles', async (): Promise<void> => {
         await supabaseClient.auth.signOut()
         const response = await supabaseClient
-        .rpc('select_user', {user_id: TEST_ID})
+        .rpc('read_user', {user_id: TEST_ID})
         expect(response.data).to.be.null
         expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.noPermission)
     })

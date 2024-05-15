@@ -179,7 +179,7 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
 
     it('an authenticated user can only view its own followings', async (): Promise<void> => {
         const response = await supabaseClient
-        .rpc('select_following_of_user',
+        .rpc('read_following_of_user',
             {
                 // @ts-ignore
                 userid: TEST_ID
@@ -191,7 +191,7 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
 
     it('an authenticated user can only view its own follower', async (): Promise<void> => {
         const response = await supabaseClient
-        .rpc('select_follower_of_user',
+        .rpc('read_follower_of_user',
             {
                 // @ts-ignore
                 userid: TEST_ID
@@ -205,7 +205,7 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
         supabaseClient.auth.signOut()
 
         const response = await supabaseClient
-        .rpc('select_following_counter',
+        .rpc('read_following_counter',
             {
                 user_id: TEST_ID
             },
