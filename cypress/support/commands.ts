@@ -65,6 +65,15 @@ Cypress.Commands.add('searchUser', (firstName: string): void => {
     .contains(firstName)
 });
 
+Cypress.Commands.add('searchGroup', (name: string): void => {
+    cy.openSearchTab()
+    cy.getDataCy('search').type(name)
+    cy.getDataCy('group-search-results')
+    .find('polity-search-group-result')
+    .shouldBeVisible()
+    .contains(name)
+});
+
 Cypress.Commands.add(
     'followUser',
     (

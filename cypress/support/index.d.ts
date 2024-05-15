@@ -53,6 +53,12 @@ declare global {
              */
             searchUser(firstName: string): Chainable<Element>
 
+            /**
+             * Searches a group by a given name.
+             *
+             * @param {string} name - The name of the group.
+             */
+            searchGroup(name: string): Chainable<Element>
 
             /**
              * Follows a user's profile by updating the counters and returning a Chainable element.
