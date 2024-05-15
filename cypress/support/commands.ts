@@ -143,6 +143,30 @@ Cypress.Commands.add('navigateToHome', (): void => {
     .contains('Dein Profil.')
 })
 
+Cypress.Commands.add('navigateToEditGroupMembershipsOfUser', (userName: string): void => {
+    cy.interceptSupabaseCall('read_user')
+    .as('read_user')
+    cy.navigateToHome()
+    cy.wait('@read_user')
+
+    cy.contains(userName)
+    .click();
+
+    cy.interceptSupabaseCall('read_group_member_invitations_of_user')
+    .as('groupMemberInvitationsOfUser')
+    cy.interceptSupabaseCall('read_group_requests_of_user')
+    .as('groupRequestsOfUser')
+    cy.interceptSupabaseCall('read_groups_of_user')
+    .as('groupsOfUser')
+
+    cy.getDataCy('nav-groups-edit', 'nav-groups-edit-desktop')
+    .filter(':visible')
+    .first()
+    .click()
+
+    cy.wait(['@groupMemberInvitationsOfUser', '@groupRequestsOfUser', '@groupsOfUser'])
+})
+
 Cypress.Commands.add('signOut', (signedInUser: AuthData): void => {
     cy.navigateToHome()
     cy.getDataCy('home-to-profile')

@@ -7,6 +7,7 @@ import {GroupMemberStoreService} from "./group-member.store.service";
 import {GroupStoreService} from "../../group/action-store-service/group.store.service";
 import {GroupCountersStoreService} from "../../group-follow/action-store-services/group-counters.store.service";
 import {GroupActionService} from "../../group/action-store-service/group.action.service";
+import {GroupsOfUserStoreService} from "../../profile-groups/action-store-services/groups-of-user.store.service";
 
 @Injectable({
     providedIn: 'root'
@@ -18,7 +19,8 @@ export class GroupMemberActionService {
         private readonly groupMembersStoreService: GroupMemberStoreService,
         private readonly groupStoreService: GroupStoreService,
         private readonly groupActionService: GroupActionService,
-        private readonly groupCountersStoreService: GroupCountersStoreService
+        private readonly groupCountersStoreService: GroupCountersStoreService,
+        private readonly groupsOfUserStoreService: GroupsOfUserStoreService
     ) {
     }
 
@@ -270,22 +272,20 @@ export class GroupMemberActionService {
         })
     }
 
-    public async removeGroupMember(userId: string): Promise<void> {
+    public async removeGroupMember(membershipId: string): Promise<void> {
+        console.log('removing group member', membershipId)
         await this.groupCountersStoreService.groupCounters.wrapUpdateFunction(async (): Promise<void> => {
-            const groupId: string | null = this.groupStoreService.group.getObjectId();
-            if (groupId) {
-                const response: PostgrestSingleResponse<SupabaseObjectReturn<'delete_group_member_by_id'>> = await this.supabaseClient.rpc(
-                    'delete_group_member_by_id',
-                    {
-                        membership_id: userId
-                    }
-                )
-                .throwOnError()
-                this.groupCountersStoreService.groupCounters.decrementKey('member_counter')
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'leave_group_by_membership_id_transaction'>> = await this.supabaseClient.rpc(
+                'leave_group_by_membership_id_transaction',
+                {
+                    membership_id_in: membershipId
+                }
+            )
+            .throwOnError();
+            if (!response.error) {
+                this.groupsOfUserStoreService.groupsOfUser.removeObjectByPropertyValue('id', membershipId);
             }
-        })
-
-
+        }, true, 'Successful removed group member!')
     }
 
     public async leaveGroup(): Promise<void> {

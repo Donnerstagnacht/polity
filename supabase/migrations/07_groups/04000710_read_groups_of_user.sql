@@ -18,7 +18,7 @@ BEGIN
     authenticated_user := auth.uid();
     RETURN QUERY (
         SELECT
-            group_members.member_id,
+            group_members.id,
             groups.id,
             groups.name,
             groups.level

@@ -865,6 +865,12 @@ export type Database = {
         }
         Returns: undefined
       }
+      delete_group_member_by_id: {
+        Args: {
+          membership_id: string
+        }
+        Returns: unknown
+      }
       delete_group_relation: {
         Args: {
           group_relation_id: string

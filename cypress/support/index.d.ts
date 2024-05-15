@@ -82,6 +82,12 @@ declare global {
             navigateToHome(): Chainable<Element>
 
             /**
+             * Navigates to the tab to edit group memberships of a user.
+             * @param {string} userName - The name of the user.
+             */
+            navigateToEditGroupMembershipsOfUser(userName: string): Chainable<Element>
+
+            /**
              * Signs out a signed-in user.
              *
              * @param {AuthData} signedInUser - The signed-in user.

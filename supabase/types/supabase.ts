@@ -82,12 +82,6 @@ export type Database = {
         }
         Returns: undefined
       }
-      delete_group_member_by_id: {
-        Args: {
-          membership_id: string
-        }
-        Returns: undefined
-      }
       delete_group_member_invitation: {
         Args: {
           group_id_in: string
@@ -162,6 +156,12 @@ export type Database = {
           "": unknown
         }
         Returns: unknown
+      }
+      leave_group_by_membership_id_transaction: {
+        Args: {
+          membership_id_in: string
+        }
+        Returns: undefined
       }
       leave_group_member_transaction: {
         Args: {
@@ -498,6 +498,11 @@ export type Database = {
     }
     CompositeTypes: {
       delete_group: {
+        group_id: string | null
+        member_id: string | null
+      }
+      membership: {
+        id: string | null
         group_id: string | null
         member_id: string | null
       }
