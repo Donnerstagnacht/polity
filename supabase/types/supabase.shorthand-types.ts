@@ -98,6 +98,13 @@ export type SupabaseEnum<T extends keyof DatabaseOverwritten['public']['Enums']>
  */
 export type SupabaseCompositeType<T extends keyof DatabaseOverwritten['public']['CompositeTypes']> = DatabaseOverwritten['public']['CompositeTypes'][T];
 
+/**
+ *  Type that represents the names of postgres functions - e.g. database calls.
+ *  The main useage is make cypress api calls/interceptions type safe.
+ *  @example see cypress commands.ts file
+ */
+export type SupabaseFunctionName = keyof DatabaseOverwritten['public']['Functions']
+
 // helper types - used in SupabaseArrayReturn type
 /**
  * The Generated Database return types are of type array if the postgres database function returns a table.

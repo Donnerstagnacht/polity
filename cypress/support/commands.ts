@@ -83,11 +83,11 @@ Cypress.Commands.add(
         userWhoFollowsCounter: ProfileCounter
     ): void => {
 
-        cy.interceptSupabaseCall('select_user')
+        cy.interceptSupabaseCall('read_user')
         .as('selectUser')
         cy.interceptSupabaseCall('check_if_following')
         .as('isFollowing')
-        cy.interceptSupabaseCall('select_following_counter')
+        cy.interceptSupabaseCall('read_following_counter')
         .as('followingCounter')
 
         cy.searchUser(userWhoIsFollowedProfile.first_name as string)
