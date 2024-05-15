@@ -5,7 +5,9 @@
         [headline]="'Group Members'"></polity-filter-headline>
     @if (showFilter) {
         <ng-container [formGroup]="combinedForm">
-            <polity-filter-string formGroupName="filterStringForm">
+            <polity-filter-string
+                placeholderText="Suche nach einem Vornamen"
+                formGroupName="filterStringForm">
             </polity-filter-string>
         </ng-container>
     }

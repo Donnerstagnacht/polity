@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS public.read_groups_of_user();
+DROP FUNCTION IF EXISTS public.read_group_member_invitations_of_user();
 
-CREATE OR REPLACE FUNCTION public.read_groups_of_user()
+CREATE OR REPLACE FUNCTION public.read_group_member_invitations_of_user()
     RETURNS table
             (
                 id          uuid,
@@ -18,16 +18,16 @@ BEGIN
     authenticated_user := auth.uid();
     RETURN QUERY (
         SELECT
-            group_members.member_id,
+            group_invited_members.id,
             groups.id,
             groups.name,
             groups.level
         FROM
-            authenticated_access.group_members
+            authenticated_access.group_invited_members
             JOIN authenticated_access.groups
-            ON group_members.group_id = groups.id
+            ON group_invited_members.group_id = groups.id
         WHERE
-            authenticated_access.group_members.member_id = authenticated_user
+            authenticated_access.group_invited_members.member_id = authenticated_user
     );
 END
 $$;

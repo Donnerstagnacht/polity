@@ -15,6 +15,7 @@ import {TuiInputModule} from "@taiga-ui/kit";
 })
 export class FilterStringComponent {
     @Input() formGroupName!: string;
+    @Input({required: true}) placeholderText: string = '';
     filterStringForm: FormGroup
 
     constructor(private rootFormGroup: FormGroupDirective) {

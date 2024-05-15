@@ -64,7 +64,8 @@ export class ProfileComponent {
             this.menuItemsProfile = NAVIGATION_ITEMS_PROFILE_OWNER;
             this.menuItemsProfile[0].link = '/profile/' + urlId
             this.menuItemsProfile[1].link = '/profile/' + urlId + '/edit'
-            this.menuItemsProfile[2].link = '/profile/' + urlId + '/follower/edit'
+            this.menuItemsProfile[2].link = '/profile/' + urlId + '/groups/edit'
+            this.menuItemsProfile[3].link = '/profile/' + urlId + '/follower/edit'
         } else {
             this.profileStoreService.profile.uiFlagStore.setFlagFalse('isOwner')
             this.menuItemsProfile = NAVIGATION_ITEMS_PROFILE;

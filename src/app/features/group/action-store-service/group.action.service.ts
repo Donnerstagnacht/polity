@@ -4,7 +4,6 @@ import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {supabaseClient} from "../../../auth/supabase-client";
 import {GroupStoreService} from "./group.store.service";
 import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
-import {ProfileStoreService} from "../../profile/action-store-services/profile.store.service";
 
 @Injectable({
     providedIn: 'root'
@@ -13,8 +12,7 @@ export class GroupActionService {
     private readonly supabase: SupabaseClient<DatabaseOverwritten> = supabaseClient;
 
     constructor(
-        private readonly groupStoreService: GroupStoreService,
-        private readonly profileStoreService: ProfileStoreService
+        private readonly groupStoreService: GroupStoreService
     ) {
     }
 
@@ -36,25 +34,6 @@ export class GroupActionService {
                 if (response.data) {
                     this.groupStoreService.group.setObject(response.data);
                     console.log(response.data)
-                }
-            }
-        })
-    }
-
-    public async readGroupsOfUser(): Promise<void> {
-        await this.groupStoreService.group.wrapSelectFunction(async (): Promise<void> => {
-            this.profileStoreService.groupsOfUser.loading.startLoading();
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_groups_of_user'>[]> = await this.supabase
-            .rpc('read_groups_of_user')
-            .throwOnError()
-            if (response.data) {
-                // const imgPath = await this.supabase.storage.from('profile_images').createSignedUrl(response.data.profile_image, 3600 * 24 * 7);
-                // response.data.profile_image = imgPath.data?.signedUrl as string;
-                if (response.data) {
-                    // this.groupStoreService.group.setObject(response.data);
-                    console.log(response.data)
-                    this.profileStoreService.groupsOfUser.setObjects(response.data);
-                    this.profileStoreService.groupsOfUser.loading.stopLoading();
                 }
             }
         })

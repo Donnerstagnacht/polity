@@ -23,6 +23,12 @@ Sizes.forEach((size: Size): void => {
             cy.signIn(signedInUserAuth);
         })
 
+        let randomNumber: number = Math.floor(Math.random() * 10000000);
+        const nameOfNewGroup: string = 'testName' + randomNumber;
+
+        randomNumber = Math.floor(Math.random() * 10000000);
+        const descriptionOfNewGroup: string = 'test' + randomNumber;
+
         it('users can create a new group.', async (): Promise<void> => {
             cy.getDataCy('nav-new', 'nav-new-desktop')
             .filter(':visible')
@@ -33,20 +39,15 @@ Sizes.forEach((size: Size): void => {
             .shouldBeVisible()
             .click()
 
-            let randomNumber: number = Math.floor(Math.random() * 10000000);
-            const groupName: string = 'testName' + randomNumber;
-
-            randomNumber = Math.floor(Math.random() * 10000000);
-            const groupDescription: string = 'test' + randomNumber;
 
             cy.getDataCy('groupNameInput')
-            .type(groupName)
+            .type(nameOfNewGroup)
 
             cy.getDataCy('levelRegional')
             .click()
 
             cy.getDataCy('groupDescriptionInput')
-            .type(groupDescription)
+            .type(descriptionOfNewGroup)
 
             cy.interceptSupabaseCall('search_user').as('searchUser')
             cy.getDataCy('inviteMemberToNewGroup')
@@ -77,26 +78,38 @@ Sizes.forEach((size: Size): void => {
             .contains(groupOfUser.name)
         })
 
-        // it('the group creator should be added as admin to the new group.', async (): Promise<void> => {
-        //     // TODO test implementation
-        // })
-        //
-        // it('the group creator should be added as admin to the new group.', async (): Promise<void> => {
-        //     // TODO test implementation
-        // })
-        //
-        // it('the groups statistics shows one group member.', async (): Promise<void> => {
-        //     // TODO test implementation
-        // })
-        //
-        // it('the group wiki shows name and level.', async (): Promise<void> => {
-        //     // TODO test implementation
-        // })
-        //
-        // it('the group wiki shows name and level.', async (): Promise<void> => {
-        //     // TODO test implementation
-        // })
-        //
+        it('the group creator should be added as admin to the new group and the admin menu should be displayed.', async (): Promise<void> => {
+            cy.navigateToHome();
+            cy.getDataCy('to-group-of-user')
+            .contains(nameOfNewGroup)
+            .click()
+
+            cy.getDataCy('nav-group-edit-desktop', 'nav-group-edit')
+            .shouldBeVisible()
+        })
+
+        it('the groups statistics shows one group member plus each invited member.', async (): Promise<void> => {
+            cy.navigateToHome();
+            cy.getDataCy('to-group-of-user')
+            .contains(nameOfNewGroup)
+            .click()
+
+            cy.getDataCy('memberCounter')
+            .shouldBeVisible()
+            .contains(2)
+        })
+
+        it('the group wiki shows name and level.', async (): Promise<void> => {
+            cy.navigateToHome();
+            cy.getDataCy('to-group-of-user')
+            .contains(nameOfNewGroup)
+            .click()
+
+            cy.getDataCy('first-name')
+            .shouldBeVisible()
+            .contains(nameOfNewGroup)
+        })
+
         // it('a group with the same name can not be created twice.', async (): Promise<void> => {
         //     // TODO test implementation
         // })

@@ -38,7 +38,7 @@ BEGIN
                 WHERE
                       group_id = group_id_in
                   AND member_id = auth_user_id
-                  AND member_type IN ('board_member')
+                  AND member_type IN ('board_member', 'board_president')
                 LIMIT 1
             ),
             (

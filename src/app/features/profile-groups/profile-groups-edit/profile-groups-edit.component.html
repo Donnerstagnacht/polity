@@ -1,0 +1,85 @@
+<div>
+    <polity-filter-headline
+        (showFilter)="toggleShowFilter()"
+        [dataCyTag]="'edit-group-memberships-and-group-requests'"
+        [headline]="'Deine Mitgliedschaften & Mitgliedsanfragen'"></polity-filter-headline>
+    @if (showFilter) {
+        <ng-container [formGroup]="combinedForm">
+            <polity-filter-string
+                placeholderText="Suche nach einer Gruppe"
+                formGroupName="filterStringForm">
+            </polity-filter-string>
+        </ng-container>
+    }
+
+    <polity-filter-clear (clearFilter)="clearFilter()">
+    </polity-filter-clear>
+
+</div>
+
+<tui-tabs [(activeItemIndex)]="activeItemIndex">
+    <button
+        (click)="showGroupMembershipList()"
+        [attr.data-cy]="'show-group-memberships'"
+        tuiTab
+    >
+        Mitgliedschaften
+    </button>
+    <button
+        (click)="showGroupRequestList()"
+        [attr.data-cy]="'show-group-requests'"
+        tuiTab
+    >
+        Mitgliedsanfragen
+    </button>
+    <!--    <button-->
+    <!--        (click)="showGroupRequestList()"-->
+    <!--        [attr.data-cy]="'show-group-invitations'"-->
+    <!--        tuiTab-->
+    <!--    >-->
+    <!--        Gruppeneinladungen-->
+    <!--    </button>-->
+</tui-tabs>
+@if (showGroupMemberships) {
+    <polity-table-three-icon-text-delete
+        (remove)="leaveGroup($event)"
+        [bonusKeys]="['group_level']"
+        [dataCyTags]="['group_profile_image', 'group_name', 'group_leave']"
+        [dataCyTagsHeadline]="['group_membership_image_headline', 'group_membership_name_headline',
+        'group_membership_leave_headline']"
+        [dataKeysForColumns]="['group_name', 'group_name', 'id']"
+        [data]="groupMembershipsOfUser"
+        [headings]="['Foto', 'Name', 'Verlassen']"
+        [isLoading]="isGroupMembershipsLoading"
+    >
+    </polity-table-three-icon-text-delete>
+}
+
+@if (!showGroupMemberships) {
+    <polity-table-three-icon-text-delete
+        (remove)="withdrawGroupRequest($event)"
+        [bonusKeys]="['group_level']"
+        [dataCyTags]="['group_request_image', 'group_request_name', 'group_request_withdraw']"
+        [dataCyTagsHeadline]="['group_request_image_headline', 'group_request_name_headline',
+        'group_request_withdraw_headline']"
+        [dataKeysForColumns]="['group_name', 'group_name', 'id']"
+        [data]="groupRequestsOfUser"
+        [headings]="['Foto', 'Name', 'Entfernen']"
+        [isLoading]="isGroupRequestsLoading"
+    >
+    </polity-table-three-icon-text-delete>
+
+    <!--    @if (!showGroupMemberships) {-->
+        <!--        <polity-table-three-icon-text-delete-->
+        <!--            (remove)="withdrawGroupRequest($event)"-->
+        <!--            [bonusKeys]="['group_level']"-->
+        <!--            [dataCyTags]="['group_request_image', 'group_request_name', 'group_request_accept']"-->
+        <!--            [dataCyTagsHeadline]="['group_request_image_headline', 'group_request_name_headline',-->
+        <!--        'group_request_accept_headline']"-->
+        <!--            [dataKeysForColumns]="['group_name', 'group_name', 'id']"-->
+        <!--            [data]="groupInvitationsOfUser"-->
+        <!--            [headings]="['Foto', 'Name', 'Entfernen']"-->
+        <!--            [isLoading]="isGroupInvitationsLoading"-->
+        <!--        >-->
+        <!--        </polity-table-three-icon-text-delete>-->
+}

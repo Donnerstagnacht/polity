@@ -8,7 +8,7 @@
         class=" polity-flex-container polity-single-item-centered tui-space_right-4 tui-space_left-4">
         <polity-counter
             [counterTitle]="'Member'"
-            [counterValue]="10"
+            [counterValue]="this.groupCounter()?.group_member_counter"
             [dataCyTag]="'memberCounter'"
             [isLoading]="isGroupMembershipStatusLoading"
             class="polity-flex-item-first"

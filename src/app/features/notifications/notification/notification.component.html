@@ -5,7 +5,9 @@
         [headline]="'Benachrichtigungen'"></polity-filter-headline>
     @if (showFilter) {
         <ng-container [formGroup]="combinedForm">
-            <polity-filter-string formGroupName="filterStringForm">
+            <polity-filter-string
+                placeholderText="Suche nach einer Benachrichtigung"
+                formGroupName="filterStringForm">
             </polity-filter-string>
 
             <polity-filter-date-range formGroupName="filterDateRangeForm">

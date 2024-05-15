@@ -1,14 +1,15 @@
-DROP FUNCTION IF EXISTS public.read_group_following_counter(
+DROP FUNCTION IF EXISTS public.read_group_counter(
     group_id_in uuid
 );
-CREATE OR REPLACE FUNCTION public.read_group_following_counter(
+CREATE OR REPLACE FUNCTION public.read_group_counter(
     group_id_in uuid
 )
     RETURNS table
             (
-                group_id          uuid,
-                follower_counter  bigint,
-                following_counter bigint
+                group_id             uuid,
+                follower_counter     bigint,
+                following_counter    bigint,
+                group_member_counter bigint
                 --unread_notifications_counter bigint
             )
     LANGUAGE plpgsql
@@ -20,7 +21,8 @@ BEGIN
         SELECT
             authenticated_access.groups_counters.id,
             authenticated_access.groups_counters.follower_counter,
-            authenticated_access.groups_counters.following_counter
+            authenticated_access.groups_counters.following_counter,
+            authenticated_access.groups_counters.group_member_counter
         FROM
             authenticated_access.groups_counters
         WHERE

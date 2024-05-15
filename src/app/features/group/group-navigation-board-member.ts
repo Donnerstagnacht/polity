@@ -9,7 +9,7 @@ export const NAVIGATION_ITEMS_GROUP_BOARD_MEMBER: NavigationItem[] = [
         dataCyDesktop: 'nav-group-wiki-desktop'
     },
     {
-        text: 'EDIT',
+        text: 'EDIT GROUP',
         icon: 'tuiIconEdit2',
         link: '/group/:id/edit',
         dataCy: 'nav-group-edit',

@@ -64,8 +64,8 @@ export class ProfileFollowEditComponent {
     async ngOnInit(): Promise<void> {
         await Promise.all(
             [
-                this.followersOfUserService.selectFollowersOfUser(),
-                this.followingOfUserService.selectFollowingsOfUser(),
+                this.followersOfUserService.readFollowersOfUser(),
+                this.followingOfUserService.readFollowingsOfUser(),
             ]
         )
         this.followersOfUser = this.followersOfUserStoreService.followersOfUser.getObjects();

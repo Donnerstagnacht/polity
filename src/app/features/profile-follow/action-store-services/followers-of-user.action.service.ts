@@ -22,7 +22,7 @@ export class FollowersOfUserActionService {
     ) {
     }
 
-    public async selectFollowersOfUser(): Promise<any> {
+    public async readFollowersOfUser(): Promise<any> {
         await this.followersOfUserStoreService.followersOfUser.wrapSelectFunction(async (): Promise<void> => {
             const followerResponse: PostgrestSingleResponse<SupabaseObjectReturn<'read_follower_of_user'>[]> = await this.supabaseClient.rpc(
                 'read_follower_of_user'

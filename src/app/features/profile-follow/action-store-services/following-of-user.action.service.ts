@@ -21,7 +21,7 @@ export class FollowingOfUserActionService {
     }
 
 
-    public async selectFollowingsOfUser(): Promise<any> {
+    public async readFollowingsOfUser(): Promise<any> {
         await this.followingOfUserStoreService.followingOfUser.wrapSelectFunction(async (): Promise<void> => {
             const followingResponse: PostgrestSingleResponse<SupabaseObjectReturn<'read_following_of_user'>[]> = await this.supabaseClient.rpc(
                 'read_following_of_user'

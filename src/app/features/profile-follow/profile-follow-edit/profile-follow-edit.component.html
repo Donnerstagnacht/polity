@@ -5,7 +5,9 @@
         [headline]="'Deine Follower & Followings'"></polity-filter-headline>
     @if (showFilter) {
         <ng-container [formGroup]="combinedForm">
-            <polity-filter-string formGroupName="filterStringForm">
+            <polity-filter-string
+                placeholderText="Suche nach einem Vornamen"
+                formGroupName="filterStringForm">
             </polity-filter-string>
         </ng-container>
     }
@@ -41,7 +43,7 @@
         'follower_remove_headline']"
         [dataKeysForColumns]="['profile_image', 'first_name', 'id']"
         [data]="followersOfUser"
-        [headings]="['Foto', 'test', 'Entfernen']"
+        [headings]="['Foto', 'Name', 'Entfernen']"
         [isLoading]="isFollowersLoading"
     >
     </polity-table-three-icon-text-delete>

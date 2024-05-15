@@ -40,5 +40,16 @@ BEGIN
         group_id,
         logged_in_user_id,
         'board_president');
+
+    FOREACH invited_member IN ARRAY invited_members
+        LOOP
+            PERFORM authenticated_access.increment_group_member_counter(
+                group_id
+                    );
+        END LOOP;
+
+    PERFORM authenticated_access.increment_group_member_counter(
+        group_id
+            );
 END;
 $$;

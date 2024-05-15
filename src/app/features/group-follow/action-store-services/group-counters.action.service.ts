@@ -20,8 +20,8 @@ export class GroupCountersActionService {
 
     public async selectGroupCounter(groupId: string): Promise<void> {
         await this.groupCountersStoreService.groupCounters.wrapSelectFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_group_following_counter'>> = await this.supabaseClient.rpc(
-                'read_group_following_counter',
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_group_counter'>> = await this.supabaseClient.rpc(
+                'read_group_counter',
                 {group_id_in: groupId}
             )
             .single()
