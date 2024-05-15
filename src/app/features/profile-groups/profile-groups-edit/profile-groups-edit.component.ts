@@ -118,8 +118,8 @@ export class ProfileGroupsEditComponent {
         await this.groupMemberActionService.removeGroupMember(membership_id);
     }
 
-    protected async withdrawGroupRequest(id: string): Promise<void> {
-        await this.groupMemberActionService.withDrawGroupRequest();
+    protected async withdrawGroupRequest(requestId: string): Promise<void> {
+        await this.groupMemberActionService.withDrawGroupRequestById(requestId);
     }
 
     protected clearFilter(): void {

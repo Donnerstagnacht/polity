@@ -198,16 +198,6 @@ export type Database = {
           last_name: string
         }[]
       }
-      read_following_counter: {
-        Args: {
-          user_id: string
-        }
-        Returns: {
-          profile_id: string
-          follower_counter: number
-          following_counter: number
-        }[]
-      }
       read_following_of_group: {
         Args: {
           group_id_in: string
@@ -338,6 +328,17 @@ export type Database = {
           first_name: string
           last_name: string
           profile_image: string
+        }[]
+      }
+      read_profile_counters: {
+        Args: {
+          user_id: string
+        }
+        Returns: {
+          profile_id: string
+          follower_counter: number
+          following_counter: number
+          group_membership_counter: number
         }[]
       }
       read_user: {

@@ -21,6 +21,13 @@
             [isLoading]="this.isProfileCounterLoading"
             class="polity-flex-item-last"
         ></polity-counter>
+        <polity-counter
+            [counterTitle]="'Memberships'"
+            [counterValue]="this.profileCounter()?.group_membership_counter"
+            [dataCyTag]="'membershipCounter'"
+            [isLoading]="this.isProfileCounterLoading"
+            class="polity-flex-item-last"
+        ></polity-counter>
     </div>
 
     <div class="tui-space_bottom-4">

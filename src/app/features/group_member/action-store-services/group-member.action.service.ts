@@ -8,6 +8,9 @@ import {GroupStoreService} from "../../group/action-store-service/group.store.se
 import {GroupCountersStoreService} from "../../group-follow/action-store-services/group-counters.store.service";
 import {GroupActionService} from "../../group/action-store-service/group.action.service";
 import {GroupsOfUserStoreService} from "../../profile-groups/action-store-services/groups-of-user.store.service";
+import {
+    GroupRequestsOfUserStoreService
+} from "../../profile-groups/action-store-services/group-requests-of-user.store.service";
 
 @Injectable({
     providedIn: 'root'
@@ -20,7 +23,8 @@ export class GroupMemberActionService {
         private readonly groupStoreService: GroupStoreService,
         private readonly groupActionService: GroupActionService,
         private readonly groupCountersStoreService: GroupCountersStoreService,
-        private readonly groupsOfUserStoreService: GroupsOfUserStoreService
+        private readonly groupsOfUserStoreService: GroupsOfUserStoreService,
+        private readonly groupRequestsOfUserStoreService: GroupRequestsOfUserStoreService
     ) {
     }
 
@@ -270,6 +274,21 @@ export class GroupMemberActionService {
                 }
             }
         })
+    }
+
+    public async withDrawGroupRequestById(requestId: string): Promise<void> {
+        await this.groupCountersStoreService.groupCounters.wrapUpdateFunction(async (): Promise<void> => {
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'delete_group_member_request_by_id'>[]> = await this.supabaseClient.rpc(
+                'delete_group_member_request_by_id',
+                {
+                    request_id: requestId
+                }
+            )
+            .throwOnError()
+            if (!response.error) {
+                this.groupRequestsOfUserStoreService.groupRequestsOfUser.removeObjectByPropertyValue('id', requestId);
+            }
+        }, true, 'Successful withdrawn group membership request!')
     }
 
     public async removeGroupMember(membershipId: string): Promise<void> {

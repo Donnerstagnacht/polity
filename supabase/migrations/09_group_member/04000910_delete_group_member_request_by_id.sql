@@ -21,8 +21,8 @@ BEGIN
     WHERE
         id = request_id
     RETURNING
-        group_id,
-        member_id
+        authenticated_access.group_member_requests.group_id,
+        authenticated_access.group_member_requests.member_id
         INTO
             group_id,
             member_id;

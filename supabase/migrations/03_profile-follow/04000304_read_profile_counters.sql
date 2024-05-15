@@ -1,14 +1,15 @@
-DROP FUNCTION IF EXISTS public.read_following_counter(
+DROP FUNCTION IF EXISTS public.read_profile_counters(
     user_id uuid
 );
-CREATE OR REPLACE FUNCTION public.read_following_counter(
+CREATE OR REPLACE FUNCTION public.read_profile_counters(
     user_id uuid
 )
     RETURNS table
             (
-                profile_id        uuid,
-                follower_counter  bigint,
-                following_counter bigint
+                profile_id               uuid,
+                follower_counter         bigint,
+                following_counter        bigint,
+                group_membership_counter bigint
                 --unread_notifications_counter bigint
             )
     LANGUAGE plpgsql
@@ -20,7 +21,8 @@ BEGIN
         SELECT
             authenticated_access.profiles_counters.id,
             authenticated_access.profiles_counters.follower_counter,
-            authenticated_access.profiles_counters.following_counter
+            authenticated_access.profiles_counters.following_counter,
+            authenticated_access.profiles_counters.group_membership_counter
         FROM
             authenticated_access.profiles_counters
         WHERE

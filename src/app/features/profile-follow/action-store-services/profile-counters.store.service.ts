@@ -6,9 +6,9 @@ import {ObjectStoreService} from "../../../signal-store/object-store.service";
     providedIn: 'root'
 })
 export class ProfileCountersStoreService {
-    public profileCounters: ObjectStoreService<SupabaseObjectReturn<'read_following_counter'>>;
+    public profileCounters: ObjectStoreService<SupabaseObjectReturn<'read_profile_counters'>>;
 
     constructor() {
-        this.profileCounters = new ObjectStoreService<SupabaseObjectReturn<'read_following_counter'>>();
+        this.profileCounters = new ObjectStoreService<SupabaseObjectReturn<'read_profile_counters'>>();
     }
 }

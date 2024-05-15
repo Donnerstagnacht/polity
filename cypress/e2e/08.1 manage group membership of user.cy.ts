@@ -1,10 +1,14 @@
-import {AUTH_DATA1, AUTH_DATA2, AuthData} from "../../seed_and_test_data/01_test_auth";
-import {Profile, PROFILE1} from "../../seed_and_test_data/02_test_profiles";
+import {AUTH_DATA1, AUTH_DATA2, AUTH_DATA9, AuthData} from "../../seed_and_test_data/01_test_auth";
+import {Profile, PROFILE1, PROFILE9} from "../../seed_and_test_data/02_test_profiles";
 import {Group, GROUP1} from "../../seed_and_test_data/07_test_groups";
 
-const signedInUserAuth: AuthData = AUTH_DATA1;
+const signedInUserAuthForLeave: AuthData = AUTH_DATA1;
+const signedInUserProfileForLeave: Profile = PROFILE1;
+
+const signedInUserAuthForWithdraw: AuthData = AUTH_DATA9;
+const signedInUserProfileForWithdraw: Profile = PROFILE9;
+
 const otherUser: AuthData = AUTH_DATA2;
-const signedInUserProfile: Profile = PROFILE1;
 const groupToBeLeft: Group = GROUP1;
 
 // Sizes.forEach((size: Size): void => {
@@ -18,20 +22,70 @@ describe(`Manage group memberships of user tests with screen size  show that  `,
         cy.resetSupabase()
         // cy.viewport(size.width, size.height)
         cy.visit('landing/sign-in');
-        cy.signIn(signedInUserAuth);
     })
 
-    it(' users can see their group memberships on their group overview page', (): void => {
-        cy.navigateToEditGroupMembershipsOfUser(signedInUserProfile.first_name)
+    // it(' users can see their group memberships on their group overview page', (): void => {
+    //     cy.signIn(signedInUserAuth);
+    //     cy.navigateToEditGroupMembershipsOfUser(signedInUserProfile.first_name)
+    //
+    //     cy.getDataCy('show-group-memberships')
+    //     .shouldBeVisible()
+    //     .click()
+    //
+    //     cy.interceptSupabaseCall('leave_group_by_membership_id_transaction')
+    //     .as('leaveGroupMemberTransaction')
+    //
+    //     cy.getDataCy('group_name')
+    //     .shouldBeVisible()
+    //     .contains(groupToBeLeft.name)
+    //     .next()
+    //     .next() // needs to be removed if group profile images are displayed
+    //     .children()
+    //     .first()
+    //     .click()
+    //
+    //     cy.wait('@leaveGroupMemberTransaction')
+    //
+    //     cy.contains(groupToBeLeft.name)
+    //     .should('not.exist')
+    //
+    //     // check group member counter
+    //     cy.searchGroup(groupToBeLeft.name)
+    //
+    //     cy.getDataCy('group-search-results')
+    //     .contains(groupToBeLeft.name)
+    //     .first()
+    //     .click()
+    //
+    //     cy.getDataCy('memberCounter')
+    //     .shouldBeVisible()
+    //     .should('have.text', '4')
+    //     // check user membership counter
+    //
+    //     cy.searchUser(signedInUserProfile.first_name)
+    //
+    //     cy.getDataCy('user-search-results')
+    //     .contains(signedInUserProfile.first_name)
+    //     .first()
+    //     .click()
+    //
+    //     cy.getDataCy('membershipCounter')
+    //     .shouldBeVisible()
+    //     .should('have.text', '2')
+    // })
 
-        cy.getDataCy('show-group-memberships')
+    it(' users can see their group requests on their group overview page', (): void => {
+        cy.signIn(signedInUserAuthForWithdraw);
+        cy.navigateToEditGroupMembershipsOfUser(signedInUserProfileForWithdraw.first_name)
+
+        cy.getDataCy('show-group-requests')
         .shouldBeVisible()
         .click()
 
-        cy.interceptSupabaseCall('leave_group_by_membership_id_transaction')
-        .as('leaveGroupMemberTransaction')
+        cy.interceptSupabaseCall('delete_group_member_request_by_id')
+        .as('deleteGroupMemberRequest')
 
-        cy.getDataCy('group_name')
+        cy.getDataCy('group_request_name')
         .shouldBeVisible()
         .contains(groupToBeLeft.name)
         .next()
@@ -40,20 +94,12 @@ describe(`Manage group memberships of user tests with screen size  show that  `,
         .first()
         .click()
 
-        cy.wait('@leaveGroupMemberTransaction')
+        cy.wait('@deleteGroupMemberRequest')
 
         cy.contains(groupToBeLeft.name)
         .should('not.exist')
-
-        // check group member counter
-        // check user membership counter
     })
-    //
-    // it(' users can see their group requests on their group overview page', (): void => {
-    //     cy.navigateToEditGroupMembershipsOfUser(signedInUserProfile.first_name)
-    //
-    // })
-    //
+
     // it(' users can see their group invitations on their group overview page', (): void => {
     //     cy.navigateToEditGroupMembershipsOfUser(signedInUserProfile.first_name)
     //
