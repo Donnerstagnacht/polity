@@ -1,11 +1,11 @@
 DROP FUNCTION IF EXISTS authenticated_access.read_group_member_request(
-    group_member_request_id uuid,
-    user_id uuid
+    group_id_in uuid,
+    user_id_in uuid
 );
 
 CREATE OR REPLACE FUNCTION authenticated_access.read_group_member_request(
-    group_member_request_id uuid,
-    user_id uuid
+    group_id_in uuid,
+    user_id_in uuid
 )
     RETURNS table
             (
@@ -26,7 +26,7 @@ BEGIN
         FROM
             authenticated_access.group_member_requests
         WHERE
-              authenticated_access.group_member_requests.id = group_member_request_id
-          AND authenticated_access.group_member_requests.member_id = user_id;
+              authenticated_access.group_member_requests.group_id = group_id_in
+          AND authenticated_access.group_member_requests.member_id = user_id_in;
 END;
 $$;

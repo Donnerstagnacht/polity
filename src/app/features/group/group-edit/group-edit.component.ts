@@ -1,5 +1,5 @@
 import {Component, WritableSignal} from '@angular/core';
-import {LinkCardComponent} from "../../../ui/link-card/link-card.component";
+import {LinkCardComponent} from "../../../ui/cards/link-card/link-card.component";
 import {GroupStoreService} from "../action-store-service/group.store.service";
 import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 

@@ -53,7 +53,7 @@ export class GroupWikiComponent {
             } else if (this.isRequested()) {
                 this.buttonTextString = 'Withdraw request';
             } else if (this.isInvited()) {
-                this.buttonTextString = 'Accept invitation';
+                this.buttonTextString = 'Answer invitation';
             }
         });
     }
@@ -96,7 +96,11 @@ export class GroupWikiComponent {
         } else if (this.isRequested()) {
             await this.groupMemberActionService.withDrawGroupRequest();
         } else if (this.isInvited()) {
+            //TODO open dialog
+            //TODO check if accepted
             await this.groupMemberActionService.accceptGroupInvitation();
+            //TODO check if not accepted
+            // await this.groupMemberActionService.declineGroupInvitation();
         }
     }
 }

@@ -64,6 +64,7 @@ export class GroupComponent {
     ngOnDestroy(): void {
         this.groupStoreService.group.resetObject();
         this.groupCountersStoreService.groupCounters.resetObject()
+        this.groupStoreService.groupMemberStatus.set('no_member')
     }
 
     private async checkMemberStatus(urlId: string): Promise<void> {

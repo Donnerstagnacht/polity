@@ -11,6 +11,9 @@ import {GroupsOfUserStoreService} from "../../profile-groups/action-store-servic
 import {
     GroupRequestsOfUserStoreService
 } from "../../profile-groups/action-store-services/group-requests-of-user.store.service";
+import {
+    GroupInvitationsOfUserStoreService
+} from "../../profile-groups/action-store-services/group-invitations-of-user.store.service";
 
 @Injectable({
     providedIn: 'root'
@@ -24,7 +27,8 @@ export class GroupMemberActionService {
         private readonly groupActionService: GroupActionService,
         private readonly groupCountersStoreService: GroupCountersStoreService,
         private readonly groupsOfUserStoreService: GroupsOfUserStoreService,
-        private readonly groupRequestsOfUserStoreService: GroupRequestsOfUserStoreService
+        private readonly groupRequestsOfUserStoreService: GroupRequestsOfUserStoreService,
+        private readonly groupInvitationsOfUserStoreService: GroupInvitationsOfUserStoreService
     ) {
     }
 
@@ -214,20 +218,36 @@ export class GroupMemberActionService {
         }, true, 'Successful accepted group membership!')
     }
 
+    public async accceptGroupInvitationById(invitation_id: string): Promise<void> {
+        await this.groupCountersStoreService.groupCounters.wrapUpdateFunction(async (): Promise<void> => {
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'accept_group_invitation_by_id_transaction'>> = await this.supabaseClient.rpc(
+                'accept_group_invitation_by_id_transaction',
+                {
+                    invitation_id: invitation_id
+                }
+            )
+            .throwOnError()
+            console.log(response)
+            if (!response.error) {
+                this.groupInvitationsOfUserStoreService.groupInvitationsOfUser.removeObjectByPropertyValue('id', invitation_id);
+                this.groupCountersStoreService.groupCounters.incrementKey('member_counter')
+            }
+        }, true, 'Successful accepted group membership!')
+    }
+
     public async removeGroupInvitation(invitation_id: string): Promise<void> {
         await this.groupCountersStoreService.groupCounters.wrapUpdateFunction(async (): Promise<void> => {
-            const groupId: string | null = this.groupStoreService.group.getObjectId();
-            if (groupId) {
-                const response: PostgrestSingleResponse<SupabaseObjectReturn<'delete_group_member_invitation_by_id'>[]> = await this.supabaseClient.rpc(
-                    'delete_group_member_invitation_by_id',
-                    {
-                        invitation_id: invitation_id
-                    }
-                )
-                .throwOnError()
-                this.groupCountersStoreService.groupCounters.decrementKey('member_counter')
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'delete_group_member_invitation_by_id'>> = await this.supabaseClient.rpc(
+                'delete_group_member_invitation_by_id',
+                {
+                    invitation_id: invitation_id
+                }
+            )
+            .throwOnError()
+            if (!response.error) {
+                this.groupInvitationsOfUserStoreService.groupInvitationsOfUser.removeObjectByPropertyValue('id', invitation_id);
             }
-        })
+        }, true, 'Successful removed group invitation!')
     }
 
     public async declineGroupInvitation(): Promise<void> {
@@ -320,7 +340,7 @@ export class GroupMemberActionService {
                 .throwOnError()
 
                 if (!response.error) {
-                    this.groupCountersStoreService.groupCounters.decrementKey('member_counter')
+                    this.groupCountersStoreService.groupCounters.decrementKey('group_member_counter')
                     this.groupStoreService.group.uiFlagStore.setFlagFalse('isMember')
                     this.groupStoreService.group.uiFlagStore.setFlagFalse('isBoardMember')
                     this.groupStoreService.group.uiFlagStore.setFlagFalse('isInvited')

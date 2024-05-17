@@ -3,8 +3,8 @@ import {SessionStoreService} from "../../../auth/services/session.store.service"
 import {ProfileActionService} from "../../profile/action-store-services/profile.action.service";
 import {ProfileStoreService} from "../../profile/action-store-services/profile.store.service";
 import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
-import {ProfileLinkCardComponent} from "../../../ui/profile-link-card/profile-link-card.component";
-import {GroupLinkCardComponent} from "../../../ui/group-link-card/group-link-card.component";
+import {ProfileLinkCardComponent} from "../../../ui/cards/profile-link-card/profile-link-card.component";
+import {GroupLinkCardComponent} from "../../../ui/cards/group-link-card/group-link-card.component";
 import {GroupsOfUserStoreService} from "../../profile-groups/action-store-services/groups-of-user.store.service";
 import {GroupsOfUserActionService} from "../../profile-groups/action-store-services/groups-of-user.action.service";
 

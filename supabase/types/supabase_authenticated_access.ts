@@ -757,7 +757,7 @@ export type Database = {
           member_id: string
           member_type: "member" | "board_member" | "board_president"
         }
-        Returns: undefined
+        Returns: unknown
       }
       create_group_requested_relation: {
         Args: {
@@ -967,8 +967,8 @@ export type Database = {
       }
       read_group_member_invitation: {
         Args: {
-          group_member_invitation_id: string
-          user_id: string
+          group_id_in: string
+          user_id_in: string
         }
         Returns: {
           id: string
@@ -981,8 +981,8 @@ export type Database = {
       }
       read_group_member_request: {
         Args: {
-          group_member_request_id: string
-          user_id: string
+          group_id_in: string
+          user_id_in: string
         }
         Returns: {
           id: string

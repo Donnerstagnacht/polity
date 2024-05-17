@@ -87,7 +87,7 @@ Cypress.Commands.add(
         .as('selectUser')
         cy.interceptSupabaseCall('check_if_following')
         .as('isFollowing')
-        cy.interceptSupabaseCall('read_following_counter')
+        cy.interceptSupabaseCall('read_profile_counters') //         cy.interceptSupabaseCall('read_following_counter')
         .as('followingCounter')
 
         cy.searchUser(userWhoIsFollowedProfile.first_name as string)
@@ -151,11 +151,6 @@ Cypress.Commands.add('navigateToEditGroupMembershipsOfUser', (userName: string):
 
     cy.contains(userName)
     .click();
-
-    cy.interceptSupabaseCall('read_group_member_invitations_of_user')
-    .as('groupMemberInvitationsOfUser')
-    cy.interceptSupabaseCall('read_group_requests_of_user')
-    .as('groupRequestsOfUser')
     cy.interceptSupabaseCall('read_groups_of_user')
     .as('groupsOfUser')
 
@@ -163,8 +158,7 @@ Cypress.Commands.add('navigateToEditGroupMembershipsOfUser', (userName: string):
     .filter(':visible')
     .first()
     .click()
-
-    cy.wait(['@groupMemberInvitationsOfUser', '@groupRequestsOfUser', '@groupsOfUser'])
+    cy.wait(['@groupsOfUser'])
 })
 
 Cypress.Commands.add('signOut', (signedInUser: AuthData): void => {

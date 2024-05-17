@@ -4,14 +4,12 @@ DROP FUNCTION IF EXISTS public.delete_group_member_invitation_by_id(
 CREATE OR REPLACE FUNCTION public.delete_group_member_invitation_by_id(
     invitation_id uuid
 )
-    RETURNS table
-            (
-                group_id  uuid,
-                member_id uuid
-            )
+    RETURNS membership
     LANGUAGE plpgsql
 AS
 $$
+DECLARE
+    membership membership;
 BEGIN
     DELETE
     FROM
@@ -19,10 +17,13 @@ BEGIN
     WHERE
         id = invitation_id
     RETURNING
+        id,
         group_id,
         member_id
         INTO
-            group_id,
-            member_id;
+            membership.id,
+            membership.group_id,
+            membership.member_id;
+    RETURN membership;
 END;
 $$;

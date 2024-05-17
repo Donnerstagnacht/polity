@@ -15,6 +15,9 @@ import {
     TableThreeIconTextDeleteComponent
 } from "../../../ui/polity-table/table-three-icon-text-delete/table-three-icon-text-delete.component";
 import {TuiTabsModule} from "@taiga-ui/kit";
+import {
+    TableThreeIconTextTwoActionsComponent
+} from "../../../ui/polity-table/table-three-icon-text-two-actions/table-three-icon-text-two-actions.component";
 
 @Component({
     selector: 'polity-profile-groups-edit',
@@ -26,7 +29,8 @@ import {TuiTabsModule} from "@taiga-ui/kit";
         FormsModule,
         ReactiveFormsModule,
         TableThreeIconTextDeleteComponent,
-        TuiTabsModule
+        TuiTabsModule,
+        TableThreeIconTextTwoActionsComponent
     ],
     templateUrl: './profile-groups-edit.component.html',
     styleUrl: './profile-groups-edit.component.less'
@@ -45,6 +49,8 @@ export class ProfileGroupsEditComponent {
     protected showFilter: boolean = true;
     protected activeItemIndex: number = 0;
     protected showGroupMemberships: boolean = true;
+    protected showGroupRequests: boolean = false;
+    protected showGroupInvitations: boolean = false;
 
     constructor(
         private readonly groupsOfUserStoreService: GroupsOfUserStoreService,
@@ -71,13 +77,7 @@ export class ProfileGroupsEditComponent {
     }
 
     async ngOnInit(): Promise<void> {
-        await Promise.all(
-            [
-                this.groupsOfUserActionService.readGroupsOfUser(),
-                this.groupRequestsOfUserActionService.readGroupRequestsOfUser(),
-                this.groupInvitationsOfUserActionService.readGroupInvitationsOfUser()
-            ]
-        )
+        await                 this.groupsOfUserActionService.readGroupsOfUser();
         this.groupMembershipsOfUser = this.groupsOfUserStoreService.groupsOfUser.getObjects();
         this.groupRequestsOfUser = this.groupRequestsOfUserStoreService.groupRequestsOfUser.getObjects();
         this.groupInvitationsOfUser = this.groupInvitationsOfUserStoreService.groupInvitationsOfUser.getObjects();
@@ -107,11 +107,24 @@ export class ProfileGroupsEditComponent {
     }
 
     protected showGroupMembershipList(): void {
+        this.groupsOfUserActionService.readGroupsOfUser();
+        this.showGroupInvitations = false;
+        this.showGroupRequests = false;
         this.showGroupMemberships = true;
     }
 
     protected showGroupRequestList(): void {
+        this.groupRequestsOfUserActionService.readGroupRequestsOfUser()
+        this.showGroupInvitations = false;
         this.showGroupMemberships = false;
+        this.showGroupRequests = true;
+    }
+
+    protected showGroupInvitationList(): void {
+        this.groupInvitationsOfUserActionService.readGroupInvitationsOfUser()
+        this.showGroupMemberships = false;
+        this.showGroupRequests = false;
+        this.showGroupInvitations = true;
     }
 
     protected async leaveGroup(membership_id: string): Promise<void> {
@@ -120,6 +133,16 @@ export class ProfileGroupsEditComponent {
 
     protected async withdrawGroupRequest(requestId: string): Promise<void> {
         await this.groupMemberActionService.withDrawGroupRequestById(requestId);
+    }
+
+    protected async acceptGroupInvitation(membership_id: string): Promise<void> {
+        await this.groupMemberActionService.accceptGroupInvitationById(membership_id);
+        await console.log('accept group invitation', membership_id)
+    }
+
+    protected async declineGroupInvitation(membership_id: string): Promise<void> {
+        await this.groupMemberActionService.removeGroupInvitation(membership_id);
+        await console.log('decline group invitation', membership_id)
     }
 
     protected clearFilter(): void {

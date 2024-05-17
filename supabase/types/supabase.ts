@@ -15,6 +15,12 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      accept_group_invitation_by_id_transaction: {
+        Args: {
+          invitation_id: string
+        }
+        Returns: Database["public"]["CompositeTypes"]["membership"]
+      }
       accept_group_invitation_transaction: {
         Args: {
           group_id_in: string
@@ -92,10 +98,7 @@ export type Database = {
         Args: {
           invitation_id: string
         }
-        Returns: {
-          group_id: string
-          member_id: string
-        }[]
+        Returns: Database["public"]["CompositeTypes"]["membership"]
       }
       delete_group_member_request: {
         Args: {
