@@ -4,13 +4,13 @@ DROP FUNCTION IF EXISTS public.delete_group_member_invitation(
 CREATE OR REPLACE FUNCTION public.delete_group_member_invitation(
     group_id_in uuid
 )
-    RETURNS delete_group
+    RETURNS membership
     LANGUAGE plpgsql
 AS
 $$
 DECLARE
     auth_user_id uuid;
-    delete_group delete_group;
+    membership   membership;
 BEGIN
     auth_user_id = auth.uid();
     DELETE
@@ -20,11 +20,13 @@ BEGIN
           authenticated_access.group_invited_members.group_id = group_id_in
       AND authenticated_access.group_invited_members.member_id = auth_user_id
     RETURNING
+        authenticated_access.group_invited_members.id,
         authenticated_access.group_invited_members.group_id,
         authenticated_access.group_invited_members.member_id
         INTO
-            delete_group.group_id,
-            delete_group.member_id;
-    RETURN delete_group;
+            membership.id,
+            membership.group_id,
+            membership.member_id;
+    RETURN membership;
 END;
 $$;

@@ -206,7 +206,7 @@ export class GroupMemberActionService {
                 )
                 .throwOnError()
                 if (!response.error) {
-                    this.groupCountersStoreService.groupCounters.incrementKey('member_counter')
+                    this.groupCountersStoreService.groupCounters.incrementKey('group_member_counter')
                     this.groupStoreService.group.uiFlagStore.setFlagTrue('isMember')
                     this.groupStoreService.group.uiFlagStore.setFlagFalse('isBoardMember')
                     this.groupStoreService.group.uiFlagStore.setFlagFalse('isInvited')

@@ -15,11 +15,11 @@ BEGIN
     FROM
         authenticated_access.group_invited_members
     WHERE
-        id = invitation_id
+        authenticated_access.group_invited_members.id = invitation_id
     RETURNING
-        id,
-        group_id,
-        member_id
+        authenticated_access.group_invited_members.id,
+        authenticated_access.group_invited_members.group_id,
+        authenticated_access.group_invited_members.member_id
         INTO
             membership.id,
             membership.group_id,

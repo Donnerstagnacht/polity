@@ -10,24 +10,24 @@ CREATE OR REPLACE FUNCTION public.accept_group_invitation_transaction(
 AS
 $$
 DECLARE
-    deleted_group delete_group;
+    membership membership;
 BEGIN
-    deleted_group := public.delete_group_member_invitation(
+    membership := public.delete_group_member_invitation(
         group_id_in
-                     );
+                  );
 
     PERFORM authenticated_access.create_group_member(
-        deleted_group.group_id,
-        deleted_group.member_id,
+        membership.group_id,
+        membership.member_id,
         'member'
             );
 
     PERFORM authenticated_access.increment_group_member_counter(
-        deleted_group.group_id
+        membership.group_id
             );
 
     PERFORM authenticated_access.increment_profile_group_membership_counter(
-        deleted_group.member_id
+        membership.member_id
             );
 END
 $$

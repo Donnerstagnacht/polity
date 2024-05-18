@@ -753,9 +753,9 @@ export type Database = {
       }
       create_group_member: {
         Args: {
-          group_id: string
-          member_id: string
-          member_type: "member" | "board_member" | "board_president"
+          group_id_in: string
+          member_id_in: string
+          member_type_in: "member" | "board_member" | "board_president"
         }
         Returns: unknown
       }

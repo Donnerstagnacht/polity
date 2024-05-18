@@ -1,13 +1,13 @@
 DROP FUNCTION IF EXISTS authenticated_access.create_group_member(
-    group_id uuid,
-    member_id uuid,
-    member_type group_member
+    group_id_in uuid,
+    member_id_in uuid,
+    member_type_in group_member
 );
 
 CREATE OR REPLACE FUNCTION authenticated_access.create_group_member(
-    group_id uuid,
-    member_id uuid,
-    member_type group_member
+    group_id_in uuid,
+    member_id_in uuid,
+    member_type_in group_member
 )
     RETURNS membership
     LANGUAGE plpgsql
@@ -21,13 +21,13 @@ BEGIN
                                             member_id,
                                             member_type)
     VALUES
-        (group_id,
-         member_id,
-         member_type)
+        (group_id_in,
+         member_id_in,
+         member_type_in)
     RETURNING
         id,
         group_id,
-        member_type
+        member_id
         INTO
             membership.id,
             membership.group_id,

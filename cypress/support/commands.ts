@@ -155,7 +155,6 @@ Cypress.Commands.add('navigateToEditGroupMembershipsOfUser', (userName: string):
     .as('groupsOfUser')
 
     cy.getDataCy('nav-groups-edit', 'nav-groups-edit-desktop')
-    .filter(':visible')
     .first()
     .click()
     cy.wait(['@groupsOfUser'])

@@ -1,0 +1,95 @@
+<table
+    [class.tui-skeleton]="isLoading()"
+    [columns]="transformColumnsForTui()"
+    class="tui-table"
+    tuiTable
+>
+    <thead>
+    <tr
+        class="tui-table__tr"
+        tuiThGroup>
+        <th
+            *tuiHead="transformColumnForTui(0)"
+            [attr.data-cy]="dataCyTagsHeadline[0]"
+            [sorter]="null"
+            class="tui-table__th tui-table__th_first"
+            tuiTh>{{ headings[0] }}
+        </th>
+        <th
+            *tuiHead="transformColumnForTui(1)"
+            [attr.data-cy]="dataCyTagsHeadline[1]"
+            class="tui-table__th"
+            tuiTh>{{ headings[1] }}
+        </th>
+        <th
+            *tuiHead="transformColumnForTui(2)"
+            [attr.data-cy]="dataCyTagsHeadline[2]"
+            class="tui-table__th"
+            tuiTh>{{ headings[2] }}
+        </th>
+    </tr>
+    </thead>
+    <tbody
+        *tuiLet="transformDataForTui() | tuiTableSort as sortedData"
+        [data]="sortedData"
+        tuiTbody>
+        @for (item of sortedData;track item) {
+            <tr
+                class="tui-table__tr tui-table__tr_border_none"
+                tuiTr
+            >
+                <td
+                    *tuiCell="transformColumnForTui(0)"
+                    class="tui-table__td tui-table__td_first"
+                    tuiTd
+                >
+                    <tui-avatar
+                        [attr.data-cy]="dataCyTags[0]"
+                        [autoColor]="true"
+                        avatarUrl="{{getTableValueKey(item, dataKeysForColumns[0])}}"
+                        size="s"
+                        text="{{getTableValueKey(item, dataKeysForColumns[0])}} {{getTableValueKey(item, bonusKeys[0])}}"
+                    ></tui-avatar>
+                </td>
+                <td
+                    *tuiCell="transformColumnForTui(1)"
+                    [attr.data-cy]="dataCyTags[1]"
+                    class="tui-table__td polity-table-column-max-width"
+                    tuiTd
+                >
+                    {{ getTableValueKey(item, dataKeysForColumns[1]) }} {{ getTableValueKey(item, bonusKeys[0]) }}
+                </td>
+                <td
+                    *tuiCell="transformColumnForTui(2)"
+                    class="tui-table__td"
+                    tuiTd
+                >
+                    <button
+                        (click)="onFirstAction(getTableValueKey(item, dataKeysForColumns[2]))"
+                        [attr.data-cy]="dataCyTags[2]"
+                        appearance="flat"
+                        class="remove"
+                        icon="{{firstActionIcon}}"
+                        shape="rounded"
+                        size="s"
+                        title="{{firstActionText}}"
+                        tuiIconButton
+                        type="button"
+                    ></button>
+                    <button
+                        (click)="onSecondAction(getTableValueKey(item, dataKeysForColumns[2]))"
+                        [attr.data-cy]="secondActionDataCyTag"
+                        appearance="flat"
+                        class="remove"
+                        icon="{{secondActionIcon}}"
+                        shape="rounded"
+                        size="s"
+                        title="{{secondActionText}}"
+                        tuiIconButton
+                        type="button"
+                    ></button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

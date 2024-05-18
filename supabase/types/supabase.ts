@@ -92,7 +92,7 @@ export type Database = {
         Args: {
           group_id_in: string
         }
-        Returns: Database["public"]["CompositeTypes"]["delete_group"]
+        Returns: Database["public"]["CompositeTypes"]["membership"]
       }
       delete_group_member_invitation_by_id: {
         Args: {

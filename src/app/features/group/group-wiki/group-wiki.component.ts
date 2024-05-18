@@ -1,4 +1,4 @@
-import {Component, effect, signal, Signal, WritableSignal} from '@angular/core';
+import {Component, effect, Inject, Injector, signal, Signal, WritableSignal} from '@angular/core';
 import {CounterComponent} from "../../../ui/polity-wiki/counter/counter.component";
 import {FollowButton} from "../../../ui/polity-wiki/follow-button/follow-button.component";
 import {RequestButton} from "../../../ui/polity-wiki/request-button/request-button.component";
@@ -8,6 +8,11 @@ import {GroupStoreService} from "../action-store-service/group.store.service";
 import {GroupCountersActionService} from "../../group-follow/action-store-services/group-counters.action.service";
 import {GroupCountersStoreService} from "../../group-follow/action-store-services/group-counters.store.service";
 import {GroupMemberActionService} from "../../group_member/action-store-services/group-member.action.service";
+import {TuiDialogService} from "@taiga-ui/core";
+import {PolymorpheusComponent} from "@tinkoff/ng-polymorpheus";
+import {
+    GroupAcceptDeclineMembershipComponent
+} from "../../group_member/group-accept-decline-membership/group-accept-decline-membership.component";
 
 @Component({
     selector: 'polity-group-wiki',
@@ -39,11 +44,22 @@ export class GroupWikiComponent {
     protected isNoMember: WritableSignal<boolean> = signal(true);
     protected buttonTextString: string = 'Request Membership';
 
+    private readonly dialog = this.dialogService.open<string>(
+        new PolymorpheusComponent(GroupAcceptDeclineMembershipComponent, this.injector),
+        {
+            // data: 237,
+            dismissible: true,
+            label: 'Heading',
+        },
+    );
+
     constructor(
         private groupStoreService: GroupStoreService,
         private groupCountersStoreService: GroupCountersStoreService,
         private groupCountersActionService: GroupCountersActionService,
-        private groupMemberActionService: GroupMemberActionService
+        private groupMemberActionService: GroupMemberActionService,
+        @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
+        @Inject(Injector) private injector: Injector
     ) {
         effect((): void => {
             if (this.isNoMember()) {
@@ -96,11 +112,28 @@ export class GroupWikiComponent {
         } else if (this.isRequested()) {
             await this.groupMemberActionService.withDrawGroupRequest();
         } else if (this.isInvited()) {
+            this.showDialog()
             //TODO open dialog
             //TODO check if accepted
-            await this.groupMemberActionService.accceptGroupInvitation();
+            // await this.groupMemberActionService.accceptGroupInvitation();
             //TODO check if not accepted
             // await this.groupMemberActionService.declineGroupInvitation();
         }
+    }
+
+    private showDialog(): void {
+        this.dialog.subscribe({
+            next: data => {
+                console.info(`Dialog emitted data = ${data}`);
+                if (data === 'accept') {
+                    this.groupMemberActionService.accceptGroupInvitation();
+                } else if (data === 'decline') {
+                    this.groupMemberActionService.declineGroupInvitation();
+                }
+            },
+            complete: () => {
+                console.info('Dialog closed');
+            },
+        });
     }
 }
