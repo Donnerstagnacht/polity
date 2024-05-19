@@ -311,7 +311,10 @@ export class GroupMemberActionService {
         }, true, 'Successful withdrawn group membership request!')
     }
 
-    public async removeGroupMember(membershipId: string): Promise<void> {
+    public async removeGroupMember(
+        membershipId: string,
+        fromGroup: boolean = false
+    ): Promise<void> {
         console.log('removing group member', membershipId)
         await this.groupCountersStoreService.groupCounters.wrapUpdateFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<SupabaseObjectReturn<'leave_group_by_membership_id_transaction'>> = await this.supabaseClient.rpc(
@@ -322,7 +325,11 @@ export class GroupMemberActionService {
             )
             .throwOnError();
             if (!response.error) {
-                this.groupsOfUserStoreService.groupsOfUser.removeObjectByPropertyValue('id', membershipId);
+                if (fromGroup) {
+                    this.groupMembersStoreService.groupMembers.removeObjectByPropertyValue('id', membershipId);
+                } else {
+                    this.groupsOfUserStoreService.groupsOfUser.removeObjectByPropertyValue('id', membershipId);
+                }
             }
         }, true, 'Successful removed group member!')
     }

@@ -1,0 +1,27 @@
+<tui-combo-box
+    (searchChange)="onSearchChange($event)"
+    [attr.data-cy]="'inviteMemberToNewGroup'"
+    [stringify]="stringify"
+    [tuiTextfieldLabelOutside]="true"
+    formControlName="members"
+>
+    Lade ein neues Mitglied ein.
+    <tui-data-list-wrapper
+        *tuiDataList
+        [attr.data-cy]="'inviteMemberSearchResult'"
+        [itemContent]="stringify | tuiStringifyContent"
+        [items]="searchResults() | tuiFilterByInputWith: stringify"
+    ></tui-data-list-wrapper>
+</tui-combo-box>
+
+<polity-table-three-icon-text-delete
+    (remove)="onRemove($event)"
+    [bonusKeys]="['last_name']"
+    [dataCyTagsHeadline]="['user_image_title', 'user_first_name_title', 'remove_invitation_title']"
+    [dataCyTags]="['user_image', 'user_first_name', 'follower_remove']"
+    [dataKeysForColumns]="['last_name', 'first_name', 'id']"
+    [data]="selectedUsersAsSignal"
+    [headings]="['Foto', 'Name', 'Entfernen']"
+    [isLoading]="signal(false)"
+>
+</polity-table-three-icon-text-delete>

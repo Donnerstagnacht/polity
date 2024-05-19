@@ -75,7 +75,7 @@ export class GroupMemberEditComponent {
     }
 
     protected async removeGroupMember(id: string): Promise<void> {
-        await this.groupMemberActionService.removeGroupMember(id);
+        await this.groupMemberActionService.removeGroupMember(id, true);
     }
 
     protected clearFilter(): void {
