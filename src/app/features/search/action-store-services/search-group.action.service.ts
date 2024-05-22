@@ -4,6 +4,7 @@ import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {supabaseClient} from "../../../auth/supabase-client";
 import {SearchGroupStoreService} from "./search-group.store.service";
 import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SearchUtilitiesService} from "./search-utilities.service";
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +13,8 @@ export class SearchGroupActionService {
     private supabaseClient: SupabaseClient<DatabaseOverwritten> = supabaseClient
 
     constructor(
-        private readonly searchStoreService: SearchGroupStoreService
+        private readonly searchStoreService: SearchGroupStoreService,
+        private readonly searchUtilitiesService: SearchUtilitiesService
     ) {
     }
 
@@ -23,6 +25,7 @@ export class SearchGroupActionService {
      * @return {Promise<boolean>} Returns true if the search was successful.
      */
     public async searchGroup(searchTerm: string): Promise<void> {
+        searchTerm = this.searchUtilitiesService.replaceSpacesWithPipe(searchTerm);
         this.searchStoreService.groupSearchResults.resetObjects()
         await this.searchStoreService.groupSearchResults.wrapSelectFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<SupabaseObjectReturn<'search_group'>[]> = await this.supabaseClient.rpc(

@@ -1,4 +1,4 @@
-import {Component, signal, WritableSignal} from '@angular/core';
+import {Component, signal} from '@angular/core';
 import {StepperRightComponent} from "../../../navigation/stepper-right/stepper-right.component";
 import {StepperTopComponent} from "../../../navigation/stepper-top/stepper-top.component";
 import {SecondBarTopComponent} from "../../../navigation/second-bar-top/second-bar-top.component";
@@ -36,6 +36,7 @@ import {
 } from "../../../ui/polity-table/table-three-icon-text-delete/table-three-icon-text-delete.component";
 import {CREATE_GROUP_STEPPER_ITEMS} from "../../../navigation/create-groupe-stepper";
 import {GroupNew} from "../../new/types/group-new";
+import {SearchProfilesBarComponent} from "../../search/search-profiles-bar/search-profiles-bar.component";
 
 @Component({
     selector: 'polity-group-new',
@@ -66,35 +67,29 @@ import {GroupNew} from "../../new/types/group-new";
         TuiFilterByInputPipeModule,
         TuiComboBoxModule,
         TableThreeIconTextDeleteComponent,
-        TuiSelectModule
+        TuiSelectModule,
+        SearchProfilesBarComponent
     ],
     templateUrl: './group-new.component.html',
     styleUrl: './group-new.component.less'
 })
 export class GroupNewComponent {
     selectedUsers: SupabaseObjectReturn<'search_user'>[] = []
-    selectedUsersAsSignal: WritableSignal<SupabaseObjectReturn<'search_user'>[]> = signal([])
     protected createGroupForm: FormGroup<{
         name: FormControl<string | null>,
         level: FormControl<string | null>
         description: FormControl<string | null>,
-        members: FormControl<string | null>
     }> = new FormGroup({
         name: new FormControl('', Validators.required),
         level: new FormControl('', Validators.required),
         description: new FormControl('', Validators.required),
-        members: new FormControl('')
     })
     protected menuItems: StepperItem[] = CREATE_GROUP_STEPPER_ITEMS;
-    protected searchResults: WritableSignal<SupabaseObjectReturn<'search_user'>[]> = signal([]);
     protected readonly signal = signal;
 
     constructor(
-        private createGroupService: CreateGroupService,
-        private searchUserActionService: SearchUserActionService,
-        private searchStoreService: SearchUserStoreService
+        private createGroupService: CreateGroupService
     ) {
-        this.searchResults = this.searchStoreService.profilSearchResults.getObjects();
     }
 
     ngOnInit(): void {
@@ -105,41 +100,10 @@ export class GroupNewComponent {
             this.updateMenuItemIcon('members', 3);
             this.updateMenuItemIcon('Inaugural-Meeting', 4);
         })
-
-        this.createGroupForm.controls['members'].valueChanges.subscribe((value: any): void => {
-            if (value) {
-                const choosenObject: SupabaseObjectReturn<'search_user'> | undefined = this.searchResults().find((searchResult: SupabaseObjectReturn<'search_user'>): boolean => {
-                    return value.id === searchResult.id
-                })
-
-                if (choosenObject && !this.selectedUsers.some((item: SupabaseObjectReturn<'search_user'>): boolean => item.id === choosenObject.id)) {
-                    this.selectedUsers.push(choosenObject);
-                    this.selectedUsersAsSignal.update((selectedUser: SupabaseObjectReturn<'search_user'>[]) => ([...selectedUser, choosenObject]))
-                    this.createGroupForm.controls['members'].setValue(null);
-                } else {
-                    this.createGroupForm.controls['members'].setValue(null);
-                }
-            }
-        })
     }
 
-    protected onSearchChange(search: string | null): void {
-        if (search) {
-            this.searchUserActionService.searchUser(search);
-        }
-    }
-
-    protected onRemove(id: string): void {
-        this.selectedUsers = this.selectedUsers.filter((item: SupabaseObjectReturn<'search_user'>): boolean => item.id !== id);
-        this.selectedUsersAsSignal.set(this.selectedUsers);
-    }
-
-    protected stringify(searchResult: { first_name: string; last_name: string }): string {
-        if (searchResult.first_name && searchResult.last_name) {
-            return `${searchResult.first_name} ${searchResult.last_name}`
-        } else {
-            return ''
-        }
+    protected onSelectedUserUpdate(selectedUsers: SupabaseObjectReturn<'search_user'>[]): void {
+        this.selectedUsers = selectedUsers;
     }
 
     protected async onCreateGroup(): Promise<void> {

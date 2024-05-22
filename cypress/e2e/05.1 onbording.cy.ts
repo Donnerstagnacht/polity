@@ -1,15 +1,15 @@
 import {Size, Sizes} from "../fixtures/size";
-import {AUTH_DATA1, AUTH_DATA2, AUTH_DATA3, AUTH_DATA4, AuthData} from "../../seed_and_test_data/01_test_auth";
+import {AUTH_DATA1, AUTH_DATA5, AUTH_DATA6, AUTH_DATA7, AuthData} from "../../seed_and_test_data/01_test_auth";
 import {Profile, PROFILE1} from "../../seed_and_test_data/02_test_profiles";
 
 const userFirstLoginDoingWelcomeTutorialAuth: AuthData = AUTH_DATA1;
 const userFirstLoginDoingWelcomeTutorialProfile: Profile = PROFILE1;
 
-const userDoingProfileTutorialAuth: AuthData = AUTH_DATA2;
+const userDoingProfileTutorialAuth: AuthData = AUTH_DATA5;
 
-const userDoingSearchTutorialAuth: AuthData = AUTH_DATA3;
+const userDoingSearchTutorialAuth: AuthData = AUTH_DATA6;
 
-const userRestartingTutorialAuth: AuthData = AUTH_DATA4;
+const userRestartingTutorialAuth: AuthData = AUTH_DATA7;
 
 Sizes.forEach((size: Size): void => {
     describe(`Onboarding tests with screen size ${size.width} show that users can `, (): void => {

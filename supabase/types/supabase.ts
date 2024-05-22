@@ -104,19 +104,13 @@ export type Database = {
         Args: {
           group_id_in: string
         }
-        Returns: {
-          group_id_out: string
-          member_id_out: string
-        }[]
+        Returns: Database["public"]["CompositeTypes"]["membership"]
       }
       delete_group_member_request_by_id: {
         Args: {
           request_id: string
         }
-        Returns: {
-          group_id: string
-          member_id: string
-        }[]
+        Returns: Database["public"]["CompositeTypes"]["membership"]
       }
       follow_group_transaction: {
         Args: {
@@ -258,8 +252,9 @@ export type Database = {
           group_id: string
           member_id: string
           member_type: Database["public"]["Enums"]["group_member"]
-          created_at: string
-          updated_at: string
+          first_name: string
+          last_name: string
+          profile_image: string
         }[]
       }
       read_group_member_invitations_of_user: {
@@ -280,8 +275,9 @@ export type Database = {
           group_id: string
           member_id: string
           member_type: Database["public"]["Enums"]["group_member"]
-          created_at: string
-          updated_at: string
+          first_name: string
+          last_name: string
+          profile_image: string
         }[]
       }
       read_group_members: {

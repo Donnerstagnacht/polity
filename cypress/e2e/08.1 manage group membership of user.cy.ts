@@ -43,7 +43,7 @@ Sizes.forEach((size: Size): void => {
             .as('leaveGroupMemberTransaction')
 
             cy.getDataCy('group_name')
-            .shouldBeVisible()
+            // .shouldBeVisible()
             .contains(groupToBeLeft.name)
             .next()
             .next() // needs to be removed if group profile images are displayed

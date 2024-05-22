@@ -61,10 +61,10 @@ export class SearchUserComponent {
     private async onKeyUp(): Promise<void> {
         let searchTerm: string | null = this.searchForm.controls.search.value
         if (searchTerm) {
-            if (searchTerm.endsWith(' ')) {
-                searchTerm = searchTerm.substring(0, searchTerm.length - 1)
-            }
-            searchTerm = searchTerm.replace(/ /g, '|')
+            //     if (searchTerm.endsWith(' ')) {
+            //         searchTerm = searchTerm.substring(0, searchTerm.length - 1)
+            //     }
+            //     searchTerm = searchTerm.replace(/ /g, '|')
 
             await Promise.all([
                 await this.searchUserActionService.searchUser(searchTerm),

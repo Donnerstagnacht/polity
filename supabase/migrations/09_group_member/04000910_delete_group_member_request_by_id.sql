@@ -5,15 +5,13 @@ DROP FUNCTION IF EXISTS public.delete_group_member_request_by_id(
 CREATE OR REPLACE FUNCTION public.delete_group_member_request_by_id(
     request_id uuid
 )
-    RETURNS table
-            (
-                group_id  uuid,
-                member_id uuid
-            )
+    RETURNS membership
     LANGUAGE plpgsql
     SECURITY INVOKER
 AS
 $$
+DECLARE
+    membership membership;
 BEGIN
     DELETE
     FROM
@@ -21,10 +19,13 @@ BEGIN
     WHERE
         id = request_id
     RETURNING
+        id,
         authenticated_access.group_member_requests.group_id,
         authenticated_access.group_member_requests.member_id
         INTO
-            group_id,
-            member_id;
+            membership.id,
+            membership.group_id,
+            membership.member_id;
+    RETURN membership;
 END;
 $$;

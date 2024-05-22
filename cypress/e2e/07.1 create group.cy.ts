@@ -54,7 +54,7 @@ Sizes.forEach((size: Size): void => {
             .type(searchedUser.first_name + ' ' + searchedUser.last_name)
             cy.wait('@searchUser')
 
-            cy.getDataCy('inviteMemberSearchResult')
+            cy.getDataCy('searchProfileBar')
             .click()
 
             cy.getDataCy('user_first_name')

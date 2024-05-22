@@ -14,6 +14,8 @@ import {
 import {
     GroupInvitationsOfUserStoreService
 } from "../../profile-groups/action-store-services/group-invitations-of-user.store.service";
+import {GroupInvitationsStoreService} from "./group-invitations.store.service";
+import {GroupRequestsStoreService} from "./group-requests.store.service";
 
 @Injectable({
     providedIn: 'root'
@@ -28,7 +30,9 @@ export class GroupMemberActionService {
         private readonly groupCountersStoreService: GroupCountersStoreService,
         private readonly groupsOfUserStoreService: GroupsOfUserStoreService,
         private readonly groupRequestsOfUserStoreService: GroupRequestsOfUserStoreService,
-        private readonly groupInvitationsOfUserStoreService: GroupInvitationsOfUserStoreService
+        private readonly groupInvitationsOfUserStoreService: GroupInvitationsOfUserStoreService,
+        private readonly groupInvitationsStoreService: GroupInvitationsStoreService,
+        private readonly groupRequestsStoreService: GroupRequestsStoreService
     ) {
     }
 
@@ -153,13 +157,19 @@ export class GroupMemberActionService {
                 }
             )
             .throwOnError()
-            this.groupCountersStoreService.groupCounters.incrementKey('member_counter')
+            if (!response.error) {
+                this.groupCountersStoreService.groupCounters.incrementKey('member_counter')
+                this.groupRequestsStoreService.groupRequests.removeObjectByPropertyValue('id', membershipRequest);
+            }
         }, true, 'Successful accepted group membership!')
     }
 
-    public async declineGroupMembershipRequest(membershipRequest: string): Promise<void> {
+    public async declineGroupMembershipRequest(
+        membershipRequest: string,
+        fromGroup: boolean = false
+    ): Promise<void> {
         await this.groupCountersStoreService.groupCounters.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'delete_group_member_request'>[]> = await this.supabaseClient.rpc(
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'delete_group_member_request'>> = await this.supabaseClient.rpc(
                 'delete_group_member_request',
                 {
                     group_id_in: membershipRequest
@@ -167,12 +177,16 @@ export class GroupMemberActionService {
             )
             .throwOnError()
             if (!response.error) {
-                this.groupStoreService.group.uiFlagStore.setFlagFalse('isMember')
-                this.groupStoreService.group.uiFlagStore.setFlagFalse('isBoardMember')
-                this.groupStoreService.group.uiFlagStore.setFlagFalse('isInvited')
-                this.groupStoreService.group.uiFlagStore.setFlagFalse('isRequested')
-                this.groupStoreService.group.uiFlagStore.setFlagTrue('isNotMember')
-                this.groupStoreService.groupMemberStatus.set('no_member')
+                if (fromGroup) {
+                    this.groupRequestsStoreService.groupRequests.removeObjectByPropertyValue('id', membershipRequest);
+                } else {
+                    this.groupStoreService.group.uiFlagStore.setFlagFalse('isMember')
+                    this.groupStoreService.group.uiFlagStore.setFlagFalse('isBoardMember')
+                    this.groupStoreService.group.uiFlagStore.setFlagFalse('isInvited')
+                    this.groupStoreService.group.uiFlagStore.setFlagFalse('isRequested')
+                    this.groupStoreService.group.uiFlagStore.setFlagTrue('isNotMember')
+                    this.groupStoreService.groupMemberStatus.set('no_member')
+                }
             }
         }, true, 'Successful declined group membership!')
 
@@ -235,7 +249,10 @@ export class GroupMemberActionService {
         }, true, 'Successful accepted group membership!')
     }
 
-    public async removeGroupInvitation(invitation_id: string): Promise<void> {
+    public async removeGroupInvitation(
+        invitation_id: string,
+        fromGroup: boolean = false
+    ): Promise<void> {
         await this.groupCountersStoreService.groupCounters.wrapUpdateFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<SupabaseObjectReturn<'delete_group_member_invitation_by_id'>> = await this.supabaseClient.rpc(
                 'delete_group_member_invitation_by_id',
@@ -245,7 +262,11 @@ export class GroupMemberActionService {
             )
             .throwOnError()
             if (!response.error) {
-                this.groupInvitationsOfUserStoreService.groupInvitationsOfUser.removeObjectByPropertyValue('id', invitation_id);
+                if (fromGroup) {
+                    this.groupInvitationsStoreService.groupInvitations.removeObjectByPropertyValue('id', invitation_id);
+                } else {
+                    this.groupInvitationsOfUserStoreService.groupInvitationsOfUser.removeObjectByPropertyValue('id', invitation_id);
+                }
             }
         }, true, 'Successful removed group invitation!')
     }
@@ -277,7 +298,7 @@ export class GroupMemberActionService {
         await this.groupCountersStoreService.groupCounters.wrapUpdateFunction(async (): Promise<void> => {
             const groupId: string | null = this.groupStoreService.group.getObjectId();
             if (groupId) {
-                const response: PostgrestSingleResponse<SupabaseObjectReturn<'delete_group_member_request'>[]> = await this.supabaseClient.rpc(
+                const response: PostgrestSingleResponse<SupabaseObjectReturn<'delete_group_member_request'>> = await this.supabaseClient.rpc(
                     'delete_group_member_request',
                     {
                         group_id_in: groupId
@@ -298,7 +319,7 @@ export class GroupMemberActionService {
 
     public async withDrawGroupRequestById(requestId: string): Promise<void> {
         await this.groupCountersStoreService.groupCounters.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'delete_group_member_request_by_id'>[]> = await this.supabaseClient.rpc(
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'delete_group_member_request_by_id'>> = await this.supabaseClient.rpc(
                 'delete_group_member_request_by_id',
                 {
                     request_id: requestId

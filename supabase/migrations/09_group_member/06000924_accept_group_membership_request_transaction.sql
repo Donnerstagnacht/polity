@@ -10,32 +10,25 @@ CREATE OR REPLACE FUNCTION public.accept_group_membership_request_transaction(
 AS
 $$
 DECLARE
-    group_id  uuid;
-    member_id uuid;
+    membership membership;
 BEGIN
-    SELECT
-        group_id,
-        member_id
-    INTO
-        group_id,
-        member_id
-    FROM
-        public.delete_group_member_request(
+    membership :=
+        public.delete_group_member_request_by_id(
             request_id
         );
 
     PERFORM authenticated_access.create_group_member(
-        group_id,
-        member_id,
+        membership.group_id,
+        membership.member_id,
         'member'
             );
 
     PERFORM authenticated_access.increment_group_member_counter(
-        group_id
+        membership.group_id
             );
 
     PERFORM authenticated_access.increment_profile_group_membership_counter(
-        member_id
+        membership.member_id
             );
 END
 $$
