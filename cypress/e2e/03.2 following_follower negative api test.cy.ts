@@ -12,7 +12,6 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
     const TEST_ID: string = otherUser.id;
 
     beforeEach(async (): Promise<void> => {
-        cy.visit('landing/sign-in');
         const response: AuthTokenResponse = await supabaseClient.auth.signInWithPassword(
             {
                 email: signedInUserAuth.email,

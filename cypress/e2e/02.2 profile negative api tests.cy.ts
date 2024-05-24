@@ -16,7 +16,6 @@ describe(`Negative api tests for profile_counter table show that `, async (): Pr
     })
 
     beforeEach(async (): Promise<void> => {
-        cy.visit('landing/sign-in');
         const response: AuthTokenResponse = await supabaseClient.auth.signInWithPassword(
             {
                 email: signedInUserAuth.email,
