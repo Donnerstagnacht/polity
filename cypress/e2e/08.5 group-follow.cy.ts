@@ -126,16 +126,6 @@ Sizes.forEach((size: Size): void => {
             console.log('size width', size.width)
             console.log('sizes[2] width', Sizes[2].width)
 
-            // if (size.width === Sizes[2].width) {
-            //     cy.getDataCy('nav-follower-edit-desktop')
-            //     .shouldBeVisible()
-            //     .click()
-            // } else {
-            //     cy.getDataCy('nav-follower-edit')
-            //     .shouldBeVisible()
-            //     .click()
-            // }
-
             cy.getDataCy('nav-follower-edit', 'nav-follower-edit-desktop')
             .filter(':visible')
             .click()
