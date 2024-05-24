@@ -113,6 +113,10 @@ export class GroupMemberEditComponent {
         this.combinedForm.reset()
         if (this.showMembers) {
             this.groupMemberStoreService.groupMembers.resetDisplayedObjects();
+        } else if (this.showRequests) {
+            this.groupRequestsStoreService.groupRequests.resetDisplayedObjects();
+        } else if (this.showInvitations) {
+            this.groupInvitationsStoreService.groupInvitations.resetDisplayedObjects();
         }
     }
 

@@ -22,7 +22,7 @@ BEGIN
     PERFORM authenticated_access.increment_group_follower_counter(
         following_id
             );
-    PERFORM authenticated_access.increment_group_following_counter(
+    PERFORM authenticated_access.increment_following_counter(
         follower_id
             );
     --     PERFORM authenticated_access.create_notification_from_user_transaction(

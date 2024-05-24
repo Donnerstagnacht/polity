@@ -68,7 +68,7 @@ Sizes.forEach((size: Size): void => {
             .as('selectUser')
             cy.interceptSupabaseCall('check_if_following')
             .as('isFollowing')
-            cy.interceptSupabaseCall('read_following_counter')
+            cy.interceptSupabaseCall('read_profile_counters')
             .as('followingCounter')
 
             cy.searchUser(userWhoIsUnFollowedProfile.first_name as string)
@@ -115,7 +115,7 @@ Sizes.forEach((size: Size): void => {
             cy.navigateToHome();
             cy.interceptSupabaseCall('check_if_following')
             .as('isFollowing')
-            cy.interceptSupabaseCall('read_following_counter')
+            cy.interceptSupabaseCall('read_profile_counters')
             .as('followingCounter')
             cy.interceptSupabaseCall('read_user')
             .as('user')
@@ -162,7 +162,7 @@ Sizes.forEach((size: Size): void => {
             cy.navigateToHome();
             cy.interceptSupabaseCall('check_if_following')
             .as('isFollowing')
-            cy.interceptSupabaseCall('read_following_counter')
+            cy.interceptSupabaseCall('read_profile_counters')
             .as('followingCounter')
             cy.interceptSupabaseCall('read_user')
             .as('user')

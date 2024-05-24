@@ -237,6 +237,15 @@ export type Database = {
           group_member_counter: number
         }[]
       }
+      read_group_followings_of_user: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          id: string
+          img_url: string
+          name: string
+          level: Database["public"]["Enums"]["group_level"]
+        }[]
+      }
       read_group_implied_type: {
         Args: {
           group_id: string

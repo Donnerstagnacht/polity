@@ -17,6 +17,8 @@ import {environment} from "../../src/environments/environment";
 import {Profile} from "../../seed_and_test_data/02_test_profiles";
 import {ProfileCounter} from "../../seed_and_test_data/04_test_profile_counters";
 import {AuthData} from "../../seed_and_test_data/01_test_auth";
+import {Group} from "../../seed_and_test_data/07_test_groups";
+import {GroupCounter} from "../../seed_and_test_data/11_test_group_counters";
 import Chainable = Cypress.Chainable;
 
 /**
@@ -126,6 +128,65 @@ Cypress.Commands.add(
         cy.getDataCy('first-name')
         .shouldBeVisible()
         .contains(userWhoFollowsProfile.first_name as string)
+
+        cy.getDataCy('followingCounter')
+        .shouldBeVisible()
+        .contains(userWhoFollowsCounter.following_counter + 1)
+    }
+)
+
+Cypress.Commands.add(
+    'followGroup',
+    (
+        groupWhichIsFollowed: Group,
+        groupWhichIsFollowedCounter: GroupCounter,
+        userWhoFollowsProfile: Profile,
+        userWhoFollowsCounter: ProfileCounter
+    ): void => {
+
+        cy.interceptSupabaseCall('read_group_columns')
+        .as('readGroupColumns')
+        cy.interceptSupabaseCall('check_if_following_group')
+        .as('isFollowingGroup')
+        cy.interceptSupabaseCall('read_group_counter') //         cy.interceptSupabaseCall('read_following_counter')
+        .as('readGroupCounter')
+
+        cy.searchGroup(groupWhichIsFollowed.name)
+        .click()
+        // cy.wait(['@followingCounter', '@isFollowing', '@selectUser'])
+
+        cy.getDataCy('first-name')
+        .shouldBeVisible()
+        .contains(groupWhichIsFollowed.name)
+
+        cy.interceptSupabaseCall('follow_group_transaction')
+        .as('followGroupTransaction')
+
+        cy.getDataCy('followButton')
+        .scrollIntoView()
+        .shouldBeVisible()
+        .should('have.text', 'FOLLOW ')
+        .click()
+
+        // cy.wait('@followTransaction')
+        cy.contains('Successful followed')
+        .should('be.visible')
+
+
+        cy.getDataCy('followButton')
+        .shouldBeVisible()
+        .should('have.text', 'UNFOLLOW ')
+
+        cy.getDataCy('followerCounter')
+        .shouldBeVisible()
+        .contains(groupWhichIsFollowedCounter.follower_counter + 1)
+
+        cy.searchUser(userWhoFollowsProfile.first_name)
+        .click()
+
+        cy.getDataCy('first-name')
+        .shouldBeVisible()
+        .contains(userWhoFollowsProfile.first_name)
 
         cy.getDataCy('followingCounter')
         .shouldBeVisible()

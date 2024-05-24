@@ -2,6 +2,8 @@ import {SupabaseFunctionName} from "../../supabase/types/supabase.shorthand-type
 import {AuthData} from "../../seed_and_test_data/01_test_auth";
 import {Profile} from "../../seed_and_test_data/02_test_profiles";
 import {ProfileCounter} from "../../seed_and_test_data/04_test_profile_counters";
+import {Group} from "../../seed_and_test_data/07_test_groups";
+import {GroupCounter} from "../../seed_and_test_data/11_test_group_counters";
 
 
 declare global {
@@ -75,6 +77,23 @@ declare global {
                 userWhoFollowsProfile: Profile,
                 userWhoFollowsCounter: ProfileCounter
             ): Chainable<Element>
+
+            /**
+             * Follows a group's profile by updating the counters and returning a Chainable element.
+             *
+             * @param {Group} groupWhichIsFollowed - The group who is being followed.
+             * @param {GroupCounter} groupWhichIsFollowedCounter - The counter of the group who is being followed.
+             * @param {Profile} userWhoFollowsProfile - The profile of the user who is following.
+             * @param {ProfileCounter} userWhoFollowsCounter - The counter of the user who is following.
+             * @return {Chainable<Element>} - A Chainable element.
+             */
+            followGroup(
+                groupWhichIsFollowed: Group,
+                groupWhichIsFollowedCounter: GroupCounter,
+                userWhoFollowsProfile: Profile,
+                userWhoFollowsCounter: ProfileCounter
+            ): Chainable<Element>
+
 
             /**
              * Navigates to the 'HOME' tab.

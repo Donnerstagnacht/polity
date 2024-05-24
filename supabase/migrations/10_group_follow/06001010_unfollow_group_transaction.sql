@@ -21,7 +21,7 @@ BEGIN
     PERFORM authenticated_access.decrement_group_follower_counter(
         following_id
             );
-    PERFORM authenticated_access.decrement_group_following_counter(
+    PERFORM authenticated_access.decrement_following_counter(
         authenticated_user
             );
 END;

@@ -6,7 +6,7 @@ import {AUTH_DATA1, AUTH_DATA2, AuthData} from "../../seed_and_test_data/01_test
 const signedInUserAuth: AuthData = AUTH_DATA1;
 const otherUser: AuthData = AUTH_DATA2;
 
-describe(`Negative api tests for the following feature show that `, async (): Promise<void> => {
+describe(`Negative api tests for the group following feature show that `, async (): Promise<void> => {
     let user_id: string | undefined;
     let token: string | undefined;
     const TEST_ID: string = otherUser.id;
