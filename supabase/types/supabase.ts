@@ -12,7 +12,90 @@ export type Database = {
       [_ in never]: never
     }
     Views: {
-      [_ in never]: never
+      board_memberships_of_authenticated_user: {
+        Row: {
+          created_at: string | null
+          group_id: string | null
+          id: string | null
+          member_id: string | null
+          member_type: Database["public"]["Enums"]["group_member"] | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          group_id?: string | null
+          id?: string | null
+          member_id?: string | null
+          member_type?: Database["public"]["Enums"]["group_member"] | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          group_id?: string | null
+          id?: string | null
+          member_id?: string | null
+          member_type?: Database["public"]["Enums"]["group_member"] | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "group_member_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "groups"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "group_member_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      memberships_of_authenticated_user: {
+        Row: {
+          created_at: string | null
+          group_id: string | null
+          id: string | null
+          member_id: string | null
+          member_type: Database["public"]["Enums"]["group_member"] | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          group_id?: string | null
+          id?: string | null
+          member_id?: string | null
+          member_type?: Database["public"]["Enums"]["group_member"] | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          group_id?: string | null
+          id?: string | null
+          member_id?: string | null
+          member_type?: Database["public"]["Enums"]["group_member"] | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "group_member_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "groups"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "group_member_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       accept_group_invitation_by_id_transaction: {

@@ -17,9 +17,9 @@ BEGIN
     FROM
         authenticated_access.group_member_requests
     WHERE
-        id = request_id
+        authenticated_access.group_member_requests.id = request_id
     RETURNING
-        id,
+        authenticated_access.group_member_requests.id,
         authenticated_access.group_member_requests.group_id,
         authenticated_access.group_member_requests.member_id
         INTO

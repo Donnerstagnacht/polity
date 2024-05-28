@@ -10,6 +10,18 @@ SET
             group_members.group_id = groups_counters.id
     );
 
+-- count all group memberships of a user
+UPDATE authenticated_access.profiles_counters
+SET
+    group_membership_counter = (
+        SELECT
+            COUNT(*)
+        FROM
+            authenticated_access.group_members
+        WHERE
+            group_members.member_id = profiles_counters.id
+    );
+
 -- count all followers of a group
 UPDATE authenticated_access.groups_counters
 SET

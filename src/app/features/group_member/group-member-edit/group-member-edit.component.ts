@@ -156,7 +156,7 @@ export class GroupMemberEditComponent {
     }
 
     protected async declineMembershipRequest(requestId: string): Promise<void> {
-        await this.groupMemberActionService.declineGroupMembershipRequest(requestId, true);
+        await this.groupMemberActionService.deleteGroupRequestById(requestId, true);
         await console.log('decline request', requestId)
     }
 

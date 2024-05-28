@@ -317,7 +317,10 @@ export class GroupMemberActionService {
         })
     }
 
-    public async withDrawGroupRequestById(requestId: string): Promise<void> {
+    public async deleteGroupRequestById(
+        requestId: string,
+        fromGroup: boolean = false
+    ): Promise<void> {
         await this.groupCountersStoreService.groupCounters.wrapUpdateFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<SupabaseObjectReturn<'delete_group_member_request_by_id'>> = await this.supabaseClient.rpc(
                 'delete_group_member_request_by_id',
@@ -327,7 +330,11 @@ export class GroupMemberActionService {
             )
             .throwOnError()
             if (!response.error) {
-                this.groupRequestsOfUserStoreService.groupRequestsOfUser.removeObjectByPropertyValue('id', requestId);
+                if (fromGroup) {
+                    this.groupRequestsStoreService.groupRequests.removeObjectByPropertyValue('id', requestId);
+                } else {
+                    this.groupRequestsOfUserStoreService.groupRequestsOfUser.removeObjectByPropertyValue('id', requestId);
+                }
             }
         }, true, 'Successful withdrawn group membership request!')
     }

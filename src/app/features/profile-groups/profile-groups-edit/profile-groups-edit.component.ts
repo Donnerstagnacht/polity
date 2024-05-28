@@ -77,7 +77,7 @@ export class ProfileGroupsEditComponent {
     }
 
     async ngOnInit(): Promise<void> {
-        await                 this.groupsOfUserActionService.readGroupsOfUser();
+        await this.groupsOfUserActionService.readGroupsOfUser();
         this.groupMembershipsOfUser = this.groupsOfUserStoreService.groupsOfUser.getObjects();
         this.groupRequestsOfUser = this.groupRequestsOfUserStoreService.groupRequestsOfUser.getObjects();
         this.groupInvitationsOfUser = this.groupInvitationsOfUserStoreService.groupInvitationsOfUser.getObjects();
@@ -132,7 +132,7 @@ export class ProfileGroupsEditComponent {
     }
 
     protected async withdrawGroupRequest(requestId: string): Promise<void> {
-        await this.groupMemberActionService.withDrawGroupRequestById(requestId);
+        await this.groupMemberActionService.deleteGroupRequestById(requestId);
     }
 
     protected async acceptGroupInvitation(membership_id: string): Promise<void> {
