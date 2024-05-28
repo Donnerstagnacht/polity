@@ -24,12 +24,12 @@ export class FollowersOfUserActionService {
 
     public async readFollowersOfUser(): Promise<any> {
         await this.followersOfUserStoreService.followersOfUser.wrapSelectFunction(async (): Promise<void> => {
-            const followerResponse: PostgrestSingleResponse<SupabaseObjectReturn<'read_follower_of_user'>[]> = await this.supabaseClient.rpc(
-                'read_follower_of_user'
+            const followerResponse: PostgrestSingleResponse<SupabaseObjectReturn<'read_followers_of_user'>[]> = await this.supabaseClient.rpc(
+                'read_followers_of_user'
             )
             .throwOnError()
             if (followerResponse.data) {
-                const finalArray: SupabaseObjectReturn<'read_follower_of_user'>[] = await this.profileActionService.transformImageNamesToUrls(followerResponse.data, 'profile_image')
+                const finalArray: SupabaseObjectReturn<'read_followers_of_user'>[] = await this.profileActionService.transformImageNamesToUrls(followerResponse.data, 'profile_image')
                 this.followersOfUserStoreService.followersOfUser.setObjects(finalArray)
             }
         })
@@ -37,8 +37,8 @@ export class FollowersOfUserActionService {
 
     public async removeFollowerOfUser(userId: string): Promise<any> {
         await this.followersOfUserStoreService.followersOfUser.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'remove_follower_transaction'>> = await this.supabaseClient.rpc(
-                'remove_follower_transaction',
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'remove_follower_of_authenticated_user_transaction'>> = await this.supabaseClient.rpc(
+                'remove_follower_of_authenticated_user_transaction',
                 {
                     follower_id: userId,
                 }
@@ -81,8 +81,8 @@ export class FollowersOfUserActionService {
     public async followProfile(): Promise<void> {
         const followingId: string = this.profileCountersStoreService.profileCounters.getValueByKey('profile_id');
         await this.profileCountersStoreService.profileCounters.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'follow_transaction'>> = await this.supabaseClient.rpc(
-                'follow_transaction',
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'follow_profile_transaction'>> = await this.supabaseClient.rpc(
+                'follow_profile_transaction',
                 {
                     following_id: followingId
                 }
@@ -96,8 +96,8 @@ export class FollowersOfUserActionService {
     public async unFollowProfile(): Promise<void> {
         const followingId = this.profileCountersStoreService.profileCounters.getValueByKey('profile_id');
         await this.profileCountersStoreService.profileCounters.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'unfollow_transaction'>> = await this.supabaseClient.rpc(
-                'unfollow_transaction',
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'unfollow_profile_transaction'>> = await this.supabaseClient.rpc(
+                'unfollow_profile_transaction',
                 {
                     following_id: followingId
                 }

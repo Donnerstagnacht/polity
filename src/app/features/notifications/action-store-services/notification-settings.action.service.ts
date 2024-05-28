@@ -16,8 +16,8 @@ export class NotificationSettingsActionService {
 
     public async selectNotificationSettings(): Promise<void> {
         await this.notificationSettingsStore.notificationSettings.wrapSelectFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_user_notification_settings'>> = await this.supabaseClient
-            .rpc('read_user_notification_settings')
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_profile_notification_settings'>> = await this.supabaseClient
+            .rpc('read_profile_notification_settings')
             .single()
             .throwOnError()
             console.log(response.data)
@@ -35,7 +35,7 @@ export class NotificationSettingsActionService {
         await this.notificationSettingsStore.notificationSettings.wrapUpdateFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<undefined> = await this.supabaseClient
             .rpc(
-                'update_receive_notifications_from_follow',
+                'update_profile_receive_notifications_from_follow',
                 {new_status: newStatus})
             .throwOnError()
             this.notificationSettingsStore.notificationSettings.setObject({receive_follow_notifications: newStatus})

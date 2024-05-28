@@ -201,7 +201,7 @@ export type Database = {
         }
         Returns: undefined
       }
-      follow_transaction: {
+      follow_profile_transaction: {
         Args: {
           following_id: string
         }
@@ -249,6 +249,18 @@ export type Database = {
         }
         Returns: undefined
       }
+      read_all_push_subscriptions_of_user: {
+        Args: {
+          user_to_be_notified: string
+        }
+        Returns: {
+          id: string
+          endpoint: string
+          expirationtime: string
+          auth: string
+          p256dh: string
+        }[]
+      }
       read_assistant: {
         Args: Record<PropertyKey, never>
         Returns: {
@@ -269,7 +281,7 @@ export type Database = {
           last_name: string
         }[]
       }
-      read_follower_of_user: {
+      read_followers_of_user: {
         Args: Record<PropertyKey, never>
         Returns: {
           id: string
@@ -289,7 +301,7 @@ export type Database = {
           last_name: string
         }[]
       }
-      read_following_of_user: {
+      read_followings_of_user: {
         Args: Record<PropertyKey, never>
         Returns: {
           id: string
@@ -328,12 +340,6 @@ export type Database = {
           name: string
           level: Database["public"]["Enums"]["group_level"]
         }[]
-      }
-      read_group_implied_type: {
-        Args: {
-          group_id: string
-        }
-        Returns: unknown
       }
       read_group_member_invitations: {
         Args: {
@@ -386,12 +392,6 @@ export type Database = {
           profile_image: string
         }[]
       }
-      read_group_record: {
-        Args: {
-          group_id: string
-        }
-        Returns: Record<string, unknown>
-      }
       read_group_requests_of_user: {
         Args: Record<PropertyKey, never>
         Returns: {
@@ -432,6 +432,19 @@ export type Database = {
           group_membership_counter: number
         }[]
       }
+      read_profile_notification_settings: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          receive_follow_notifications: boolean
+        }[]
+      }
+      read_unread_notifications_counter: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          profile_id: string
+          unread_notifications_counter: number
+        }[]
+      }
       read_user: {
         Args: {
           user_id: string
@@ -443,13 +456,7 @@ export type Database = {
           profile_image: string
         }[]
       }
-      read_user_notification_settings: {
-        Args: Record<PropertyKey, never>
-        Returns: {
-          receive_follow_notifications: boolean
-        }[]
-      }
-      remove_follower_transaction: {
+      remove_follower_of_authenticated_user_transaction: {
         Args: {
           follower_id: string
         }
@@ -462,7 +469,7 @@ export type Database = {
         }
         Returns: undefined
       }
-      reset_notification_counter: {
+      reset_profile_notification_counter: {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
@@ -488,25 +495,6 @@ export type Database = {
           username: string
         }[]
       }
-      select_all_push_subscriptions_of_user: {
-        Args: {
-          user_to_be_notified: string
-        }
-        Returns: {
-          id: string
-          endpoint: string
-          expirationtime: string
-          auth: string
-          p256dh: string
-        }[]
-      }
-      select_unread_notifications_counter: {
-        Args: Record<PropertyKey, never>
-        Returns: {
-          profile_id: string
-          unread_notifications_counter: number
-        }[]
-      }
       set_limit: {
         Args: {
           "": number
@@ -529,7 +517,7 @@ export type Database = {
         }
         Returns: undefined
       }
-      unfollow_transaction: {
+      unfollow_profile_transaction: {
         Args: {
           following_id: string
         }
@@ -547,7 +535,18 @@ export type Database = {
         }
         Returns: undefined
       }
-      update_receive_notifications_from_follow: {
+      update_profile: {
+        Args: {
+          updated_at_in?: string
+          username_in?: string
+          first_name_in?: string
+          last_name_in?: string
+          profile_image_in?: string
+          receive_follow_notifications_in?: boolean
+        }
+        Returns: undefined
+      }
+      update_profile_receive_notifications_from_follow: {
         Args: {
           new_status: boolean
         }
@@ -556,17 +555,6 @@ export type Database = {
       update_skip_tutorial: {
         Args: {
           new_status: boolean
-        }
-        Returns: undefined
-      }
-      update_user: {
-        Args: {
-          updated_at_in?: string
-          username_in?: string
-          first_name_in?: string
-          last_name_in?: string
-          profile_image_in?: string
-          receive_follow_notifications_in?: boolean
         }
         Returns: undefined
       }

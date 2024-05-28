@@ -27,7 +27,7 @@ export class NotificationBadgeActionService {
         },
         (payload: RealtimePostgresUpdatePayload<SupabaseTable<'profiles_counters'>>): void => {
             console.log('payload', payload)
-            const testReturn: SupabaseObjectReturn<'select_unread_notifications_counter'> = {
+            const testReturn: SupabaseObjectReturn<'read_unread_notifications_counter'> = {
                 unread_notifications_counter: payload.new.unread_notifications_counter as number,
                 profile_id: payload.new.id as string
             }
@@ -44,7 +44,7 @@ export class NotificationBadgeActionService {
 
     public async selectUnreadNotificationsCounter(): Promise<void> {
         await this.notificationBadgeStoreService.notificationBadge.wrapSelectFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'select_unread_notifications_counter'>> = await this.supabaseClient.rpc('select_unread_notifications_counter')
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_unread_notifications_counter'>> = await this.supabaseClient.rpc('read_unread_notifications_counter')
             .single()
             .throwOnError()
             if (response.data) {

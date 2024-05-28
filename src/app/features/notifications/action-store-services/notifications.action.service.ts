@@ -57,8 +57,8 @@ export class NotificationsActionService {
 
     public async resetNotificationCounter(): Promise<void> {
         await this.notificationStoreService.notifications.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'reset_notification_counter'>> = await this.supabaseClient
-            .rpc('reset_notification_counter')
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'reset_profile_notification_counter'>> = await this.supabaseClient
+            .rpc('reset_profile_notification_counter')
             .single()
             .throwOnError()
         }, false)
@@ -66,8 +66,8 @@ export class NotificationsActionService {
 
     public async updateReceiveFollowNotificationStatus(): Promise<void> {
         await this.notificationStoreService.notifications.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'update_receive_notifications_from_follow'>> = await this.supabaseClient
-            .rpc('update_receive_notifications_from_follow', {
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'update_profile_receive_notifications_from_follow'>> = await this.supabaseClient
+            .rpc('update_profile_receive_notifications_from_follow', {
                 new_status: true
             })
             .single()

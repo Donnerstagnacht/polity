@@ -34,13 +34,13 @@ import {FollowingGroupsOfUserActionService} from "../action-store-services/follo
 })
 export class ProfileFollowEditComponent {
     protected isFollowingLoading: WritableSignal<boolean> = signal(true);
-    protected followingsOfUser: WritableSignal<SupabaseObjectReturn<'read_following_of_user'>[]> = signal([]);
+    protected followingsOfUser: WritableSignal<SupabaseObjectReturn<'read_followings_of_user'>[]> = signal([]);
 
     protected isFollowingGroupLoading: WritableSignal<boolean> = signal(true);
     protected followingsOfUserGroup: WritableSignal<SupabaseObjectReturn<'read_group_followings_of_user'>[]> = signal([]);
 
     protected isFollowersLoading: WritableSignal<boolean> = signal(true);
-    protected followersOfUser: WritableSignal<SupabaseObjectReturn<'read_follower_of_user'>[]> = signal([]);
+    protected followersOfUser: WritableSignal<SupabaseObjectReturn<'read_followers_of_user'>[]> = signal([]);
 
     protected readonly columns: string[] = ['first_name', 'last_name', 'actions'];
     protected activeItemIndex: number = 0;

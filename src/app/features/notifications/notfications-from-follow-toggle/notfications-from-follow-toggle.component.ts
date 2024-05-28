@@ -20,7 +20,7 @@ export class NotficationsFromFollowToggleComponent {
     }> = new FormGroup({
         showFollowNotifications: new FormControl(false),
     });
-    private notificationSettings: WritableSignal<SupabaseObjectReturn<'read_user_notification_settings'> | null> = signal(null);
+    private notificationSettings: WritableSignal<SupabaseObjectReturn<'read_profile_notification_settings'> | null> = signal(null);
 
     constructor(
         private notificationSettingsStore: NotificationSettingsStoreService,

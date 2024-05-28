@@ -26,7 +26,7 @@ export class FirstBarBottomComponent {
      * @Input items: Item[]. Default is signed out items.
      */
     @Input({required: true}) public items: NavigationItem[] = NAVIGATION_ITEMS_SIGNED_OUT;
-    @Input() public notificationBadge: WritableSignal<SupabaseObjectReturn<'select_unread_notifications_counter'> | null> = signal({
+    @Input() public notificationBadge: WritableSignal<SupabaseObjectReturn<'read_unread_notifications_counter'> | null> = signal({
         profile_id: '',
         unread_notifications_counter: 0
     });

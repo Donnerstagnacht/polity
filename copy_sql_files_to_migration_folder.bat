@@ -1,4 +1,5 @@
 @echo off
+
 REM SCRIPT REQUIRES RUNNING DOCKER DESKTOP
 
 REM Specify the destination folder where the file will be copied
@@ -10,28 +11,76 @@ del /q "%destination_folder%\*.*"
 REM Use the copy command to copy the migration files to the destination folder
 copy "%~dp0supabase\migrations\01_migration_preparation_and_schemas\*" "%destination_folder%"
 
-copy "%~dp0supabase\migrations\02_profile\*" "%destination_folder%"
-copy "%~dp0supabase\migrations\03_profile-follow\*" "%destination_folder%"
-copy "%~dp0supabase\migrations\04_search\*" "%destination_folder%"
-copy "%~dp0supabase\migrations\05_assistant\*" "%destination_folder%"
-copy "%~dp0supabase\migrations\06_notifications\*" "%destination_folder%"
-copy "%~dp0supabase\migrations\07_groups\*" "%destination_folder%"
-copy "%~dp0supabase\migrations\08_group_relations\*" "%destination_folder%"
-copy "%~dp0supabase\migrations\09_group_member\*" "%destination_folder%"
-copy "%~dp0supabase\migrations\10_group_follow\*" "%destination_folder%"
-copy "%~dp0supabase\migrations\11_hashtags\*" "%destination_folder%"
-copy "%~dp0supabase\migrations\12_meetings\*" "%destination_folder%"
+copy "%~dp0supabase\migrations\000000_migration_preparation_and_schemas\*" "%destination_folder%"
+copy "%~dp0supabase\migrations\001000_profiles\*" "%destination_folder%"
+copy "%~dp0supabase\migrations\001001_profile_counters\*" "%destination_folder%"
+copy "%~dp0supabase\migrations\001002_profile_followers\*" "%destination_folder%"
 
-copy "%~dp0supabase\migrations\98_access_grants\*" "%destination_folder%"
-copy "%~dp0supabase\migrations\99_seed\*" "%destination_folder%"
+copy "%~dp0supabase\migrations\002000_groups\*" "%destination_folder%"
+copy "%~dp0supabase\migrations\002001_group_counters\*" "%destination_folder%"
+copy "%~dp0supabase\migrations\002002_group_member_requests\*" "%destination_folder%"
+copy "%~dp0supabase\migrations\002003_group_member_invitations\*" "%destination_folder%"
+copy "%~dp0supabase\migrations\002004_group_members\*" "%destination_folder%"
+copy "%~dp0supabase\migrations\002005_group_relation_requests\*" "%destination_folder%"
+copy "%~dp0supabase\migrations\002006_group_relations\*" "%destination_folder%"
+copy "%~dp0supabase\migrations\002007_group_followers\*" "%destination_folder%"
+
+copy "%~dp0supabase\migrations\003000_meetings\*" "%destination_folder%"
+copy "%~dp0supabase\migrations\004000_amendments\*" "%destination_folder%"
+copy "%~dp0supabase\migrations\005000_change_requests\*" "%destination_folder%"
+copy "%~dp0supabase\migrations\006000_elections\*" "%destination_folder%"
+copy "%~dp0supabase\migrations\007000_todos\*" "%destination_folder%"
+copy "%~dp0supabase\migrations\008000_payments\*" "%destination_folder%"
+copy "%~dp0supabase\migrations\009000_blogs\*" "%destination_folder%"
+copy "%~dp0supabase\migrations\010000_statements\*" "%destination_folder%"
+copy "%~dp0supabase\migrations\011000_chats\*" "%destination_folder%"
+copy "%~dp0supabase\migrations\041000_assistants\*" "%destination_folder%"
+copy "%~dp0supabase\migrations\051000_searches\*" "%destination_folder%"
+copy "%~dp0supabase\migrations\051001_hashtags\*" "%destination_folder%"
+copy "%~dp0supabase\migrations\071000_notifications\*" "%destination_folder%"
+
+copy "%~dp0supabase\migrations\099998_access_grants\*" "%destination_folder%"
+copy "%~dp0supabase\migrations\099999_seed\*" "%destination_folder%"
 
 REM Check if the copy operation was successful
+    pause
+
 if errorlevel 1 (
     echo Error: Failed to copy the file.
 ) else (
     echo File has been successfully copied to "%destination_folder%".
+)
 
-    pause
+
+setlocal enabledelayedexpansion
+REM Change to the destination directory
+set "start_folder=%CD%"
+cd /d "%destination_folder%"
+
+REM remove the first "_" after the postgres object type 2 digits
+for %%f in (*) do (
+    set "filename=%%f"
+    set "newfilename=!filename:~0,2!!filename:~3!"
+    ren "%%f" "!newfilename!"
+)
+
+REM remove the second underscore after the running number of 2 digits
+for %%f in (*) do (
+    set "filename=%%f"
+    set "newfilename=!filename:~0,4!!filename:~5!"
+    ren "%%f" "!newfilename!"
+)
+
+REM Add the prefix "0000" to each file name to create 14 starting digits (yyyy - mm - dd - hh - mm - ss) (default
+REM postgres setting
+ for %%f in (*) do (
+     set "filename=%%f"
+     set "newfilename=0000!filename!"
+     ren "%%f" "!newfilename!"
+ )
+
+cd /d "%start_folder%"
+endlocal
 
 @REM  Apply migrations locally: (requires supabase start once to start db)
 @REM      supabase start
@@ -59,3 +108,4 @@ REM    pause
     pause
 )
 
+pause

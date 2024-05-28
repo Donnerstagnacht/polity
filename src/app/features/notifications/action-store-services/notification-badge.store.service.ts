@@ -6,10 +6,10 @@ import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.short
     providedIn: 'root'
 })
 export class NotificationBadgeStoreService {
-    public notificationBadge: ObjectStoreService<SupabaseObjectReturn<'select_unread_notifications_counter'>>
+    public notificationBadge: ObjectStoreService<SupabaseObjectReturn<'read_unread_notifications_counter'>>
 
 
     constructor() {
-        this.notificationBadge = new ObjectStoreService<SupabaseObjectReturn<'select_unread_notifications_counter'>>();
+        this.notificationBadge = new ObjectStoreService<SupabaseObjectReturn<'read_unread_notifications_counter'>>();
     }
 }
