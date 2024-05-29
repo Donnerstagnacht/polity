@@ -43,7 +43,7 @@ export class AssistantActionService {
     public async updateFirstSignIn(newStatus: boolean): Promise<void> {
         await this.assistantStoreService.assistant.wrapUpdateFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<undefined> = await this.supabaseClient
-            .rpc('update_first_sign_in', {new_status: newStatus})
+            .rpc('update_first_sign_in', {_new_status: newStatus})
             .throwOnError()
 
             const updatedAssistant: SupabaseObjectReturn<'read_assistant'> = {
@@ -62,7 +62,7 @@ export class AssistantActionService {
     public async skipTutorial(newStatus: boolean): Promise<void> {
         await this.assistantStoreService.assistant.wrapUpdateFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<undefined> = await this.supabaseClient
-            .rpc('update_skip_tutorial', {new_status: newStatus})
+            .rpc('update_skip_tutorial', {_new_status: newStatus})
             .throwOnError()
 
             const updatedAssistant: SupabaseObjectReturn<'read_assistant'> = {
@@ -81,7 +81,7 @@ export class AssistantActionService {
     public async updateLastTutorial(last_tutorial: DatabaseOverwritten["public"]["Enums"]["tutorial_enum"]): Promise<void> {
         await this.assistantStoreService.assistant.wrapUpdateFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<undefined> = await this.supabaseClient
-            .rpc('update_last_tutorial', {new_status: last_tutorial})
+            .rpc('update_last_tutorial', {_new_status: last_tutorial})
             .throwOnError()
 
             const updatedAssistant: SupabaseObjectReturn<'read_assistant'> = {
