@@ -12,7 +12,7 @@ type ProfileUIFlags =
     providedIn: 'root'
 })
 export class ProfileStoreService {
-    public profile: ObjectStoreService<SupabaseObjectReturn<'read_user'>, ProfileUIFlags>;
+    public profile: ObjectStoreService<SupabaseObjectReturn<'read_profile'>, ProfileUIFlags>;
     private uiFlags = {
         isOwner: signal(false),
         isFollowing: signal(false),
@@ -20,6 +20,6 @@ export class ProfileStoreService {
     }
 
     constructor() {
-        this.profile = new ObjectStoreService<SupabaseObjectReturn<'read_user'>, ProfileUIFlags>(this.uiFlags);
+        this.profile = new ObjectStoreService<SupabaseObjectReturn<'read_profile'>, ProfileUIFlags>(this.uiFlags);
     }
 }

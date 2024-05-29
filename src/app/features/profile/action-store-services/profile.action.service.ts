@@ -25,12 +25,12 @@ export class ProfileActionService {
      */
     public async readProfile(id: string): Promise<void> {
         await this.profileStoreService.profile.wrapSelectFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_user'>> = await this.supabase
-            .rpc('read_user', {_user_id: id})
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_profile'>> = await this.supabase
+            .rpc('read_profile', {_user_id: id})
             .single()
             .throwOnError()
             if (response.data) {
-                const imgPath = await this.supabase.storage.from('profile_images').createSignedUrl(response.data.profile_image, 3600 * 24 * 7);
+                const imgPath = await this.supabase.storage.from('profile_images').createSignedUrl(response.data.profile_image as string, 3600 * 24 * 7);
                 response.data.profile_image = imgPath.data?.signedUrl as string;
                 this.profileStoreService.profile.setObject(response.data);
             }
@@ -43,7 +43,7 @@ export class ProfileActionService {
      * @param {Profile} profile - The profile object containing the updated information.
      * @return {Promise<void>}
      */
-    public async updateProfile(profile: SupabaseObjectReturn<'read_user'>): Promise<void> {
+    public async updateProfile(profile: SupabaseObjectReturn<'read_profile'>): Promise<void> {
         await this.profileStoreService.profile.wrapUpdateFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<SupabaseObjectReturn<'update_profile'>> = await this.supabase
             .rpc('update_profile', {
