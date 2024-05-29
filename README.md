@@ -182,7 +182,7 @@
 <hr>
 
 <h1>Naming conventions</h1>
-<p>PostgreSQL code and code or variables that are used to call PostgreSQL functions should be written in lowercase with underscores e.g. <code>a_variable_for_a_postgres functions.</code>. Parameters and return table variables of postgres functions should be prefixed with a "_" (e.g. <code>_parameter</code>) to avoid ambitous naming conflicts.</p> 
+<p>PostgreSQL code and code or variables that are used to call PostgreSQL functions should be written in lowercase with underscores e.g. <code>a_variable_for_a_postgres functions.</code>. Parameters and return table variables of postgres functions should be prefixed with a "_" (e.g. <code>_parameter</code>) to avoid ambitous naming conflicts. However, table returns should be avoided in general. Instead, define types and return the select result.</p> 
 
 <p>Postgres migration files are applied in descending sequential order, must be unique and named like <code>timestamp_name.sql</code>. The codestamp must have a minimum of 6 digits and a maximum of 14 digits. After that an "_" must follow. Files which determine the initial setup do not use a timestamp. Instead, a numbercode is used to gurantee a certain execution order.</p> The number code is:
 
