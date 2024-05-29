@@ -4,7 +4,7 @@ import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.short
 import {FollowersOfUserStoreService} from "./followers-of-user.store.service";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
 import {ProfileCountersStoreService} from "./profile-counters.store.service";
-import {supabaseClient} from "../../../auth/supabase-client";
+import {supabasePublicClient} from "../../../auth/supabase-public-client";
 import {ProfileActionService} from "../../profile/action-store-services/profile.action.service";
 import {ProfileStoreService} from "../../profile/action-store-services/profile.store.service";
 
@@ -12,7 +12,7 @@ import {ProfileStoreService} from "../../profile/action-store-services/profile.s
     providedIn: 'root'
 })
 export class FollowersOfUserActionService {
-    private readonly supabaseClient: SupabaseClient<DatabaseOverwritten> = supabaseClient;
+    private readonly supabaseClient: SupabaseClient<DatabaseOverwritten> = supabasePublicClient;
 
     constructor(
         private followersOfUserStoreService: FollowersOfUserStoreService,

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Router} from "@angular/router";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
-import {supabaseClient} from "../../../auth/supabase-client";
+import {supabasePublicClient} from "../../../auth/supabase-public-client";
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {GroupNew} from "../types/group-new";
@@ -10,7 +10,7 @@ import {GroupNew} from "../types/group-new";
     providedIn: 'root'
 })
 export class CreateGroupService {
-    private readonly supabaseClient: SupabaseClient<DatabaseOverwritten> = supabaseClient
+    private readonly supabaseClient: SupabaseClient<DatabaseOverwritten> = supabasePublicClient
 
     constructor(private router: Router) {
     }

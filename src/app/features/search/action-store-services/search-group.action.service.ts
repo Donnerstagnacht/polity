@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
-import {supabaseClient} from "../../../auth/supabase-client";
+import {supabasePublicClient} from "../../../auth/supabase-public-client";
 import {SearchGroupStoreService} from "./search-group.store.service";
 import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {SearchUtilitiesService} from "./search-utilities.service";
@@ -10,7 +10,7 @@ import {SearchUtilitiesService} from "./search-utilities.service";
     providedIn: 'root'
 })
 export class SearchGroupActionService {
-    private supabaseClient: SupabaseClient<DatabaseOverwritten> = supabaseClient
+    private supabaseClient: SupabaseClient<DatabaseOverwritten> = supabasePublicClient
 
     constructor(
         private readonly searchStoreService: SearchGroupStoreService,

@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {SwPush} from "@angular/service-worker";
 import {environment} from "../../../../environments/environment";
 import {PushSubscriptionStringifies} from "../pushSubscription";
-import {supabaseClient} from "../../../auth/supabase-client";
+import {supabasePublicClient} from "../../../auth/supabase-public-client";
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
 import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
@@ -13,7 +13,7 @@ import {TuiAlertService} from "@taiga-ui/core";
 })
 export class PushActionService {
     private readonly VAPID_PUBLIC_KEY: string = environment.vapidPublicKey;
-    private supabaseClient: SupabaseClient<DatabaseOverwritten> = supabaseClient;
+    private supabaseClient: SupabaseClient<DatabaseOverwritten> = supabasePublicClient;
 
     constructor(
         private swPush: SwPush,

@@ -3,14 +3,14 @@ import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {ProfileStoreService} from "./profile.store.service";
 import {TuiFileLike} from "@taiga-ui/kit";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
-import {supabaseClient} from "../../../auth/supabase-client";
+import {supabasePublicClient} from "../../../auth/supabase-public-client";
 import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProfileActionService {
-    private supabase: SupabaseClient<DatabaseOverwritten> = supabaseClient
+    private supabase: SupabaseClient<DatabaseOverwritten> = supabasePublicClient
 
     constructor(
         private readonly profileStoreService: ProfileStoreService

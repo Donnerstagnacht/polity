@@ -1,4 +1,4 @@
-import {supabaseClient} from "../../src/app/auth/supabase-client";
+import {supabasePublicClient} from "../../src/app/auth/supabase-public-client";
 import {AUTH_DATA1, AUTH_DATA7, AuthData} from "../../seed_and_test_data/01_test_auth";
 import {AuthTokenResponse} from "@supabase/supabase-js";
 import {Group, GROUP1, GROUP3} from "../../seed_and_test_data/07_test_groups";
@@ -29,7 +29,7 @@ describe(`Negative api tests for the group membership management of a group show
     })
 
     it('non members can not read a groups members', async (): Promise<void> => {
-        const authResponse: AuthTokenResponse = await supabaseClient.auth.signInWithPassword(
+        const authResponse: AuthTokenResponse = await supabasePublicClient.auth.signInWithPassword(
             {
                 email: nonMemberUser.email,
                 password: nonMemberUser.password,
@@ -40,14 +40,14 @@ describe(`Negative api tests for the group membership management of a group show
         expect(user_id).to.be.not.null
         expect(token).to.be.not.null
 
-        const response = await supabaseClient
+        const response = await supabasePublicClient
         .rpc('read_group_members', {group_id_in: nonMemberGroup.id})
         expect(response.data).to.be.an('array').empty
         expect(response.error?.code).to.be.undefined
     })
 
     it('non board members can not not remove group members', async (): Promise<void> => {
-        const authResponse: AuthTokenResponse = await supabaseClient.auth.signInWithPassword(
+        const authResponse: AuthTokenResponse = await supabasePublicClient.auth.signInWithPassword(
             {
                 email: memberUser.email,
                 password: memberUser.password,
@@ -58,7 +58,7 @@ describe(`Negative api tests for the group membership management of a group show
         expect(user_id).to.be.not.null
         expect(token).to.be.not.null
 
-        const response = await supabaseClient
+        const response = await supabasePublicClient
         .rpc('leave_group_by_membership_id_transaction', {membership_id_in: membership.id})
         expect(response.data).to.be.null
         expect(response.error?.code).to.be.undefined
@@ -66,7 +66,7 @@ describe(`Negative api tests for the group membership management of a group show
 
 
     it('non board members can not read group membership requests', async (): Promise<void> => {
-        const authResponse: AuthTokenResponse = await supabaseClient.auth.signInWithPassword(
+        const authResponse: AuthTokenResponse = await supabasePublicClient.auth.signInWithPassword(
             {
                 email: memberUser.email,
                 password: memberUser.password,
@@ -77,7 +77,7 @@ describe(`Negative api tests for the group membership management of a group show
         expect(user_id).to.be.not.null
         expect(token).to.be.not.null
 
-        const response = await supabaseClient
+        const response = await supabasePublicClient
         .rpc('read_group_member_requests', {group_id_in: memberGroup.id})
         expect(response.data).to.be.an('array').empty
         expect(response.error?.code).to.be.undefined
@@ -85,7 +85,7 @@ describe(`Negative api tests for the group membership management of a group show
 
     it('non board members can not accept group membership requests', async (): Promise<void> => {
         cy.resetSupabase()
-        const authResponse: AuthTokenResponse = await supabaseClient.auth.signInWithPassword(
+        const authResponse: AuthTokenResponse = await supabasePublicClient.auth.signInWithPassword(
             {
                 email: memberUser.email,
                 password: memberUser.password,
@@ -96,7 +96,7 @@ describe(`Negative api tests for the group membership management of a group show
         expect(user_id).to.be.not.null
         expect(token).to.be.not.null
 
-        const response = await supabaseClient
+        const response = await supabasePublicClient
         .rpc('accept_group_membership_request_transaction', {request_id: memberGroup.id})
         expect(response.data).to.be.null
         expect(response.error?.code).to.be.oneOf([POSTGRES_ERRORS.noPermission, POSTGRES_ERRORS.function_not_existing])
@@ -104,7 +104,7 @@ describe(`Negative api tests for the group membership management of a group show
 
     it('non board members can not decline group membership requests', async (): Promise<void> => {
         cy.resetSupabase()
-        const authResponse: AuthTokenResponse = await supabaseClient.auth.signInWithPassword(
+        const authResponse: AuthTokenResponse = await supabasePublicClient.auth.signInWithPassword(
             {
                 email: memberUser.email,
                 password: memberUser.password,
@@ -115,7 +115,7 @@ describe(`Negative api tests for the group membership management of a group show
         expect(user_id).to.be.not.null
         expect(token).to.be.not.null
 
-        const response = await supabaseClient
+        const response = await supabasePublicClient
         .rpc('delete_group_member_request_by_id', {request_id: memberGroup.id})
         expect(response.data?.id).to.be.null
         expect(response.error?.code).to.be.undefined
@@ -123,7 +123,7 @@ describe(`Negative api tests for the group membership management of a group show
 
 
     it('non board members can not read a groups invitations', async (): Promise<void> => {
-        const authResponse: AuthTokenResponse = await supabaseClient.auth.signInWithPassword(
+        const authResponse: AuthTokenResponse = await supabasePublicClient.auth.signInWithPassword(
             {
                 email: memberUser.email,
                 password: memberUser.password,
@@ -134,14 +134,14 @@ describe(`Negative api tests for the group membership management of a group show
         expect(user_id).to.be.not.null
         expect(token).to.be.not.null
 
-        const response = await supabaseClient
+        const response = await supabasePublicClient
         .rpc('read_group_member_invitations', {group_id_in: memberGroup.id})
         expect(response.data).to.be.an('array').empty
         expect(response.error?.code).to.be.undefined
     })
 
     it('non board members can not invite new members', async (): Promise<void> => {
-        const authResponse: AuthTokenResponse = await supabaseClient.auth.signInWithPassword(
+        const authResponse: AuthTokenResponse = await supabasePublicClient.auth.signInWithPassword(
             {
                 email: memberUser.email,
                 password: memberUser.password,
@@ -152,7 +152,7 @@ describe(`Negative api tests for the group membership management of a group show
         expect(user_id).to.be.not.null
         expect(token).to.be.not.null
 
-        const response = await supabaseClient
+        const response = await supabasePublicClient
         .rpc('create_group_member_invitation', {
             group_id: memberGroup.id,
             member_id: invitedUser.id

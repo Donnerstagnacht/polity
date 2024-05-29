@@ -1,4 +1,4 @@
-import {supabaseClient} from "../../src/app/auth/supabase-client";
+import {supabasePublicClient} from "../../src/app/auth/supabase-public-client";
 import {AUTH_DATA1, AUTH_DATA5, AUTH_DATA8, AuthData} from "../../seed_and_test_data/01_test_auth";
 import {POSTGRES_ERRORS} from "../fixtures/postgres_errors";
 import {Group, GROUP3} from "../../seed_and_test_data/07_test_groups";
@@ -34,42 +34,42 @@ describe(`Negative api tests for the group membership of a user management show 
     })
 
     it('a non authenticated user can not leave groups.', async (): Promise<void> => {
-        const response = await supabaseClient
+        const response = await supabasePublicClient
         .rpc('leave_group_member_transaction', {group_id_in: leaveGroup.id})
         expect(response.data).to.be.null
         expect(response.error?.code).to.be.oneOf([POSTGRES_ERRORS.noPermission, POSTGRES_ERRORS.function_not_existing])
     })
 
     it('a non authenticated user can not request group memberships.', async (): Promise<void> => {
-        const response = await supabaseClient
+        const response = await supabasePublicClient
         .rpc('create_group_member_request', {group_id_in: leaveGroup.id})
         expect(response.data).to.be.null
         expect(response.error?.code).to.be.oneOf([POSTGRES_ERRORS.noPermission, POSTGRES_ERRORS.function_not_existing])
     })
 
     it('a non authenticated user can not withdraw group memberships.', async (): Promise<void> => {
-        const response = await supabaseClient
+        const response = await supabasePublicClient
         .rpc('delete_group_member_request', {group_id_in: leaveGroup.id})
         expect(response.data).to.be.null
         expect(response.error?.code).to.be.oneOf([POSTGRES_ERRORS.noPermission, POSTGRES_ERRORS.function_not_existing])
     })
 
     it('a non authenticated user can not accept group invitations.', async (): Promise<void> => {
-        const response = await supabaseClient
+        const response = await supabasePublicClient
         .rpc('accept_group_invitation_transaction', {group_id_in: leaveGroup.id})
         expect(response.data).to.be.null
         expect(response.error?.code).to.be.oneOf([POSTGRES_ERRORS.noPermission, POSTGRES_ERRORS.function_not_existing])
     })
 
     it('a non authenticated user can not decline group invitations.', async (): Promise<void> => {
-        const response = await supabaseClient
+        const response = await supabasePublicClient
         .rpc('delete_group_member_invitation', {group_id_in: leaveGroup.id})
         expect(response.data).to.be.null
         expect(response.error?.code).to.be.oneOf([POSTGRES_ERRORS.noPermission, POSTGRES_ERRORS.function_not_existing])
     })
 
     it('an authenticated user can not leave groups, he is not a member of.', async (): Promise<void> => {
-        const authResponse: AuthTokenResponse = await supabaseClient.auth.signInWithPassword(
+        const authResponse: AuthTokenResponse = await supabasePublicClient.auth.signInWithPassword(
             {
                 email: leaveSignedInUserAuth.email,
                 password: leaveSignedInUserAuth.password,
@@ -80,14 +80,14 @@ describe(`Negative api tests for the group membership of a user management show 
         expect(user_id).to.be.not.null
         expect(token).to.be.not.null
 
-        const response = await supabaseClient
+        const response = await supabasePublicClient
         .rpc('leave_group_member_transaction', {group_id_in: leaveGroup.id})
         expect(response.data).to.be.null
         expect(response.error?.code).to.be.undefined
     })
 
     it('an authenticated user can not request groups, the user already joined.', async (): Promise<void> => {
-        const authResponse: AuthTokenResponse = await supabaseClient.auth.signInWithPassword(
+        const authResponse: AuthTokenResponse = await supabasePublicClient.auth.signInWithPassword(
             {
                 email: requestJoinedGroupSignedInUserAuth.email,
                 password: requestJoinedGroupSignedInUserAuth.password,
@@ -98,7 +98,7 @@ describe(`Negative api tests for the group membership of a user management show 
         expect(user_id).to.be.not.null
         expect(token).to.be.not.null
 
-        const response = await supabaseClient
+        const response = await supabasePublicClient
         .rpc('create_group_member_request', {group_id_in: requestJoinedGroup.id})
         expect(response.data).to.be.null
         console.log(response.error)
@@ -114,7 +114,7 @@ describe(`Negative api tests for the group membership of a user management show 
     })
 
     it('an authenticated user can not withdraw group memberships in behalf of other users.', async (): Promise<void> => {
-        const authResponse: AuthTokenResponse = await supabaseClient.auth.signInWithPassword(
+        const authResponse: AuthTokenResponse = await supabasePublicClient.auth.signInWithPassword(
             {
                 email: withdrawSignedInUserAuth.email,
                 password: withdrawSignedInUserAuth.password,
@@ -125,7 +125,7 @@ describe(`Negative api tests for the group membership of a user management show 
         expect(user_id).to.be.not.null
         expect(token).to.be.not.null
 
-        const response = await supabaseClient
+        const response = await supabasePublicClient
         .rpc('delete_group_member_request_by_id', {request_id: withdrawnMembershipId.id})
         expect(response.data?.id).to.be.null
         console.log(response.error)
@@ -140,7 +140,7 @@ describe(`Negative api tests for the group membership of a user management show 
 
     it('an authenticated user can not accept group invites in behalf of other users.', async (): Promise<void> => {
         cy.resetSupabase()
-        const authResponse: AuthTokenResponse = await supabaseClient.auth.signInWithPassword(
+        const authResponse: AuthTokenResponse = await supabasePublicClient.auth.signInWithPassword(
             {
                 email: invitationSignedInUserAuth.email,
                 password: invitationSignedInUserAuth.password,
@@ -151,7 +151,7 @@ describe(`Negative api tests for the group membership of a user management show 
         expect(user_id).to.be.not.null
         expect(token).to.be.not.null
 
-        const response = await supabaseClient
+        const response = await supabasePublicClient
         .rpc('accept_group_invitation_by_id_transaction', {
             invitation_id: invitationId.id
         })
@@ -162,7 +162,7 @@ describe(`Negative api tests for the group membership of a user management show 
 
     it('an authenticated user can not decline group invites in behalf of other users.', async (): Promise<void> => {
         cy.resetSupabase()
-        const authResponse: AuthTokenResponse = await supabaseClient.auth.signInWithPassword(
+        const authResponse: AuthTokenResponse = await supabasePublicClient.auth.signInWithPassword(
             {
                 email: invitationSignedInUserAuth.email,
                 password: invitationSignedInUserAuth.password,
@@ -173,7 +173,7 @@ describe(`Negative api tests for the group membership of a user management show 
         expect(user_id).to.be.not.null
         expect(token).to.be.not.null
 
-        const response = await supabaseClient
+        const response = await supabasePublicClient
         .rpc('delete_group_member_invitation_by_id', {
             invitation_id: invitationId.id
         })

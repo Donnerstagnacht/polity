@@ -3,13 +3,13 @@ import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {GroupsOfUserStoreService} from "./groups-of-user.store.service";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
-import {supabaseClient} from "../../../auth/supabase-client";
+import {supabasePublicClient} from "../../../auth/supabase-public-client";
 
 @Injectable({
     providedIn: 'root'
 })
 export class GroupsOfUserActionService {
-    private readonly supabase: SupabaseClient<DatabaseOverwritten> = supabaseClient;
+    private readonly supabase: SupabaseClient<DatabaseOverwritten> = supabasePublicClient;
 
     constructor(
         private readonly groupsOfUserStoreService: GroupsOfUserStoreService

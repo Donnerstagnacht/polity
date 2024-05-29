@@ -97,16 +97,12 @@ REM    pause
 
 @REM     Generate types from remote (requires to click apply editor config to work locally, else wise type errors
 @REM occure)
-    echo Start generating types
-    supabase gen types typescript --project-id "kvfoskstaagtgqvbrwbo" --schema public > supabase/types/supabase.ts
-    supabase gen types typescript --project-id "kvfoskstaagtgqvbrwbo" --schema hidden >
-    supabase/types/supabase_authenticated_access.ts
+echo Start generating types
+supabase gen types typescript --project-id "kvfoskstaagtgqvbrwbo" --schema public > supabase/types/supabase.public.ts
+supabase gen types typescript --project-id "kvfoskstaagtgqvbrwbo" --schema authenticated > supabase/types/supabase.authenticated.ts
 
 @REM Start angular client and run tests
 @REM     pause
 @REM     ng serve
 @REM    npx cypress run --spec "cypress/e2e/all.cy.ts" --record false
-    pause
-)
 
-pause

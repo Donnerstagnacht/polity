@@ -3,13 +3,13 @@ import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {NotificationSettingsStoreService} from "./notification-settings.store.service";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
-import {supabaseClient} from "../../../auth/supabase-client";
+import {supabasePublicClient} from "../../../auth/supabase-public-client";
 
 @Injectable({
     providedIn: 'root'
 })
 export class NotificationSettingsActionService {
-    private supabaseClient: SupabaseClient<DatabaseOverwritten> = supabaseClient;
+    private supabaseClient: SupabaseClient<DatabaseOverwritten> = supabasePublicClient;
 
     constructor(private notificationSettingsStore: NotificationSettingsStoreService) {
     }

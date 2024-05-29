@@ -4,14 +4,14 @@ import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modifi
 import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {FollowingOfUserStoreService} from "./following-of-user.store.service";
 import {ProfileCountersStoreService} from "./profile-counters.store.service";
-import {supabaseClient} from "../../../auth/supabase-client";
+import {supabasePublicClient} from "../../../auth/supabase-public-client";
 import {ProfileActionService} from "../../profile/action-store-services/profile.action.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class FollowingOfUserActionService {
-    private readonly supabaseClient: SupabaseClient<DatabaseOverwritten> = supabaseClient;
+    private readonly supabaseClient: SupabaseClient<DatabaseOverwritten> = supabasePublicClient;
 
     constructor(
         private readonly followingOfUserStoreService: FollowingOfUserStoreService,

@@ -8,7 +8,7 @@ import {
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
 import {NotificationsStoreService} from "./notifications.store.service";
 import {SupabaseObjectReturn, SupabaseTable} from "../../../../../supabase/types/supabase.shorthand-types";
-import {supabaseClient} from "../../../auth/supabase-client";
+import {supabasePublicClient} from "../../../auth/supabase-public-client";
 import {SessionStoreService} from "../../../auth/services/session.store.service";
 import {ProfileActionService} from "../../profile/action-store-services/profile.action.service";
 
@@ -16,7 +16,7 @@ import {ProfileActionService} from "../../profile/action-store-services/profile.
     providedIn: 'root'
 })
 export class NotificationsActionService {
-    private readonly supabaseClient: SupabaseClient<DatabaseOverwritten> = supabaseClient;
+    private readonly supabaseClient: SupabaseClient<DatabaseOverwritten> = supabasePublicClient;
     private currentNotificationsChannel: RealtimeChannel | null = null;
 
     constructor(
@@ -89,7 +89,7 @@ export class NotificationsActionService {
         const channelId: number = Math.floor(Math.random() * 1000000);
         const channelName: string = `channel-${channelId}`;
 
-        const notificationsChannel: RealtimeChannel = supabaseClient
+        const notificationsChannel: RealtimeChannel = supabasePublicClient
         .channel(channelName)
         .on('postgres_changes', {
                 event: 'INSERT',
