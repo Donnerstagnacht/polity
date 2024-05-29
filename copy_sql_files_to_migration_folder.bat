@@ -64,18 +64,18 @@ for %%f in (*) do (
     ren "%%f" "!newfilename!"
 )
 
-REM remove the second underscore after the running number of 2 digits
+REM remove the second underscore after the running number of 3 digits
 for %%f in (*) do (
     set "filename=%%f"
-    set "newfilename=!filename:~0,4!!filename:~5!"
+    set "newfilename=!filename:~0,5!!filename:~6!"
     ren "%%f" "!newfilename!"
 )
 
-REM Add the prefix "0000" to each file name to create 14 starting digits (yyyy - mm - dd - hh - mm - ss) (default
+REM Add the prefix "000" to each file name to create 14 starting digits (yyyy - mm - dd - hh - mm - ss) (default
 REM postgres setting
  for %%f in (*) do (
      set "filename=%%f"
-     set "newfilename=0000!filename!"
+     set "newfilename=000!filename!"
      ren "%%f" "!newfilename!"
  )
 
