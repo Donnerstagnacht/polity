@@ -30,7 +30,7 @@ export class SearchGroupActionService {
         await this.searchStoreService.groupSearchResults.wrapSelectFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<SupabaseObjectReturn<'search_group'>[]> = await this.supabaseClient.rpc(
                 'search_group',
-                {search_term: searchTerm}
+                {_search_term: searchTerm}
             ).throwOnError()
             if (response.data) {
                 this.searchStoreService.groupSearchResults.setObjects(response.data)

@@ -26,10 +26,10 @@ export class FollowingOfGroupActionService {
         await this.followingOfGroupStoreService.followingOfGroup.wrapSelectFunction(async (): Promise<void> => {
             const groupId: string | null = this.groupStoreService.group.getObjectId();
             if (groupId) {
-                const followingResponse: PostgrestSingleResponse<SupabaseObjectReturn<'read_following_of_group'>[]> = await this.supabaseClient.rpc(
-                    'read_following_of_group',
+                const followingResponse: PostgrestSingleResponse<SupabaseObjectReturn<'read_followings_of_group'>[]> = await this.supabaseClient.rpc(
+                    'read_followings_of_group',
                     {
-                        group_id_in: groupId
+                        _group_id: groupId
                     }
                 )
                 .throwOnError()
@@ -46,7 +46,7 @@ export class FollowingOfGroupActionService {
             const response: PostgrestSingleResponse<void | PostgrestError> = await this.supabaseClient.rpc(
                 'unfollow_group_transaction',
                 {
-                    following_id: userId
+                    _following_id: userId
                 }
             )
             .single()

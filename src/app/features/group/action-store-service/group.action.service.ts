@@ -25,7 +25,7 @@ export class GroupActionService {
     public async readGroup(id: string): Promise<void> {
         await this.groupStoreService.group.wrapSelectFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_group_columns'>> = await this.supabase
-            .rpc('read_group_columns', {group_id: id})
+            .rpc('read_group_columns', {_group_id: id})
             .single()
             .throwOnError()
             if (response.data) {

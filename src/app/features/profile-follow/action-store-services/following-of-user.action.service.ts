@@ -39,7 +39,7 @@ export class FollowingOfUserActionService {
             const response: PostgrestSingleResponse<SupabaseObjectReturn<'unfollow_profile_transaction'>> = await this.supabaseClient.rpc(
                 'unfollow_profile_transaction',
                 {
-                    following_id: userId
+                    _following_id: userId
                 }
             )
             .single()

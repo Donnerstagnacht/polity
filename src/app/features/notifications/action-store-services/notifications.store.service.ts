@@ -6,10 +6,10 @@ import {ArrayStoreService} from "../../../signal-store/array-store.service";
     providedIn: 'root'
 })
 export class NotificationsStoreService {
-    public notifications: ArrayStoreService<SupabaseObjectReturn<'read_notifications_of_users'>>;
+    public notifications: ArrayStoreService<SupabaseObjectReturn<'read_notifications_of_user'>>;
 
     constructor() {
-        this.notifications = new ArrayStoreService<SupabaseObjectReturn<'read_notifications_of_users'>>(
+        this.notifications = new ArrayStoreService<SupabaseObjectReturn<'read_notifications_of_user'>>(
             true
         );
     }

@@ -6,9 +6,9 @@ import {ObjectStoreService} from "../../../signal-store/object-store.service";
     providedIn: 'root'
 })
 export class GroupCountersStoreService {
-    public groupCounters: ObjectStoreService<SupabaseObjectReturn<'read_group_counter'>>;
+    public groupCounters: ObjectStoreService<SupabaseObjectReturn<'read_group_counters'>>;
 
     constructor() {
-        this.groupCounters = new ObjectStoreService<SupabaseObjectReturn<'read_group_counter'>>();
+        this.groupCounters = new ObjectStoreService<SupabaseObjectReturn<'read_group_counters'>>();
     }
 }

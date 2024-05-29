@@ -40,7 +40,7 @@ export class FollowersOfUserActionService {
             const response: PostgrestSingleResponse<SupabaseObjectReturn<'remove_follower_of_authenticated_user_transaction'>> = await this.supabaseClient.rpc(
                 'remove_follower_of_authenticated_user_transaction',
                 {
-                    follower_id: userId,
+                    _follower_id: userId,
                 }
             )
             .single()
@@ -60,10 +60,10 @@ export class FollowersOfUserActionService {
 
         await this.profileCountersStoreService.profileCounters.wrapSelectFunction(async (): Promise<void> => {
             this.profileStoreService.profile.uiFlagStore.setFlagTrue('isFollowingCheckLoading')
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'check_if_following'>> = await this.supabaseClient.rpc(
-                'check_if_following',
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'check_if_user_follows_profile'>> = await this.supabaseClient.rpc(
+                'check_if_user_follows_profile',
                 {
-                    following_id: followingId as string
+                    _following_id: followingId as string
                 }
             )
             .single()
@@ -84,7 +84,7 @@ export class FollowersOfUserActionService {
             const response: PostgrestSingleResponse<SupabaseObjectReturn<'follow_profile_transaction'>> = await this.supabaseClient.rpc(
                 'follow_profile_transaction',
                 {
-                    following_id: followingId
+                    _following_id: followingId
                 }
             ).throwOnError()
 
@@ -99,7 +99,7 @@ export class FollowersOfUserActionService {
             const response: PostgrestSingleResponse<SupabaseObjectReturn<'unfollow_profile_transaction'>> = await this.supabaseClient.rpc(
                 'unfollow_profile_transaction',
                 {
-                    following_id: followingId
+                    _following_id: followingId
                 }
             ).throwOnError()
 

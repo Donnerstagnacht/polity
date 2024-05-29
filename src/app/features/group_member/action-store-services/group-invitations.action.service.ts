@@ -25,7 +25,7 @@ export class GroupInvitationsActionService {
                 const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_group_member_invitations'>[]> = await this.supabaseClient.rpc(
                     'read_group_member_invitations',
                     {
-                        group_id_in: groupId
+                        _group_id: groupId
                     }
                 )
                 .throwOnError()

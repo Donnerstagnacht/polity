@@ -26,7 +26,7 @@ export class ProfileActionService {
     public async readProfile(id: string): Promise<void> {
         await this.profileStoreService.profile.wrapSelectFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_user'>> = await this.supabase
-            .rpc('read_user', {user_id: id})
+            .rpc('read_user', {_user_id: id})
             .single()
             .throwOnError()
             if (response.data) {
@@ -47,9 +47,9 @@ export class ProfileActionService {
         await this.profileStoreService.profile.wrapUpdateFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<SupabaseObjectReturn<'update_profile'>> = await this.supabase
             .rpc('update_profile', {
-                first_name_in: profile.first_name as string,
-                last_name_in: profile.last_name as string,
-                profile_image_in: profile.profile_image as string
+                _first_name: profile.first_name as string,
+                _last_name: profile.last_name as string,
+                _profile_image: profile.profile_image as string
             })
             .single()
             .throwOnError()
@@ -68,7 +68,7 @@ export class ProfileActionService {
         await this.profileStoreService.profile.wrapUpdateFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<SupabaseObjectReturn<'update_profile'>> = await this.supabase
             .rpc('update_profile', {
-                profile_image_in: imageUrl
+                _profile_image: imageUrl
             })
             .single()
             .throwOnError()

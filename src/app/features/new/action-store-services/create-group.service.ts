@@ -19,10 +19,10 @@ export class CreateGroupService {
         console.log(group)
         const response: PostgrestSingleResponse<SupabaseObjectReturn<'create_group_transaction'>> = await this.supabaseClient
         .rpc('create_group_transaction', {
-            name: group.name,
-            level: group.level,
-            description: group.description,
-            invited_members: group.invited_members
+            _name: group.name,
+            _level: group.level,
+            _description: group.description,
+            _invited_members: group.invited_members
         })
         .throwOnError()
         if (response.error) {

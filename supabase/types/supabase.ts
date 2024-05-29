@@ -122,7 +122,7 @@ export type Database = {
         }
         Returns: string
       }
-      check_if_user_following_group: {
+      check_if_user_follows_group: {
         Args: {
           _following_id: string
         }

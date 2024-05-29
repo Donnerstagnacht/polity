@@ -38,7 +38,7 @@ export class NotificationComponent {
     protected throttle: number = 300;
     protected scrollDistance: number = 1;
     protected scrollUpDistance: number = 2;
-    protected notifications: WritableSignal<SupabaseObjectReturn<'read_notifications_of_users'>[]> = signal([]);
+    protected notifications: WritableSignal<SupabaseObjectReturn<'read_notifications_of_user'>[]> = signal([]);
     protected isNotificationsLoading: WritableSignal<boolean> = signal(true);
     protected showFilter: boolean = true;
     protected readonly filterTypes: filterTag[] = Filter_TYPES;

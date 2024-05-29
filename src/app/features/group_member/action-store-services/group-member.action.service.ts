@@ -46,7 +46,7 @@ export class GroupMemberActionService {
                 const response: PostgrestSingleResponse<SupabaseObjectReturn<'check_group_membership_status'>> = await this.supabaseClient.rpc(
                     'check_group_membership_status',
                     {
-                        group_id_in: group_id
+                        _group_id: group_id
                     }
                 )
                 .single()
@@ -112,7 +112,7 @@ export class GroupMemberActionService {
                 const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_group_members'>[]> = await this.supabaseClient.rpc(
                     'read_group_members',
                     {
-                        group_id_in: groupId
+                        _group_id: groupId
                     }
                 )
                 .throwOnError()
@@ -131,7 +131,7 @@ export class GroupMemberActionService {
                 const response: PostgrestSingleResponse<SupabaseObjectReturn<'create_group_member_request'>> = await this.supabaseClient.rpc(
                     'create_group_member_request',
                     {
-                        group_id_in: groupId
+                        _group_id: groupId
                     }
                 )
                 .throwOnError()
@@ -153,7 +153,7 @@ export class GroupMemberActionService {
             const response: PostgrestSingleResponse<SupabaseObjectReturn<'accept_group_membership_request_transaction'>> = await this.supabaseClient.rpc(
                 'accept_group_membership_request_transaction',
                 {
-                    request_id: membershipRequest
+                    _request_id: membershipRequest
                 }
             )
             .throwOnError()
@@ -172,7 +172,7 @@ export class GroupMemberActionService {
             const response: PostgrestSingleResponse<SupabaseObjectReturn<'delete_group_member_request'>> = await this.supabaseClient.rpc(
                 'delete_group_member_request',
                 {
-                    group_id_in: membershipRequest
+                    _group_id: membershipRequest
                 }
             )
             .throwOnError()
@@ -199,8 +199,8 @@ export class GroupMemberActionService {
                 const response: PostgrestSingleResponse<SupabaseObjectReturn<'create_group_member_invitation'>> = await this.supabaseClient.rpc(
                     'create_group_member_invitation',
                     {
-                        group_id: groupId,
-                        member_id: user_id
+                        _group_id: groupId,
+                        _member_id: user_id
                     }
                 )
                 .throwOnError()
@@ -215,7 +215,7 @@ export class GroupMemberActionService {
                 const response: PostgrestSingleResponse<SupabaseObjectReturn<'accept_group_invitation_transaction'>> = await this.supabaseClient.rpc(
                     'accept_group_invitation_transaction',
                     {
-                        group_id_in: groupId
+                        _group_id: groupId
                     }
                 )
                 .throwOnError()
@@ -237,7 +237,7 @@ export class GroupMemberActionService {
             const response: PostgrestSingleResponse<SupabaseObjectReturn<'accept_group_invitation_by_id_transaction'>> = await this.supabaseClient.rpc(
                 'accept_group_invitation_by_id_transaction',
                 {
-                    invitation_id: invitation_id
+                    _invitation_id: invitation_id
                 }
             )
             .throwOnError()
@@ -257,7 +257,7 @@ export class GroupMemberActionService {
             const response: PostgrestSingleResponse<SupabaseObjectReturn<'delete_group_member_invitation_by_id'>> = await this.supabaseClient.rpc(
                 'delete_group_member_invitation_by_id',
                 {
-                    invitation_id: invitation_id
+                    _invitation_id: invitation_id
                 }
             )
             .throwOnError()
@@ -278,7 +278,7 @@ export class GroupMemberActionService {
                 const response: PostgrestSingleResponse<SupabaseObjectReturn<'delete_group_member_invitation'>> = await this.supabaseClient.rpc(
                     'delete_group_member_invitation',
                     {
-                        group_id_in: groupId
+                        _group_id: groupId
                     }
                 )
                 .throwOnError()
@@ -301,7 +301,7 @@ export class GroupMemberActionService {
                 const response: PostgrestSingleResponse<SupabaseObjectReturn<'delete_group_member_request'>> = await this.supabaseClient.rpc(
                     'delete_group_member_request',
                     {
-                        group_id_in: groupId
+                        _group_id: groupId
                     }
                 )
                 .throwOnError()
@@ -325,7 +325,7 @@ export class GroupMemberActionService {
             const response: PostgrestSingleResponse<SupabaseObjectReturn<'delete_group_member_request_by_id'>> = await this.supabaseClient.rpc(
                 'delete_group_member_request_by_id',
                 {
-                    request_id: requestId
+                    _request_id: requestId
                 }
             )
             .throwOnError()
@@ -348,7 +348,7 @@ export class GroupMemberActionService {
             const response: PostgrestSingleResponse<SupabaseObjectReturn<'leave_group_by_membership_id_transaction'>> = await this.supabaseClient.rpc(
                 'leave_group_by_membership_id_transaction',
                 {
-                    membership_id_in: membershipId
+                    _membership_id: membershipId
                 }
             )
             .throwOnError();
@@ -369,7 +369,7 @@ export class GroupMemberActionService {
                 const response: PostgrestSingleResponse<SupabaseObjectReturn<'leave_group_member_transaction'>> = await this.supabaseClient.rpc(
                     'leave_group_member_transaction',
                     {
-                        group_id_in: groupId
+                        _group_id: groupId
                     }
                 )
                 .throwOnError()

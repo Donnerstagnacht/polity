@@ -36,7 +36,7 @@ export class FollowingGroupsOfUserActionService {
             const response: PostgrestSingleResponse<SupabaseObjectReturn<'unfollow_group_transaction'>> = await this.supabaseClient.rpc(
                 'unfollow_group_transaction',
                 {
-                    following_id: groupId
+                    _following_id: groupId
                 }
             )
             .single()

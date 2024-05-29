@@ -31,7 +31,7 @@ export class GroupWikiComponent {
     protected group: Signal<SupabaseObjectReturn<'read_group_columns'> | null> = signal(null);
 
     protected isGroupCounterLoading: WritableSignal<boolean> = signal(true);
-    protected groupCounter: WritableSignal<SupabaseObjectReturn<'read_group_counter'> | null> = signal(null);
+    protected groupCounter: WritableSignal<SupabaseObjectReturn<'read_group_counters'> | null> = signal(null);
 
     protected isFollowingCheckLoading: WritableSignal<boolean> = signal(false);
     protected isFollowing: WritableSignal<boolean> = signal(false);

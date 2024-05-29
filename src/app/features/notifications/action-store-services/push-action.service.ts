@@ -23,10 +23,10 @@ export class PushActionService {
 
     public async addPushSubscriber(pushSubscriptionStringifies: PushSubscriptionStringifies): Promise<void> {
         const response: PostgrestSingleResponse<SupabaseObjectReturn<'upsert_push_subscription'>> = await this.supabaseClient.rpc('upsert_push_subscription', {
-            endpoint: pushSubscriptionStringifies.endpoint,
-            expirationtime: pushSubscriptionStringifies.expirationTime as string,
-            auth: pushSubscriptionStringifies.keys.auth,
-            p256dh: pushSubscriptionStringifies.keys.p256dh
+            _endpoint: pushSubscriptionStringifies.endpoint,
+            _expirationtime: pushSubscriptionStringifies.expirationTime as string,
+            _auth: pushSubscriptionStringifies.keys.auth,
+            _p256dh: pushSubscriptionStringifies.keys.p256dh
         })
         .single()
         .throwOnError();

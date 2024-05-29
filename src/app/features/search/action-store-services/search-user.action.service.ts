@@ -30,7 +30,7 @@ export class SearchUserActionService {
         await this.searchStoreService.profilSearchResults.wrapSelectFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<SupabaseObjectReturn<'search_user'>[]> = await this.supabaseClient.rpc(
                 'search_user',
-                {search_term: searchTerm}
+                {_search_term: searchTerm}
             ).throwOnError()
             if (response.data) {
                 this.searchStoreService.profilSearchResults.setObjects(response.data)
