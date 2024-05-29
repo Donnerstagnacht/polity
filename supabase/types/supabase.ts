@@ -409,6 +409,17 @@ export type Database = {
           profile_image: string
         }[]
       }
+      read_profile: {
+        Args: {
+          _user_id: string
+        }
+        Returns: {
+          id: string
+          first_name: string
+          last_name: string
+          profile_image: string
+        }[]
+      }
       read_profile_counters: {
         Args: {
           _user_id: string
@@ -431,17 +442,6 @@ export type Database = {
         Returns: {
           profile_id: string
           unread_notifications_counter: number
-        }[]
-      }
-      read_user: {
-        Args: {
-          _user_id: string
-        }
-        Returns: {
-          id: string
-          first_name: string
-          last_name: string
-          profile_image: string
         }[]
       }
       remove_follower_of_authenticated_user_transaction: {
