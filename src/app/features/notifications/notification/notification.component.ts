@@ -1,6 +1,6 @@
 import {Component, effect, signal, WritableSignal} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
 import {TuiDay} from "@taiga-ui/cdk";
 import {IInfiniteScrollEvent, InfiniteScrollModule} from "ngx-infinite-scroll";
 import {CommonModule} from "@angular/common";

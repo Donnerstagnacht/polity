@@ -1,7 +1,7 @@
-DROP FUNCTION IF EXISTS public.accept_group_membership_request_transaction(
+DROP FUNCTION IF EXISTS authenticated.accept_group_membership_request_transaction(
     _request_id uuid
 );
-CREATE OR REPLACE FUNCTION public.accept_group_membership_request_transaction(
+CREATE OR REPLACE FUNCTION authenticated.accept_group_membership_request_transaction(
     _request_id uuid
 )
     RETURNS void
@@ -13,7 +13,7 @@ DECLARE
     membership membership;
 BEGIN
     membership :=
-        public.delete_group_member_request_by_id(
+        authenticated.delete_group_member_request_by_id(
             _request_id
         );
 

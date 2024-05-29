@@ -1,15 +1,16 @@
 import {Injectable} from '@angular/core';
-import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
-import {DatabasePublicOverwritten} from "../../../../../supabase/types/supabase.public.modified";
-import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {PostgrestSingleResponse} from "@supabase/supabase-js";
+import {DatabaseAuthenticatedOverwritten} from "../../../../../supabase/types/supabase.public.modified";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
 import {AssistantStoreService} from "./assistant.store.service";
 import {supabaseAuthenticatedClient} from "../../../auth/supabase-authenticated-client";
+import {DatabaseHiddenOverwritten} from "../../../../../supabase/types/supabase.hidden.modified";
 
 @Injectable({
     providedIn: 'root'
 })
 export class AssistantActionService {
-    private readonly supabaseClient: SupabaseClient<DatabasePublicOverwritten> = supabaseAuthenticatedClient;
+    private readonly supabaseClient = supabaseAuthenticatedClient;
 
     constructor(
         private readonly assistantStoreService: AssistantStoreService,
@@ -75,10 +76,10 @@ export class AssistantActionService {
     /**
      * Updates the last tutorial status and the assistant store.
      *
-     * @param {DatabasePublicOverwritten["public"]["Enums"]["tutorial_enum"]} last_tutorial - The new value for the last tutorial.
+     * @param {DatabaseAuthenticatedOverwritten["public"]["Enums"]["tutorial_enum"]} last_tutorial - The new value for the last tutorial.
      * @return {Promise<void>}
      */
-    public async updateLastTutorial(last_tutorial: DatabasePublicOverwritten["public"]["Enums"]["tutorial_enum"]): Promise<void> {
+    public async updateLastTutorial(last_tutorial: DatabaseHiddenOverwritten["hidden"]["Enums"]["tutorial_enum"]): Promise<void> {
         await this.assistantStoreService.assistant.wrapUpdateFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<undefined> = await this.supabaseClient
             .rpc('update_last_tutorial', {_new_status: last_tutorial})

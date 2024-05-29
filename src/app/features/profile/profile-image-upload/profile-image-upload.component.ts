@@ -5,7 +5,7 @@ import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {ProfileActionService} from "../action-store-services/profile.action.service";
 import {ProfileStoreService} from "../action-store-services/profile.store.service";
-import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
 
 @Component({
     selector: 'polity-profile-image-upload',

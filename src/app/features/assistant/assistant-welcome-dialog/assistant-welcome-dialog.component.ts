@@ -10,13 +10,13 @@ import {POLYMORPHEUS_CONTEXT} from "@tinkoff/ng-polymorpheus";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {SessionStoreService} from "../../../auth/services/session.store.service";
 import {Router} from "@angular/router";
-import {DatabasePublicOverwritten} from "../../../../../supabase/types/supabase.public.modified";
-import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
 import {TuiCarouselModule, TuiFieldErrorPipeModule, TuiInputModule} from "@taiga-ui/kit";
 import {CommonModule} from "@angular/common";
 import {ProfileActionService} from "../../profile/action-store-services/profile.action.service";
 import {AssistantActionService} from "../action-stores-services/assistant.action.service";
 import {AssistantStoreService} from "../action-stores-services/assistant.store.service";
+import {DatabaseHiddenOverwritten} from "../../../../../supabase/types/supabase.hidden.modified";
 
 @Component({
     selector: 'polity-assistant-welcome-dialog',
@@ -123,7 +123,7 @@ export class AssistantWelcomeDialogComponent {
         this.dialogContext.completeWith(false);
     }
 
-    private async setLastTutorial(newStatus: DatabasePublicOverwritten["public"]["Enums"]["tutorial_enum"]): Promise<void> {
+    private async setLastTutorial(newStatus: DatabaseHiddenOverwritten["hidden"]["Enums"]["tutorial_enum"]): Promise<void> {
         await this.assistantService.updateLastTutorial(newStatus)
     }
 

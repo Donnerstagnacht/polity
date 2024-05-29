@@ -1,13 +1,10 @@
 import {Injectable} from '@angular/core';
-import {
-    PostgrestSingleResponse,
-    RealtimeChannel,
-    RealtimePostgresInsertPayload,
-    SupabaseClient
-} from "@supabase/supabase-js";
-import {DatabasePublicOverwritten} from "../../../../../supabase/types/supabase.public.modified";
+import {PostgrestSingleResponse, RealtimeChannel, RealtimePostgresInsertPayload} from "@supabase/supabase-js";
 import {NotificationsStoreService} from "./notifications.store.service";
-import {SupabaseObjectReturn, SupabaseTable} from "../../../../../supabase/types/supabase.shorthand-types";
+import {
+    SupabaseObjectReturn,
+    SupabaseTable
+} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
 import {supabaseAuthenticatedClient} from "../../../auth/supabase-authenticated-client";
 import {SessionStoreService} from "../../../auth/services/session.store.service";
 import {ProfileActionService} from "../../profile/action-store-services/profile.action.service";
@@ -16,7 +13,7 @@ import {ProfileActionService} from "../../profile/action-store-services/profile.
     providedIn: 'root'
 })
 export class NotificationsActionService {
-    private readonly supabaseClient: SupabaseClient<DatabasePublicOverwritten> = supabaseAuthenticatedClient;
+    private readonly supabaseClient = supabaseAuthenticatedClient;
     private currentNotificationsChannel: RealtimeChannel | null = null;
 
     constructor(

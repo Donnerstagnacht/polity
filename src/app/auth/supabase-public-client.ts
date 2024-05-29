@@ -1,9 +1,9 @@
 import {createClient} from '@supabase/supabase-js';
-import {DatabasePublicOverwritten} from "../../../supabase/types/supabase.public.modified";
+import {DatabaseAuthenticatedOverwritten} from "../../../supabase/types/supabase.public.modified";
 import {environment} from "../../environments/environment";
 
 export const supabasePublicClient =
-    createClient<DatabasePublicOverwritten>(
+    createClient<DatabaseAuthenticatedOverwritten>(
         environment.supabaseProjectUrl,
         environment.supabaseAnonKey,
         {

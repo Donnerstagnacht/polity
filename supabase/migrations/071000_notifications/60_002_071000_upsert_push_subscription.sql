@@ -1,10 +1,10 @@
-DROP FUNCTION IF EXISTS public.upsert_push_subscription(
+DROP FUNCTION IF EXISTS authenticated.upsert_push_subscription(
     _endpoint text,
     _expirationTime text,
     _auth text,
     _p256dh text
 );
-CREATE OR REPLACE FUNCTION public.upsert_push_subscription(
+CREATE OR REPLACE FUNCTION authenticated.upsert_push_subscription(
     _endpoint text,
     _expirationTime text,
     _auth text,

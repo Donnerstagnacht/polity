@@ -1,8 +1,8 @@
-DROP FUNCTION IF EXISTS public.remove_group_follower_transaction(
+DROP FUNCTION IF EXISTS authenticated.remove_group_follower_transaction(
     _follower_id uuid,
     _group_id_in uuid
 );
-CREATE OR REPLACE FUNCTION public.remove_group_follower_transaction(
+CREATE OR REPLACE FUNCTION authenticated.remove_group_follower_transaction(
     _follower_id uuid,
     _group_id_in uuid
 )

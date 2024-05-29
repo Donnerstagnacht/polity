@@ -1,13 +1,13 @@
 DROP FUNCTION IF EXISTS hidden.create_notification_from_user_transaction(
     _sender uuid,
     _receiver uuid,
-    _type_of_notification notifications_enum,
+    _type_of_notification hidden.notifications_enum,
     _read_by_receiver boolean
 );
 CREATE OR REPLACE FUNCTION hidden.create_notification_from_user_transaction(
     _sender uuid,
     _receiver uuid,
-    _type_of_notification notifications_enum,
+    _type_of_notification hidden.notifications_enum,
     _read_by_receiver boolean
 )
     RETURNS void

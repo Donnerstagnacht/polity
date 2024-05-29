@@ -1,15 +1,14 @@
 import {Injectable} from '@angular/core';
-import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
-import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {PostgrestSingleResponse} from "@supabase/supabase-js";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
 import {NotificationSettingsStoreService} from "./notification-settings.store.service";
-import {DatabasePublicOverwritten} from "../../../../../supabase/types/supabase.public.modified";
 import {supabaseAuthenticatedClient} from "../../../auth/supabase-authenticated-client";
 
 @Injectable({
     providedIn: 'root'
 })
 export class NotificationSettingsActionService {
-    private supabaseClient: SupabaseClient<DatabasePublicOverwritten> = supabaseAuthenticatedClient;
+    private supabaseClient = supabaseAuthenticatedClient;
 
     constructor(private notificationSettingsStore: NotificationSettingsStoreService) {
     }

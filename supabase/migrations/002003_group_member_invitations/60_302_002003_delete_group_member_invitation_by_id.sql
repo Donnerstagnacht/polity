@@ -1,7 +1,7 @@
-DROP FUNCTION IF EXISTS public.delete_group_member_invitation_by_id(
+DROP FUNCTION IF EXISTS authenticated.delete_group_member_invitation_by_id(
     _invitation_id uuid);
 
-CREATE OR REPLACE FUNCTION public.delete_group_member_invitation_by_id(
+CREATE OR REPLACE FUNCTION authenticated.delete_group_member_invitation_by_id(
     _invitation_id uuid
 )
     RETURNS membership

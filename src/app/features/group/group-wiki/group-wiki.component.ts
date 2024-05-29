@@ -3,7 +3,7 @@ import {CounterComponent} from "../../../ui/polity-wiki/counter/counter.componen
 import {FollowButton} from "../../../ui/polity-wiki/follow-button/follow-button.component";
 import {RequestButton} from "../../../ui/polity-wiki/request-button/request-button.component";
 import {WikiHeadlineComponent} from "../../../ui/polity-wiki/wiki-headline/wiki-headline.component";
-import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
 import {GroupStoreService} from "../action-store-service/group.store.service";
 import {GroupCountersActionService} from "../../group-follow/action-store-services/group-counters.action.service";
 import {GroupCountersStoreService} from "../../group-follow/action-store-services/group-counters.store.service";

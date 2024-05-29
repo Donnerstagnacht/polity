@@ -1,7 +1,7 @@
-DROP FUNCTION IF EXISTS public.update_skip_tutorial(
+DROP FUNCTION IF EXISTS authenticated.update_skip_tutorial(
     _new_status boolean
 );
-CREATE OR REPLACE FUNCTION public.update_skip_tutorial(
+CREATE OR REPLACE FUNCTION authenticated.update_skip_tutorial(
     _new_status boolean
 )
     RETURNS void

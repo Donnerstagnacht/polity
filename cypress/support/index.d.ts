@@ -1,4 +1,4 @@
-import {SupabaseFunctionName} from "../../supabase/types/supabase.shorthand-types";
+import {SupabaseFunctionName} from "../../supabase/types/supabase.authenticated.shorthand-types";
 import {AuthData} from "../../seed_and_test_data/01_test_auth";
 import {Profile} from "../../seed_and_test_data/02_test_profiles";
 import {ProfileCounter} from "../../seed_and_test_data/04_test_profile_counters";

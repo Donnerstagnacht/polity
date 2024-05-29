@@ -1,7 +1,7 @@
-DROP FUNCTION IF EXISTS public.accept_group_invitation_by_id_transaction(
+DROP FUNCTION IF EXISTS authenticated.accept_group_invitation_by_id_transaction(
     _invitation_id uuid
 );
-CREATE OR REPLACE FUNCTION public.accept_group_invitation_by_id_transaction(
+CREATE OR REPLACE FUNCTION authenticated.accept_group_invitation_by_id_transaction(
     _invitation_id uuid
 )
     RETURNS membership
@@ -13,7 +13,7 @@ DECLARE
     deleted_invitation membership;
     new_membership     membership;
 BEGIN
-    deleted_invitation := public.delete_group_member_invitation_by_id(
+    deleted_invitation := authenticated.delete_group_member_invitation_by_id(
         _invitation_id
                           );
 

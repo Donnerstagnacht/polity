@@ -6,7 +6,7 @@ import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from "@angular
 import {GroupsOfUserActionService} from "../action-store-services/groups-of-user.action.service";
 import {GroupInvitationsOfUserActionService} from "../action-store-services/group-invitations-of-user.action.service";
 import {GroupRequestsOfUserActionService} from "../action-store-services/group-requests-of-user.action.service";
-import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
 import {GroupMemberActionService} from "../../group_member/action-store-services/group-member.action.service";
 import {FilterClearComponent} from "../../../ui/polity-filter/filter-clear/filter-clear.component";
 import {FilterHeadlineComponent} from "../../../ui/polity-filter/filter-headline/filter-headline.component";

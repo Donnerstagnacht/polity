@@ -11,7 +11,7 @@ import {
     TuiStringifyContentPipeModule
 } from "@taiga-ui/kit";
 import {TuiTextfieldControllerModule} from "@taiga-ui/core";
-import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
 import {SearchUserActionService} from "../action-store-services/search-user.action.service";
 import {SearchUserStoreService} from "../action-store-services/search-user.store.service";
 

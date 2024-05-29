@@ -1,7 +1,7 @@
-DROP FUNCTION IF EXISTS public.unfollow_profile_transaction(
+DROP FUNCTION IF EXISTS authenticated.unfollow_profile_transaction(
     _following_id uuid
 );
-CREATE OR REPLACE FUNCTION public.unfollow_profile_transaction(
+CREATE OR REPLACE FUNCTION authenticated.unfollow_profile_transaction(
     _following_id uuid
 )
     RETURNS void

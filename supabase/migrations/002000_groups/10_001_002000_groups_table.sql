@@ -3,13 +3,13 @@ CREATE EXTENSION IF NOT EXISTS pg_trgm;
 DROP TABLE IF EXISTS hidden.groups CASCADE;
 CREATE TABLE IF NOT EXISTS hidden.groups
 (
-    id          uuid                                                  NOT NULL DEFAULT uuid_generate_v4(),
-    creator     uuid                                                  NOT NULL,
-    name        text                                                  NOT NULL,
+    id          uuid                                                         NOT NULL DEFAULT uuid_generate_v4(),
+    creator     uuid                                                         NOT NULL,
+    name        text                                                         NOT NULL,
     description text,
-    created_at  timestamp WITH TIME ZONE DEFAULT NOW()                NOT NULL,
-    updated_at  timestamp WITH TIME ZONE DEFAULT NOW()                NOT NULL,
-    level       group_level              DEFAULT 'local'::group_level NOT NULL,
+    created_at  timestamp WITH TIME ZONE DEFAULT NOW()                       NOT NULL,
+    updated_at  timestamp WITH TIME ZONE DEFAULT NOW()                       NOT NULL,
+    level       hidden.group_level       DEFAULT 'local'::hidden.group_level NOT NULL,
     img_url     text,
     fts         tsvector GENERATED ALWAYS AS (
                     TO_TSVECTOR(

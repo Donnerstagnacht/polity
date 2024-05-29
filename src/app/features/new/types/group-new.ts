@@ -1,8 +1,8 @@
-import {SupabaseEnum} from "../../../../../supabase/types/supabase.shorthand-types";
+import {DatabaseHiddenOverwritten} from "../../../../../supabase/types/supabase.hidden.modified";
 
 export type GroupNew = {
     name: string;
     description: string;
-    level: SupabaseEnum<'group_level'>;
+    level: DatabaseHiddenOverwritten["hidden"]["Enums"]["group_level"];
     invited_members: string[];
 }

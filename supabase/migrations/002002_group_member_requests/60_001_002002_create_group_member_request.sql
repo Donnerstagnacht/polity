@@ -1,8 +1,8 @@
-DROP FUNCTION IF EXISTS public.create_group_member_request(
+DROP FUNCTION IF EXISTS authenticated.create_group_member_request(
     _group_id uuid
 );
 
-CREATE OR REPLACE FUNCTION public.create_group_member_request(
+CREATE OR REPLACE FUNCTION authenticated.create_group_member_request(
     _group_id uuid
 )
     RETURNS void

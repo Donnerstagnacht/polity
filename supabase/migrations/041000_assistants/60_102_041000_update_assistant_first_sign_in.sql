@@ -1,7 +1,7 @@
-DROP FUNCTION IF EXISTS public.update_first_sign_in(
+DROP FUNCTION IF EXISTS authenticated.update_first_sign_in(
     _new_status boolean
 );
-CREATE OR REPLACE FUNCTION public.update_first_sign_in(
+CREATE OR REPLACE FUNCTION authenticated.update_first_sign_in(
     _new_status boolean
 )
     RETURNS void

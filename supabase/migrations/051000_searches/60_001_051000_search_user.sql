@@ -1,7 +1,7 @@
-DROP FUNCTION IF EXISTS public.search_user(
+DROP FUNCTION IF EXISTS authenticated.search_user(
     _search_term text
 );
-CREATE OR REPLACE FUNCTION public.search_user(
+CREATE OR REPLACE FUNCTION authenticated.search_user(
     _search_term text
 )
     RETURNS table

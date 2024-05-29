@@ -11,10 +11,10 @@ This seems to occur often with supabase real time.
 Currently, overwritten types:
 public - tables - profiles - row - updated_at
  */
-export type DatabaseAuthenticatedOverwritten = MergeDeep<
+export type DatabaseHiddenOverwritten = MergeDeep<
     DatabaseGenerated,
     {
-        public: {
+        authenticated: {
             Tables: {
                 profiles: {
                     Row: {

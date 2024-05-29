@@ -1,7 +1,7 @@
-DROP FUNCTION IF EXISTS public.remove_follower_of_authenticated_user_transaction(
+DROP FUNCTION IF EXISTS authenticated.remove_follower_of_authenticated_user_transaction(
     _follower_id uuid
 );
-CREATE OR REPLACE FUNCTION public.remove_follower_of_authenticated_user_transaction(
+CREATE OR REPLACE FUNCTION authenticated.remove_follower_of_authenticated_user_transaction(
     _follower_id uuid
 )
     RETURNS void

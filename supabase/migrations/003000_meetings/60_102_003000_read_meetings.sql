@@ -12,7 +12,7 @@ CREATE OR REPLACE FUNCTION hidden.read_meetings(
                 creator_id  uuid,
                 name        text,
                 description text,
-                type        meeting_type,
+                type        hidden.meeting_type,
                 date        timestamp WITH TIME ZONE,
                 created_at  timestamp WITH TIME ZONE,
                 updated_at  timestamp WITH TIME ZONE

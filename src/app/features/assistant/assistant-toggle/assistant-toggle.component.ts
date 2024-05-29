@@ -1,6 +1,6 @@
 import {Component, effect, signal, WritableSignal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
 import {TuiToggleModule} from "@taiga-ui/kit";
 import {AssistantActionService} from "../action-stores-services/assistant.action.service";
 import {AssistantStoreService} from "../action-stores-services/assistant.store.service";

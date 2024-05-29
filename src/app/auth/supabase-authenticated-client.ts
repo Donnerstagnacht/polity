@@ -1,14 +1,14 @@
 import {createClient} from '@supabase/supabase-js';
-import {DatabasePublicOverwritten} from "../../../supabase/types/supabase.public.modified";
 import {environment} from "../../environments/environment";
+import {DatabaseHiddenOverwritten} from "../../../supabase/types/supabase.authenticated.modified";
 
 export const supabaseAuthenticatedClient =
-    createClient<DatabasePublicOverwritten>(
+    createClient<DatabaseHiddenOverwritten>(
         environment.supabaseProjectUrl,
         environment.supabaseAnonKey,
         {
             db: {
-                schema: 'public',
+                schema: 'authenticated',
             }
         }
     );

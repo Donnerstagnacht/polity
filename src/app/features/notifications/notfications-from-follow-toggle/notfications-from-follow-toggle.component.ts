@@ -4,7 +4,7 @@ import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {TuiToggleModule} from "@taiga-ui/kit";
 import {NotificationSettingsStoreService} from "../action-store-services/notification-settings.store.service";
 import {NotificationSettingsActionService} from "../action-store-services/notification-settings.action.service";
-import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
 
 @Component({
     selector: 'polity-notfications-from-follow-toggle',

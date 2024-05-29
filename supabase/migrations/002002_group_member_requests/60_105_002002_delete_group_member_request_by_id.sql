@@ -1,8 +1,8 @@
-DROP FUNCTION IF EXISTS public.delete_group_member_request_by_id(
+DROP FUNCTION IF EXISTS authenticated.delete_group_member_request_by_id(
     _request_id uuid
 );
 
-CREATE OR REPLACE FUNCTION public.delete_group_member_request_by_id(
+CREATE OR REPLACE FUNCTION authenticated.delete_group_member_request_by_id(
     _request_id uuid
 )
     RETURNS membership

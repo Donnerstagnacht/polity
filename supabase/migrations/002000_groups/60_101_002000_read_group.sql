@@ -1,14 +1,14 @@
-DROP FUNCTION IF EXISTS public.read_group(
+DROP FUNCTION IF EXISTS authenticated.read_group(
     _group_id uuid
 );
-CREATE OR REPLACE FUNCTION public.read_group(
+CREATE OR REPLACE FUNCTION authenticated.read_group(
     _group_id uuid
 )
     RETURNS table
             (
                 id_          uuid,
                 name_        text,
-                level_       group_level,
+                level_       hidden.group_level,
                 description_ text
             )
     LANGUAGE plpgsql
@@ -35,8 +35,8 @@ END
 $$;
 
 --same function but differnt return types that cause issues with the supabase type generation
--- DROP FUNCTION IF EXISTS public.read_group_implied_type(uuid);
--- CREATE OR REPLACE FUNCTION public.read_group_implied_type(group_id uuid)
+-- DROP FUNCTION IF EXISTS authenticated.read_group_implied_type(uuid);
+-- CREATE OR REPLACE FUNCTION authenticated.read_group_implied_type(group_id uuid)
 --     RETURNS hidden.groups
 --     LANGUAGE plpgsql
 --     SECURITY INVOKER
@@ -56,8 +56,8 @@ $$;
 -- $$;
 
 -- -- does not work, requires to declare and return a variable
--- DROP FUNCTION IF EXISTS public.read_group_groups_no_variable(uuid);
--- CREATE OR REPLACE FUNCTION public.read_group_groups_no_variable(group_id uuid)
+-- DROP FUNCTION IF EXISTS authenticated.read_group_groups_no_variable(uuid);
+-- CREATE OR REPLACE FUNCTION authenticated.read_group_groups_no_variable(group_id uuid)
 --     RETURNS hidden.groups
 --     LANGUAGE plpgsql
 --     SECURITY INVOKER
@@ -72,8 +72,8 @@ $$;
 -- END
 -- $$;
 
--- DROP FUNCTION IF EXISTS public.read_group_record(uuid);
--- CREATE OR REPLACE FUNCTION public.read_group_record(group_id uuid)
+-- DROP FUNCTION IF EXISTS authenticated.read_group_record(uuid);
+-- CREATE OR REPLACE FUNCTION authenticated.read_group_record(group_id uuid)
 --     RETURNS record
 --     LANGUAGE plpgsql
 --     SECURITY INVOKER

@@ -1,14 +1,14 @@
-DROP FUNCTION IF EXISTS public.search_group(
+DROP FUNCTION IF EXISTS authenticated.search_group(
     _search_term text
 );
-CREATE OR REPLACE FUNCTION public.search_group(
+CREATE OR REPLACE FUNCTION authenticated.search_group(
     _search_term text
 )
     RETURNS table
             (
                 id_          uuid,
                 name_        text,
-                level_       group_level,
+                level_       hidden.group_level,
                 description_ text
             )
     LANGUAGE plpgsql

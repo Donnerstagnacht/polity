@@ -10,7 +10,7 @@ CREATE OR REPLACE FUNCTION hidden.read_group_relations(
                 id_                    uuid,
                 group_id_              text,
                 related_group_id_      uuid,
-                relation_type_         group_relation,
+                relation_type_         hidden.group_relation,
                 created_at_            timestamp WITH TIME ZONE,
                 updated_at_            timestamp WITH TIME ZONE,
                 right_to_inform_       boolean,

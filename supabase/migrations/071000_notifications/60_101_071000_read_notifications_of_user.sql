@@ -1,8 +1,8 @@
-DROP FUNCTION IF EXISTS public.read_notifications_of_user();
-CREATE OR REPLACE FUNCTION public.read_notifications_of_user()
+DROP FUNCTION IF EXISTS authenticated.read_notifications_of_user();
+CREATE OR REPLACE FUNCTION authenticated.read_notifications_of_user()
     RETURNS table
             (
-                type_of_notification_ notifications_enum,
+                type_of_notification_ hidden.notifications_enum,
                 read_by_receiver_     boolean,
                 created_at_           timestamp WITH TIME ZONE,
                 first_name_           text,
@@ -43,10 +43,10 @@ END
 $$;
 
 --option with retrun query instead of setof
--- DROP FUNCTION IF EXISTS public.read_notifications_of_users(
+-- DROP FUNCTION IF EXISTS authenticated.read_notifications_of_users(
 --     user_id uuid
 -- );
--- CREATE OR REPLACE FUNCTION public.read_notifications_of_users(
+-- CREATE OR REPLACE FUNCTION authenticated.read_notifications_of_users(
 --     user_id uuid
 -- )
 --     RETURNS table
@@ -66,7 +66,7 @@ $$;
 --     RETURN QUERY (
 --         SELECT *
 --         FROM
---             public.notifications_by_user
+--             authenticated.notifications_by_user
 --         WHERE
 --                 receiver = user_id
 --     );

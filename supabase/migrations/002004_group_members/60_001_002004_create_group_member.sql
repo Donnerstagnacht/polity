@@ -7,7 +7,7 @@ DROP FUNCTION IF EXISTS hidden.create_group_member(
 CREATE OR REPLACE FUNCTION hidden.create_group_member(
     _group_id uuid,
     _member_id uuid,
-    _member_type group_member
+    _member_type hidden.group_member
 )
     RETURNS membership
     LANGUAGE plpgsql

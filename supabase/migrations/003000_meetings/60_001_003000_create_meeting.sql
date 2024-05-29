@@ -3,7 +3,7 @@ DROP FUNCTION IF EXISTS hidden.create_meeting(
     _creator_id uuid,
     _name text,
     _description text,
-    _type meeting_type,
+    _type hidden.meeting_type,
     _date timestamp WITH TIME ZONE,
     _created_at timestamp WITH TIME ZONE,
     _updated_at timestamp WITH TIME ZONE
@@ -14,7 +14,7 @@ CREATE OR REPLACE FUNCTION hidden.create_meeting(
     _creator_id uuid,
     _name text,
     _description text,
-    _type meeting_type,
+    _type hidden.meeting_type,
     _date timestamp WITH TIME ZONE,
     _created_at timestamp WITH TIME ZONE DEFAULT NOW(),
     _updated_at timestamp WITH TIME ZONE DEFAULT NOW()

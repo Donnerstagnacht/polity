@@ -100,6 +100,9 @@ REM    pause
 echo Start generating types
 supabase gen types typescript --project-id "kvfoskstaagtgqvbrwbo" --schema public > supabase/types/supabase.public.ts
 supabase gen types typescript --project-id "kvfoskstaagtgqvbrwbo" --schema authenticated > supabase/types/supabase.authenticated.ts
+supabase gen types typescript --project-id "kvfoskstaagtgqvbrwbo" --schema hidden > supabase/types/supabase.hidden.ts
+supabase gen types typescript --project-id "kvfoskstaagtgqvbrwbo" --schema security > supabase/types/supabase.security.ts
+supabase gen types typescript --project-id "kvfoskstaagtgqvbrwbo" --schema postgres > supabase/types/supabase.postgres.ts
 
 @REM Start angular client and run tests
 @REM     pause

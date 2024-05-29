@@ -1,5 +1,5 @@
 import {Component, signal, Signal, WritableSignal} from '@angular/core';
-import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
 import {WikiHeadlineComponent} from "../../../ui/polity-wiki/wiki-headline/wiki-headline.component";
 import {CounterComponent} from "../../../ui/polity-wiki/counter/counter.component";
 import {FollowButton} from "../../../ui/polity-wiki/follow-button/follow-button.component";

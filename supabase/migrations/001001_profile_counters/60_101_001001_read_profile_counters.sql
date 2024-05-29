@@ -1,7 +1,7 @@
-DROP FUNCTION IF EXISTS public.read_profile_counters(
+DROP FUNCTION IF EXISTS authenticated.read_profile_counters(
     _user_id uuid
 );
-CREATE OR REPLACE FUNCTION public.read_profile_counters(
+CREATE OR REPLACE FUNCTION authenticated.read_profile_counters(
     _user_id uuid
 )
     RETURNS table

@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS hidden.group_relations
     id                    uuid                                   NOT NULL,
     group_id              uuid                                   NOT NULL,
     related_group_id      uuid                                   NOT NULL,
-    relation_type         group_relation,
+    relation_type         hidden.group_relation,
     created_at            timestamp WITH TIME ZONE DEFAULT NOW() NOT NULL,
     updated_at            timestamp WITH TIME ZONE DEFAULT NOW() NOT NULL,
     right_to_inform       boolean                  DEFAULT FALSE,

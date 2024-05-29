@@ -1,4 +1,4 @@
-import {DatabasePublicOverwritten} from "./supabase.public.modified";
+import {DatabaseHiddenOverwritten} from "./supabase.authenticated.modified";
 
 // Commonly used types
 // from functions
@@ -24,8 +24,8 @@ import {DatabasePublicOverwritten} from "./supabase.public.modified";
  * It can be used to create an array of objects using typescript array notation:
  * protected notifications: WritableSignal<SupabaseObjectReturn<'select_notifications_of_users'>[]> = signal([]);
  * */
-export type SupabaseObjectReturn<T extends keyof DatabasePublicOverwritten['public']['Functions']> =
-    DatabasePublicOverwritten['public']['Functions'][T] extends { Returns: infer R } // Infer the return type
+export type SupabaseObjectReturn<T extends keyof DatabaseHiddenOverwritten['authenticated']['Functions']> =
+    DatabaseHiddenOverwritten['authenticated']['Functions'][T] extends { Returns: infer R } // Infer the return type
         ? R extends any[] // Check if the return type is an array
             ? R[number]  // In case 'Returns' is an array, infer the element type
             : R          // Otherwise, infer the return type directly
@@ -48,8 +48,8 @@ export type SupabaseObjectReturn<T extends keyof DatabasePublicOverwritten['publ
  *   name: string
  * }[]
  */
-// export type SupabaseReturn<T extends keyof DatabaseOverwritten['public']['Functions']> =
-//     DatabaseOverwritten['public']['Functions'][T]['Returns']
+// export type SupabaseReturn<T extends keyof DatabaseOverwritten['authenticated']['Functions']> =
+//     DatabaseOverwritten['authenticated']['Functions'][T]['Returns']
 
 
 // other postgres objects
@@ -70,14 +70,14 @@ export type SupabaseObjectReturn<T extends keyof DatabasePublicOverwritten['publ
  *   name: string
  * }
  */
-export type SupabaseTable<T extends keyof DatabasePublicOverwritten['public']['Tables']> = DatabasePublicOverwritten['public']['Tables'][T]['Row']
+export type SupabaseTable<T extends keyof DatabaseHiddenOverwritten['authenticated']['Tables']> = DatabaseHiddenOverwritten['authenticated']['Tables'][T]['Row']
 
 /**
  *  Type that represents the definition of an enum in the database as typescript object.
  *  @example
  *  If a database enum is defined as "group_level", it should be used as SupabaseEnum<'group_level'>
  */
-export type SupabaseEnum<T extends keyof DatabasePublicOverwritten['public']['Enums']> = DatabasePublicOverwritten['public']['Enums'][T];
+export type SupabaseEnum<T extends keyof DatabaseHiddenOverwritten['authenticated']['Enums']> = DatabaseHiddenOverwritten['authenticated']['Enums'][T];
 
 /**
  *  Type that represents the definition of a postgres composite type in the database as typescript object.
@@ -96,14 +96,14 @@ export type SupabaseEnum<T extends keyof DatabasePublicOverwritten['public']['En
  *     member_id: string
  * }
  */
-export type SupabaseCompositeType<T extends keyof DatabasePublicOverwritten['public']['CompositeTypes']> = DatabasePublicOverwritten['public']['CompositeTypes'][T];
+export type SupabaseCompositeType<T extends keyof DatabaseHiddenOverwritten['authenticated']['CompositeTypes']> = DatabaseHiddenOverwritten['authenticated']['CompositeTypes'][T];
 
 /**
  *  Type that represents the names of postgres functions - e.g. database calls.
  *  The main useage is make cypress api calls/interceptions type safe.
  *  @example see cypress commands.ts file
  */
-export type SupabaseFunctionName = keyof DatabasePublicOverwritten['public']['Functions']
+export type SupabaseFunctionName = keyof DatabaseHiddenOverwritten['authenticated']['Functions']
 
 // helper types - used in SupabaseArrayReturn type
 /**
@@ -115,7 +115,7 @@ export type SupabaseFunctionName = keyof DatabasePublicOverwritten['public']['Fu
  * returns the actual object type.
  *
  * Type ArrayElement is providing this feature. The type guard is removed, since
- * DatabaseGenerated['public']['Functions']['T']['Returns'] are not always arrays (in the case of functions that
+ * DatabaseGenerated['authenticated']['Functions']['T']['Returns'] are not always arrays (in the case of functions that
  * return just a single row)
  *
  * @see https://stackoverflow.com/questions/41253310/typescript-retrieve-element-type-information-from-array-type
@@ -161,6 +161,6 @@ export type SupabaseResultOk<T> = T extends PromiseLike<{ data: infer U }> ? Exc
  *   name: string
  * }
  */
-// export type SupabaseArrayReturnConditional<T extends keyof DatabaseOverwritten['public']['Functions']> =
-//     SupabaseArrayElement<DatabaseOverwritten['public']['Functions'][T]['Returns']>;
+// export type SupabaseArrayReturnConditional<T extends keyof DatabaseOverwritten['authenticated']['Functions']> =
+//     SupabaseArrayElement<DatabaseOverwritten['authenticated']['Functions'][T]['Returns']>;
 

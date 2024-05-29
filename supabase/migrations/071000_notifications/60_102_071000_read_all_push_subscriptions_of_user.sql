@@ -1,4 +1,4 @@
--- TODO: replace public to hidden
+-- TODO: replace authenticated to hidden
 DROP FUNCTION IF EXISTS hidden.read_push_subscriptions_of_user(
     _user_to_be_notified uuid
 );

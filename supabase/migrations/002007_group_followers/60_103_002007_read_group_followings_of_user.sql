@@ -1,13 +1,13 @@
-DROP FUNCTION IF EXISTS public.read_group_followings_of_user(
+DROP FUNCTION IF EXISTS authenticated.read_group_followings_of_user(
 );
-CREATE OR REPLACE FUNCTION public.read_group_followings_of_user(
+CREATE OR REPLACE FUNCTION authenticated.read_group_followings_of_user(
 )
     RETURNS table
             (
                 id_      uuid,
                 img_url_ text,
                 name_    text,
-                level_   group_level
+                level_   hidden.group_level
             )
     LANGUAGE plpgsql
     SECURITY INVOKER

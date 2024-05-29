@@ -1,7 +1,7 @@
-DROP FUNCTION IF EXISTS public.follow_profile_transaction(
+DROP FUNCTION IF EXISTS authenticated.follow_profile_transaction(
     _following_id uuid
 );
-CREATE OR REPLACE FUNCTION public.follow_profile_transaction(
+CREATE OR REPLACE FUNCTION authenticated.follow_profile_transaction(
     _following_id uuid
 )
     RETURNS void
@@ -10,7 +10,7 @@ CREATE OR REPLACE FUNCTION public.follow_profile_transaction(
 AS
 $$
 DECLARE
-    follow_enum notifications_enum;
+    follow_enum hidden.notifications_enum;
     follower_id uuid;
 BEGIN
     follow_enum := 'follow_from_user';

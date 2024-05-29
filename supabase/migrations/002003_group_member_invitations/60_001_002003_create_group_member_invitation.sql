@@ -1,9 +1,9 @@
-DROP FUNCTION IF EXISTS public.create_group_member_invitation(
+DROP FUNCTION IF EXISTS authenticated.create_group_member_invitation(
     _group_id uuid,
     _member_id uuid
 );
 
-CREATE OR REPLACE FUNCTION public.create_group_member_invitation(
+CREATE OR REPLACE FUNCTION authenticated.create_group_member_invitation(
     _group_id uuid,
     _member_id uuid
 )

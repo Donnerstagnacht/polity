@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS hidden.meetings
     creator_id  uuid                                   NOT NULL,
     name        text                                   NOT NULL,
     description text,
-    type        meeting_type,
+    type        hidden.meeting_type,
     date        timestamp WITH TIME ZONE               NOT NULL,
     created_at  timestamp WITH TIME ZONE DEFAULT NOW() NOT NULL,
     updated_at  timestamp WITH TIME ZONE DEFAULT NOW() NOT NULL,

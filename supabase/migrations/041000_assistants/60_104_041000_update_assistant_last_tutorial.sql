@@ -1,8 +1,8 @@
-DROP FUNCTION IF EXISTS public.update_last_tutorial(
-    _new_status tutorial_enum
+DROP FUNCTION IF EXISTS authenticated.update_last_tutorial(
+    _new_status hidden.tutorial_enum
 );
-CREATE OR REPLACE FUNCTION public.update_last_tutorial(
-    _new_status tutorial_enum
+CREATE OR REPLACE FUNCTION authenticated.update_last_tutorial(
+    _new_status hidden.tutorial_enum
 )
     RETURNS void
     LANGUAGE plpgsql

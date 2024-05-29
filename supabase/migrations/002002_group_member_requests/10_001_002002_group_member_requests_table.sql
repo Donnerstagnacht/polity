@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS hidden.group_member_requests
     id          uuid                                   NOT NULL DEFAULT uuid_generate_v4(),
     group_id    uuid                                   NOT NULL,
     member_id   uuid                                   NOT NULL,
-    member_type group_member,
+    member_type hidden.group_member,
     created_at  timestamp WITH TIME ZONE DEFAULT NOW() NOT NULL,
     updated_at  timestamp WITH TIME ZONE DEFAULT NOW() NOT NULL,
     CONSTRAINT group_member_request_pkey PRIMARY KEY (id),

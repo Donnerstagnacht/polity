@@ -1,16 +1,15 @@
 import {Injectable} from '@angular/core';
-import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
+import {PostgrestSingleResponse} from "@supabase/supabase-js";
 import {ProfileStoreService} from "./profile.store.service";
 import {TuiFileLike} from "@taiga-ui/kit";
-import {DatabasePublicOverwritten} from "../../../../../supabase/types/supabase.public.modified";
 import {supabaseAuthenticatedClient} from "../../../auth/supabase-authenticated-client";
-import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProfileActionService {
-    private supabase: SupabaseClient<DatabasePublicOverwritten> = supabaseAuthenticatedClient
+    private supabase = supabaseAuthenticatedClient
 
     constructor(
         private readonly profileStoreService: ProfileStoreService

@@ -1,5 +1,5 @@
-DROP FUNCTION IF EXISTS public.read_unread_notifications_counter();
-CREATE OR REPLACE FUNCTION public.read_unread_notifications_counter()
+DROP FUNCTION IF EXISTS authenticated.read_unread_notifications_counter();
+CREATE OR REPLACE FUNCTION authenticated.read_unread_notifications_counter()
     RETURNS table
             (
                 profile_id_                   uuid,

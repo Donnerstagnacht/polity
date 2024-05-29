@@ -28,13 +28,14 @@ import {NgxPageScrollModule} from "ngx-page-scroll";
 import {AutoscrollDirective} from "../../../navigation/autoscroll.directive";
 import {StepperItem} from "../../../navigation/types-and-interfaces/stepper-item";
 import {CreateGroupService} from "../../new/action-store-services/create-group.service";
-import {SupabaseEnum, SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
 import {
     TableThreeIconTextDeleteComponent
 } from "../../../ui/polity-table/table-three-icon-text-delete/table-three-icon-text-delete.component";
 import {CREATE_GROUP_STEPPER_ITEMS} from "../../../navigation/create-groupe-stepper";
 import {GroupNew} from "../../new/types/group-new";
 import {SearchProfilesBarComponent} from "../../search/search-profiles-bar/search-profiles-bar.component";
+import {DatabaseHiddenOverwritten} from "../../../../../supabase/types/supabase.hidden.modified";
 
 @Component({
     selector: 'polity-group-new',
@@ -107,7 +108,7 @@ export class GroupNewComponent {
     protected async onCreateGroup(): Promise<void> {
         const newGroup: GroupNew = {
             name: this.createGroupForm.value.name as string,
-            level: this.createGroupForm.value.level as SupabaseEnum<'group_level'>,
+            level: this.createGroupForm.value.level as DatabaseHiddenOverwritten["hidden"]["Enums"]["group_level"],
             description: this.createGroupForm.value.description as string,
             invited_members: this.selectedUsers.map((item: SupabaseObjectReturn<'search_user'>): string => item.id_)
         }

@@ -1,5 +1,5 @@
-DROP FUNCTION IF EXISTS public.read_followers_of_user();
-CREATE OR REPLACE FUNCTION public.read_followers_of_user()
+DROP FUNCTION IF EXISTS authenticated.read_followers_of_user();
+CREATE OR REPLACE FUNCTION authenticated.read_followers_of_user()
     RETURNS table
             (
                 id_            uuid,

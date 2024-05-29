@@ -10,7 +10,7 @@ CREATE OR REPLACE FUNCTION hidden.read_group_member(
                 id_          uuid,
                 group_id_    uuid,
                 member_id_   uuid,
-                member_type_ group_member,
+                member_type_ hidden.group_member,
                 created_at_  timestamp WITH TIME ZONE,
                 updated_at_  timestamp WITH TIME ZONE
             )

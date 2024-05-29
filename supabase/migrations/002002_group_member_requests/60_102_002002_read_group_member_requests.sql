@@ -1,7 +1,7 @@
-DROP FUNCTION IF EXISTS public.read_group_member_requests(
+DROP FUNCTION IF EXISTS authenticated.read_group_member_requests(
     _group_id uuid);
 
-CREATE OR REPLACE FUNCTION public.read_group_member_requests(
+CREATE OR REPLACE FUNCTION authenticated.read_group_member_requests(
     _group_id uuid
 )
     RETURNS table
@@ -9,7 +9,7 @@ CREATE OR REPLACE FUNCTION public.read_group_member_requests(
                 id_            uuid,
                 group_id_      uuid,
                 member_id_     uuid,
-                member_type_   group_member,
+                member_type_   hidden.group_member,
                 first_name_    text,
                 last_name_     text,
                 profile_image_ text

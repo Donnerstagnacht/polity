@@ -1,7 +1,7 @@
-DROP FUNCTION IF EXISTS public.leave_group_member_transaction(
+DROP FUNCTION IF EXISTS authenticated.leave_group_member_transaction(
     group_id uuid
 );
-CREATE OR REPLACE FUNCTION public.leave_group_member_transaction(
+CREATE OR REPLACE FUNCTION authenticated.leave_group_member_transaction(
     _group_id uuid
 )
     RETURNS void

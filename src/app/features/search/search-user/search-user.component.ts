@@ -1,7 +1,7 @@
 import {Component, signal, WritableSignal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {debounceTime} from "rxjs";
-import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
 import {TuiFieldErrorPipeModule, TuiInputModule} from "@taiga-ui/kit";
 import {TuiErrorModule} from "@taiga-ui/core";
 import {SearchProfileResult} from "../search-profile-result/search-profile-result.component";

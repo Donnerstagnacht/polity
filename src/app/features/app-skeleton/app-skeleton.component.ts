@@ -6,7 +6,7 @@ import {FirstBarLeftComponent} from "../../navigation/first-bar-left/first-bar-l
 import {RouterOutlet} from "@angular/router";
 import {AssistantComponent} from "../assistant/assistant/assistant.component";
 import {NotificationBadgeStoreService} from "../notifications/action-store-services/notification-badge.store.service";
-import {SupabaseObjectReturn} from "../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../supabase/types/supabase.authenticated.shorthand-types";
 import {NotificationBadgeActionService} from "../notifications/action-store-services/notification-badge.action.service";
 
 @Component({

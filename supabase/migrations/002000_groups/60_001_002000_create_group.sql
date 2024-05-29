@@ -10,7 +10,7 @@ DROP FUNCTION IF EXISTS hidden.create_group(
 CREATE OR REPLACE FUNCTION hidden.create_group(
     _name text,
     _description text,
-    _level group_level,
+    _level hidden.group_level,
     _created_by uuid,
     _created_at timestamp WITH TIME ZONE DEFAULT NOW(),
     _updated_at timestamp WITH TIME ZONE DEFAULT NOW()

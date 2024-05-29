@@ -1,7 +1,7 @@
-DROP FUNCTION IF EXISTS public.update_profile_receive_notifications_from_follow(
+DROP FUNCTION IF EXISTS authenticated.update_profile_receive_notifications_from_follow(
     _new_status boolean
 );
-CREATE OR REPLACE FUNCTION public.update_profile_receive_notifications_from_follow(
+CREATE OR REPLACE FUNCTION authenticated.update_profile_receive_notifications_from_follow(
     _new_status boolean
 )
     RETURNS void

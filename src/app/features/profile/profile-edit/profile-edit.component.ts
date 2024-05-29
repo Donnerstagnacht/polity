@@ -8,7 +8,7 @@ import {CommonModule} from "@angular/common";
 import {ProfileImageUploadComponent} from "../profile-image-upload/profile-image-upload.component";
 import {ProfileStoreService} from "../action-store-services/profile.store.service";
 import {ProfileActionService} from "../action-store-services/profile.action.service";
-import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
 import {
     NotficationsFromFollowToggleComponent
 } from "../../notifications/notfications-from-follow-toggle/notfications-from-follow-toggle.component";

@@ -1,12 +1,12 @@
-DROP FUNCTION IF EXISTS public.read_groups_of_user();
+DROP FUNCTION IF EXISTS authenticated.read_groups_of_user();
 
-CREATE OR REPLACE FUNCTION public.read_groups_of_user()
+CREATE OR REPLACE FUNCTION authenticated.read_groups_of_user()
     RETURNS table
             (
                 id_          uuid,
                 group_id_    uuid,
                 group_name_  text,
-                group_level_ group_level
+                group_level_ hidden.group_level
             )
     LANGUAGE plpgsql
     SECURITY INVOKER

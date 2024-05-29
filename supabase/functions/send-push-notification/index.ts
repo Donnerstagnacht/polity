@@ -6,7 +6,7 @@
 // import {TablesAuthenticatedAccess} from '../../types/supabase_authenticated_access.ts'
 // import {createClient} from 'https://esm.sh/@supabase/supabase-js'
 // import * as webPush from "https://dev.jspm.io/web-push"
-// // import { FunctionTableReturn } from '../../types/supabase.shorthand-types.ts'
+// // import { FunctionTableReturn } from '../../types/supabase.authenticated.shorthand-types.ts'
 //
 // type PushsSubscription = {
 //     id: string,

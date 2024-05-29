@@ -1,5 +1,5 @@
-DROP FUNCTION IF EXISTS public.read_profile_notification_settings();
-CREATE OR REPLACE FUNCTION public.read_profile_notification_settings()
+DROP FUNCTION IF EXISTS authenticated.read_profile_notification_settings();
+CREATE OR REPLACE FUNCTION authenticated.read_profile_notification_settings()
     RETURNS table
             (
                 receive_follow_notifications_ boolean

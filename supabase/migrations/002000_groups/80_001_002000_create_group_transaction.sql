@@ -1,14 +1,14 @@
-DROP FUNCTION IF EXISTS public.create_group_transaction(
+DROP FUNCTION IF EXISTS authenticated.create_group_transaction(
     _name text,
     _description text,
     _level group_level,
     _invited_members uuid[]
 );
 
-CREATE OR REPLACE FUNCTION public.create_group_transaction(
+CREATE OR REPLACE FUNCTION authenticated.create_group_transaction(
     _name text,
     _description text,
-    _level group_level,
+    _level hidden.group_level,
     _invited_members uuid[]
 )
     RETURNS void

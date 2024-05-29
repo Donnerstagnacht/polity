@@ -1,5 +1,5 @@
 import {Component, signal, WritableSignal} from '@angular/core';
-import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {GroupMemberStoreService} from "../action-store-services/group-member.store.service";
 import {GroupMemberActionService} from "../action-store-services/group-member.action.service";

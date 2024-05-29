@@ -1,8 +1,8 @@
 -- 1. Increment Following counter
-DROP FUNCTION IF EXISTS public.check_if_user_follows_group(
+DROP FUNCTION IF EXISTS authenticated.check_if_user_follows_group(
     _following_id uuid
 );
-CREATE OR REPLACE FUNCTION public.check_if_user_follows_group(
+CREATE OR REPLACE FUNCTION authenticated.check_if_user_follows_group(
     _following_id uuid
 )
     RETURNS boolean

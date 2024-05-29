@@ -73,10 +73,10 @@ SET
 FROM
     (
         SELECT
-            (JSON_ARRAY_ELEMENTS(doc) ->> 'id')::uuid                     AS id,
-            (JSON_ARRAY_ELEMENTS(doc) ->> 'first_sign_in')::boolean       AS first_sign_in,
-            (JSON_ARRAY_ELEMENTS(doc) ->> 'skip_tutorial')::boolean       AS skip_tutorial,
-            (JSON_ARRAY_ELEMENTS(doc) ->> 'last_tutorial')::tutorial_enum AS last_tutorial
+            (JSON_ARRAY_ELEMENTS(doc) ->> 'id')::uuid                            AS id,
+            (JSON_ARRAY_ELEMENTS(doc) ->> 'first_sign_in')::boolean              AS first_sign_in,
+            (JSON_ARRAY_ELEMENTS(doc) ->> 'skip_tutorial')::boolean              AS skip_tutorial,
+            (JSON_ARRAY_ELEMENTS(doc) ->> 'last_tutorial')::hidden.tutorial_enum AS last_tutorial
 
         FROM
             assistants_json

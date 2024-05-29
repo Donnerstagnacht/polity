@@ -1,11 +1,11 @@
-DROP FUNCTION IF EXISTS public.read_assistant();
-CREATE OR REPLACE FUNCTION public.read_assistant()
+DROP FUNCTION IF EXISTS authenticated.read_assistant();
+CREATE OR REPLACE FUNCTION authenticated.read_assistant()
     RETURNS table
             (
                 id_            uuid,
                 first_sign_in_ boolean,
                 skip_tutorial_ boolean,
-                last_tutorial_ tutorial_enum
+                last_tutorial_ hidden.tutorial_enum
             )
     LANGUAGE plpgsql
     SECURITY INVOKER

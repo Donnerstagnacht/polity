@@ -1,5 +1,5 @@
 import {Component, Input, signal, WritableSignal} from '@angular/core';
-import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
 import {Router} from "@angular/router";
 import {TuiIslandModule} from "@taiga-ui/kit";
 

@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
-import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
-import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
-import {DatabasePublicOverwritten} from "../../../../../supabase/types/supabase.public.modified";
+import {PostgrestSingleResponse} from "@supabase/supabase-js";
+import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
 import {supabaseAuthenticatedClient} from "../../../auth/supabase-authenticated-client";
 import {GroupInvitationsOfUserStoreService} from "./group-invitations-of-user.store.service";
 
@@ -9,7 +8,7 @@ import {GroupInvitationsOfUserStoreService} from "./group-invitations-of-user.st
     providedIn: 'root'
 })
 export class GroupInvitationsOfUserActionService {
-    private readonly supabase: SupabaseClient<DatabasePublicOverwritten> = supabaseAuthenticatedClient;
+    private readonly supabase = supabaseAuthenticatedClient;
 
     constructor(
         private readonly groupInvitationsOfUserStoreService: GroupInvitationsOfUserStoreService

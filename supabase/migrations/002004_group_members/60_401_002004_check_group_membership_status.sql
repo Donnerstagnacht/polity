@@ -1,8 +1,8 @@
-DROP FUNCTION IF EXISTS public.check_group_membership_status(
+DROP FUNCTION IF EXISTS authenticated.check_group_membership_status(
     _group_id uuid
 );
 
-CREATE OR REPLACE FUNCTION public.check_group_membership_status(
+CREATE OR REPLACE FUNCTION authenticated.check_group_membership_status(
     _group_id uuid
 )
     RETURNS text

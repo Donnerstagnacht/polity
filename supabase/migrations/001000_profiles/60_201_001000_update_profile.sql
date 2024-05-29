@@ -1,4 +1,4 @@
-DROP FUNCTION IF EXISTS public.update_profile(
+DROP FUNCTION IF EXISTS authenticated.update_profile(
     _updated_at timestamp WITH TIME ZONE,
     _username text,
     _first_name_in text,
@@ -6,7 +6,7 @@ DROP FUNCTION IF EXISTS public.update_profile(
     _profile_image text,
     _receive_follow_notifications boolean
 );
-CREATE OR REPLACE FUNCTION public.update_profile(
+CREATE OR REPLACE FUNCTION authenticated.update_profile(
     _updated_at timestamp WITH TIME ZONE DEFAULT NULL,
     _username text DEFAULT NULL,
     _first_name text DEFAULT NULL,

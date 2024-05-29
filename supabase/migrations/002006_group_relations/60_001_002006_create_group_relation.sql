@@ -1,7 +1,7 @@
 DROP FUNCTION IF EXISTS hidden.create_group_relation(
     _group_id uuid,
     _related_group_id uuid,
-    _relation_type group_relation,
+    _relation_type hidden.group_relation,
     _created_by timestamp WITH TIME ZONE,
     _updated_at timestamp WITH TIME ZONE,
     _right_to_inform boolean,
@@ -11,10 +11,10 @@ DROP FUNCTION IF EXISTS hidden.create_group_relation(
     _right_to_vote_passive boolean
 );
 
-CREATE OR REPLACE FUNCTION create_group_relation(
+CREATE OR REPLACE FUNCTION hidden.create_group_relation(
     _group_id uuid,
     _related_group_id uuid,
-    _relation_type group_relation,
+    _relation_type hidden.group_relation,
     _created_at timestamp WITH TIME ZONE DEFAULT NOW(),
     _updated_at timestamp WITH TIME ZONE DEFAULT NOW(),
     _right_to_inform boolean DEFAULT FALSE,

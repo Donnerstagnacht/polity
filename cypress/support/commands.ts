@@ -12,7 +12,7 @@
 //
 // -- This is a parent command --
 
-import {SupabaseFunctionName} from "../../supabase/types/supabase.shorthand-types";
+import {SupabaseFunctionName} from "../../supabase/types/supabase.authenticated.shorthand-types";
 import {environment} from "../../src/environments/environment";
 import {Profile} from "../../seed_and_test_data/02_test_profiles";
 import {ProfileCounter} from "../../seed_and_test_data/04_test_profile_counters";

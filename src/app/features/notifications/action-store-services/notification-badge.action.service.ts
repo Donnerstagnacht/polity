@@ -1,21 +1,18 @@
 import {Injectable} from '@angular/core';
 import {NotificationBadgeStoreService} from "./notification-badge.store.service";
-import {
-    PostgrestSingleResponse,
-    RealtimeChannel,
-    RealtimePostgresUpdatePayload,
-    SupabaseClient
-} from "@supabase/supabase-js";
-import {DatabasePublicOverwritten} from "../../../../../supabase/types/supabase.public.modified";
+import {PostgrestSingleResponse, RealtimeChannel, RealtimePostgresUpdatePayload} from "@supabase/supabase-js";
 import {supabaseAuthenticatedClient} from "../../../auth/supabase-authenticated-client";
-import {SupabaseObjectReturn, SupabaseTable} from "../../../../../supabase/types/supabase.shorthand-types";
+import {
+    SupabaseObjectReturn,
+    SupabaseTable
+} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
 import {SessionStoreService} from "../../../auth/services/session.store.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class NotificationBadgeActionService {
-    private readonly supabaseClient: SupabaseClient<DatabasePublicOverwritten> = supabaseAuthenticatedClient;
+    private readonly supabaseClient = supabaseAuthenticatedClient;
 
     private channel: RealtimeChannel = this.supabaseClient
     .channel('profiles_counters')

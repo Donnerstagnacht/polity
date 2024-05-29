@@ -1,5 +1,5 @@
-DROP FUNCTION IF EXISTS public.reset_profile_notification_counter();
-CREATE OR REPLACE FUNCTION public.reset_profile_notification_counter()
+DROP FUNCTION IF EXISTS authenticated.reset_profile_notification_counter();
+CREATE OR REPLACE FUNCTION authenticated.reset_profile_notification_counter()
     RETURNS void
     LANGUAGE plpgsql
     SECURITY INVOKER

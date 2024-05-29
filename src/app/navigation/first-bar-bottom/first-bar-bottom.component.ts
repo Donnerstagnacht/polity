@@ -5,7 +5,7 @@ import {TuiTabBarModule} from "@taiga-ui/addon-mobile";
 import {RouterModule} from "@angular/router";
 import {TuiHintModule} from "@taiga-ui/core";
 import {CommonModule} from "@angular/common";
-import {SupabaseObjectReturn} from "../../../../supabase/types/supabase.shorthand-types";
+import {SupabaseObjectReturn} from "../../../../supabase/types/supabase.authenticated.shorthand-types";
 
 @Component({
     selector: 'polity-main-bar-bottom',

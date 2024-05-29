@@ -7,13 +7,11 @@ import {
     Session,
     SignInWithPasswordCredentials,
     Subscription,
-    SupabaseClient,
     User,
     UserResponse
 } from "@supabase/supabase-js";
 import {SessionStoreService} from "./session.store.service";
 import {Router} from "@angular/router";
-import {DatabasePublicOverwritten} from "../../../../supabase/types/supabase.public.modified";
 import {ErrorStoreService} from "../../signal-store/error-store.service";
 import {supabaseAuthenticatedClient} from "../supabase-authenticated-client";
 import {TuiAlertService} from "@taiga-ui/core";
@@ -22,7 +20,7 @@ import {TuiAlertService} from "@taiga-ui/core";
     providedIn: 'root'
 })
 export class AuthenticationService {
-    private readonly supabaseClient: SupabaseClient<DatabasePublicOverwritten> = supabaseAuthenticatedClient;
+    private readonly supabaseClient = supabaseAuthenticatedClient;
 
     constructor(
         private readonly notificationService: ErrorStoreService,

@@ -1,7 +1,7 @@
-DROP FUNCTION IF EXISTS public.read_profile(
+DROP FUNCTION IF EXISTS authenticated.read_profile(
     _user_id uuid
 );
-CREATE OR REPLACE FUNCTION public.read_profile(
+CREATE OR REPLACE FUNCTION authenticated.read_profile(
     _user_id uuid
 )
     RETURNS table
