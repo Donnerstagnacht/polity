@@ -1,13 +1,13 @@
 CREATE OR REPLACE FUNCTION
-    postgres_access.create_assistant()
+    postgres.create_assistant()
     RETURNS trigger AS
 $$
 BEGIN
     INSERT INTO
-        authenticated_access.assistants (id,
-                                         first_sign_in,
-                                         skip_tutorial,
-                                         last_tutorial)
+        hidden.assistants (id,
+                           first_sign_in,
+                           skip_tutorial,
+                           last_tutorial)
     VALUES
         (new.id,
          TRUE,
@@ -20,6 +20,6 @@ $$ LANGUAGE plpgsql
 
 CREATE OR REPLACE TRIGGER on_auth_user_created_add_assistant
     AFTER INSERT
-    ON authenticated_access.profiles
+    ON hidden.profiles
     FOR EACH ROW
-EXECUTE PROCEDURE postgres_access.create_assistant();
+EXECUTE PROCEDURE postgres.create_assistant();

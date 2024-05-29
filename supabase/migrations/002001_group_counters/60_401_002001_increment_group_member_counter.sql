@@ -1,7 +1,7 @@
-DROP FUNCTION IF EXISTS authenticated_access.increment_group_member_counter(
+DROP FUNCTION IF EXISTS hidden.increment_group_member_counter(
     group_id uuid
 );
-CREATE OR REPLACE FUNCTION authenticated_access.increment_group_member_counter(
+CREATE OR REPLACE FUNCTION hidden.increment_group_member_counter(
     group_id uuid
 )
     RETURNS void
@@ -11,7 +11,7 @@ AS
 $$
 BEGIN
     PERFORM SET_CONFIG('app.current_function', 'increment_group_member_counter', TRUE);
-    UPDATE authenticated_access.groups_counters
+    UPDATE hidden.groups_counters
     SET
         group_member_counter = group_member_counter + 1
     WHERE

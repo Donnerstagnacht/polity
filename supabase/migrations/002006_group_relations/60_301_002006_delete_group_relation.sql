@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS authenticated_access.delete_group_relation(uuid);
+DROP FUNCTION IF EXISTS hidden.delete_group_relation(uuid);
 
-CREATE OR REPLACE FUNCTION authenticated_access.delete_group_relation(
+CREATE OR REPLACE FUNCTION hidden.delete_group_relation(
     group_relation_id uuid
 )
     RETURNS void

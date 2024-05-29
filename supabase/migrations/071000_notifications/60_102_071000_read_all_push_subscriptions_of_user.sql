@@ -1,4 +1,4 @@
--- TODO: replace public to authenticated_access
+-- TODO: replace public to hidden
 DROP FUNCTION IF EXISTS public.read_all_push_subscriptions_of_user(
     user_to_be_notified uuid
 );
@@ -21,7 +21,7 @@ BEGIN
     RETURN QUERY (
         SELECT *
         FROM
-            authenticated_access.push_subscriptions
+            hidden.push_subscriptions
 
         WHERE
             push_subscriptions.id = user_to_be_notified

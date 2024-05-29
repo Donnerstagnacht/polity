@@ -1,9 +1,9 @@
-DROP FUNCTION IF EXISTS authenticated_access.accept_group_relation_request_transaction(
+DROP FUNCTION IF EXISTS hidden.accept_group_relation_request_transaction(
     uuid,
     uuid
 );
 
-CREATE OR REPLACE FUNCTION authenticated_access.accept_group_relation_request_transaction(
+CREATE OR REPLACE FUNCTION hidden.accept_group_relation_request_transaction(
     group_relation_request_id uuid,
     group_id uuid
 )
@@ -17,13 +17,13 @@ DECLARE
 BEGIN
     SELECT *
     FROM
-        authenticated_access.delete_group_relation_request(
+        hidden.delete_group_relation_request(
             group_relation_request_id
         )
     INTO req_record;
 
     IF FOUND req_record THEN
-        PERFORM authenticated_access.create_group_relation(
+        PERFORM hidden.create_group_relation(
             req_record.group_id,
             req_record.related_group_id,
             req_record.relation_type,

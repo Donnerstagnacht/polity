@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS authenticated_access.read_group_hashtags(uuid);
+DROP FUNCTION IF EXISTS hidden.read_group_hashtags(uuid);
 
-CREATE OR REPLACE FUNCTION authenticated_access.read_group_hashtags(
+CREATE OR REPLACE FUNCTION hidden.read_group_hashtags(
     group_id_in uuid
 )
     RETURNS table
@@ -18,9 +18,9 @@ BEGIN
             hashtags.id,
             hashtags.value
         FROM
-            authenticated_access.group_hashtags
+            hidden.group_hashtags
             JOIN
-                authenticated_access.hashtags
+                hidden.hashtags
             ON
                 group_hashtags.hashtag_id = hashtags.id
         WHERE

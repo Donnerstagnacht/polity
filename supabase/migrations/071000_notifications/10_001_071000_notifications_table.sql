@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS authenticated_access.notifications_by_user
+CREATE TABLE IF NOT EXISTS hidden.notifications_by_user
 (
     id                   uuid                     NOT NULL DEFAULT uuid_generate_v4(),
     sender               uuid                     NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS authenticated_access.notifications_by_user
     CONSTRAINT notifications_by_user_receiver_fkey FOREIGN KEY (receiver) REFERENCES auth.users (id) MATCH SIMPLE
 );
 
-ALTER PUBLICATION supabase_realtime ADD TABLE authenticated_access.notifications_by_user;
+ALTER PUBLICATION supabase_realtime ADD TABLE hidden.notifications_by_user;
 
-ALTER TABLE authenticated_access.notifications_by_user
+ALTER TABLE hidden.notifications_by_user
     ENABLE ROW LEVEL SECURITY;

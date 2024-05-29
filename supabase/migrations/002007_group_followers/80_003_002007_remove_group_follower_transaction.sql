@@ -12,15 +12,15 @@ CREATE OR REPLACE FUNCTION public.remove_group_follower_transaction(
 AS
 $$
 BEGIN
-    PERFORM authenticated_access.delete_group_following_follower_relationship(
+    PERFORM hidden.delete_group_following_follower_relationship(
         follower_id,
         group_id_in
             );
 
-    PERFORM authenticated_access.decrement_group_follower_counter(
+    PERFORM hidden.decrement_group_follower_counter(
         group_id_in
             );
-    PERFORM authenticated_access.decrement_group_following_counter(
+    PERFORM hidden.decrement_group_following_counter(
         follower_id
             );
 END;

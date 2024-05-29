@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS authenticated_access.assistants
+CREATE TABLE IF NOT EXISTS hidden.assistants
 (
     id            uuid                                           NOT NULL,
     first_sign_in boolean       DEFAULT TRUE                     NOT NULL,
@@ -8,5 +8,5 @@ CREATE TABLE IF NOT EXISTS authenticated_access.assistants
     CONSTRAINT assistants_id_fkey FOREIGN KEY (id) REFERENCES auth.users (id) MATCH SIMPLE
 );
 
-ALTER TABLE authenticated_access.assistants
+ALTER TABLE hidden.assistants
     ENABLE ROW LEVEL SECURITY;

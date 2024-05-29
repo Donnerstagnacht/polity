@@ -13,13 +13,13 @@ DECLARE
 BEGIN
     DELETE
     FROM
-        authenticated_access.group_invited_members
+        hidden.group_invited_members
     WHERE
-        authenticated_access.group_invited_members.id = invitation_id
+        hidden.group_invited_members.id = invitation_id
     RETURNING
-        authenticated_access.group_invited_members.id,
-        authenticated_access.group_invited_members.group_id,
-        authenticated_access.group_invited_members.member_id
+        hidden.group_invited_members.id,
+        hidden.group_invited_members.group_id,
+        hidden.group_invited_members.member_id
         INTO
             membership.id,
             membership.group_id,

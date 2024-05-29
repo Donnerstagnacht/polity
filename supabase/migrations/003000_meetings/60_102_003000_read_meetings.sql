@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS authenticated_access.read_meetings(uuid);
+DROP FUNCTION IF EXISTS hidden.read_meetings(uuid);
 
-CREATE OR REPLACE FUNCTION authenticated_access.read_meetings(
+CREATE OR REPLACE FUNCTION hidden.read_meetings(
     group_id_in uuid
 )
     RETURNS table
@@ -23,8 +23,8 @@ BEGIN
     RETURN QUERY
         SELECT *
         FROM
-            authenticated_access.meetings
+            hidden.meetings
         WHERE
-            authenticated_access.group_id = group_id_in;
+            hidden.group_id = group_id_in;
 END;
 $$;

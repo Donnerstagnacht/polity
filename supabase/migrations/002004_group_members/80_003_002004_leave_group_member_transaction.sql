@@ -12,15 +12,15 @@ $$
 DECLARE
     membership membership ;
 BEGIN
-    membership := authenticated_access.delete_group_member_by_id(
+    membership := hidden.delete_group_member_by_id(
         membership_id_in
                   );
 
-    PERFORM authenticated_access.decrement_group_member_counter(
+    PERFORM hidden.decrement_group_member_counter(
         membership.group_id
             );
 
-    PERFORM authenticated_access.decrement_profile_group_membership_counter(
+    PERFORM hidden.decrement_profile_group_membership_counter(
         membership.member_id
             );
 END

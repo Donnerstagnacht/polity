@@ -20,18 +20,18 @@ $$
 BEGIN
     RETURN QUERY
         SELECT
-            authenticated_access.group_members.id,
-            authenticated_access.group_members.group_id,
-            authenticated_access.group_members.member_id,
-            authenticated_access.group_members.member_type,
-            authenticated_access.profiles.first_name,
-            authenticated_access.profiles.last_name,
-            authenticated_access.profiles.profile_image
+            hidden.group_members.id,
+            hidden.group_members.group_id,
+            hidden.group_members.member_id,
+            hidden.group_members.member_type,
+            hidden.profiles.first_name,
+            hidden.profiles.last_name,
+            hidden.profiles.profile_image
         FROM
-            authenticated_access.group_members
-            INNER JOIN authenticated_access.profiles
-            ON authenticated_access.group_members.member_id = authenticated_access.profiles.id
+            hidden.group_members
+            INNER JOIN hidden.profiles
+            ON hidden.group_members.member_id = hidden.profiles.id
         WHERE
-            authenticated_access.group_members.group_id = group_id_in;
+            hidden.group_members.group_id = group_id_in;
 END;
 $$;

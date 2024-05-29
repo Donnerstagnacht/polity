@@ -15,7 +15,7 @@ DECLARE
 BEGIN
     auth_user_id = auth.uid();
     INSERT INTO
-        authenticated_access.group_member_requests
+        hidden.group_member_requests
     (group_id,
      member_id,
      member_type)

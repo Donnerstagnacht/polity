@@ -16,7 +16,7 @@ BEGIN
         SELECT
             profiles.receive_follow_notifications
         FROM
-            authenticated_access.profiles
+            hidden.profiles
         WHERE
             id = authenticated_user
     );

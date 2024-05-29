@@ -13,15 +13,15 @@ DECLARE
     following_authenticated_user uuid;
 BEGIN
     following_authenticated_user = auth.uid();
-    PERFORM authenticated_access.delete_following_follower_relationship(
+    PERFORM hidden.delete_following_follower_relationship(
         follower_id,
         following_authenticated_user
             );
 
-    PERFORM authenticated_access.decrement_follower_counter(
+    PERFORM hidden.decrement_follower_counter(
         following_authenticated_user
             );
-    PERFORM authenticated_access.decrement_following_counter(
+    PERFORM hidden.decrement_following_counter(
         follower_id
             );
 END;

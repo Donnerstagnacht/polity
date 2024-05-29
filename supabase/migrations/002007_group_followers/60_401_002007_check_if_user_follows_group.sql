@@ -17,7 +17,7 @@ BEGIN
     RETURN EXISTS (
         SELECT *
         FROM
-            authenticated_access.following_groups
+            hidden.following_groups
         WHERE
               follower = auth_user_id
           AND following = following_id

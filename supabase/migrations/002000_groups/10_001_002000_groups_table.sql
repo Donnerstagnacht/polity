@@ -1,7 +1,7 @@
 CREATE EXTENSION IF NOT EXISTS pg_trgm;
 
-DROP TABLE IF EXISTS authenticated_access.groups CASCADE;
-CREATE TABLE IF NOT EXISTS authenticated_access.groups
+DROP TABLE IF EXISTS hidden.groups CASCADE;
+CREATE TABLE IF NOT EXISTS hidden.groups
 (
     id          uuid                                                  NOT NULL DEFAULT uuid_generate_v4(),
     creator     uuid                                                  NOT NULL,
@@ -19,13 +19,13 @@ CREATE TABLE IF NOT EXISTS authenticated_access.groups
                     ) STORED,
     CONSTRAINT group_table_pkey PRIMARY KEY (id),
     CONSTRAINT group_table_creator_fkey FOREIGN KEY (creator)
-        REFERENCES authenticated_access.profiles (id) MATCH SIMPLE
+        REFERENCES hidden.profiles (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
 
 DROP INDEX IF EXISTS group_table_name_idx CASCADE;
-CREATE INDEX group_table_name_idx ON authenticated_access.groups USING gin (fts);
+CREATE INDEX group_table_name_idx ON hidden.groups USING gin (fts);
 
-ALTER TABLE authenticated_access.groups
+ALTER TABLE hidden.groups
     ENABLE ROW LEVEL SECURITY;

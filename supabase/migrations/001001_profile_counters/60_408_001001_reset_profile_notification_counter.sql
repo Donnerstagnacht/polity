@@ -9,7 +9,7 @@ DECLARE
     authenticated_user uuid;
 BEGIN
     authenticated_user = auth.uid();
-    UPDATE authenticated_access.profiles_counters
+    UPDATE hidden.profiles_counters
     SET
         unread_notifications_counter = 0
     WHERE

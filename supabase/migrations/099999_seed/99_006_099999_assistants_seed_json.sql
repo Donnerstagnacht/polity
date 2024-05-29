@@ -65,7 +65,7 @@ WITH
             ]
             '::json)
     )
-UPDATE authenticated_access.assistants AS a
+UPDATE hidden.assistants AS a
 SET
     first_sign_in = json_data.first_sign_in,
     skip_tutorial = json_data.skip_tutorial,

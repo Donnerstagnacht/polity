@@ -23,7 +23,7 @@ BEGIN
                 SELECT
                     'member'
                 FROM
-                    authenticated_access.group_members
+                    hidden.group_members
                 WHERE
                       group_id = group_id_in
                   AND member_id = auth_user_id
@@ -34,7 +34,7 @@ BEGIN
                 SELECT
                     'board_member'
                 FROM
-                    authenticated_access.group_members
+                    hidden.group_members
                 WHERE
                       group_id = group_id_in
                   AND member_id = auth_user_id
@@ -45,7 +45,7 @@ BEGIN
                 SELECT
                     'requested'
                 FROM
-                    authenticated_access.read_group_member_request(
+                    hidden.read_group_member_request(
                         group_id_in,
                         auth_user_id
                     )
@@ -55,7 +55,7 @@ BEGIN
                 SELECT
                     'invited'
                 FROM
-                    authenticated_access.read_group_member_invitation(
+                    hidden.read_group_member_invitation(
                         group_id_in,
                         auth_user_id
                     )

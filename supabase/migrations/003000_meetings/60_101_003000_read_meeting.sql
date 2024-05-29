@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS authenticated_access.read_meeting(uuid);
+DROP FUNCTION IF EXISTS hidden.read_meeting(uuid);
 
-CREATE OR REPLACE FUNCTION authenticated_access.read_meeting(
+CREATE OR REPLACE FUNCTION hidden.read_meeting(
     meeting_id uuid
 )
     RETURNS table
@@ -23,7 +23,7 @@ BEGIN
     RETURN QUERY
         SELECT *
         FROM
-            authenticated_access.meetings
+            hidden.meetings
         WHERE
             id = meeting_id;
 END;

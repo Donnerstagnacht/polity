@@ -23,11 +23,11 @@ BEGIN
     --  subscribe in multiple browsers. How is the endpont string looking from different brwosers? Probably a
     --  composite key or a simple new row for each subscription?
     INSERT INTO
-        authenticated_access.push_subscriptions (id,
-                                                 endpoint,
-                                                 expirationTime,
-                                                 auth,
-                                                 p256dh)
+        hidden.push_subscriptions (id,
+                                   endpoint,
+                                   expirationTime,
+                                   auth,
+                                   p256dh)
     VALUES
         (authenticated_user,
          endpoint,

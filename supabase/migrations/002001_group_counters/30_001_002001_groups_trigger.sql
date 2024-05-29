@@ -1,12 +1,12 @@
 CREATE OR REPLACE FUNCTION
-    postgres_access.create_groups_counter()
+    postgres.create_groups_counter()
     RETURNS trigger AS
 $$
 BEGIN
     INSERT INTO
-        authenticated_access.groups_counters (id,
-                                              follower_counter,
-                                              following_counter)
+        hidden.groups_counters (id,
+                                follower_counter,
+                                following_counter)
     VALUES
         (new.id,
          0,
@@ -18,6 +18,6 @@ $$ LANGUAGE plpgsql
 
 CREATE OR REPLACE TRIGGER on_auth_user_created_add_groups_counter
     AFTER INSERT
-    ON authenticated_access.groups
+    ON hidden.groups
     FOR EACH ROW
-EXECUTE PROCEDURE postgres_access.create_groups_counter();
+EXECUTE PROCEDURE postgres.create_groups_counter();

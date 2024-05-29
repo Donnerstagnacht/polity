@@ -13,7 +13,7 @@ DECLARE
     authenticated_user uuid;
 BEGIN
     authenticated_user := auth.uid();
-    UPDATE authenticated_access.assistants
+    UPDATE hidden.assistants
     SET
         skip_tutorial = new_status
     WHERE

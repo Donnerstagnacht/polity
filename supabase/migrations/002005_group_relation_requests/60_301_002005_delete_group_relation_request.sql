@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS authenticated_access.delete_group_requested_relations(uuid);
+DROP FUNCTION IF EXISTS hidden.delete_group_requested_relations(uuid);
 
-CREATE OR REPLACE FUNCTION authenticated_access.delete_group_requested_relations(
+CREATE OR REPLACE FUNCTION hidden.delete_group_requested_relations(
     group_relation_id uuid
 )
     RETURNS table

@@ -21,7 +21,7 @@ export class NotificationBadgeActionService {
     .channel('profiles_counters')
     .on<SupabaseTable<'profiles_counters'>>('postgres_changes', {
             event: 'UPDATE',
-            schema: 'authenticated_access',
+            schema: 'hidden',
             table: 'profiles_counters',
             filter: 'id=eq.' + this.sessionStoreService.getSessionId()
         },

@@ -18,12 +18,12 @@ $$
 BEGIN
     RETURN QUERY
         SELECT
-            authenticated_access.groups.id,
-            authenticated_access.groups.name,
-            authenticated_access.groups.level,
-            authenticated_access.groups.description
+            hidden.groups.id,
+            hidden.groups.name,
+            hidden.groups.level,
+            hidden.groups.description
         FROM
-            authenticated_access.groups
+            hidden.groups
         WHERE
             fts @@ TO_TSQUERY('german', search_term);
 END

@@ -1,15 +1,15 @@
 DROP POLICY IF EXISTS "Public groups_counters can be followed by by everyone."
-    ON authenticated_access.groups_counters;
+    ON hidden.groups_counters;
 CREATE POLICY "Public groups_counters can be followed by by everyone."
-    ON authenticated_access.groups_counters
+    ON hidden.groups_counters
     FOR INSERT
     TO authenticated
     WITH CHECK (TRUE);
 
 DROP POLICY IF EXISTS "Public groups_counters are viewable by everyone."
-    ON authenticated_access.groups_counters;
+    ON hidden.groups_counters;
 CREATE POLICY "Public groups_counters are viewable by everyone."
-    ON authenticated_access.groups_counters
+    ON hidden.groups_counters
     FOR SELECT
     TO authenticated
     USING (
@@ -17,9 +17,9 @@ CREATE POLICY "Public groups_counters are viewable by everyone."
     );
 
 DROP POLICY IF EXISTS "Public groups_counters can be updated by by everyone."
-    ON authenticated_access.groups_counters;
+    ON hidden.groups_counters;
 CREATE POLICY "Public groups_counters can be updated by by everyone."
-    ON authenticated_access.groups_counters
+    ON hidden.groups_counters
     FOR UPDATE
     TO authenticated
     USING (

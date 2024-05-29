@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS authenticated_access.read_group_requested_relations(uuid);
+DROP FUNCTION IF EXISTS hidden.read_group_requested_relations(uuid);
 
-CREATE OR REPLACE FUNCTION authenticated_access.read_group_requested_relations(
+CREATE OR REPLACE FUNCTION hidden.read_group_requested_relations(
     group_id_in uuid
 )
     RETURNS table

@@ -31,12 +31,12 @@ WITH
     )
 INSERT
 INTO
-    authenticated_access.groups (id,
-                                 creator,
-                                 name,
-                                 description,
-                                 level,
-                                 img_url)
+    hidden.groups (id,
+                   creator,
+                   name,
+                   description,
+                   level,
+                   img_url)
 SELECT
     id,
     creator,
@@ -47,5 +47,5 @@ SELECT
 FROM
     groups_json l
     CROSS JOIN LATERAL JSON_POPULATE_RECORDSET(
-        NULL::authenticated_access.groups,
+        NULL::hidden.groups,
         doc) AS f;

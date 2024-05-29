@@ -26,13 +26,13 @@ WITH
     )
 INSERT
 INTO
-    authenticated_access.following_groups (follower,
-                                           following)
+    hidden.following_groups (follower,
+                             following)
 SELECT
     follower,
     following
 FROM
     following_groups l
     CROSS JOIN LATERAL JSON_POPULATE_RECORDSET(
-        NULL::authenticated_access.following_groups,
+        NULL::hidden.following_groups,
         doc) AS f;

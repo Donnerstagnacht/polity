@@ -54,7 +54,7 @@ WITH
                 }
             ]'::json)
     )
-UPDATE authenticated_access.profiles AS p
+UPDATE hidden.profiles AS p
 SET
     first_name = json_data.first_name,
     last_name  = json_data.last_name

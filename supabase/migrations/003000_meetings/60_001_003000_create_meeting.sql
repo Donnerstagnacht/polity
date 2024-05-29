@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS authenticated_access.create_meeting(uuid);
+DROP FUNCTION IF EXISTS hidden.create_meeting(uuid);
 
-CREATE OR REPLACE FUNCTION authenticated_access.create_meeting(
+CREATE OR REPLACE FUNCTION hidden.create_meeting(
     group_id uuid,
     creator_id uuid,
     name text,
@@ -17,15 +17,15 @@ AS
 $$
 BEGIN
     INSERT INTO
-        authenticated_access.meetings (id,
-                                       group_id,
-                                       creator_id,
-                                       name,
-                                       description,
-                                       type,
-                                       date,
-                                       created_at,
-                                       updated_at)
+        hidden.meetings (id,
+                         group_id,
+                         creator_id,
+                         name,
+                         description,
+                         type,
+                         date,
+                         created_at,
+                         updated_at)
     VALUES
         (group_id,
          creator_id,

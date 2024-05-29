@@ -18,9 +18,9 @@ BEGIN
     RETURN QUERY (
         SELECT *
         FROM
-            authenticated_access.assistants
+            hidden.assistants
         WHERE
-            authenticated_access.assistants.id = authenticated_user
+            hidden.assistants.id = authenticated_user
     );
 END
 $$;

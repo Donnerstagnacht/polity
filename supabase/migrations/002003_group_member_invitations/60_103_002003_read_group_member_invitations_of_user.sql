@@ -23,11 +23,11 @@ BEGIN
             groups.name,
             groups.level
         FROM
-            authenticated_access.group_invited_members
-            JOIN authenticated_access.groups
+            hidden.group_invited_members
+            JOIN hidden.groups
             ON group_invited_members.group_id = groups.id
         WHERE
-            authenticated_access.group_invited_members.member_id = authenticated_user
+            hidden.group_invited_members.member_id = authenticated_user
     );
 END
 $$;

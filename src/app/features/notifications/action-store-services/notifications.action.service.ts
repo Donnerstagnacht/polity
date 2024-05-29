@@ -93,7 +93,7 @@ export class NotificationsActionService {
         .channel(channelName)
         .on('postgres_changes', {
                 event: 'INSERT',
-                schema: 'authenticated_access',
+                schema: 'hidden',
                 table: 'notifications_by_user',
                 filter: 'receiver=eq.' + this.sessionStoreService.getSessionId()
             },

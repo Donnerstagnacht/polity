@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS authenticated_access.delete_group_hashtag_relationship(uuid);
+DROP FUNCTION IF EXISTS hidden.delete_group_hashtag_relationship(uuid);
 
-CREATE OR REPLACE FUNCTION authenticated_access.delete_group_hashtag_relationshi(
+CREATE OR REPLACE FUNCTION hidden.delete_group_hashtag_relationshi(
     hashtag_id uuid
 )
     RETURNS void
@@ -11,7 +11,7 @@ $$
 BEGIN
     DELETE
     FROM
-        authenticated_access.group_hashtags
+        hidden.group_hashtags
     WHERE
         hashtag_id = hashtag_id;
 END;

@@ -19,12 +19,12 @@ $$
 BEGIN
     RETURN QUERY (
         SELECT
-            authenticated_access.groups_counters.id,
-            authenticated_access.groups_counters.follower_counter,
-            authenticated_access.groups_counters.following_counter,
-            authenticated_access.groups_counters.group_member_counter
+            hidden.groups_counters.id,
+            hidden.groups_counters.follower_counter,
+            hidden.groups_counters.following_counter,
+            hidden.groups_counters.group_member_counter
         FROM
-            authenticated_access.groups_counters
+            hidden.groups_counters
         WHERE
             id = group_id_in
     );

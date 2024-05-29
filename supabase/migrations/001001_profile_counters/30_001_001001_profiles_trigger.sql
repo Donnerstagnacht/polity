@@ -1,12 +1,12 @@
 CREATE OR REPLACE FUNCTION
-    postgres_access.create_profile_counter()
+    postgres.create_profile_counter()
     RETURNS trigger AS
 $$
 BEGIN
     INSERT INTO
-        authenticated_access.profiles_counters (id,
-                                                follower_counter,
-                                                following_counter)
+        hidden.profiles_counters (id,
+                                  follower_counter,
+                                  following_counter)
     VALUES
         (new.id,
          0,
@@ -20,4 +20,4 @@ CREATE OR REPLACE TRIGGER on_auth_user_created_add_profile_counter
     AFTER INSERT
     ON auth.users
     FOR EACH ROW
-EXECUTE PROCEDURE postgres_access.create_profile_counter();
+EXECUTE PROCEDURE postgres.create_profile_counter();

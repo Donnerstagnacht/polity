@@ -97,10 +97,10 @@ WITH
     )
 INSERT
 INTO
-    authenticated_access.group_members (id,
-                                        group_id,
-                                        member_id,
-                                        member_type)
+    hidden.group_members (id,
+                          group_id,
+                          member_id,
+                          member_type)
 SELECT
     id,
     group_id,
@@ -109,5 +109,5 @@ SELECT
 FROM
     group_members_json l
     CROSS JOIN LATERAL JSON_POPULATE_RECORDSET(
-        NULL::authenticated_access.group_members,
+        NULL::hidden.group_members,
         doc) AS f;

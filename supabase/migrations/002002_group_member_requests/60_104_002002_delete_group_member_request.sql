@@ -17,7 +17,7 @@ BEGIN
     auth_user_id = auth.uid();
     DELETE
     FROM
-        authenticated_access.group_member_requests
+        hidden.group_member_requests
     WHERE
           group_id = group_id_in
       AND member_id = auth_user_id

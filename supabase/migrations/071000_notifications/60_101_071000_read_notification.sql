@@ -19,16 +19,16 @@ BEGIN
     authenticated_user := auth.uid();
     RETURN QUERY (
         SELECT
-            authenticated_access.notifications_by_user.type_of_notification,
-            authenticated_access.notifications_by_user.read_by_receiver,
-            authenticated_access.notifications_by_user.created_at,
+            hidden.notifications_by_user.type_of_notification,
+            hidden.notifications_by_user.read_by_receiver,
+            hidden.notifications_by_user.created_at,
             profiles.first_name,
             profiles.last_name,
             profiles.profile_image
         FROM
-            authenticated_access.notifications_by_user
-            JOIN authenticated_access.profiles
-            ON authenticated_access.profiles.id = authenticated_access.notifications_by_user.sender
+            hidden.notifications_by_user
+            JOIN hidden.profiles
+            ON hidden.profiles.id = hidden.notifications_by_user.sender
 
         WHERE
             receiver = authenticated_user

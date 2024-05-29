@@ -1,9 +1,9 @@
-DROP FUNCTION IF EXISTS authenticated_access.delete_group_member(
+DROP FUNCTION IF EXISTS hidden.delete_group_member(
     user_id_in uuid,
     group_id_in uuid
 );
 
-CREATE OR REPLACE FUNCTION authenticated_access.delete_group_member(
+CREATE OR REPLACE FUNCTION hidden.delete_group_member(
     user_id_in uuid,
     group_id_in uuid
 )
@@ -15,7 +15,7 @@ $$
 BEGIN
     DELETE
     FROM
-        authenticated_access.group_members
+        hidden.group_members
     WHERE
           member_id = user_id_in
       AND group_id = group_id_in;

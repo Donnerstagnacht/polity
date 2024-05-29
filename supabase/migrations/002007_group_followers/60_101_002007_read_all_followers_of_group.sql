@@ -23,8 +23,8 @@ BEGIN
             profiles.first_name,
             profiles.last_name
         FROM
-            authenticated_access.following_groups
-            JOIN authenticated_access.profiles
+            hidden.following_groups
+            JOIN hidden.profiles
             ON following_groups.follower = profiles.id
         WHERE
             following_groups.following = group_id_in

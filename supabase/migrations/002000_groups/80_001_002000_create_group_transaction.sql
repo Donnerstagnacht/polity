@@ -21,7 +21,7 @@ DECLARE
     invited_member    uuid;
 BEGIN
     logged_in_user_id = auth.uid();
-    group_id := authenticated_access.create_group(
+    group_id := hidden.create_group(
         name,
         description,
         level,
@@ -30,25 +30,25 @@ BEGIN
 
     FOREACH invited_member IN ARRAY invited_members
         LOOP
-            PERFORM authenticated_access.create_group_member(
+            PERFORM hidden.create_group_member(
                 group_id,
                 invited_member,
                 'member');
         END LOOP;
 
-    PERFORM authenticated_access.create_group_member(
+    PERFORM hidden.create_group_member(
         group_id,
         logged_in_user_id,
         'board_president');
 
     FOREACH invited_member IN ARRAY invited_members
         LOOP
-            PERFORM authenticated_access.increment_group_member_counter(
+            PERFORM hidden.increment_group_member_counter(
                 group_id
                     );
         END LOOP;
 
-    PERFORM authenticated_access.increment_group_member_counter(
+    PERFORM hidden.increment_group_member_counter(
         group_id
             );
 END;

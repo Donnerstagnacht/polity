@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS authenticated_access.group_requested_relations
+CREATE TABLE IF NOT EXISTS hidden.group_requested_relations
 (
     id                    uuid                                   NOT NULL,
     group_id              uuid                                   NOT NULL,
@@ -13,14 +13,14 @@ CREATE TABLE IF NOT EXISTS authenticated_access.group_requested_relations
     right_to_vote_passive boolean                  DEFAULT FALSE,
     CONSTRAINT group_requested_relation_pkey PRIMARY KEY (id),
     CONSTRAINT group_requested_relation_group_id_fkey FOREIGN KEY (group_id)
-        REFERENCES authenticated_access.groups (id) MATCH SIMPLE
+        REFERENCES hidden.groups (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT group_requested_relation_related_id_fkey FOREIGN KEY (related_group_id)
-        REFERENCES authenticated_access.groups (id) MATCH SIMPLE
+        REFERENCES hidden.groups (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
 
-ALTER TABLE authenticated_access.group_requested_relations
+ALTER TABLE hidden.group_requested_relations
     ENABLE ROW LEVEL SECURITY;

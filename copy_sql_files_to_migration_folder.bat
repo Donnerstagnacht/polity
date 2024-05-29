@@ -99,7 +99,8 @@ REM    pause
 @REM occure)
     echo Start generating types
     supabase gen types typescript --project-id "kvfoskstaagtgqvbrwbo" --schema public > supabase/types/supabase.ts
-    supabase gen types typescript --project-id "kvfoskstaagtgqvbrwbo" --schema authenticated_access > supabase/types/supabase_authenticated_access.ts
+    supabase gen types typescript --project-id "kvfoskstaagtgqvbrwbo" --schema hidden >
+    supabase/types/supabase_authenticated_access.ts
 
 @REM Start angular client and run tests
 @REM     pause

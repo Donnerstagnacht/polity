@@ -547,10 +547,10 @@ WITH
     )
 INSERT
 INTO
-    authenticated_access.notifications_by_user (sender,
-                                                receiver,
-                                                type_of_notification,
-                                                read_by_receiver)
+    hidden.notifications_by_user (sender,
+                                  receiver,
+                                  type_of_notification,
+                                  read_by_receiver)
 SELECT
     n.sender,
     n.receiver,
@@ -559,7 +559,7 @@ SELECT
 FROM
     notification_json l
     CROSS JOIN LATERAL JSON_POPULATE_RECORDSET(
-        NULL::authenticated_access.notifications_by_user,
+        NULL::hidden.notifications_by_user,
         doc) AS n;
 
 
@@ -572,7 +572,7 @@ FROM
 --     )
 -- INSERT
 -- INTO
---     authenticated_access.notifications_by_user (sender,
+--     hidden.notifications_by_user (sender,
 --                                                 receiver,
 --                                                 type_of_notification,
 --                                                 read_by_receiver)
@@ -584,5 +584,5 @@ FROM
 -- FROM
 --     notification_json l
 --     CROSS JOIN LATERAL JSON_POPULATE_RECORDSET(
---         NULL::authenticated_access.notifications_by_user,
+--         NULL::hidden.notifications_by_user,
 --         doc) AS n;

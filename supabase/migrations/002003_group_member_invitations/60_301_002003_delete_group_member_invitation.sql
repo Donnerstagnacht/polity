@@ -15,14 +15,14 @@ BEGIN
     auth_user_id = auth.uid();
     DELETE
     FROM
-        authenticated_access.group_invited_members
+        hidden.group_invited_members
     WHERE
-          authenticated_access.group_invited_members.group_id = group_id_in
-      AND authenticated_access.group_invited_members.member_id = auth_user_id
+          hidden.group_invited_members.group_id = group_id_in
+      AND hidden.group_invited_members.member_id = auth_user_id
     RETURNING
-        authenticated_access.group_invited_members.id,
-        authenticated_access.group_invited_members.group_id,
-        authenticated_access.group_invited_members.member_id
+        hidden.group_invited_members.id,
+        hidden.group_invited_members.group_id,
+        hidden.group_invited_members.member_id
         INTO
             membership.id,
             membership.group_id,

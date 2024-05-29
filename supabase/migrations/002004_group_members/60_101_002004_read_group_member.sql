@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS authenticated_access.read_group_member(uuid);
+DROP FUNCTION IF EXISTS hidden.read_group_member(uuid);
 
-CREATE OR REPLACE FUNCTION authenticated_access.read_group_member(
+CREATE OR REPLACE FUNCTION hidden.read_group_member(
     membership_id uuid
 )
     RETURNS table
@@ -22,6 +22,6 @@ BEGIN
         FROM
             group_members
         WHERE
-            id = authenticated_access.membership_id;
+            id = hidden.membership_id;
 END;
 $$;

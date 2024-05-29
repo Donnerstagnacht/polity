@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS authenticated_access.push_subscriptions
+CREATE TABLE IF NOT EXISTS hidden.push_subscriptions
 (
     id             uuid NOT NULL,
     endpoint       text NOT NULL,
@@ -6,8 +6,8 @@ CREATE TABLE IF NOT EXISTS authenticated_access.push_subscriptions
     auth           text NOT NULL,
     p256dh         text NOT NULL,
     CONSTRAINT push_subscriptions_pkey PRIMARY KEY (id),
-    CONSTRAINT push_subscriptions_id_fkey FOREIGN KEY (id) REFERENCES authenticated_access.profiles (id) MATCH SIMPLE
+    CONSTRAINT push_subscriptions_id_fkey FOREIGN KEY (id) REFERENCES hidden.profiles (id) MATCH SIMPLE
 );
 
-ALTER TABLE authenticated_access.push_subscriptions
+ALTER TABLE hidden.push_subscriptions
     ENABLE ROW LEVEL SECURITY;

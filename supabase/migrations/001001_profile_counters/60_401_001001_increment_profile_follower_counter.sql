@@ -1,7 +1,7 @@
-DROP FUNCTION IF EXISTS authenticated_access.increment_follower_counter(
+DROP FUNCTION IF EXISTS hidden.increment_follower_counter(
     user_id uuid
 );
-CREATE OR REPLACE FUNCTION authenticated_access.increment_follower_counter(
+CREATE OR REPLACE FUNCTION hidden.increment_follower_counter(
     user_id uuid
 )
     RETURNS void
@@ -11,7 +11,7 @@ AS
 $$
 BEGIN
     PERFORM SET_CONFIG('app.current_function', 'increment_follower_counter', TRUE);
-    UPDATE authenticated_access.profiles_counters
+    UPDATE hidden.profiles_counters
     SET
         follower_counter = follower_counter + 1
     WHERE

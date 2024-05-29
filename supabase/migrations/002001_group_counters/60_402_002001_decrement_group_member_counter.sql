@@ -1,5 +1,5 @@
-DROP FUNCTION IF EXISTS authenticated_access.decrement_group_member_counter(group_id uuid);
-CREATE OR REPLACE FUNCTION authenticated_access.decrement_group_member_counter(group_id uuid)
+DROP FUNCTION IF EXISTS hidden.decrement_group_member_counter(group_id uuid);
+CREATE OR REPLACE FUNCTION hidden.decrement_group_member_counter(group_id uuid)
     RETURNS void
     LANGUAGE plpgsql
     SECURITY INVOKER
@@ -7,7 +7,7 @@ AS
 $$
 BEGIN
     PERFORM SET_CONFIG('app.current_function', 'decrement_group_member_counter', TRUE);
-    UPDATE authenticated_access.groups_counters
+    UPDATE hidden.groups_counters
     SET
         group_member_counter = group_member_counter - 1
     WHERE

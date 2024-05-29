@@ -16,17 +16,17 @@ BEGIN
         group_id_in
                   );
 
-    PERFORM authenticated_access.create_group_member(
+    PERFORM hidden.create_group_member(
         membership.group_id,
         membership.member_id,
         'member'
             );
 
-    PERFORM authenticated_access.increment_group_member_counter(
+    PERFORM hidden.increment_group_member_counter(
         membership.group_id
             );
 
-    PERFORM authenticated_access.increment_profile_group_membership_counter(
+    PERFORM hidden.increment_profile_group_membership_counter(
         membership.member_id
             );
 END

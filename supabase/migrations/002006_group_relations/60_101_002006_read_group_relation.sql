@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS authenticated_access.read_group_relation(uuid);
+DROP FUNCTION IF EXISTS hidden.read_group_relation(uuid);
 
-CREATE OR REPLACE FUNCTION authenticated_access.read_group_relation(
+CREATE OR REPLACE FUNCTION hidden.read_group_relation(
     group_relation_id uuid
 )
     RETURNS table
@@ -25,7 +25,7 @@ BEGIN
     RETURN QUERY
         SELECT *
         FROM
-            authenticated_access.group_relation
+            hidden.group_relation
         WHERE
             group_relation.id = group_relation_id;
 END

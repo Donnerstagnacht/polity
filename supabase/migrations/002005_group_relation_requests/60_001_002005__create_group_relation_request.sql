@@ -1,4 +1,4 @@
-DROP FUNCTION IF EXISTS authenticated_access.create_group_requested_relation(
+DROP FUNCTION IF EXISTS hidden.create_group_requested_relation(
     uuid,
     uuid,
     group_relation,
@@ -11,7 +11,7 @@ DROP FUNCTION IF EXISTS authenticated_access.create_group_requested_relation(
     boolean
 );
 
-CREATE OR REPLACE FUNCTION authenticated_access.create_group_requested_relation(
+CREATE OR REPLACE FUNCTION hidden.create_group_requested_relation(
     group_id uuid,
     related_group_id uuid,
     relation_type group_relation,
@@ -30,7 +30,7 @@ AS
 $$
 BEGIN
     INSERT INTO
-        authenticated_access.group_requested_relations
+        hidden.group_requested_relations
     (group_id,
      related_group_id,
      relation_type,

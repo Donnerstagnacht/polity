@@ -14,7 +14,7 @@ AS
 $$
 BEGIN
     INSERT INTO
-        authenticated_access.group_invited_members(group_id,
+        hidden.group_invited_members(group_id,
                                                    member_id,
                                                    member_type)
     VALUES

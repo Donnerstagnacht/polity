@@ -1,8 +1,8 @@
-DROP FUNCTION IF EXISTS authenticated_access.create_hashtag(
+DROP FUNCTION IF EXISTS hidden.create_hashtag(
     value text
 );
 
-CREATE OR REPLACE FUNCTION authenticated_access.create_hashtag(
+CREATE OR REPLACE FUNCTION hidden.create_hashtag(
     value text
 )
     RETURNS void
@@ -12,7 +12,7 @@ AS
 $$
 BEGIN
     INSERT INTO
-        authenticated_access.hashtags(value)
+        hidden.hashtags(value)
     VALUES (value);
 END;
 $$

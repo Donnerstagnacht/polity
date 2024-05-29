@@ -1,8 +1,8 @@
-DROP FUNCTION IF EXISTS authenticated_access.delete_profile_follower_relationship(
+DROP FUNCTION IF EXISTS hidden.delete_profile_follower_relationship(
     follower_id uuid,
     following_id uuid
 );
-CREATE OR REPLACE FUNCTION authenticated_access.delete_profile_follower_relationship(
+CREATE OR REPLACE FUNCTION hidden.delete_profile_follower_relationship(
     follower_id uuid,
     following_id uuid
 )
@@ -14,7 +14,7 @@ $$
 BEGIN
     DELETE
     FROM
-        authenticated_access.following_profiles
+        hidden.following_profiles
     WHERE
           follower = follower_id
       AND following = following_id;

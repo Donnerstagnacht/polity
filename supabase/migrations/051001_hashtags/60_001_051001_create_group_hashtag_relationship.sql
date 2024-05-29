@@ -1,9 +1,9 @@
-DROP FUNCTION IF EXISTS authenticated_access.create_group_hashtag_relationship(
+DROP FUNCTION IF EXISTS hidden.create_group_hashtag_relationship(
     uuid,
     uuid
 );
 
-CREATE OR REPLACE FUNCTION authenticated_access.create_group_hashtag_relationship(
+CREATE OR REPLACE FUNCTION hidden.create_group_hashtag_relationship(
     group_id uuid,
     hashtag_id uuid
 )
@@ -14,8 +14,8 @@ AS
 $$
 BEGIN
     INSERT INTO
-        authenticated_access.group_hashtags(group_id,
-                                            hashtag_id)
+        hidden.group_hashtags(group_id,
+                              hashtag_id)
     VALUES
         (group_id,
          hashtag_id);

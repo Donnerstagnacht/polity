@@ -24,8 +24,8 @@ BEGIN
             groups.name,
             groups.level
         FROM
-            authenticated_access.following_groups
-            JOIN authenticated_access.groups
+            hidden.following_groups
+            JOIN hidden.groups
             ON following_groups.following = groups.id
         WHERE
             following_groups.follower = auth_user_id

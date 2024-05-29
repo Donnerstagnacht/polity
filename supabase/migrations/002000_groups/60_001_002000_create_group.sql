@@ -1,4 +1,4 @@
-DROP FUNCTION IF EXISTS authenticated_access.create_group(
+DROP FUNCTION IF EXISTS hidden.create_group(
     text,
     text,
     group_level,
@@ -7,7 +7,7 @@ DROP FUNCTION IF EXISTS authenticated_access.create_group(
     timestamp WITH TIME ZONE
 );
 
-CREATE OR REPLACE FUNCTION authenticated_access.create_group(
+CREATE OR REPLACE FUNCTION hidden.create_group(
     name text,
     description text,
     level group_level,
@@ -24,7 +24,7 @@ DECLARE
     group_id uuid;
 BEGIN
     INSERT INTO
-        authenticated_access.groups (name,
+        hidden.groups (name,
                                      description,
                                      level,
                                      creator,

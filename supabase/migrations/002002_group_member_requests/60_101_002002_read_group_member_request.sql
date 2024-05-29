@@ -1,9 +1,9 @@
-DROP FUNCTION IF EXISTS authenticated_access.read_group_member_request(
+DROP FUNCTION IF EXISTS hidden.read_group_member_request(
     group_id_in uuid,
     user_id_in uuid
 );
 
-CREATE OR REPLACE FUNCTION authenticated_access.read_group_member_request(
+CREATE OR REPLACE FUNCTION hidden.read_group_member_request(
     group_id_in uuid,
     user_id_in uuid
 )
@@ -24,9 +24,9 @@ BEGIN
     RETURN QUERY
         SELECT *
         FROM
-            authenticated_access.group_member_requests
+            hidden.group_member_requests
         WHERE
-              authenticated_access.group_member_requests.group_id = group_id_in
-          AND authenticated_access.group_member_requests.member_id = user_id_in;
+              hidden.group_member_requests.group_id = group_id_in
+          AND hidden.group_member_requests.member_id = user_id_in;
 END;
 $$;

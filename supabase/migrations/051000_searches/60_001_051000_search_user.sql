@@ -18,12 +18,12 @@ $$
 BEGIN
     RETURN QUERY
         SELECT
-            authenticated_access.profiles.id,
-            authenticated_access.profiles.first_name,
-            authenticated_access.profiles.last_name,
-            authenticated_access.profiles.username
+            hidden.profiles.id,
+            hidden.profiles.first_name,
+            hidden.profiles.last_name,
+            hidden.profiles.username
         FROM
-            authenticated_access.profiles
+            hidden.profiles
         WHERE
             fts @@ TO_TSQUERY('german', search_term);
 END

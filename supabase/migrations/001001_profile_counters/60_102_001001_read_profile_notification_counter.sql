@@ -15,10 +15,10 @@ BEGIN
     authenticated_user := auth.uid();
     RETURN QUERY (
         SELECT
-            authenticated_access.profiles_counters.id AS profile_id,
-            authenticated_access.profiles_counters.unread_notifications_counter
+            hidden.profiles_counters.id AS profile_id,
+            hidden.profiles_counters.unread_notifications_counter
         FROM
-            authenticated_access.profiles_counters
+            hidden.profiles_counters
         WHERE
             id = authenticated_user
     );

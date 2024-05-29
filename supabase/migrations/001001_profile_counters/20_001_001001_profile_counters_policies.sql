@@ -1,15 +1,15 @@
 DROP POLICY IF EXISTS "Public profiles_counters can be followed by by everyone."
-    ON authenticated_access.profiles_counters;
+    ON hidden.profiles_counters;
 CREATE POLICY "Public profiles_counters can be followed by by everyone."
-    ON authenticated_access.profiles_counters
+    ON hidden.profiles_counters
     FOR INSERT
     TO authenticated
     WITH CHECK (TRUE);
 
 DROP POLICY IF EXISTS "Public profiles_counters are viewable by everyone."
-    ON authenticated_access.profiles_counters;
+    ON hidden.profiles_counters;
 CREATE POLICY "Public profiles_counters are viewable by everyone."
-    ON authenticated_access.profiles_counters
+    ON hidden.profiles_counters
     FOR SELECT
     TO authenticated
     USING (
@@ -17,9 +17,9 @@ CREATE POLICY "Public profiles_counters are viewable by everyone."
     );
 
 DROP POLICY IF EXISTS "Public profiles_counters can be updated by by everyone."
-    ON authenticated_access.profiles_counters;
+    ON hidden.profiles_counters;
 CREATE POLICY "Public profiles_counters can be updated by by everyone."
-    ON authenticated_access.profiles_counters
+    ON hidden.profiles_counters
     FOR UPDATE
     TO authenticated
     USING (
