@@ -182,16 +182,40 @@
 <hr>
 
 <h1>Naming conventions</h1>
-<p>PostgreSQL code and code or variables that are used to call PostgreSQL functions should be written in lowercase with underscores e.g. <code>a_variable_for_a_postgres functions.</code>.</p> 
+<p>PostgreSQL code and code or variables that are used to call PostgreSQL functions should be written in lowercase with underscores e.g. <code>a_variable_for_a_postgres functions.</code>. Parameters of postgres functions should be prefixed with a "_" (e.g. <code>_parameter</code>) to avoid ambitous naming conflicts.</p> 
 
-<p>Postgres files must be named like <code>timestamp_name.sql</code>. In case the file determines the initial setup, it must be prefixed with an initial 0, e.g. <code>0numbercode_name.sql </code>. Since initial setup/migration is executed by alphabetical order (e.g. earliest timestamp or numbercode first), the numbercode follows a certain logic:</p>
+<p>Postgres migration files are applied in descending sequential order, must be unique and named like <code>timestamp_name.sql</code>. The codestamp must have a minimum of 6 digits and a maximum of 14 digits. After that an "_" must follow. Files which determine the initial setup do not use a timestamp. Instead, a numbercode is used to gurantee a certain execution order.</p> The number code is:
 
-<p><code>numbercode = two digit number implying the postgres object type + four digit number equal to feature number + two digit running number starting from 01</code></p>
-<p> The two digit number code is mapped to postgres types: 00 = pre migration tasks (resets, schema creation...), 01 = table creation, 02 = triggers, 04 = standalone functions,  06 = transactions calling standalone functions, 08 = access grants, 09 = database seed, 99 = post migration tasks (supabase bug fixes...). For example,  <code>04000705_read_group.sql</code> is a file including the standalone function (04) "read_group" of the seventh feature (groups, 0007) and is the 5th file of this feature (05).</p>
+<p><code>numbercode = 000 + two digit number implying the postgres object type _ three digit running number _ six digit number determining the featuere.</code></p>
+<p> The two digit number code is mapped to postgres types to ensure that postgres objects are created in the correct order (since objects on lower table lines depend on higher table lines):
+    
+| Code    | Description                                            |
+| ------- | ------------------------------------------------------ |
+| 00      | Pre migration tasks (enums, types, resets, schemas...) |
+| 10      | Tables, indexes, row level security settings           |
+| 20      | Row level security policies                            |
+| 30      | Triggers and trigger related functions                 |
+| 60      | Functions                                              |   
+| 80      | Transactions (functions that depend on other functions)|   
+| 98      | Post migration tasks (bug fixes...)                    |   
+| 99      | Database/table seeding                                 |   
+
+<p>The three digit running number is simply a running number except for the Standalone Functions (Code 60). Here, functions should order by Create, read, update, delete and others.</p>
+
+| Code    | Description                                            |
+| ------- | ------------------------------------------------------ |
+| 0xx     | Functions for create operations (insert or upsert)     |
+| 1xx     | Functions for read operations                          |
+| 2xx     | Functions for update operations                        |
+| 3xx     | Functions for delete operations                        |
+| 4xx     | Other functions (checks, increments, decrements...)    |   
+
+<p>The feature is a unique 6 diigt code. Main features should be "thousand steps" (for example: 001000 = profiles).</p>
+<p>The leading "000" prefix is added by a scipt.</p>
 
 <p>For purely frontend-related variables code camelCase is used e.g. <code>aVariableForTheFrontend</code>.</p>
 
-<p>HTML elements used for testing should contain the <code>[attr.data-cy]="'element-name'"</code>.</p>
+<p>HTML elements used for testing should contain the attribute <code>[attr.data-cy]="'element-name'"</code>. The attribute name uses "-" seperators.</p>
 <p>In general, use speaking names and choose a longer more specific name over a short unspecific name.</p>
 <hr>
 
@@ -200,9 +224,18 @@
 <hr>
 
 <h1>Database security</h1>
-<p>Supabase generates a public api for all database elements in the public schema. Therefore, database tables including data which should not be accessible by everyone, should be added to a non-public layer (hidden layer).</p>
-<p>The public layer is solely used to store invoker database functions ("invoker" ensures that database users can only use database elements according to their role and associated rights). These functions can access the hidden table layer. Therefore, the column access is controlled by the access given to database functions.</p>
-<p>Row level access is controlled by row security rules. Authenticated userIds should not be handed over to functions as function argument. Instead, supabase helper functions like auth.uid() should be used directly in database functions.</p>
+<p>Polity applies a database security layer concept with the following layers</p>
+
+| Layername     | Description                                                                                                                                   |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| public        | A public layer available to all roles. An API is generated automatically.                                                                     |
+| authenticated | A layer available to the "authenticated" role (logged in users). An API is generated automatically                                            |
+| hidden        | A hidden layer that can only be accessed by functions (e.g. available to "authenticated" role but no API generated. This includes all tables. |
+| security      | A hidden layer that can only be accessed by row level security checks. It is used to store security definer functions                         |
+
+<p>Additionally, each table is secured with row level security policies. Row level security policies check data access for each row. While this architecture disables the quick usage of the autogenerated supabase api, it decreases the attack vector to the parameters of functions of the public/authenticated layer. To strengthen this even further, it should be avoided to pass the id of the authenticated user as argument to a function. Instead, supabase heper functions like auth.uid() should be used directly in the database function</p> 
+
+<p>Functions from the hidden layer should always raise an error if they fail.</p>
 <hr>
 
 <h1>Testing Approach</h1>
