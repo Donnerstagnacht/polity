@@ -10,7 +10,7 @@ import {POLYMORPHEUS_CONTEXT} from "@tinkoff/ng-polymorpheus";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {SessionStoreService} from "../../../auth/services/session.store.service";
 import {Router} from "@angular/router";
-import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
+import {DatabasePublicOverwritten} from "../../../../../supabase/types/supabase.public.modified";
 import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {TuiCarouselModule, TuiFieldErrorPipeModule, TuiInputModule} from "@taiga-ui/kit";
 import {CommonModule} from "@angular/common";
@@ -123,7 +123,7 @@ export class AssistantWelcomeDialogComponent {
         this.dialogContext.completeWith(false);
     }
 
-    private async setLastTutorial(newStatus: DatabaseOverwritten["public"]["Enums"]["tutorial_enum"]): Promise<void> {
+    private async setLastTutorial(newStatus: DatabasePublicOverwritten["public"]["Enums"]["tutorial_enum"]): Promise<void> {
         await this.assistantService.updateLastTutorial(newStatus)
     }
 

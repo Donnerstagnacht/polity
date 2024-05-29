@@ -4,7 +4,7 @@ import {environment} from "../../../../environments/environment";
 import {PushSubscriptionStringifies} from "../pushSubscription";
 import {supabaseAuthenticatedClient} from "../../../auth/supabase-authenticated-client";
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
-import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
+import {DatabasePublicOverwritten} from "../../../../../supabase/types/supabase.public.modified";
 import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {TuiAlertService} from "@taiga-ui/core";
 
@@ -13,7 +13,7 @@ import {TuiAlertService} from "@taiga-ui/core";
 })
 export class PushActionService {
     private readonly VAPID_PUBLIC_KEY: string = environment.vapidPublicKey;
-    private supabaseClient: SupabaseClient<DatabaseOverwritten> = supabaseAuthenticatedClient;
+    private supabaseClient: SupabaseClient<DatabasePublicOverwritten> = supabaseAuthenticatedClient;
 
     constructor(
         private swPush: SwPush,

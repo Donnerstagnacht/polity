@@ -170,7 +170,7 @@
 │    │         ├── Database transactions (calling other functions): 06000X prefix
 │    │         └── Database seed: 09000X prefix
 │    └── types
-│         ├── supabase.modified.ts: Overwritten supabase types since generation is not always correct
+│         ├── supabase.public.modified.ts: Overwritten supabase types since generation is not always correct
 │         ├── supabase.shorthand-types.ts: Short-handed supabase types for easier usage in Front End code
 │         └── supabase.ts: Auto-generated supabase types
 │

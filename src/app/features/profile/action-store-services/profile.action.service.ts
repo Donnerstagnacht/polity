@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
 import {ProfileStoreService} from "./profile.store.service";
 import {TuiFileLike} from "@taiga-ui/kit";
-import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
+import {DatabasePublicOverwritten} from "../../../../../supabase/types/supabase.public.modified";
 import {supabaseAuthenticatedClient} from "../../../auth/supabase-authenticated-client";
 import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 
@@ -10,7 +10,7 @@ import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.short
     providedIn: 'root'
 })
 export class ProfileActionService {
-    private supabase: SupabaseClient<DatabaseOverwritten> = supabaseAuthenticatedClient
+    private supabase: SupabaseClient<DatabasePublicOverwritten> = supabaseAuthenticatedClient
 
     constructor(
         private readonly profileStoreService: ProfileStoreService

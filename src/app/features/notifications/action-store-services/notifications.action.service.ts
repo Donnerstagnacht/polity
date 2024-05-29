@@ -5,7 +5,7 @@ import {
     RealtimePostgresInsertPayload,
     SupabaseClient
 } from "@supabase/supabase-js";
-import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
+import {DatabasePublicOverwritten} from "../../../../../supabase/types/supabase.public.modified";
 import {NotificationsStoreService} from "./notifications.store.service";
 import {SupabaseObjectReturn, SupabaseTable} from "../../../../../supabase/types/supabase.shorthand-types";
 import {supabaseAuthenticatedClient} from "../../../auth/supabase-authenticated-client";
@@ -16,7 +16,7 @@ import {ProfileActionService} from "../../profile/action-store-services/profile.
     providedIn: 'root'
 })
 export class NotificationsActionService {
-    private readonly supabaseClient: SupabaseClient<DatabaseOverwritten> = supabaseAuthenticatedClient;
+    private readonly supabaseClient: SupabaseClient<DatabasePublicOverwritten> = supabaseAuthenticatedClient;
     private currentNotificationsChannel: RealtimeChannel | null = null;
 
     constructor(

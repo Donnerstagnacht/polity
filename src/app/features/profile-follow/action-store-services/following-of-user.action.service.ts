@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
-import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
+import {DatabasePublicOverwritten} from "../../../../../supabase/types/supabase.public.modified";
 import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {FollowingOfUserStoreService} from "./following-of-user.store.service";
 import {ProfileCountersStoreService} from "./profile-counters.store.service";
@@ -11,7 +11,7 @@ import {ProfileActionService} from "../../profile/action-store-services/profile.
     providedIn: 'root'
 })
 export class FollowingOfUserActionService {
-    private readonly supabaseClient: SupabaseClient<DatabaseOverwritten> = supabaseAuthenticatedClient;
+    private readonly supabaseClient: SupabaseClient<DatabasePublicOverwritten> = supabaseAuthenticatedClient;
 
     constructor(
         private readonly followingOfUserStoreService: FollowingOfUserStoreService,

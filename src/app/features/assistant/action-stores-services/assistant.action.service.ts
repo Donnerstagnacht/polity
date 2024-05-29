@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {PostgrestSingleResponse, SupabaseClient} from "@supabase/supabase-js";
-import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
+import {DatabasePublicOverwritten} from "../../../../../supabase/types/supabase.public.modified";
 import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
 import {AssistantStoreService} from "./assistant.store.service";
 import {supabaseAuthenticatedClient} from "../../../auth/supabase-authenticated-client";
@@ -9,7 +9,7 @@ import {supabaseAuthenticatedClient} from "../../../auth/supabase-authenticated-
     providedIn: 'root'
 })
 export class AssistantActionService {
-    private readonly supabaseClient: SupabaseClient<DatabaseOverwritten> = supabaseAuthenticatedClient;
+    private readonly supabaseClient: SupabaseClient<DatabasePublicOverwritten> = supabaseAuthenticatedClient;
 
     constructor(
         private readonly assistantStoreService: AssistantStoreService,
@@ -75,10 +75,10 @@ export class AssistantActionService {
     /**
      * Updates the last tutorial status and the assistant store.
      *
-     * @param {DatabaseOverwritten["public"]["Enums"]["tutorial_enum"]} last_tutorial - The new value for the last tutorial.
+     * @param {DatabasePublicOverwritten["public"]["Enums"]["tutorial_enum"]} last_tutorial - The new value for the last tutorial.
      * @return {Promise<void>}
      */
-    public async updateLastTutorial(last_tutorial: DatabaseOverwritten["public"]["Enums"]["tutorial_enum"]): Promise<void> {
+    public async updateLastTutorial(last_tutorial: DatabasePublicOverwritten["public"]["Enums"]["tutorial_enum"]): Promise<void> {
         await this.assistantStoreService.assistant.wrapUpdateFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<undefined> = await this.supabaseClient
             .rpc('update_last_tutorial', {_new_status: last_tutorial})
