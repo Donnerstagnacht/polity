@@ -129,10 +129,10 @@ export class AssistantWelcomeDialogComponent {
 
     private async updateProfileName(): Promise<void> {
         this.name = this.welcomeForm.value.firstName + ' ' + this.welcomeForm.value.lastName;
-        const profile: SupabaseObjectReturn<'read_user'> = {
+        const profile: SupabaseObjectReturn<'read_profile'> = {
             first_name: this.welcomeForm.value.firstName as string,
             last_name: this.welcomeForm.value.lastName as string
-        } as SupabaseObjectReturn<'read_user'>
+        } as SupabaseObjectReturn<'read_profile'>
         await Promise.all([
             this.profilService.updateProfile(profile),
             this.assistantService.updateLastTutorial('profile')
