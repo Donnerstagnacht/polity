@@ -26,7 +26,7 @@ export class ProfileImageUploadComponent {
     protected loadedFiles$: Observable<TuiFileLike | null> = this.imageControl.valueChanges.pipe(
         switchMap(file => (file ? this.returnRequestAsObservable(file) : of(null))),
     );
-    protected profileWriteable: WritableSignal<SupabaseObjectReturn<'read_user'> | null | undefined>;
+    protected profileWriteable: WritableSignal<SupabaseObjectReturn<'read_profile'> | null | undefined>;
     private avatarUrl: string = '';
 
     constructor(
@@ -65,9 +65,9 @@ export class ProfileImageUploadComponent {
                         await this.profileService.updateProfileImage(response.data.path);
                     } catch (error) {
                     } finally {
-                        const profile: SupabaseObjectReturn<"read_user"> = {
+                        const profile: SupabaseObjectReturn<"read_profile"> = {
                             profile_image: privateUrl
-                        } as SupabaseObjectReturn<'read_user'>;
+                        } as SupabaseObjectReturn<'read_profile'>;
                         this.profileStoreService.profile.mutateObject(profile);
                     }
                 } catch (error) {

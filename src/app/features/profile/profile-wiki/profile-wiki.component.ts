@@ -26,7 +26,7 @@ export class ProfileWikiComponent {
     protected isProfileLoading: WritableSignal<boolean> = signal(true);
     protected isProfileCounterLoading: WritableSignal<boolean> = signal(true);
     protected isFollowingCheckLoading: WritableSignal<boolean> = signal(true);
-    protected profile: Signal<SupabaseObjectReturn<'read_user'> | null>;
+    protected profile: Signal<SupabaseObjectReturn<'read_profile'> | null>;
     protected profileCounter: WritableSignal<SupabaseObjectReturn<'read_profile_counters'> | null> = signal(null);
     protected isOwner: WritableSignal<boolean>;
     protected isFollowing: WritableSignal<boolean>;
