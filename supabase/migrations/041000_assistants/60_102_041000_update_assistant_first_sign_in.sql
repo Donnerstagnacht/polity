@@ -18,5 +18,10 @@ BEGIN
         first_sign_in = _new_status
     WHERE
         id = auth_user_id;
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'No assistant found for user id %', auth_user_id
+            USING ERRCODE = 'P0002';
+    END IF;
 END
 $$;

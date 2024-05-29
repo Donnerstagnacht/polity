@@ -20,8 +20,8 @@ BEGIN
       AND following = _following_id;
 
     IF NOT FOUND THEN
-        -- Raise an exception to roll back the transaction
-        RAISE EXCEPTION 'Error in unfollow_transaction: %', SQLERRM;
+        RAISE EXCEPTION 'No follower relationship found for follower id % and following id %', _follower_id, _following_id
+            USING ERRCODE = 'P0002';
     END IF;
 END;
 $$;

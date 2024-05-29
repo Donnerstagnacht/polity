@@ -1,9 +1,9 @@
 DROP FUNCTION IF EXISTS hidden.delete_group_relation_request(
-    _group_relation uuid
+    _group_relation_id uuid
 );
 
 CREATE OR REPLACE FUNCTION hidden.delete_group_relation_request(
-    _group_relation uuid
+    _group_relation_id uuid
 )
     RETURNS table
             (deleted_requested_group_relation record
@@ -19,9 +19,14 @@ BEGIN
     FROM
         hidden.group_requested_relations
     WHERE
-        id = _group_relation
+        id = _group_relation_id
     RETURNING *
         INTO deleted_requested_group_relation;
     RETURN NEXT;
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'No group relation request found for id %', _group_relation_id
+            USING ERRCODE = 'P0002';
+    END IF;
 END
 $$;

@@ -17,6 +17,11 @@ BEGIN
     WHERE
         id = _user_id;
     PERFORM SET_CONFIG('app.current_function', NULL, TRUE);
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'No profile counter found for user with id %', _user_id
+            USING ERRCODE = 'P0002';
+    END IF;
 END
 $$;
 

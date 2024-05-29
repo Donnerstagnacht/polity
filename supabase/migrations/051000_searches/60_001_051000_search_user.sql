@@ -26,5 +26,10 @@ BEGIN
             hidden.profiles
         WHERE
             fts @@ TO_TSQUERY('german', _search_term);
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'No profile matches %', _search_term
+            USING ERRCODE = 'P0002';
+    END IF;
 END
 $$;

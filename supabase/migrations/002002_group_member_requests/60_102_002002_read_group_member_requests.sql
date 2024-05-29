@@ -34,5 +34,10 @@ BEGIN
             ON hidden.group_member_requests.member_id = hidden.profiles.id
         WHERE
             hidden.group_member_requests.group_id = _group_id;
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'No group member request found for group id % and user id %', _group_id, _user_id
+            USING ERRCODE = 'P0002';
+    END IF;
 END;
 $$;

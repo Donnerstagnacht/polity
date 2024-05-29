@@ -19,5 +19,10 @@ BEGIN
     WHERE
           member_id = _user_id
       AND group_id = _group_id;
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'No group member found for group id % and user id %', _group_id, _user_id
+            USING ERRCODE = 'P0002';
+    END IF;
 END;
 $$;

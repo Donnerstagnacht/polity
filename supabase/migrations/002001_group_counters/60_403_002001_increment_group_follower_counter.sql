@@ -18,5 +18,9 @@ BEGIN
         id = _group_id;
     PERFORM SET_CONFIG('app.current_function', NULL, TRUE);
 
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'No group found counter for group id % ', _group_id
+            USING ERRCODE = 'P0002';
+    END IF;
 END
 $$;

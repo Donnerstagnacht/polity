@@ -25,5 +25,10 @@ BEGIN
             hidden.group_members
         WHERE
             id = _membership_id;
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'No group member found for membership id %', _membership_id
+            USING ERRCODE = 'P0002';
+    END IF;
 END;
 $$;

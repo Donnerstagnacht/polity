@@ -18,5 +18,11 @@ BEGIN
         receive_follow_notifications = _new_status
     WHERE
         id = auth_user_id;
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'No profile found for user with id %', auth_user_id
+            USING ERRCODE = 'P0002';
+    END IF;
+
 END
 $$;

@@ -27,6 +27,11 @@ BEGIN
             membership.id,
             membership.group_id,
             membership.member_id;
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'No group member invitation found for group id %', _group_id
+            USING ERRCODE = 'P0002';
+    END IF;
     RETURN membership;
 END;
 $$;

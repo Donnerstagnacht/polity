@@ -30,5 +30,10 @@ BEGIN
         WHERE
             following_groups.follower = auth_user_id
     );
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'No group followings found for user id %', auth_user_id
+            USING ERRCODE = 'P0002';
+    END IF;
 END
 $$;

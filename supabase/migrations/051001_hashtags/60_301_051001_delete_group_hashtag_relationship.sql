@@ -15,5 +15,10 @@ BEGIN
         hidden.group_hashtags
     WHERE
         _hashtag_id = _hashtag_id;
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'No hashtag found for id %', _hashtag_id
+            USING ERRCODE = 'P0002';
+    END IF;
 END;
 $$;

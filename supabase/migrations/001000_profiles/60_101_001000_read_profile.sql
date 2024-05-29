@@ -6,7 +6,7 @@ CREATE OR REPLACE FUNCTION public.read_profile(
 )
     RETURNS table
             (
-                id            uuid,
+                profile_id    uuid,
                 first_name    text,
                 last_name     text,
                 profile_image text
@@ -16,15 +16,21 @@ CREATE OR REPLACE FUNCTION public.read_profile(
 AS
 $$
 BEGIN
-    RETURN QUERY
+    RETURN QUERY (
         SELECT
-            id,
-            first_name,
-            last_name,
-            profile_image
+            p.id,
+            p.first_name,
+            p.last_name,
+            p.profile_image
         FROM
-            hidden.profiles
+            hidden.profiles p
         WHERE
-            id = _user_id;
+            p.id = _user_id
+    );
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'No profile found for user with id %', _user_id
+            USING ERRCODE = 'P0002';
+    END IF;
 END
 $$;

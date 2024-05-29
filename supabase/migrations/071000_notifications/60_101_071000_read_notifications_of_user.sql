@@ -34,6 +34,11 @@ BEGIN
             receiver = auth_user_id
         ORDER BY notifications_by_user.created_at DESC
     );
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'No notifications found for user id %', auth_user_id
+            USING ERRCODE = 'P0002';
+    END IF;
 END
 $$;
 

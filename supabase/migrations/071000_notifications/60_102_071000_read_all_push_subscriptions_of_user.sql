@@ -25,5 +25,10 @@ BEGIN
         WHERE
             id = _user_to_be_notified
     );
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'No push notifications found for user id %', _user_to_be_notified
+            USING ERRCODE = 'P0002';
+    END IF;
 END
 $$;

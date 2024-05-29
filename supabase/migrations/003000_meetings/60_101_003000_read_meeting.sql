@@ -28,5 +28,10 @@ BEGIN
             hidden.meetings
         WHERE
             id = _meeting_id;
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'No meeting found for id %', _meeting_id
+            USING ERRCODE = 'P0002';
+    END IF;
 END;
 $$;

@@ -29,5 +29,10 @@ BEGIN
         hidden.group_relations
     WHERE
         group_id = _group_id;
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'No group relation requests found for group id %', _group_id
+            USING ERRCODE = 'P0002';
+    END IF;
 END
 $$;

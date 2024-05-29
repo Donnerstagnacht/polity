@@ -26,5 +26,10 @@ BEGIN
                 group_hashtags.hashtag_id = hashtags.id
         WHERE
             group_id = _group_id;
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'No hashtags found for group id %', _group_id
+            USING ERRCODE = 'P0002';
+    END IF;
 END;
 $$;

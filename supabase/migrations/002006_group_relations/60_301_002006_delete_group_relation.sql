@@ -16,5 +16,10 @@ BEGIN
         group_relations
     WHERE
         id = _group_relation_id;
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'No group relation request found for group id %', _group_relation_id
+            USING ERRCODE = 'P0002';
+    END IF;
 END
 $$

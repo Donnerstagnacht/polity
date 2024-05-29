@@ -19,6 +19,11 @@ BEGIN
         hidden.profiles
     WHERE
         id = _user_id;
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'No profile found for user with id %', _user_id
+            USING ERRCODE = 'P0002';
+    END IF;
     RETURN receives_follow_notifications_status;
 END
 $$;

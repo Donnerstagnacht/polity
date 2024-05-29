@@ -14,5 +14,10 @@ BEGIN
         unread_notifications_counter = 0
     WHERE
         id = auth_user_id;
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'No profile counter found for user with id %', auth_user_id
+            USING ERRCODE = 'P0002';
+    END IF;
 END
 $$;

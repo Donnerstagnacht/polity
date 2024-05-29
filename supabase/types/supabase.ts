@@ -298,7 +298,7 @@ export type Database = {
           last_name: string
         }[]
       }
-      read_group_columns: {
+      read_group: {
         Args: {
           _group_id: string
         }
@@ -414,7 +414,7 @@ export type Database = {
           _user_id: string
         }
         Returns: {
-          id: string
+          profile_id: string
           first_name: string
           last_name: string
           profile_image: string

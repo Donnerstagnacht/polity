@@ -30,5 +30,10 @@ BEGIN
             WHERE
                 following_groups.follower = _group_id
         );
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'No group followings found for group id %', _group_id
+            USING ERRCODE = 'P0002';
+    END IF;
 END
 $$;

@@ -16,7 +16,7 @@ type GroupUIFlags =
     providedIn: 'root'
 })
 export class GroupStoreService {
-    public group: ObjectStoreService<SupabaseObjectReturn<'read_group_columns'>, GroupUIFlags>
+    public group: ObjectStoreService<SupabaseObjectReturn<'read_group'>, GroupUIFlags>
     public groupMemberStatus: WritableSignal<string> = signal('no_member')
     private uiFlags = {
         isMember: signal(false),
@@ -30,6 +30,6 @@ export class GroupStoreService {
     }
 
     constructor() {
-        this.group = new ObjectStoreService<SupabaseObjectReturn<'read_group_columns'>, GroupUIFlags>(this.uiFlags);
+        this.group = new ObjectStoreService<SupabaseObjectReturn<'read_group'>, GroupUIFlags>(this.uiFlags);
     }
 }

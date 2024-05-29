@@ -1,7 +1,7 @@
-DROP FUNCTION IF EXISTS public.read_group_columns(
+DROP FUNCTION IF EXISTS public.read_group(
     _group_id uuid
 );
-CREATE OR REPLACE FUNCTION public.read_group_columns(
+CREATE OR REPLACE FUNCTION public.read_group(
     _group_id uuid
 )
     RETURNS table
@@ -26,6 +26,11 @@ BEGIN
             hidden.groups
         WHERE
             id = _group_id;
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'No group found for id % ', _group_id
+            USING ERRCODE = 'P0002';
+    END IF;
 END
 $$;
 

@@ -29,5 +29,10 @@ BEGIN
         WHERE
             hidden.group_members.member_id = auth_user_id
     );
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'No group found for user id % ', auth_user_id
+            USING ERRCODE = 'P0002';
+    END IF;
 END
 $$;

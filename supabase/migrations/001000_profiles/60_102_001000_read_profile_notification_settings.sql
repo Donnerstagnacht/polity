@@ -20,5 +20,10 @@ BEGIN
         WHERE
             id = auth_user
     );
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'No profile found for user with id %', auth_user
+            USING ERRCODE = 'P0002';
+    END IF;
 END
 $$;

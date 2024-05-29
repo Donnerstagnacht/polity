@@ -28,5 +28,10 @@ BEGIN
         WHERE
             following_profiles.following = auth_user_id
     );
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'No followers found for user with id %', auth_user_id
+            USING ERRCODE = 'P0002';
+    END IF;
 END
 $$;

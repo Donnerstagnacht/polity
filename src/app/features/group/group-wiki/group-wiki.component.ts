@@ -28,7 +28,7 @@ import {
 })
 export class GroupWikiComponent {
     protected isGroupLoading: WritableSignal<boolean> = signal(true);
-    protected group: Signal<SupabaseObjectReturn<'read_group_columns'> | null> = signal(null);
+    protected group: Signal<SupabaseObjectReturn<'read_group'> | null> = signal(null);
 
     protected isGroupCounterLoading: WritableSignal<boolean> = signal(true);
     protected groupCounter: WritableSignal<SupabaseObjectReturn<'read_group_counters'> | null> = signal(null);
