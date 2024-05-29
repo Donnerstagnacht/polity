@@ -1,7 +1,7 @@
-DROP FUNCTION IF EXISTS hidden.increment_following_counter(
+DROP FUNCTION IF EXISTS hidden.increment_profile_following_counter(
     _user_id uuid
 );
-CREATE OR REPLACE FUNCTION hidden.increment_following_counter(
+CREATE OR REPLACE FUNCTION hidden.increment_profile_following_counter(
     _user_id uuid
 )
     RETURNS void

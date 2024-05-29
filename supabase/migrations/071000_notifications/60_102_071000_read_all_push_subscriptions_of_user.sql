@@ -1,8 +1,8 @@
 -- TODO: replace public to hidden
-DROP FUNCTION IF EXISTS public.read_all_push_subscriptions_of_user(
+DROP FUNCTION IF EXISTS hidden.read_push_subscriptions_of_user(
     _user_to_be_notified uuid
 );
-CREATE OR REPLACE FUNCTION public.read_all_push_subscriptions_of_user(
+CREATE OR REPLACE FUNCTION hidden.read_push_subscriptions_of_user(
     _user_to_be_notified uuid
 )
     RETURNS table

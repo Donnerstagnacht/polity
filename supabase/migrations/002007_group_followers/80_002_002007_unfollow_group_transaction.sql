@@ -21,7 +21,7 @@ BEGIN
     PERFORM hidden.decrement_group_follower_counter(
         _following_id
             );
-    PERFORM hidden.decrement_following_counter(
+    PERFORM hidden.decrement_group_following_counter(
         auth_user_id
             );
 END;

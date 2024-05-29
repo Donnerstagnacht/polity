@@ -13,7 +13,7 @@ CREATE OR REPLACE FUNCTION hidden.accept_group_relation_request_transaction(
 AS
 $$
 DECLARE
-    req_record RECORD;
+    req_record record;
 BEGIN
     SELECT *
     FROM
@@ -22,7 +22,7 @@ BEGIN
         )
     INTO req_record;
 
-    IF FOUND req_record THEN
+    IF req_record THEN
         PERFORM hidden.create_group_relation(
             req_record.group_id,
             req_record.related_group_id,

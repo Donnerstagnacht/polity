@@ -100,110 +100,110 @@ export type Database = {
     Functions: {
       accept_group_invitation_by_id_transaction: {
         Args: {
-          invitation_id: string
+          _invitation_id: string
         }
         Returns: Database["public"]["CompositeTypes"]["membership"]
       }
       accept_group_invitation_transaction: {
         Args: {
-          group_id_in: string
+          _group_id: string
         }
         Returns: undefined
       }
       accept_group_membership_request_transaction: {
         Args: {
-          request_id: string
+          _request_id: string
         }
         Returns: undefined
       }
       check_group_membership_status: {
         Args: {
-          group_id_in: string
+          _group_id: string
         }
         Returns: string
       }
-      check_if_following: {
+      check_if_user_following_group: {
         Args: {
-          following_id: string
+          _following_id: string
         }
         Returns: boolean
       }
-      check_if_following_group: {
+      check_if_user_follows_profile: {
         Args: {
-          following_id: string
+          _following_id: string
         }
         Returns: boolean
       }
       create_group_member_invitation: {
         Args: {
-          group_id: string
-          member_id: string
+          _group_id: string
+          _member_id: string
         }
         Returns: undefined
       }
       create_group_member_request: {
         Args: {
-          group_id_in: string
+          _group_id: string
         }
         Returns: undefined
       }
       create_group_relation: {
         Args: {
-          group_id: string
-          related_group_id: string
-          relation_type: Database["public"]["Enums"]["group_relation"]
-          created_by?: string
-          updated_at?: string
-          right_to_inform?: boolean
-          right_to_speak?: boolean
-          right_to_amend?: boolean
-          right_to_vote_active?: boolean
-          right_to_vote_passive?: boolean
+          _group_id: string
+          _related_group_id: string
+          _relation_type: Database["public"]["Enums"]["group_relation"]
+          _created_at?: string
+          _updated_at?: string
+          _right_to_inform?: boolean
+          _right_to_speak?: boolean
+          _right_to_amend?: boolean
+          _right_to_vote_active?: boolean
+          _right_to_vote_passive?: boolean
         }
         Returns: undefined
       }
       create_group_transaction: {
         Args: {
-          name: string
-          description: string
-          level: Database["public"]["Enums"]["group_level"]
-          invited_members: string[]
+          _name: string
+          _description: string
+          _level: Database["public"]["Enums"]["group_level"]
+          _invited_members: string[]
         }
         Returns: undefined
       }
       delete_group_member_invitation: {
         Args: {
-          group_id_in: string
+          _group_id: string
         }
         Returns: Database["public"]["CompositeTypes"]["membership"]
       }
       delete_group_member_invitation_by_id: {
         Args: {
-          invitation_id: string
+          _invitation_id: string
         }
         Returns: Database["public"]["CompositeTypes"]["membership"]
       }
       delete_group_member_request: {
         Args: {
-          group_id_in: string
+          _group_id: string
         }
         Returns: Database["public"]["CompositeTypes"]["membership"]
       }
       delete_group_member_request_by_id: {
         Args: {
-          request_id: string
+          _request_id: string
         }
         Returns: Database["public"]["CompositeTypes"]["membership"]
       }
       follow_group_transaction: {
         Args: {
-          following_id: string
+          _following_id: string
         }
         Returns: undefined
       }
       follow_profile_transaction: {
         Args: {
-          following_id: string
+          _following_id: string
         }
         Returns: undefined
       }
@@ -239,27 +239,15 @@ export type Database = {
       }
       leave_group_by_membership_id_transaction: {
         Args: {
-          membership_id_in: string
+          _membership_id: string
         }
         Returns: undefined
       }
       leave_group_member_transaction: {
         Args: {
-          group_id_in: string
+          _group_id: string
         }
         Returns: undefined
-      }
-      read_all_push_subscriptions_of_user: {
-        Args: {
-          user_to_be_notified: string
-        }
-        Returns: {
-          id: string
-          endpoint: string
-          expirationtime: string
-          auth: string
-          p256dh: string
-        }[]
       }
       read_assistant: {
         Args: Record<PropertyKey, never>
@@ -270,9 +258,9 @@ export type Database = {
           last_tutorial: Database["public"]["Enums"]["tutorial_enum"]
         }[]
       }
-      read_follower_of_group: {
+      read_followers_of_group: {
         Args: {
-          group_id_in: string
+          _group_id: string
         }
         Returns: {
           id: string
@@ -290,9 +278,9 @@ export type Database = {
           last_name: string
         }[]
       }
-      read_following_of_group: {
+      read_followings_of_group: {
         Args: {
-          group_id_in: string
+          _group_id: string
         }
         Returns: {
           id: string
@@ -312,7 +300,7 @@ export type Database = {
       }
       read_group_columns: {
         Args: {
-          group_id: string
+          _group_id: string
         }
         Returns: {
           id: string
@@ -321,9 +309,9 @@ export type Database = {
           description: string
         }[]
       }
-      read_group_counter: {
+      read_group_counters: {
         Args: {
-          group_id_in: string
+          _group_id: string
         }
         Returns: {
           group_id: string
@@ -343,7 +331,7 @@ export type Database = {
       }
       read_group_member_invitations: {
         Args: {
-          group_id_in: string
+          _group_id: string
         }
         Returns: {
           id: string
@@ -366,7 +354,7 @@ export type Database = {
       }
       read_group_member_requests: {
         Args: {
-          group_id_in: string
+          _group_id: string
         }
         Returns: {
           id: string
@@ -380,7 +368,7 @@ export type Database = {
       }
       read_group_members: {
         Args: {
-          group_id_in: string
+          _group_id: string
         }
         Returns: {
           id: string
@@ -410,7 +398,7 @@ export type Database = {
           group_level: Database["public"]["Enums"]["group_level"]
         }[]
       }
-      read_notifications_of_users: {
+      read_notifications_of_user: {
         Args: Record<PropertyKey, never>
         Returns: {
           type_of_notification: Database["public"]["Enums"]["notifications_enum"]
@@ -423,7 +411,7 @@ export type Database = {
       }
       read_profile_counters: {
         Args: {
-          user_id: string
+          _user_id: string
         }
         Returns: {
           profile_id: string
@@ -447,7 +435,7 @@ export type Database = {
       }
       read_user: {
         Args: {
-          user_id: string
+          _user_id: string
         }
         Returns: {
           id: string
@@ -458,14 +446,14 @@ export type Database = {
       }
       remove_follower_of_authenticated_user_transaction: {
         Args: {
-          follower_id: string
+          _follower_id: string
         }
         Returns: undefined
       }
       remove_group_follower_transaction: {
         Args: {
-          follower_id: string
-          group_id_in: string
+          _follower_id: string
+          _group_id_in: string
         }
         Returns: undefined
       }
@@ -475,7 +463,7 @@ export type Database = {
       }
       search_group: {
         Args: {
-          search_term: string
+          _search_term: string
         }
         Returns: {
           id: string
@@ -486,7 +474,7 @@ export type Database = {
       }
       search_user: {
         Args: {
-          search_term: string
+          _search_term: string
         }
         Returns: {
           id: string
@@ -513,57 +501,57 @@ export type Database = {
       }
       unfollow_group_transaction: {
         Args: {
-          following_id: string
+          _following_id: string
         }
         Returns: undefined
       }
       unfollow_profile_transaction: {
         Args: {
-          following_id: string
+          _following_id: string
         }
         Returns: undefined
       }
       update_first_sign_in: {
         Args: {
-          new_status: boolean
+          _new_status: boolean
         }
         Returns: undefined
       }
       update_last_tutorial: {
         Args: {
-          new_status: Database["public"]["Enums"]["tutorial_enum"]
+          _new_status: Database["public"]["Enums"]["tutorial_enum"]
         }
         Returns: undefined
       }
       update_profile: {
         Args: {
-          updated_at_in?: string
-          username_in?: string
-          first_name_in?: string
-          last_name_in?: string
-          profile_image_in?: string
-          receive_follow_notifications_in?: boolean
+          _updated_at?: string
+          _username?: string
+          _first_name?: string
+          _last_name?: string
+          _profile_image?: string
+          _receive_follow_notifications?: boolean
         }
         Returns: undefined
       }
       update_profile_receive_notifications_from_follow: {
         Args: {
-          new_status: boolean
+          _new_status: boolean
         }
         Returns: undefined
       }
       update_skip_tutorial: {
         Args: {
-          new_status: boolean
+          _new_status: boolean
         }
         Returns: undefined
       }
       upsert_push_subscription: {
         Args: {
-          endpoint: string
-          expirationtime: string
-          auth: string
-          p256dh: string
+          _endpoint: string
+          _expirationtime: string
+          _auth: string
+          _p256dh: string
         }
         Returns: undefined
       }

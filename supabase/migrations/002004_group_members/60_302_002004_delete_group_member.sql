@@ -1,6 +1,6 @@
 DROP FUNCTION IF EXISTS hidden.delete_group_member(
-    user_id_in uuid,
-    group_id_in uuid
+    _user_id uuid,
+    _group_id uuid
 );
 
 CREATE OR REPLACE FUNCTION hidden.delete_group_member(

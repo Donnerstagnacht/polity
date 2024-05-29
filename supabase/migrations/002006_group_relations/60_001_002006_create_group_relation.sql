@@ -1,4 +1,4 @@
-DROP FUNCTION IF EXISTS create_group_relation(
+DROP FUNCTION IF EXISTS hidden.create_group_relation(
     _group_id uuid,
     _related_group_id uuid,
     _relation_type group_relation,

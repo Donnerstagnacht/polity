@@ -1,8 +1,8 @@
-DROP FUNCTION IF EXISTS hidden.delete_group_following_follower_relationship(
+DROP FUNCTION IF EXISTS hidden.delete_group_follower_relationship(
     _follower_id uuid,
     _following_id uuid
 );
-CREATE OR REPLACE FUNCTION hidden.delete_group_following_follower_relationship(
+CREATE OR REPLACE FUNCTION hidden.delete_group_follower_relationship(
     _follower_id uuid,
     _following_id uuid
 )

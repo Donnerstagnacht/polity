@@ -1,5 +1,5 @@
-DROP FUNCTION IF EXISTS public.read_notifications_of_users();
-CREATE OR REPLACE FUNCTION public.read_notifications_of_users()
+DROP FUNCTION IF EXISTS public.read_notifications_of_user();
+CREATE OR REPLACE FUNCTION public.read_notifications_of_user()
     RETURNS table
             (
                 type_of_notification notifications_enum,

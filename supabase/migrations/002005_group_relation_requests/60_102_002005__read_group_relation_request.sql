@@ -1,8 +1,8 @@
-DROP FUNCTION IF EXISTS hidden.read_group_requested_relations(
+DROP FUNCTION IF EXISTS hidden.read_group_relation_request(
     _group_id uuid
 );
 
-CREATE OR REPLACE FUNCTION hidden.read_group_requested_relations(
+CREATE OR REPLACE FUNCTION hidden.read_group_relation_request(
     _group_id uuid
 )
     RETURNS table

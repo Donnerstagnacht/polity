@@ -1,7 +1,7 @@
-DROP FUNCTION IF EXISTS public.read_follower_of_group(
+DROP FUNCTION IF EXISTS public.read_followers_of_group(
     _group_id uuid
 );
-CREATE OR REPLACE FUNCTION public.read_follower_of_group(
+CREATE OR REPLACE FUNCTION public.read_followers_of_group(
     _group_id uuid
 )
     RETURNS table

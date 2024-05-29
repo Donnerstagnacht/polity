@@ -1,7 +1,7 @@
-DROP FUNCTION IF EXISTS public.read_group_counter(
+DROP FUNCTION IF EXISTS public.read_group_counters(
     _group_id uuid
 );
-CREATE OR REPLACE FUNCTION public.read_group_counter(
+CREATE OR REPLACE FUNCTION public.read_group_counters(
     _group_id uuid
 )
     RETURNS table

@@ -1,7 +1,7 @@
-DROP FUNCTION IF EXISTS hidden.decrement_follower_counter(
+DROP FUNCTION IF EXISTS hidden.decrement_profile_follower_counter(
     _user_id uuid
 );
-CREATE OR REPLACE FUNCTION hidden.decrement_follower_counter(
+CREATE OR REPLACE FUNCTION hidden.decrement_profile_follower_counter(
     _user_id uuid
 )
     RETURNS void

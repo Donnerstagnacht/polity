@@ -18,10 +18,10 @@ BEGIN
         following_authenticated_user
             );
 
-    PERFORM hidden.decrement_follower_counter(
+    PERFORM hidden.decrement_profile_follower_counter(
         following_authenticated_user
             );
-    PERFORM hidden.decrement_following_counter(
+    PERFORM hidden.decrement_profile_following_counter(
         _follower_id
             );
 END;

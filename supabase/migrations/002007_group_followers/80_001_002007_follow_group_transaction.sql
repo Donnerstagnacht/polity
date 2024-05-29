@@ -15,14 +15,14 @@ DECLARE
 BEGIN
     follow_enum := 'follow_from_user';
     follower_id := auth.uid();
-    PERFORM hidden.create_group_following_follower_relationship(
+    PERFORM hidden.create_group_follower_relationship(
         follower_id,
         _following_id
             );
     PERFORM hidden.increment_group_follower_counter(
         _following_id
             );
-    PERFORM hidden.increment_following_counter(
+    PERFORM hidden.increment_group_following_counter(
         follower_id
             );
     --     PERFORM hidden.create_notification_from_user_transaction(

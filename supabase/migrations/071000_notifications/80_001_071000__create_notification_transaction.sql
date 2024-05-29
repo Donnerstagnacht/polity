@@ -18,18 +18,18 @@ $$
 DECLARE
     is_notification_enabled boolean;
 BEGIN
-    is_notification_enabled := hidden.check_if_user_receives_follow_notifications(
+    is_notification_enabled := hidden.check_profile_if_user_receives_follow_notifications(
         _receiver
                                );
 
     IF is_notification_enabled THEN
-        PERFORM hidden.insert_notification_by_user(
+        PERFORM hidden.create_notification_by_user(
             _sender,
             _receiver,
             _type_of_notification,
             _read_by_receiver
                 );
-        PERFORM hidden.increment_notification_counter(
+        PERFORM hidden.increment_profile_notification_counter(
             _receiver
                 );
     END IF;
