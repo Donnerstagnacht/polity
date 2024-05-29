@@ -191,8 +191,8 @@
     
 | Code    | Description                                            |
 | ------- | ------------------------------------------------------ |
-| 00      | Pre migration tasks (enums, resets, schemas...) |
-| 01      | Postgres return types                                  |
+| 00      | Pre migration tasks (types, resets, schemas...) |
+| 01      | Enums                                 |
 | 10      | Tables, indexes, row level security settings           |
 | 20      | Row level security policies                            |
 | 30      | Triggers and trigger related functions                 |
