@@ -37,7 +37,7 @@ export class GroupLinkCardComponent {
     }
 
     protected async onClick(): Promise<void> {
-        await this.router.navigate(['/group/', this.group?.group_id]);
+        await this.router.navigate(['/group/', this.group?.group_id_]);
     }
 
 }

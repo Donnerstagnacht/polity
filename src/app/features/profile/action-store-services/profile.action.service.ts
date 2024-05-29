@@ -30,8 +30,8 @@ export class ProfileActionService {
             .single()
             .throwOnError()
             if (response.data) {
-                const imgPath = await this.supabase.storage.from('profile_images').createSignedUrl(response.data.profile_image as string, 3600 * 24 * 7);
-                response.data.profile_image = imgPath.data?.signedUrl as string;
+                const imgPath = await this.supabase.storage.from('profile_images').createSignedUrl(response.data.profile_image_, 3600 * 24 * 7);
+                response.data.profile_image_ = imgPath.data?.signedUrl as string;
                 this.profileStoreService.profile.setObject(response.data);
             }
         })
@@ -47,9 +47,9 @@ export class ProfileActionService {
         await this.profileStoreService.profile.wrapUpdateFunction(async (): Promise<void> => {
             const response: PostgrestSingleResponse<SupabaseObjectReturn<'update_profile'>> = await this.supabase
             .rpc('update_profile', {
-                _first_name: profile.first_name as string,
-                _last_name: profile.last_name as string,
-                _profile_image: profile.profile_image as string
+                _first_name: profile.first_name_,
+                _last_name: profile.last_name_,
+                _profile_image: profile.profile_image_
             })
             .single()
             .throwOnError()

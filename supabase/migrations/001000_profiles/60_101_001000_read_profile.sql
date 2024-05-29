@@ -6,10 +6,10 @@ CREATE OR REPLACE FUNCTION public.read_profile(
 )
     RETURNS table
             (
-                profile_id    uuid,
-                first_name    text,
-                last_name     text,
-                profile_image text
+                profile_id_    uuid,
+                first_name_    text,
+                last_name_     text,
+                profile_image_ text
             )
     LANGUAGE plpgsql
     SECURITY INVOKER

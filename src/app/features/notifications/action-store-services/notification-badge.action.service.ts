@@ -28,8 +28,8 @@ export class NotificationBadgeActionService {
         (payload: RealtimePostgresUpdatePayload<SupabaseTable<'profiles_counters'>>): void => {
             console.log('payload', payload)
             const testReturn: SupabaseObjectReturn<'read_unread_notifications_counter'> = {
-                unread_notifications_counter: payload.new.unread_notifications_counter as number,
-                profile_id: payload.new.id as string
+                unread_notifications_counter_: payload.new.unread_notifications_counter as number,
+                profile_id_: payload.new.id as string
             }
             this.notificationBadgeStoreService.notificationBadge.setObject(testReturn)
         }

@@ -34,7 +34,7 @@ export class FollowingOfGroupActionService {
                 )
                 .throwOnError()
                 if (followingResponse.data) {
-                    const finalArray: SupabaseObjectReturn<'read_followings_of_user'>[] = await this.groupActionService.transformImageNamesToUrls(followingResponse.data, 'profile_image')
+                    const finalArray: SupabaseObjectReturn<'read_followings_of_user'>[] = await this.groupActionService.transformImageNamesToUrls(followingResponse.data, 'profile_image_')
                     this.followingOfGroupStoreService.followingOfGroup.setObjects(finalArray)
                 }
             }
@@ -53,7 +53,7 @@ export class FollowingOfGroupActionService {
             .throwOnError()
 
             this.followingOfGroupStoreService.followingOfGroup.removeObjectByPropertyValue(
-                'id',
+                'id_',
                 userId
             )
             this.groupCountersStoreService.groupCounters.decrementKey('following_counter')

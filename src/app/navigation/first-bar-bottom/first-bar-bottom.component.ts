@@ -27,14 +27,14 @@ export class FirstBarBottomComponent {
      */
     @Input({required: true}) public items: NavigationItem[] = NAVIGATION_ITEMS_SIGNED_OUT;
     @Input() public notificationBadge: WritableSignal<SupabaseObjectReturn<'read_unread_notifications_counter'> | null> = signal({
-        profile_id: '',
-        unread_notifications_counter: 0
+        profile_id_: '',
+        unread_notifications_counter_: 0
     });
     protected activeItemIndex: number = 1;
 
     constructor() {
         effect((): void => {
-            this.items[2].badge = this.notificationBadge()?.unread_notifications_counter
+            this.items[2].badge = this.notificationBadge()?.unread_notifications_counter_
         })
     }
 }

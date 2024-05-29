@@ -28,7 +28,7 @@ export class FollowingOfUserActionService {
             )
             .throwOnError()
             if (followingResponse.data) {
-                const finalArray: SupabaseObjectReturn<'read_followings_of_user'>[] = await this.profileActionService.transformImageNamesToUrls(followingResponse.data, 'profile_image')
+                const finalArray: SupabaseObjectReturn<'read_followings_of_user'>[] = await this.profileActionService.transformImageNamesToUrls(followingResponse.data, 'profile_image_')
                 this.followingOfUserStoreService.followingOfUser.setObjects(finalArray)
             }
         })
@@ -46,7 +46,7 @@ export class FollowingOfUserActionService {
             .throwOnError()
 
             this.followingOfUserStoreService.followingOfUser.removeObjectByPropertyValue(
-                'id',
+                'id_',
                 userId
             )
             this.profileCountersStoreService.profileCounters.decrementKey('following_counter')

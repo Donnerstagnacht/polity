@@ -59,11 +59,11 @@ export class AssistantWelcomeDialogComponent {
         this.sessionId = this.sessionStoreService.getSessionId();
         this.assistant = this.assistantStoreService.assistant.getObject()
 
-        if (this.assistant()?.last_tutorial === 'welcome') {
+        if (this.assistant()?.last_tutorial_ === 'welcome') {
             this.index = 0
-        } else if (this.assistant()?.last_tutorial === 'profile') {
+        } else if (this.assistant()?.last_tutorial_ === 'profile') {
             this.index = 1
-        } else if (this.assistant()?.last_tutorial === 'search') {
+        } else if (this.assistant()?.last_tutorial_ === 'search') {
             this.index = 2
         }
     }
@@ -130,8 +130,8 @@ export class AssistantWelcomeDialogComponent {
     private async updateProfileName(): Promise<void> {
         this.name = this.welcomeForm.value.firstName + ' ' + this.welcomeForm.value.lastName;
         const profile: SupabaseObjectReturn<'read_profile'> = {
-            first_name: this.welcomeForm.value.firstName as string,
-            last_name: this.welcomeForm.value.lastName as string
+            first_name_: this.welcomeForm.value.firstName,
+            last_name_: this.welcomeForm.value.lastName
         } as SupabaseObjectReturn<'read_profile'>
         await Promise.all([
             this.profilService.updateProfile(profile),

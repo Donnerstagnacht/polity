@@ -7,11 +7,11 @@ CREATE OR REPLACE FUNCTION hidden.read_push_subscriptions_of_user(
 )
     RETURNS table
             (
-                id             uuid,
-                endpoint       text,
-                expirationtime text,
-                auth           text,
-                p256dh         text
+                id_             uuid,
+                endpoint_       text,
+                expirationtime_ text,
+                auth_           text,
+                p256dh_         text
             )
     LANGUAGE plpgsql
     SECURITY INVOKER

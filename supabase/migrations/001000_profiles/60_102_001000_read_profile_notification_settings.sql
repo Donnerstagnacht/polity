@@ -2,7 +2,7 @@ DROP FUNCTION IF EXISTS public.read_profile_notification_settings();
 CREATE OR REPLACE FUNCTION public.read_profile_notification_settings()
     RETURNS table
             (
-                receive_follow_notifications boolean
+                receive_follow_notifications_ boolean
             )
     LANGUAGE plpgsql
     SECURITY INVOKER

@@ -44,11 +44,11 @@
     <polity-table-three-icon-text-delete
         (remove)="removeFollower($event)"
 
-        [bonusKeys]="['last_name']"
+        [bonusKeys]="['last_name_']"
         [dataCyTags]="['follower_profile_image', 'follower_first_name', 'follower_remove']"
         [dataCyTagsHeadline]="['follower_profile_image_headline', 'follower_first_name_headline',
         'follower_remove_headline']"
-        [dataKeysForColumns]="['profile_image', 'first_name', 'id']"
+        [dataKeysForColumns]="['profile_image_', 'first_name_', 'id_']"
         [data]="followersOfUser"
         [headings]="['Foto', 'Name', 'Entfernen']"
         [isLoading]="isFollowersLoading"
@@ -59,11 +59,11 @@
 @if (showFollowing) {
     <polity-table-three-icon-text-delete
         (remove)="removeFollowing($event)"
-        [bonusKeys]="['last_name']"
+        [bonusKeys]="['last_name_']"
         [dataCyTags]="['following_profile_image', 'following_first_name', 'following_remove']"
         [dataCyTagsHeadline]="['following_profile_image_headline', 'following_first_name_headline',
         'following_remove_headline']"
-        [dataKeysForColumns]="['profile_image', 'first_name', 'id']"
+        [dataKeysForColumns]="['profile_image_', 'first_name_', 'id_']"
         [data]="followingsOfUser"
         [headings]="['Foto', 'Name', 'Entfernen']"
         [isLoading]="isFollowingLoading"
@@ -74,11 +74,11 @@
 @if (showFollowingGroups) {
     <polity-table-three-icon-text-delete
         (remove)="removeFollowingGroup($event)"
-        [bonusKeys]="['level']"
+        [bonusKeys]="['level_']"
         [dataCyTags]="['following_group_image', 'following_group_name', 'following_group_remove']"
         [dataCyTagsHeadline]="['following_group_image_headline', 'following_group_name_headline',
         'following_group_remove_headline']"
-        [dataKeysForColumns]="['img_url', 'name', 'id']"
+        [dataKeysForColumns]="['img_url_', 'name_', 'id_']"
         [data]="followingsOfUserGroup"
         [headings]="['Foto', 'Name', 'Entfernen']"
         [isLoading]="isFollowingGroupLoading"

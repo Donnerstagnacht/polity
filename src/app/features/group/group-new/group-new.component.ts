@@ -28,9 +28,7 @@ import {NgxPageScrollModule} from "ngx-page-scroll";
 import {AutoscrollDirective} from "../../../navigation/autoscroll.directive";
 import {StepperItem} from "../../../navigation/types-and-interfaces/stepper-item";
 import {CreateGroupService} from "../../new/action-store-services/create-group.service";
-import {SearchUserActionService} from "../../search/action-store-services/search-user.action.service";
 import {SupabaseEnum, SupabaseObjectReturn} from "../../../../../supabase/types/supabase.shorthand-types";
-import {SearchUserStoreService} from "../../search/action-store-services/search-user.store.service";
 import {
     TableThreeIconTextDeleteComponent
 } from "../../../ui/polity-table/table-three-icon-text-delete/table-three-icon-text-delete.component";
@@ -111,7 +109,7 @@ export class GroupNewComponent {
             name: this.createGroupForm.value.name as string,
             level: this.createGroupForm.value.level as SupabaseEnum<'group_level'>,
             description: this.createGroupForm.value.description as string,
-            invited_members: this.selectedUsers.map((item: SupabaseObjectReturn<'search_user'>): string => item.id)
+            invited_members: this.selectedUsers.map((item: SupabaseObjectReturn<'search_user'>): string => item.id_)
         }
         await this.createGroupService.createGroup(newGroup);
         this.createGroupForm.reset()

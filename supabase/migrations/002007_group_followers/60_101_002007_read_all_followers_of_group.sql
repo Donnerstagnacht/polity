@@ -6,10 +6,10 @@ CREATE OR REPLACE FUNCTION public.read_followers_of_group(
 )
     RETURNS table
             (
-                id            uuid,
-                profile_image text,
-                first_name    text,
-                last_name     text
+                id_            uuid,
+                profile_image_ text,
+                first_name_    text,
+                last_name_     text
             )
     LANGUAGE plpgsql
     SECURITY INVOKER

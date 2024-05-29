@@ -47,7 +47,7 @@ export class AssistantActionService {
             .throwOnError()
 
             const updatedAssistant: SupabaseObjectReturn<'read_assistant'> = {
-                first_sign_in: newStatus,
+                first_sign_in_: newStatus,
             } as SupabaseObjectReturn<'read_assistant'>
             this.assistantStoreService.assistant.mutateObject(updatedAssistant)
         }, false)
@@ -66,7 +66,7 @@ export class AssistantActionService {
             .throwOnError()
 
             const updatedAssistant: SupabaseObjectReturn<'read_assistant'> = {
-                skip_tutorial: newStatus,
+                skip_tutorial_: newStatus,
             } as SupabaseObjectReturn<'read_assistant'>
             this.assistantStoreService.assistant.mutateObject(updatedAssistant)
         }, true, 'You can reactivate your tutorials in your profile settings!')
@@ -85,7 +85,7 @@ export class AssistantActionService {
             .throwOnError()
 
             const updatedAssistant: SupabaseObjectReturn<'read_assistant'> = {
-                last_tutorial: last_tutorial,
+                last_tutorial_: last_tutorial,
             } as SupabaseObjectReturn<'read_assistant'>
             this.assistantStoreService.assistant.mutateObject(updatedAssistant)
         }, false)

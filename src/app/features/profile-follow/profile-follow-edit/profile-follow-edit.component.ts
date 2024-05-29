@@ -99,13 +99,13 @@ export class ProfileFollowEditComponent {
         if (this.showFollowers) {
             this.followersOfUserStoreService.followersOfUser.filterArray(
                 filterByString,
-                ['first_name', 'last_name'],
+                ['first_name_', 'last_name_'],
                 stringFilter,
             )
         } else {
             this.followingOfUserStoreService.followingOfUser.filterArray(
                 filterByString,
-                ['first_name', 'last_name'],
+                ['first_name_', 'last_name_'],
                 stringFilter
             )
         }

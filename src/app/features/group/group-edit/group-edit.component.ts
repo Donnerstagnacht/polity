@@ -24,7 +24,7 @@ export class GroupEditComponent {
 
     ngOnInit(): void {
         const group: WritableSignal<SupabaseObjectReturn<'read_group'> | null> = this.groupStoreService.group.getObject()
-        const urlId: string | undefined = group()?.id
+        const urlId: string | undefined = group()?.id_
         this.editGroupUrl = 'group/' + urlId + '/settings/edit';
         this.editGroupMemberUrl = 'group/' + urlId + '/member/edit';
         this.editGroupFollowerUrl = 'group/' + urlId + '/follower/edit';

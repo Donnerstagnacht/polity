@@ -6,10 +6,10 @@ CREATE OR REPLACE FUNCTION public.read_group_counters(
 )
     RETURNS table
             (
-                group_id             uuid,
-                follower_counter     bigint,
-                following_counter    bigint,
-                group_member_counter bigint
+                group_id_             uuid,
+                follower_counter_     bigint,
+                following_counter_    bigint,
+                group_member_counter_ bigint
                 --unread_notifications_counter bigint
             )
     LANGUAGE plpgsql

@@ -20,7 +20,7 @@ import {AssistantStoreService} from "../action-stores-services/assistant.store.s
 })
 export class AssistantComponent {
     protected assistant: WritableSignal<SupabaseObjectReturn<'read_assistant'> | null> = signal({
-        skip_tutorial: true,
+        skip_tutorial_: true,
     }) as WritableSignal<SupabaseObjectReturn<'read_assistant'> | null>;
 
     constructor(
@@ -36,7 +36,7 @@ export class AssistantComponent {
         this.assistant = this.assistantStoreService.assistant.getObject()
         console.log('assistant', this.assistant());
 
-        if (this.assistant()?.first_sign_in) {
+        if (this.assistant()?.first_sign_in_) {
             // TODO: needs to be activated in production
             // is deactivated since conditional testing makes Cypress tests flaky
             // and would affect all test since this affects the reused login tests

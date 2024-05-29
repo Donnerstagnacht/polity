@@ -7,15 +7,15 @@ CREATE OR REPLACE FUNCTION hidden.read_meeting(
 )
     RETURNS table
             (
-                id          uuid,
-                group_id    uuid,
-                creator_id  uuid,
-                name        text,
-                description text,
-                type        meeting_type,
-                date        timestamp WITH TIME ZONE,
-                created_at  timestamp WITH TIME ZONE,
-                updated_at  timestamp WITH TIME ZONE
+                id_          uuid,
+                group_id_    uuid,
+                creator_id_  uuid,
+                name_        text,
+                description_ text,
+                type_        meeting_type,
+                date_        timestamp WITH TIME ZONE,
+                created_at_  timestamp WITH TIME ZONE,
+                updated_at_  timestamp WITH TIME ZONE
             )
     LANGUAGE plpgsql
     SECURITY INVOKER

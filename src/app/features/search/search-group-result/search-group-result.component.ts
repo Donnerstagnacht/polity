@@ -25,6 +25,6 @@ export class SearchGroupResultComponent {
     }
 
     protected async onClick(): Promise<void> {
-        await this.router.navigate([`/group/`, this.group?.id]);
+        await this.router.navigate([`/group/`, this.group?.id_]);
     }
 }

@@ -1,29 +1,29 @@
 <div class="polity-center min-height">
     <polity-wiki-headline
-        [firstName]="profile()?.first_name"
+        [firstName]="profile()?.first_name_"
         [isLoading]="isProfileLoading"
-        [lastName]="profile()?.last_name"
+        [lastName]="profile()?.last_name_"
     ></polity-wiki-headline>
 
     <div
         class=" polity-flex-container polity-single-item-centered tui-space_right-4 tui-space_left-4">
         <polity-counter
             [counterTitle]="'Follower'"
-            [counterValue]="this.profileCounter()?.follower_counter"
+            [counterValue]="this.profileCounter()?.follower_counter_"
             [dataCyTag]="'followerCounter'"
             [isLoading]="this.isProfileCounterLoading"
             class="polity-flex-item-first"
         ></polity-counter>
         <polity-counter
             [counterTitle]="'Following'"
-            [counterValue]="this.profileCounter()?.following_counter"
+            [counterValue]="this.profileCounter()?.following_counter_"
             [dataCyTag]="'followingCounter'"
             [isLoading]="this.isProfileCounterLoading"
             class="polity-flex-item-last"
         ></polity-counter>
         <polity-counter
             [counterTitle]="'Memberships'"
-            [counterValue]="this.profileCounter()?.group_membership_counter"
+            [counterValue]="this.profileCounter()?.group_membership_counter_"
             [dataCyTag]="'membershipCounter'"
             [isLoading]="this.isProfileCounterLoading"
             class="polity-flex-item-last"
@@ -41,6 +41,6 @@
 
     <polity-wiki-image
         [isLoading]="isProfileLoading"
-        [src]="profile()?.profile_image"
+        [src]="profile()?.profile_image_"
     ></polity-wiki-image>
 </div>

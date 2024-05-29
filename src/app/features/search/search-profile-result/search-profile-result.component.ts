@@ -25,6 +25,6 @@ export class SearchProfileResult {
     }
 
     protected async onClick(): Promise<void> {
-        await this.router.navigate([`/profile/`, this.profile?.id]);
+        await this.router.navigate([`/profile/`, this.profile?.id_]);
     }
 }

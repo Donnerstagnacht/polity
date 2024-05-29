@@ -65,8 +65,8 @@ export class ProfileEditComponent {
 
         effect((): void => {
             this.editProfileForm.patchValue({
-                firstName: this.profile()?.first_name as string,
-                lastName: this.profile()?.last_name as string
+                firstName: this.profile()?.first_name_ as string,
+                lastName: this.profile()?.last_name_ as string
             })
         });
     }
@@ -75,8 +75,8 @@ export class ProfileEditComponent {
     protected async onEdit(): Promise<void> {
         const profile: SupabaseObjectReturn<'read_profile'> =
             {
-                first_name: this.editProfileForm.value.firstName as string,
-                last_name: this.editProfileForm.value.lastName as string
+                first_name_: this.editProfileForm.value.firstName,
+                last_name_: this.editProfileForm.value.lastName
             } as SupabaseObjectReturn<'read_profile'>
         await this.profileService.updateProfile(profile);
     }

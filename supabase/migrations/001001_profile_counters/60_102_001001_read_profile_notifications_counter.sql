@@ -2,8 +2,8 @@ DROP FUNCTION IF EXISTS public.read_unread_notifications_counter();
 CREATE OR REPLACE FUNCTION public.read_unread_notifications_counter()
     RETURNS table
             (
-                profile_id                   uuid,
-                unread_notifications_counter bigint
+                profile_id_                   uuid,
+                unread_notifications_counter_ bigint
             )
     LANGUAGE plpgsql
     SECURITY INVOKER

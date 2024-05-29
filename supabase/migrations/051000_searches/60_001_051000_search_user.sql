@@ -6,10 +6,10 @@ CREATE OR REPLACE FUNCTION public.search_user(
 )
     RETURNS table
             (
-                id         uuid,
-                first_name text,
-                last_name  text,
-                username   text
+                id_         uuid,
+                first_name_ text,
+                last_name_  text,
+                username_   text
             )
     LANGUAGE plpgsql
     SECURITY INVOKER

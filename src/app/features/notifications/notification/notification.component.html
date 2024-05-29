@@ -32,11 +32,11 @@
     infinite-scroll
 >
     <polity-table-four-icon-text-tag-date
-        [bonusKeys]="['last_name']"
+        [bonusKeys]="['last_name_']"
         [dataCyTagsHeadline]="['profile_image_headline', 'first_name_headline', 'type_of_notification_headline',
 			'created_at_headline']"
         [dataCyTags]="['profile_image', 'first_name', 'type_of_notification', 'created_at']"
-        [dataKeysForColumns]="['profile_image', 'first_name', 'type_of_notification', 'created_at']"
+        [dataKeysForColumns]="['profile_image_', 'first_name_', 'type_of_notification_', 'created_at_']"
         [data]="notifications"
         [headings]="['Foto', 'Name', 'Typ', 'Datum']"
         [isLoading]="isNotificationsLoading"

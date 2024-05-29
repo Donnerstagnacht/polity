@@ -99,7 +99,7 @@ export class GroupMemberEditComponent {
         if (this.showMembers) {
             this.groupMemberStoreService.groupMembers.filterArray(
                 filterByString,
-                ['first_name', 'last_name'],
+                ['first_name_', 'last_name_'],
                 stringFilter
             )
         }
@@ -162,7 +162,7 @@ export class GroupMemberEditComponent {
 
     protected onSelectedUserUpdate(selectedUsers: SupabaseObjectReturn<'search_user'>[]): void {
         const addedUser: SupabaseObjectReturn<'search_user'> = selectedUsers[selectedUsers.length - 1];
-        console.log('userId invite', addedUser.id)
-        this.groupMemberActionService.inviteGroupMember(addedUser.id);
+        console.log('userId invite', addedUser.id_)
+        this.groupMemberActionService.inviteGroupMember(addedUser.id_);
     }
 }

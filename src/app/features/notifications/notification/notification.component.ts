@@ -124,15 +124,15 @@ export class NotificationComponent {
 
         this.notificationStoreService.notifications.filterArray(
             filterByString,
-            ['first_name', 'last_name'],
+            ['first_name_', 'last_name_'],
             stringFilter,
 
             filterByType,
-            'type_of_notification',
+            'type_of_notification_',
             typeKeyValues,
 
             filterByDate,
-            'created_at',
+            'created_at_',
             dateFilterFrom,
             dateFilterTo
         )

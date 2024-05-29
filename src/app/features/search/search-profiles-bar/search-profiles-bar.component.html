@@ -19,10 +19,10 @@
 
     <polity-table-three-icon-text-delete
         (remove)="onRemove($event)"
-        [bonusKeys]="['last_name']"
+        [bonusKeys]="['last_name_']"
         [dataCyTagsHeadline]="['user_image_title', 'user_first_name_title', 'remove_invitation_title']"
         [dataCyTags]="['user_image', 'user_first_name', 'follower_remove']"
-        [dataKeysForColumns]="['last_name', 'first_name', 'id']"
+        [dataKeysForColumns]="['last_name_', 'first_name_', 'id_']"
         [data]="selectedUsersAsSignal"
         [headings]="['Foto', 'Name', 'Entfernen']"
         [isLoading]="signal(false)"

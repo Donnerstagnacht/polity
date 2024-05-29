@@ -4,10 +4,10 @@ CREATE OR REPLACE FUNCTION public.read_group_followings_of_user(
 )
     RETURNS table
             (
-                id      uuid,
-                img_url text,
-                name    text,
-                level   group_level
+                id_      uuid,
+                img_url_ text,
+                name_    text,
+                level_   group_level
             )
     LANGUAGE plpgsql
     SECURITY INVOKER

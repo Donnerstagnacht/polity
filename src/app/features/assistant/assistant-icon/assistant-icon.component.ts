@@ -36,11 +36,11 @@ export class AssistantIconComponent {
         this.assistant = this.assistantStoreService.assistant.getObject()
 
         effect((): void => {
-            if (this.assistant()?.last_tutorial === 'welcome') {
+            if (this.assistant()?.last_tutorial_ === 'welcome') {
                 this.activatedTutorial = this.tutorials[0]
-            } else if (this.assistant()?.last_tutorial === 'profile') {
+            } else if (this.assistant()?.last_tutorial_ === 'profile') {
                 this.activatedTutorial = this.tutorials[1]
-            } else if (this.assistant()?.last_tutorial === 'search') {
+            } else if (this.assistant()?.last_tutorial_ === 'search') {
                 this.activatedTutorial = this.tutorials[2]
             }
         })

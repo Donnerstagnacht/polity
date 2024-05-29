@@ -7,13 +7,13 @@ CREATE OR REPLACE FUNCTION public.read_group_members(
 )
     RETURNS table
             (
-                id            uuid,
-                group_id      uuid,
-                member_id     uuid,
-                member_type   group_member,
-                first_name    text,
-                last_name     text,
-                profile_image text
+                id_            uuid,
+                group_id_      uuid,
+                member_id_     uuid,
+                member_type_   group_member,
+                first_name_    text,
+                last_name_     text,
+                profile_image_ text
             )
     LANGUAGE plpgsql
     SECURITY INVOKER

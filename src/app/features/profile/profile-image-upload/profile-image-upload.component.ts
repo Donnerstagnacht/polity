@@ -66,7 +66,7 @@ export class ProfileImageUploadComponent {
                     } catch (error) {
                     } finally {
                         const profile: SupabaseObjectReturn<"read_profile"> = {
-                            profile_image: privateUrl
+                            profile_image_: privateUrl
                         } as SupabaseObjectReturn<'read_profile'>;
                         this.profileStoreService.profile.mutateObject(profile);
                     }

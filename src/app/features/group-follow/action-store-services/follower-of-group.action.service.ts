@@ -34,7 +34,7 @@ export class FollowerOfGroupActionService {
                 )
                 .throwOnError()
                 if (followerResponse.data) {
-                    const finalArray: SupabaseObjectReturn<'read_followers_of_user'>[] = await this.groupActionService.transformImageNamesToUrls(followerResponse.data, 'profile_image')
+                    const finalArray: SupabaseObjectReturn<'read_followers_of_user'>[] = await this.groupActionService.transformImageNamesToUrls(followerResponse.data, 'profile_image_')
                     this.followersOfGroupStoreService.followersOfGroup.setObjects(finalArray)
                 }
             }
@@ -43,7 +43,7 @@ export class FollowerOfGroupActionService {
 
     public async removeFollowerOfGroup(userId: string): Promise<any> {
         await this.followersOfGroupStoreService.followersOfGroup.wrapUpdateFunction(async (): Promise<void> => {
-            const groupId: string = this.groupStoreService.group.getValueByKey('id');
+            const groupId: string = this.groupStoreService.group.getValueByKey('id_');
             const response: PostgrestSingleResponse<SupabaseObjectReturn<'remove_group_follower_transaction'>[]> = await this.supabaseClient.rpc(
                 'remove_group_follower_transaction',
                 {
@@ -55,7 +55,7 @@ export class FollowerOfGroupActionService {
             .throwOnError()
 
             this.followersOfGroupStoreService.followersOfGroup.removeObjectByPropertyValue(
-                'id',
+                'id_',
                 userId
             )
             this.groupCountersStoreService.groupCounters.decrementKey('follower_counter')

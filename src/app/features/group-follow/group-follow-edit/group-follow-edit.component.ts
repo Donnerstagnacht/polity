@@ -79,13 +79,13 @@ export class GroupFollowEditComponent {
         if (this.showFollowers) {
             this.followersOfGroupStoreService.followersOfGroup.filterArray(
                 filterByString,
-                ['first_name', 'last_name'],
+                ['first_name_', 'last_name_'],
                 stringFilter
             )
         } else {
             this.followingOfGroupStoreService.followingOfGroup.filterArray(
                 filterByString,
-                ['first_name', 'last_name'],
+                ['first_name_', 'last_name_'],
                 stringFilter
             )
         }

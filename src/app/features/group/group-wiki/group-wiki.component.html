@@ -1,6 +1,6 @@
 <div class="polity-center min-height">
     <polity-wiki-headline
-        [firstName]="group()?.name"
+        [firstName]="group()?.name_"
         [isLoading]="isGroupLoading"
     ></polity-wiki-headline>
 
@@ -8,14 +8,14 @@
         class=" polity-flex-container polity-single-item-centered tui-space_right-4 tui-space_left-4">
         <polity-counter
             [counterTitle]="'Member'"
-            [counterValue]="this.groupCounter()?.group_member_counter"
+            [counterValue]="this.groupCounter()?.group_member_counter_"
             [dataCyTag]="'memberCounter'"
             [isLoading]="isGroupMembershipStatusLoading"
             class="polity-flex-item-first"
         ></polity-counter>
         <polity-counter
             [counterTitle]="'Follower'"
-            [counterValue]="this.groupCounter()?.follower_counter"
+            [counterValue]="this.groupCounter()?.follower_counter_"
             [dataCyTag]="'followerCounter'"
             [isLoading]="isGroupMembershipStatusLoading"
             class="polity-flex-item-first"

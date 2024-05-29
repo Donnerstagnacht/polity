@@ -6,8 +6,8 @@ CREATE OR REPLACE FUNCTION hidden.read_group_hashtags(
 )
     RETURNS table
             (
-                id    uuid,
-                value uuid
+                id_    uuid,
+                value_ uuid
             )
     LANGUAGE plpgsql
     SECURITY INVOKER

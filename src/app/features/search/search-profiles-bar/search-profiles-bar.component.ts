@@ -54,10 +54,10 @@ export class SearchProfilesBarComponent {
             console.log('value changed', value)
             if (value) {
                 const choosenObject: SupabaseObjectReturn<'search_user'> | undefined = this.searchResults().find((searchResult: SupabaseObjectReturn<'search_user'>): boolean => {
-                    return value.id === searchResult.id
+                    return value.id === searchResult.id_
                 })
 
-                if (choosenObject && !this.selectedUsers.some((item: SupabaseObjectReturn<'search_user'>): boolean => item.id === choosenObject.id)) {
+                if (choosenObject && !this.selectedUsers.some((item: SupabaseObjectReturn<'search_user'>): boolean => item.id_ === choosenObject.id_)) {
                     this.selectedUsers.push(choosenObject);
                     this.selectedUsersAsSignal.update((selectedUser: SupabaseObjectReturn<'search_user'>[]) => ([...selectedUser, choosenObject]))
                     this.onUpdateSelectedUsers.emit(this.selectedUsersAsSignal())
@@ -70,14 +70,14 @@ export class SearchProfilesBarComponent {
     }
 
     protected onRemove(id: string): void {
-        this.selectedUsers = this.selectedUsers.filter((item: SupabaseObjectReturn<'search_user'>): boolean => item.id !== id);
+        this.selectedUsers = this.selectedUsers.filter((item: SupabaseObjectReturn<'search_user'>): boolean => item.id_ !== id);
         this.selectedUsersAsSignal.set(this.selectedUsers);
         this.onUpdateSelectedUsers.emit(this.selectedUsersAsSignal())
     }
 
-    protected stringify(searchResult: { first_name: string; last_name: string }): string {
-        if (searchResult.first_name && searchResult.last_name) {
-            return `${searchResult.first_name} ${searchResult.last_name}`
+    protected stringify(searchResult: { first_name_: string; last_name_: string }): string {
+        if (searchResult.first_name_ && searchResult.last_name_) {
+            return `${searchResult.first_name_} ${searchResult.last_name_}`
         } else {
             return ''
         }

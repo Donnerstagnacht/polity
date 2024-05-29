@@ -252,10 +252,10 @@ export type Database = {
       read_assistant: {
         Args: Record<PropertyKey, never>
         Returns: {
-          id: string
-          first_sign_in: boolean
-          skip_tutorial: boolean
-          last_tutorial: Database["public"]["Enums"]["tutorial_enum"]
+          id_: string
+          first_sign_in_: boolean
+          skip_tutorial_: boolean
+          last_tutorial_: Database["public"]["Enums"]["tutorial_enum"]
         }[]
       }
       read_followers_of_group: {
@@ -263,19 +263,19 @@ export type Database = {
           _group_id: string
         }
         Returns: {
-          id: string
-          profile_image: string
-          first_name: string
-          last_name: string
+          id_: string
+          profile_image_: string
+          first_name_: string
+          last_name_: string
         }[]
       }
       read_followers_of_user: {
         Args: Record<PropertyKey, never>
         Returns: {
-          id: string
-          profile_image: string
-          first_name: string
-          last_name: string
+          id_: string
+          profile_image_: string
+          first_name_: string
+          last_name_: string
         }[]
       }
       read_followings_of_group: {
@@ -283,19 +283,19 @@ export type Database = {
           _group_id: string
         }
         Returns: {
-          id: string
-          profile_image: string
-          first_name: string
-          last_name: string
+          id_: string
+          profile_image_: string
+          first_name_: string
+          last_name_: string
         }[]
       }
       read_followings_of_user: {
         Args: Record<PropertyKey, never>
         Returns: {
-          id: string
-          profile_image: string
-          first_name: string
-          last_name: string
+          id_: string
+          profile_image_: string
+          first_name_: string
+          last_name_: string
         }[]
       }
       read_group: {
@@ -303,10 +303,10 @@ export type Database = {
           _group_id: string
         }
         Returns: {
-          id: string
-          name: string
-          level: Database["public"]["Enums"]["group_level"]
-          description: string
+          id_: string
+          name_: string
+          level_: Database["public"]["Enums"]["group_level"]
+          description_: string
         }[]
       }
       read_group_counters: {
@@ -314,19 +314,19 @@ export type Database = {
           _group_id: string
         }
         Returns: {
-          group_id: string
-          follower_counter: number
-          following_counter: number
-          group_member_counter: number
+          group_id_: string
+          follower_counter_: number
+          following_counter_: number
+          group_member_counter_: number
         }[]
       }
       read_group_followings_of_user: {
         Args: Record<PropertyKey, never>
         Returns: {
-          id: string
-          img_url: string
-          name: string
-          level: Database["public"]["Enums"]["group_level"]
+          id_: string
+          img_url_: string
+          name_: string
+          level_: Database["public"]["Enums"]["group_level"]
         }[]
       }
       read_group_member_invitations: {
@@ -334,22 +334,22 @@ export type Database = {
           _group_id: string
         }
         Returns: {
-          id: string
-          group_id: string
-          member_id: string
-          member_type: Database["public"]["Enums"]["group_member"]
-          first_name: string
-          last_name: string
-          profile_image: string
+          id_: string
+          group_id_: string
+          member_id_: string
+          member_type_: Database["public"]["Enums"]["group_member"]
+          first_name_: string
+          last_name_: string
+          profile_image_: string
         }[]
       }
       read_group_member_invitations_of_user: {
         Args: Record<PropertyKey, never>
         Returns: {
-          id: string
-          group_id: string
-          group_name: string
-          group_level: Database["public"]["Enums"]["group_level"]
+          id_: string
+          group_id_: string
+          group_name_: string
+          group_level_: Database["public"]["Enums"]["group_level"]
         }[]
       }
       read_group_member_requests: {
@@ -357,13 +357,13 @@ export type Database = {
           _group_id: string
         }
         Returns: {
-          id: string
-          group_id: string
-          member_id: string
-          member_type: Database["public"]["Enums"]["group_member"]
-          first_name: string
-          last_name: string
-          profile_image: string
+          id_: string
+          group_id_: string
+          member_id_: string
+          member_type_: Database["public"]["Enums"]["group_member"]
+          first_name_: string
+          last_name_: string
+          profile_image_: string
         }[]
       }
       read_group_members: {
@@ -371,42 +371,42 @@ export type Database = {
           _group_id: string
         }
         Returns: {
-          id: string
-          group_id: string
-          member_id: string
-          member_type: Database["public"]["Enums"]["group_member"]
-          first_name: string
-          last_name: string
-          profile_image: string
+          id_: string
+          group_id_: string
+          member_id_: string
+          member_type_: Database["public"]["Enums"]["group_member"]
+          first_name_: string
+          last_name_: string
+          profile_image_: string
         }[]
       }
       read_group_requests_of_user: {
         Args: Record<PropertyKey, never>
         Returns: {
-          id: string
-          group_id: string
-          group_name: string
-          group_level: Database["public"]["Enums"]["group_level"]
+          id_: string
+          group_id_: string
+          group_name_: string
+          group_level_: Database["public"]["Enums"]["group_level"]
         }[]
       }
       read_groups_of_user: {
         Args: Record<PropertyKey, never>
         Returns: {
-          id: string
-          group_id: string
-          group_name: string
-          group_level: Database["public"]["Enums"]["group_level"]
+          id_: string
+          group_id_: string
+          group_name_: string
+          group_level_: Database["public"]["Enums"]["group_level"]
         }[]
       }
       read_notifications_of_user: {
         Args: Record<PropertyKey, never>
         Returns: {
-          type_of_notification: Database["public"]["Enums"]["notifications_enum"]
-          read_by_receiver: boolean
-          created_at: string
-          first_name: string
-          last_name: string
-          profile_image: string
+          type_of_notification_: Database["public"]["Enums"]["notifications_enum"]
+          read_by_receiver_: boolean
+          created_at_: string
+          first_name_: string
+          last_name_: string
+          profile_image_: string
         }[]
       }
       read_profile: {
@@ -414,10 +414,10 @@ export type Database = {
           _user_id: string
         }
         Returns: {
-          profile_id: string
-          first_name: string
-          last_name: string
-          profile_image: string
+          profile_id_: string
+          first_name_: string
+          last_name_: string
+          profile_image_: string
         }[]
       }
       read_profile_counters: {
@@ -425,23 +425,23 @@ export type Database = {
           _user_id: string
         }
         Returns: {
-          profile_id: string
-          follower_counter: number
-          following_counter: number
-          group_membership_counter: number
+          profile_id_: string
+          follower_counter_: number
+          following_counter_: number
+          group_membership_counter_: number
         }[]
       }
       read_profile_notification_settings: {
         Args: Record<PropertyKey, never>
         Returns: {
-          receive_follow_notifications: boolean
+          receive_follow_notifications_: boolean
         }[]
       }
       read_unread_notifications_counter: {
         Args: Record<PropertyKey, never>
         Returns: {
-          profile_id: string
-          unread_notifications_counter: number
+          profile_id_: string
+          unread_notifications_counter_: number
         }[]
       }
       remove_follower_of_authenticated_user_transaction: {
@@ -466,10 +466,10 @@ export type Database = {
           _search_term: string
         }
         Returns: {
-          id: string
-          name: string
-          level: Database["public"]["Enums"]["group_level"]
-          description: string
+          id_: string
+          name_: string
+          level_: Database["public"]["Enums"]["group_level"]
+          description_: string
         }[]
       }
       search_user: {
@@ -477,10 +477,10 @@ export type Database = {
           _search_term: string
         }
         Returns: {
-          id: string
-          first_name: string
-          last_name: string
-          username: string
+          id_: string
+          first_name_: string
+          last_name_: string
+          username_: string
         }[]
       }
       set_limit: {

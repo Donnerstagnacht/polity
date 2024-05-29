@@ -43,7 +43,7 @@ export class FollowingGroupsOfUserActionService {
             .throwOnError()
 
             this.followingGroupsOfUserStoreService.followingGroupsOfUser.removeObjectByPropertyValue(
-                'id',
+                'id_',
                 groupId
             )
             this.profileCountersStoreService.profileCounters.decrementKey('following_counter')

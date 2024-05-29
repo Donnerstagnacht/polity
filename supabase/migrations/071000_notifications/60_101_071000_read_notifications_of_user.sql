@@ -2,12 +2,12 @@ DROP FUNCTION IF EXISTS public.read_notifications_of_user();
 CREATE OR REPLACE FUNCTION public.read_notifications_of_user()
     RETURNS table
             (
-                type_of_notification notifications_enum,
-                read_by_receiver     boolean,
-                created_at           timestamp WITH TIME ZONE,
-                first_name           text,
-                last_name            text,
-                profile_image        text
+                type_of_notification_ notifications_enum,
+                read_by_receiver_     boolean,
+                created_at_           timestamp WITH TIME ZONE,
+                first_name_           text,
+                last_name_            text,
+                profile_image_        text
             )
     LANGUAGE plpgsql
     SECURITY INVOKER

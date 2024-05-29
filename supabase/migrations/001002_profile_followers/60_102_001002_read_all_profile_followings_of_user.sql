@@ -2,10 +2,10 @@ DROP FUNCTION IF EXISTS public.read_followings_of_user();
 CREATE OR REPLACE FUNCTION public.read_followings_of_user()
     RETURNS table
             (
-                id            uuid,
-                profile_image text,
-                first_name    text,
-                last_name     text
+                id_            uuid,
+                profile_image_ text,
+                first_name_    text,
+                last_name_     text
             )
     LANGUAGE plpgsql
     SECURITY INVOKER

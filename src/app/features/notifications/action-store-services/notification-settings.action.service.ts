@@ -38,7 +38,7 @@ export class NotificationSettingsActionService {
                 'update_profile_receive_notifications_from_follow',
                 {_new_status: newStatus})
             .throwOnError()
-            this.notificationSettingsStore.notificationSettings.setObject({receive_follow_notifications: newStatus})
+            this.notificationSettingsStore.notificationSettings.setObject({receive_follow_notifications_: newStatus})
 
         }, true, message)
     }

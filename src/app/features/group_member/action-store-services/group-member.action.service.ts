@@ -117,7 +117,7 @@ export class GroupMemberActionService {
                 )
                 .throwOnError()
                 if (response.data) {
-                    const finalArray: SupabaseObjectReturn<'read_group_members'>[] = await this.groupActionService.transformImageNamesToUrls(response.data, 'profile_image')
+                    const finalArray: SupabaseObjectReturn<'read_group_members'>[] = await this.groupActionService.transformImageNamesToUrls(response.data, 'profile_image_')
                     this.groupMembersStoreService.groupMembers.setObjects(finalArray)
                 }
             }
@@ -159,7 +159,7 @@ export class GroupMemberActionService {
             .throwOnError()
             if (!response.error) {
                 this.groupCountersStoreService.groupCounters.incrementKey('member_counter')
-                this.groupRequestsStoreService.groupRequests.removeObjectByPropertyValue('id', membershipRequest);
+                this.groupRequestsStoreService.groupRequests.removeObjectByPropertyValue('id_', membershipRequest);
             }
         }, true, 'Successful accepted group membership!')
     }
@@ -178,7 +178,7 @@ export class GroupMemberActionService {
             .throwOnError()
             if (!response.error) {
                 if (fromGroup) {
-                    this.groupRequestsStoreService.groupRequests.removeObjectByPropertyValue('id', membershipRequest);
+                    this.groupRequestsStoreService.groupRequests.removeObjectByPropertyValue('id_', membershipRequest);
                 } else {
                     this.groupStoreService.group.uiFlagStore.setFlagFalse('isMember')
                     this.groupStoreService.group.uiFlagStore.setFlagFalse('isBoardMember')
@@ -243,7 +243,7 @@ export class GroupMemberActionService {
             .throwOnError()
             console.log(response)
             if (!response.error) {
-                this.groupInvitationsOfUserStoreService.groupInvitationsOfUser.removeObjectByPropertyValue('id', invitation_id);
+                this.groupInvitationsOfUserStoreService.groupInvitationsOfUser.removeObjectByPropertyValue('id_', invitation_id);
                 this.groupCountersStoreService.groupCounters.incrementKey('member_counter')
             }
         }, true, 'Successful accepted group membership!')
@@ -263,9 +263,9 @@ export class GroupMemberActionService {
             .throwOnError()
             if (!response.error) {
                 if (fromGroup) {
-                    this.groupInvitationsStoreService.groupInvitations.removeObjectByPropertyValue('id', invitation_id);
+                    this.groupInvitationsStoreService.groupInvitations.removeObjectByPropertyValue('id_', invitation_id);
                 } else {
-                    this.groupInvitationsOfUserStoreService.groupInvitationsOfUser.removeObjectByPropertyValue('id', invitation_id);
+                    this.groupInvitationsOfUserStoreService.groupInvitationsOfUser.removeObjectByPropertyValue('id_', invitation_id);
                 }
             }
         }, true, 'Successful removed group invitation!')
@@ -331,9 +331,9 @@ export class GroupMemberActionService {
             .throwOnError()
             if (!response.error) {
                 if (fromGroup) {
-                    this.groupRequestsStoreService.groupRequests.removeObjectByPropertyValue('id', requestId);
+                    this.groupRequestsStoreService.groupRequests.removeObjectByPropertyValue('id_', requestId);
                 } else {
-                    this.groupRequestsOfUserStoreService.groupRequestsOfUser.removeObjectByPropertyValue('id', requestId);
+                    this.groupRequestsOfUserStoreService.groupRequestsOfUser.removeObjectByPropertyValue('id_', requestId);
                 }
             }
         }, true, 'Successful withdrawn group membership request!')
@@ -354,9 +354,9 @@ export class GroupMemberActionService {
             .throwOnError();
             if (!response.error) {
                 if (fromGroup) {
-                    this.groupMembersStoreService.groupMembers.removeObjectByPropertyValue('id', membershipId);
+                    this.groupMembersStoreService.groupMembers.removeObjectByPropertyValue('id_', membershipId);
                 } else {
-                    this.groupsOfUserStoreService.groupsOfUser.removeObjectByPropertyValue('id', membershipId);
+                    this.groupsOfUserStoreService.groupsOfUser.removeObjectByPropertyValue('id_', membershipId);
                 }
             }
         }, true, 'Successful removed group member!')

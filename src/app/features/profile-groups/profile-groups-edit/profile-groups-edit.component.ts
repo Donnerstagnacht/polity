@@ -94,13 +94,13 @@ export class ProfileGroupsEditComponent {
         if (this.showGroupMemberships) {
             this.groupsOfUserStoreService.groupsOfUser.filterArray(
                 filterByString,
-                ['group_name', 'group_level'],
+                ['group_name_', 'group_level_'],
                 stringFilter,
             )
         } else {
             this.groupRequestsOfUserStoreService.groupRequestsOfUser.filterArray(
                 filterByString,
-                ['group_name', 'group_level'],
+                ['group_name_', 'group_level_'],
                 stringFilter
             )
         }

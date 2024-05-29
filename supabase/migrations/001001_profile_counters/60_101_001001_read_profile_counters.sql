@@ -6,10 +6,10 @@ CREATE OR REPLACE FUNCTION public.read_profile_counters(
 )
     RETURNS table
             (
-                profile_id               uuid,
-                follower_counter         bigint,
-                following_counter        bigint,
-                group_membership_counter bigint
+                profile_id_               uuid,
+                follower_counter_         bigint,
+                following_counter_        bigint,
+                group_membership_counter_ bigint
                 --unread_notifications_counter bigint
             )
     LANGUAGE plpgsql

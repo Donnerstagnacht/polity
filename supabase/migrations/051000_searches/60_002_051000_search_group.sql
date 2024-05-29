@@ -6,10 +6,10 @@ CREATE OR REPLACE FUNCTION public.search_group(
 )
     RETURNS table
             (
-                id          uuid,
-                name        text,
-                level       group_level,
-                description text
+                id_          uuid,
+                name_        text,
+                level_       group_level,
+                description_ text
             )
     LANGUAGE plpgsql
     SECURITY INVOKER

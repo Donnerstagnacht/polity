@@ -24,8 +24,8 @@ import {NotificationBadgeActionService} from "../notifications/action-store-serv
 export class AppSkeletonComponent {
     protected items: NavigationItem[] = NAVIGATION_ITEMS;
     protected notificationBadge: WritableSignal<SupabaseObjectReturn<'read_unread_notifications_counter'> | null> = signal({
-        profile_id: '',
-        unread_notifications_counter: 50
+        profile_id_: '',
+        unread_notifications_counter_: 50
     });
 
     constructor(

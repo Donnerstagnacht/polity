@@ -33,7 +33,7 @@ export class NotficationsFromFollowToggleComponent {
 
         effect((): void => {
             this.toggleNotificationsFromFollowForm.patchValue({
-                showFollowNotifications: this.notificationSettings()?.receive_follow_notifications
+                showFollowNotifications: this.notificationSettings()?.receive_follow_notifications_
             })
         })
     }

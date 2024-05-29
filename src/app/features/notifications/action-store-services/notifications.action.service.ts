@@ -32,7 +32,7 @@ export class NotificationsActionService {
             .rpc('read_notifications_of_user')
             .throwOnError()
             if (response.data) {
-                const finalArray: SupabaseObjectReturn<'read_notifications_of_user'>[] = await this.profileActionService.transformImageNamesToUrls(response.data, 'profile_image')
+                const finalArray: SupabaseObjectReturn<'read_notifications_of_user'>[] = await this.profileActionService.transformImageNamesToUrls(response.data, 'profile_image_')
                 this.notificationStoreService.notifications.setObjects(finalArray);
             }
         })

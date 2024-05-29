@@ -34,7 +34,7 @@ export class AssistantToggleComponent {
 
         effect((): void => {
             this.toggleAssistantForm.patchValue({
-                showAssistant: !this.assistant()?.skip_tutorial
+                showAssistant: !this.assistant()?.skip_tutorial_
             })
         })
     }

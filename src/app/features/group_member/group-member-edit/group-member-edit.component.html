@@ -50,11 +50,11 @@
     <polity-table-three-icon-text-delete
         (remove)="removeGroupMember($event)"
 
-        [bonusKeys]="['last_name']"
+        [bonusKeys]="['last_name_']"
         [dataCyTags]="['member_profile_image', 'member_first_name', 'member_remove']"
         [dataCyTagsHeadline]="['member_profile_image_headline', 'member_first_name_headline',
         'member_remove_headline']"
-        [dataKeysForColumns]="['profile_image', 'first_name', 'id']"
+        [dataKeysForColumns]="['profile_image_', 'first_name_', 'id_']"
         [data]="members"
         [headings]="['Foto', 'Name', 'Entfernen']"
         [isLoading]="isMembersLoading"
@@ -65,11 +65,11 @@
 @if (showInvitations) {
     <polity-table-three-icon-text-delete
         (remove)="withdrawInvitation($event)"
-        [bonusKeys]="['last_name']"
+        [bonusKeys]="['last_name_']"
         [dataCyTags]="['group_invitation_image', 'group_invitation_name', 'group_invitation_accept']"
         [dataCyTagsHeadline]="['group_invitation_image_headline', 'group_invitation_name_headline',
         'group_request_withdraw_headline']"
-        [dataKeysForColumns]="['profile_image', 'first_name', 'id']"
+        [dataKeysForColumns]="['profile_image_', 'first_name_', 'id_']"
         [data]="invitations"
         [headings]="['Foto', 'Name', 'Entfernen']"
         [isLoading]="isInvitationsLoading"
@@ -80,11 +80,11 @@
     <polity-table-three-icon-text-two-actions
         (firstAction)="acceptMembershipRequest($event)"
         (secondAction)="declineMembershipRequest($event)"
-        [bonusKeys]="['last_name']"
+        [bonusKeys]="['last_name_']"
         [dataCyTags]="['group_request_image', 'group_request_name', 'group_request_withdraw']"
         [dataCyTagsHeadline]="['group_request_image_headline', 'group_request_name_headline',
         'group_invitation_accept_headline']"
-        [dataKeysForColumns]="['profile_image', 'first_name', 'id']"
+        [dataKeysForColumns]="['profile_image_', 'first_name_', 'id_']"
         [data]="requests"
         [headings]="['Foto', 'Name', 'Entscheiden']"
         [isLoading]="isRequestsLoading"
