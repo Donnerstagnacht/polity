@@ -1,7 +1,9 @@
-DROP FUNCTION IF EXISTS public.read_group_members(uuid);
+DROP FUNCTION IF EXISTS public.read_group_members(
+    _group_id uuid
+);
 
 CREATE OR REPLACE FUNCTION public.read_group_members(
-    group_id_in uuid
+    _group_id uuid
 )
     RETURNS table
             (
@@ -32,6 +34,6 @@ BEGIN
             INNER JOIN hidden.profiles
             ON hidden.group_members.member_id = hidden.profiles.id
         WHERE
-            hidden.group_members.group_id = group_id_in;
+            hidden.group_members.group_id = _group_id;
 END;
 $$;

@@ -1,8 +1,8 @@
 DROP FUNCTION IF EXISTS public.read_profile_counters(
-    user_id uuid
+    _user_id uuid
 );
 CREATE OR REPLACE FUNCTION public.read_profile_counters(
-    user_id uuid
+    _user_id uuid
 )
     RETURNS table
             (
@@ -19,14 +19,14 @@ $$
 BEGIN
     RETURN QUERY (
         SELECT
-            hidden.profiles_counters.id,
-            hidden.profiles_counters.follower_counter,
-            hidden.profiles_counters.following_counter,
-            hidden.profiles_counters.group_membership_counter
+            id,
+            follower_counter,
+            following_counter,
+            group_membership_counter
         FROM
             hidden.profiles_counters
         WHERE
-            id = user_id
+            id = _user_id
     );
 END
 $$;

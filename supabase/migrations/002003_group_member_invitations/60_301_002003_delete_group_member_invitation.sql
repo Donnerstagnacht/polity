@@ -1,8 +1,8 @@
 DROP FUNCTION IF EXISTS public.delete_group_member_invitation(
-    group_id_in uuid);
+    _group_id uuid);
 
 CREATE OR REPLACE FUNCTION public.delete_group_member_invitation(
-    group_id_in uuid
+    _group_id uuid
 )
     RETURNS membership
     LANGUAGE plpgsql
@@ -17,12 +17,12 @@ BEGIN
     FROM
         hidden.group_invited_members
     WHERE
-          hidden.group_invited_members.group_id = group_id_in
-      AND hidden.group_invited_members.member_id = auth_user_id
+          group_id = _group_id
+      AND member_id = auth_user_id
     RETURNING
-        hidden.group_invited_members.id,
-        hidden.group_invited_members.group_id,
-        hidden.group_invited_members.member_id
+        id,
+        group_id,
+        member_id
         INTO
             membership.id,
             membership.group_id,

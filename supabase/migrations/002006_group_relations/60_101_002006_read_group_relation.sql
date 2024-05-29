@@ -1,7 +1,9 @@
-DROP FUNCTION IF EXISTS hidden.read_group_relation(uuid);
+DROP FUNCTION IF EXISTS hidden.read_group_relation(
+    _group_relation_id uuid
+);
 
 CREATE OR REPLACE FUNCTION hidden.read_group_relation(
-    group_relation_id uuid
+    _group_relation_id uuid
 )
     RETURNS table
             (
@@ -25,9 +27,9 @@ BEGIN
     RETURN QUERY
         SELECT *
         FROM
-            hidden.group_relation
+            hidden.group_relations
         WHERE
-            group_relation.id = group_relation_id;
+            id = _group_relation_id;
 END
 $$;
 

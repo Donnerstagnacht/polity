@@ -1,8 +1,8 @@
 DROP FUNCTION IF EXISTS public.follow_profile_transaction(
-    following_id uuid
+    _following_id uuid
 );
 CREATE OR REPLACE FUNCTION public.follow_profile_transaction(
-    following_id uuid
+    _following_id uuid
 )
     RETURNS void
     LANGUAGE plpgsql
@@ -15,19 +15,19 @@ DECLARE
 BEGIN
     follow_enum := 'follow_from_user';
     follower_id := auth.uid();
-    PERFORM hidden.insert_following_follower_relationship(
+    PERFORM hidden.create_profile_follower_relationship(
         follower_id,
-        following_id
+        _following_id
             );
     PERFORM hidden.increment_follower_counter(
-        following_id
+        _following_id
             );
     PERFORM hidden.increment_following_counter(
         follower_id
             );
     PERFORM hidden.create_notification_from_user_transaction(
         follower_id,
-        following_id,
+        _following_id,
         follow_enum,
         FALSE
             );

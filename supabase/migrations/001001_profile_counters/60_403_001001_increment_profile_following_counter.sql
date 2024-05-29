@@ -1,5 +1,9 @@
-DROP FUNCTION IF EXISTS hidden.increment_following_counter(user_id uuid);
-CREATE OR REPLACE FUNCTION hidden.increment_following_counter(user_id uuid)
+DROP FUNCTION IF EXISTS hidden.increment_following_counter(
+    _user_id uuid
+);
+CREATE OR REPLACE FUNCTION hidden.increment_following_counter(
+    _user_id uuid
+)
     RETURNS void
     LANGUAGE plpgsql
     SECURITY INVOKER
@@ -11,7 +15,7 @@ BEGIN
     SET
         following_counter = following_counter + 1
     WHERE
-        id = user_id;
+        id = _user_id;
     PERFORM SET_CONFIG('app.current_function', NULL, TRUE);
 END
 $$;

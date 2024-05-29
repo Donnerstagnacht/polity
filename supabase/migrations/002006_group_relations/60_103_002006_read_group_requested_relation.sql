@@ -1,7 +1,9 @@
-DROP FUNCTION IF EXISTS hidden.read_group_requested_relation(uuid);
+DROP FUNCTION IF EXISTS hidden.read_group_requested_relation(
+    _group_relation_id uuid
+);
 
 CREATE OR REPLACE FUNCTION hidden.read_group_requested_relation(
-    group_relation_id uuid
+    _group_relation_id uuid
 )
     RETURNS table
             (
@@ -36,8 +38,8 @@ BEGIN
             right_to_vote_active,
             right_to_vote_passive
         FROM
-            hidden.group_relation
+            hidden.group_relations
         WHERE
-            id = group_relation_id;
+            id = _group_relation_id;
 END
 $$;

@@ -1,18 +1,18 @@
 DROP FUNCTION IF EXISTS public.update_profile(
-    updated_at_in timestamp WITH TIME ZONE,
-    username_in text,
-    first_name_in text,
-    last_name_in text,
-    profile_image_in text,
-    receive_follow_notifications_in boolean
+    _updated_at timestamp WITH TIME ZONE,
+    _username text,
+    _first_name_in text,
+    _last_name text,
+    _profile_image text,
+    _receive_follow_notifications boolean
 );
 CREATE OR REPLACE FUNCTION public.update_profile(
-    updated_at_in timestamp WITH TIME ZONE DEFAULT NULL,
-    username_in text DEFAULT NULL,
-    first_name_in text DEFAULT NULL,
-    last_name_in text DEFAULT NULL,
-    profile_image_in text DEFAULT NULL,
-    receive_follow_notifications_in boolean DEFAULT NULL
+    _updated_at timestamp WITH TIME ZONE DEFAULT NULL,
+    _username text DEFAULT NULL,
+    _first_name text DEFAULT NULL,
+    _last_name text DEFAULT NULL,
+    _profile_image text DEFAULT NULL,
+    _receive_follow_notifications boolean DEFAULT NULL
 )
     RETURNS void
     LANGUAGE plpgsql
@@ -20,17 +20,17 @@ CREATE OR REPLACE FUNCTION public.update_profile(
 AS
 $$
 DECLARE
-    authenticated_user uuid;
+    auth_user_id uuid;
 BEGIN
-    authenticated_user := auth.uid();
+    auth_user_id := auth.uid();
     UPDATE hidden.profiles
     SET
-        username                     = COALESCE(username_in, username),
-        first_name                   = COALESCE(first_name_in, first_name),
-        last_name                    = COALESCE(last_name_in, last_name),
-        profile_image                = COALESCE(profile_image_in, profile_image),
-        receive_follow_notifications = COALESCE(receive_follow_notifications_in, receive_follow_notifications)
+        username                     = COALESCE(_username, username),
+        first_name                   = COALESCE(_first_name, first_name),
+        last_name                    = COALESCE(_last_name, last_name),
+        profile_image                = COALESCE(_profile_image, profile_image),
+        receive_follow_notifications = COALESCE(_receive_follow_notifications, receive_follow_notifications)
     WHERE
-        id = authenticated_user;
+        id = auth_user_id;
 END
 $$;

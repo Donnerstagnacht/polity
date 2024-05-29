@@ -1,7 +1,9 @@
-DROP FUNCTION IF EXISTS hidden.read_group_relations(uuid);
+DROP FUNCTION IF EXISTS hidden.read_group_relations(
+    _group_id uuid
+);
 
 CREATE OR REPLACE FUNCTION hidden.read_group_relations(
-    group_id_in uuid
+    _group_id uuid
 )
     RETURNS table
             (
@@ -26,6 +28,6 @@ BEGIN
     FROM
         hidden.group_relations
     WHERE
-        hidden.group_relations.group_id = group_id_in;
+        group_id = _group_id;
 END
 $$;

@@ -1,7 +1,9 @@
-DROP FUNCTION IF EXISTS hidden.read_group_member(uuid);
+DROP FUNCTION IF EXISTS hidden.read_group_member(
+    _membership_id uuid
+);
 
 CREATE OR REPLACE FUNCTION hidden.read_group_member(
-    membership_id uuid
+    _membership_id uuid
 )
     RETURNS table
             (
@@ -20,8 +22,8 @@ BEGIN
     RETURN QUERY
         SELECT *
         FROM
-            group_members
+            hidden.group_members
         WHERE
-            id = hidden.membership_id;
+            id = _membership_id;
 END;
 $$;

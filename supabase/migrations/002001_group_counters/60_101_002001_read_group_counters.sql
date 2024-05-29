@@ -1,8 +1,8 @@
 DROP FUNCTION IF EXISTS public.read_group_counter(
-    group_id_in uuid
+    _group_id uuid
 );
 CREATE OR REPLACE FUNCTION public.read_group_counter(
-    group_id_in uuid
+    _group_id uuid
 )
     RETURNS table
             (
@@ -19,14 +19,14 @@ $$
 BEGIN
     RETURN QUERY (
         SELECT
-            hidden.groups_counters.id,
-            hidden.groups_counters.follower_counter,
-            hidden.groups_counters.following_counter,
-            hidden.groups_counters.group_member_counter
+            id,
+            follower_counter,
+            following_counter,
+            group_member_counter
         FROM
             hidden.groups_counters
         WHERE
-            id = group_id_in
+            id = _group_id
     );
 END
 $$;

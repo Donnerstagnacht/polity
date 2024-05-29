@@ -14,9 +14,9 @@ CREATE OR REPLACE FUNCTION public.read_notifications_of_users()
 AS
 $$
 DECLARE
-    authenticated_user uuid;
+    auth_user_id uuid;
 BEGIN
-    authenticated_user := auth.uid();
+    auth_user_id := auth.uid();
     RETURN QUERY (
         SELECT
             hidden.notifications_by_user.type_of_notification,
@@ -31,7 +31,7 @@ BEGIN
             ON hidden.profiles.id = hidden.notifications_by_user.sender
 
         WHERE
-            receiver = authenticated_user
+            receiver = auth_user_id
         ORDER BY notifications_by_user.created_at DESC
     );
 END

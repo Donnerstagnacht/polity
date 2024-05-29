@@ -1,9 +1,9 @@
 DROP FUNCTION IF EXISTS hidden.create_hashtag(
-    value text
+    _value text
 );
 
 CREATE OR REPLACE FUNCTION hidden.create_hashtag(
-    value text
+    _value text
 )
     RETURNS void
     LANGUAGE plpgsql
@@ -13,6 +13,6 @@ $$
 BEGIN
     INSERT INTO
         hidden.hashtags(value)
-    VALUES (value);
+    VALUES (_value);
 END;
 $$

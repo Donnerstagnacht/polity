@@ -13,9 +13,9 @@ CREATE OR REPLACE FUNCTION public.read_group_requests_of_user()
 AS
 $$
 DECLARE
-    authenticated_user uuid;
+    auth_user_id uuid;
 BEGIN
-    authenticated_user := auth.uid();
+    auth_user_id := auth.uid();
     RETURN QUERY (
         SELECT
             group_member_requests.id,
@@ -27,7 +27,7 @@ BEGIN
             JOIN hidden.groups
             ON group_member_requests.group_id = groups.id
         WHERE
-            hidden.group_member_requests.member_id = authenticated_user
+            hidden.group_member_requests.member_id = auth_user_id
     );
 END
 $$;

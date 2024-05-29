@@ -1,7 +1,8 @@
-DROP FUNCTION IF EXISTS hidden.read_group_hashtags(uuid);
+DROP FUNCTION IF EXISTS hidden.read_group_hashtags(
+    _group_id uuid);
 
 CREATE OR REPLACE FUNCTION hidden.read_group_hashtags(
-    group_id_in uuid
+    _group_id uuid
 )
     RETURNS table
             (
@@ -24,6 +25,6 @@ BEGIN
             ON
                 group_hashtags.hashtag_id = hashtags.id
         WHERE
-            group_id = group_id_in;
+            group_id = _group_id;
 END;
 $$;

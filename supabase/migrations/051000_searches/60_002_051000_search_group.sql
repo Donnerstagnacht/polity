@@ -1,8 +1,8 @@
 DROP FUNCTION IF EXISTS public.search_group(
-    search_term text
+    _search_term text
 );
 CREATE OR REPLACE FUNCTION public.search_group(
-    search_term text
+    _search_term text
 )
     RETURNS table
             (
@@ -18,13 +18,13 @@ $$
 BEGIN
     RETURN QUERY
         SELECT
-            hidden.groups.id,
-            hidden.groups.name,
-            hidden.groups.level,
-            hidden.groups.description
+            id,
+            name,
+            level,
+            description
         FROM
             hidden.groups
         WHERE
-            fts @@ TO_TSQUERY('german', search_term);
+            fts @@ TO_TSQUERY('german', _search_term);
 END
 $$;

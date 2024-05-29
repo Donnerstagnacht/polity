@@ -1,11 +1,11 @@
 DROP FUNCTION IF EXISTS public.create_group_member_invitation(
-    group_id uuid,
-    member_id uuid
+    _group_id uuid,
+    _member_id uuid
 );
 
 CREATE OR REPLACE FUNCTION public.create_group_member_invitation(
-    group_id uuid,
-    member_id uuid
+    _group_id uuid,
+    _member_id uuid
 )
     RETURNS void
     LANGUAGE plpgsql
@@ -15,11 +15,11 @@ $$
 BEGIN
     INSERT INTO
         hidden.group_invited_members(group_id,
-                                                   member_id,
-                                                   member_type)
+                                     member_id,
+                                     member_type)
     VALUES
-        (group_id,
-         member_id,
+        (_group_id,
+         _member_id,
          'member');
 END;
 $$;

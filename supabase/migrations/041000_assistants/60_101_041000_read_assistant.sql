@@ -12,15 +12,15 @@ CREATE OR REPLACE FUNCTION public.read_assistant()
 AS
 $$
 DECLARE
-    authenticated_user uuid;
+    auth_user_id uuid;
 BEGIN
-    authenticated_user := auth.uid();
+    auth_user_id := auth.uid();
     RETURN QUERY (
         SELECT *
         FROM
             hidden.assistants
         WHERE
-            hidden.assistants.id = authenticated_user
+            id = auth_user_id
     );
 END
 $$;

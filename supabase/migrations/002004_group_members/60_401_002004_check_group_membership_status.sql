@@ -1,9 +1,9 @@
 DROP FUNCTION IF EXISTS public.check_group_membership_status(
-    group_id_in uuid
+    _group_id uuid
 );
 
 CREATE OR REPLACE FUNCTION public.check_group_membership_status(
-    group_id_in uuid
+    _group_id uuid
 )
     RETURNS text
     LANGUAGE plpgsql
@@ -25,7 +25,7 @@ BEGIN
                 FROM
                     hidden.group_members
                 WHERE
-                      group_id = group_id_in
+                      group_id = _group_id
                   AND member_id = auth_user_id
                   AND member_type IN ('member')
                 LIMIT 1
@@ -36,7 +36,7 @@ BEGIN
                 FROM
                     hidden.group_members
                 WHERE
-                      group_id = group_id_in
+                      group_id = _group_id
                   AND member_id = auth_user_id
                   AND member_type IN ('board_member', 'board_president')
                 LIMIT 1
@@ -46,7 +46,7 @@ BEGIN
                     'requested'
                 FROM
                     hidden.read_group_member_request(
-                        group_id_in,
+                        _group_id,
                         auth_user_id
                     )
                 --if row returned, return 'requested' instead of the row,
@@ -56,7 +56,7 @@ BEGIN
                     'invited'
                 FROM
                     hidden.read_group_member_invitation(
-                        group_id_in,
+                        _group_id,
                         auth_user_id
                     )
                 --if row returned, return 'invited' instead of the row,

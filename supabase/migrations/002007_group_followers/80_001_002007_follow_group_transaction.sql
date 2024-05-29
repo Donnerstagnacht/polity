@@ -1,8 +1,8 @@
 DROP FUNCTION IF EXISTS public.follow_group_transaction(
-    following_id uuid
+    _following_id uuid
 );
 CREATE OR REPLACE FUNCTION public.follow_group_transaction(
-    following_id uuid
+    _following_id uuid
 )
     RETURNS void
     LANGUAGE plpgsql
@@ -17,10 +17,10 @@ BEGIN
     follower_id := auth.uid();
     PERFORM hidden.create_group_following_follower_relationship(
         follower_id,
-        following_id
+        _following_id
             );
     PERFORM hidden.increment_group_follower_counter(
-        following_id
+        _following_id
             );
     PERFORM hidden.increment_following_counter(
         follower_id

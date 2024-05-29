@@ -1,8 +1,8 @@
 DROP FUNCTION IF EXISTS public.accept_group_invitation_transaction(
-    group_id_in uuid
+    _group_id uuid
 );
 CREATE OR REPLACE FUNCTION public.accept_group_invitation_transaction(
-    group_id_in uuid
+    _group_id uuid
 )
     RETURNS void
     LANGUAGE plpgsql
@@ -13,7 +13,7 @@ DECLARE
     membership membership;
 BEGIN
     membership := public.delete_group_member_invitation(
-        group_id_in
+        _group_id
                   );
 
     PERFORM hidden.create_group_member(

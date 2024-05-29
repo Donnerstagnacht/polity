@@ -1,8 +1,8 @@
 DROP FUNCTION IF EXISTS public.read_user(
-    user_id uuid
+    _user_id uuid
 );
 CREATE OR REPLACE FUNCTION public.read_user(
-    user_id uuid
+    _user_id uuid
 )
     RETURNS table
             (
@@ -18,13 +18,13 @@ $$
 BEGIN
     RETURN QUERY
         SELECT
-            hidden.profiles.id,
-            hidden.profiles.first_name,
-            hidden.profiles.last_name,
-            hidden.profiles.profile_image
+            id,
+            first_name,
+            last_name,
+            profile_image
         FROM
             hidden.profiles
         WHERE
-            hidden.profiles.id = user_id;
+            id = _user_id;
 END
 $$;

@@ -1,8 +1,8 @@
 DROP FUNCTION IF EXISTS public.leave_group_member_transaction(
-    group_id_in uuid
+    group_id uuid
 );
 CREATE OR REPLACE FUNCTION public.leave_group_member_transaction(
-    group_id_in uuid
+    _group_id uuid
 )
     RETURNS void
     LANGUAGE plpgsql
@@ -15,11 +15,11 @@ BEGIN
     authenticated_user := auth.uid();
     PERFORM hidden.delete_group_member(
         authenticated_user,
-        group_id_in
+        _group_id
             );
 
     PERFORM hidden.decrement_group_member_counter(
-        group_id_in
+        _group_id
             );
 
     PERFORM hidden.decrement_profile_group_membership_counter(

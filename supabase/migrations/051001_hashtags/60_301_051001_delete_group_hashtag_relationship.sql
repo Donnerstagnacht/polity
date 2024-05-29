@@ -1,7 +1,8 @@
-DROP FUNCTION IF EXISTS hidden.delete_group_hashtag_relationship(uuid);
+DROP FUNCTION IF EXISTS hidden.delete_group_hashtag_relationship(
+    _hashtag_id uuid);
 
-CREATE OR REPLACE FUNCTION hidden.delete_group_hashtag_relationshi(
-    hashtag_id uuid
+CREATE OR REPLACE FUNCTION hidden.delete_group_hashtag_relationship(
+    _hashtag_id uuid
 )
     RETURNS void
     LANGUAGE plpgsql
@@ -13,6 +14,6 @@ BEGIN
     FROM
         hidden.group_hashtags
     WHERE
-        hashtag_id = hashtag_id;
+        _hashtag_id = _hashtag_id;
 END;
 $$;

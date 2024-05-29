@@ -1,8 +1,8 @@
 DROP FUNCTION IF EXISTS hidden.check_profile_if_user_receives_follow_notifications(
-    user_id uuid
+    _user_id uuid
 );
 CREATE OR REPLACE FUNCTION hidden.check_profile_if_user_receives_follow_notifications(
-    user_id uuid
+    _user_id uuid
 )
     RETURNS boolean
     LANGUAGE plpgsql
@@ -18,7 +18,7 @@ BEGIN
     FROM
         hidden.profiles
     WHERE
-        id = user_id;
+        id = _user_id;
     RETURN receives_follow_notifications_status;
 END
 $$;

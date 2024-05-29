@@ -1,10 +1,10 @@
 DROP FUNCTION IF EXISTS hidden.create_profile_follower_relationship(
-    follower_id uuid,
-    following_id uuid
+    _follower_id uuid,
+    _following_id uuid
 );
 CREATE OR REPLACE FUNCTION hidden.create_profile_follower_relationship(
-    follower_id uuid,
-    following_id uuid
+    _follower_id uuid,
+    _following_id uuid
 )
     RETURNS void
     LANGUAGE plpgsql
@@ -14,9 +14,9 @@ $$
 BEGIN
     INSERT INTO
         hidden.following_profiles (follower,
-                                                 following)
+                                   following)
     VALUES
-        (follower_id,
-         following_id);
+        (_follower_id,
+         _following_id);
 END;
 $$;

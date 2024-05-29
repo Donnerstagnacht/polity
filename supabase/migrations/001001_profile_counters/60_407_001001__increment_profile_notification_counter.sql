@@ -1,8 +1,8 @@
 DROP FUNCTION IF EXISTS hidden.increment_profile_notification_counter(
-    user_id uuid
+    _user_id uuid
 );
 CREATE OR REPLACE FUNCTION hidden.increment_profile_notification_counter(
-    user_id uuid
+    _user_id uuid
 )
     RETURNS void
     LANGUAGE plpgsql
@@ -14,6 +14,6 @@ BEGIN
     SET
         unread_notifications_counter = unread_notifications_counter + 1
     WHERE
-        id = user_id;
+        id = _user_id;
 END
 $$;

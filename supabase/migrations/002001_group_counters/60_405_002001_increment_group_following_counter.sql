@@ -1,8 +1,8 @@
 DROP FUNCTION IF EXISTS hidden.increment_group_following_counter(
-    group_id_in uuid)
+    group_id uuid)
 ;
 CREATE OR REPLACE FUNCTION hidden.increment_group_following_counter(
-    group_id_in uuid
+    _group_id uuid
 )
     RETURNS void
     LANGUAGE plpgsql
@@ -15,7 +15,7 @@ BEGIN
     SET
         following_counter = following_counter + 1
     WHERE
-        id = group_id_in;
+        id = _group_id;
     PERFORM SET_CONFIG('app.current_function', NULL, TRUE);
 END
 $$;

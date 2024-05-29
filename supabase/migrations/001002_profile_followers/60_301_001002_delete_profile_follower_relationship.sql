@@ -1,10 +1,10 @@
 DROP FUNCTION IF EXISTS hidden.delete_profile_follower_relationship(
-    follower_id uuid,
-    following_id uuid
+    _follower_id uuid,
+    _following_id uuid
 );
 CREATE OR REPLACE FUNCTION hidden.delete_profile_follower_relationship(
-    follower_id uuid,
-    following_id uuid
+    _follower_id uuid,
+    _following_id uuid
 )
     RETURNS void
     LANGUAGE plpgsql
@@ -16,8 +16,8 @@ BEGIN
     FROM
         hidden.following_profiles
     WHERE
-          follower = follower_id
-      AND following = following_id;
+          follower = _follower_id
+      AND following = _following_id;
 
     IF NOT FOUND THEN
         -- Raise an exception to roll back the transaction

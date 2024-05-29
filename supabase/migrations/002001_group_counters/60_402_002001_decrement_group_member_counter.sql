@@ -1,5 +1,9 @@
-DROP FUNCTION IF EXISTS hidden.decrement_group_member_counter(group_id uuid);
-CREATE OR REPLACE FUNCTION hidden.decrement_group_member_counter(group_id uuid)
+DROP FUNCTION IF EXISTS hidden.decrement_group_member_counter(
+    _group_id uuid
+);
+CREATE OR REPLACE FUNCTION hidden.decrement_group_member_counter(
+    _group_id uuid
+)
     RETURNS void
     LANGUAGE plpgsql
     SECURITY INVOKER
@@ -11,7 +15,7 @@ BEGIN
     SET
         group_member_counter = group_member_counter - 1
     WHERE
-        id = group_id;
+        id = _group_id;
     PERFORM SET_CONFIG('app.current_function', NULL, TRUE);
 END;
 $$;

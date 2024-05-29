@@ -6,13 +6,13 @@ CREATE OR REPLACE FUNCTION public.reset_profile_notification_counter()
 AS
 $$
 DECLARE
-    authenticated_user uuid;
+    auth_user_id uuid;
 BEGIN
-    authenticated_user = auth.uid();
+    auth_user_id = auth.uid();
     UPDATE hidden.profiles_counters
     SET
         unread_notifications_counter = 0
     WHERE
-        id = authenticated_user;
+        id = auth_user_id;
 END
 $$;

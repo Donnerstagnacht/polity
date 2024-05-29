@@ -9,16 +9,16 @@ CREATE OR REPLACE FUNCTION public.read_profile_notification_settings()
 AS
 $$
 DECLARE
-    authenticated_user uuid;
+    auth_user uuid;
 BEGIN
-    authenticated_user := auth.uid();
+    auth_user := auth.uid();
     RETURN QUERY (
         SELECT
-            profiles.receive_follow_notifications
+            receive_follow_notifications
         FROM
             hidden.profiles
         WHERE
-            id = authenticated_user
+            id = auth_user
     );
 END
 $$;

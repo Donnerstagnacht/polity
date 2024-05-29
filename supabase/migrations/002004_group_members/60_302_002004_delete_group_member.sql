@@ -4,8 +4,8 @@ DROP FUNCTION IF EXISTS hidden.delete_group_member(
 );
 
 CREATE OR REPLACE FUNCTION hidden.delete_group_member(
-    user_id_in uuid,
-    group_id_in uuid
+    _user_id uuid,
+    _group_id uuid
 )
     RETURNS void
     LANGUAGE plpgsql
@@ -17,7 +17,7 @@ BEGIN
     FROM
         hidden.group_members
     WHERE
-          member_id = user_id_in
-      AND group_id = group_id_in;
+          member_id = _user_id
+      AND group_id = _group_id;
 END;
 $$;

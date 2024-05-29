@@ -1,8 +1,8 @@
 DROP FUNCTION IF EXISTS public.update_profile_receive_notifications_from_follow(
-    new_status boolean
+    _new_status boolean
 );
 CREATE OR REPLACE FUNCTION public.update_profile_receive_notifications_from_follow(
-    new_status boolean
+    _new_status boolean
 )
     RETURNS void
     LANGUAGE plpgsql
@@ -10,13 +10,13 @@ CREATE OR REPLACE FUNCTION public.update_profile_receive_notifications_from_foll
 AS
 $$
 DECLARE
-    authenticated_user uuid;
+    auth_user_id uuid;
 BEGIN
-    authenticated_user := auth.uid();
+    auth_user_id := auth.uid();
     UPDATE hidden.profiles
     SET
-        receive_follow_notifications = new_status
+        receive_follow_notifications = _new_status
     WHERE
-        id = authenticated_user;
+        id = auth_user_id;
 END
 $$;

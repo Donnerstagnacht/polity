@@ -10,17 +10,17 @@ CREATE OR REPLACE FUNCTION public.read_unread_notifications_counter()
 AS
 $$
 DECLARE
-    authenticated_user uuid;
+    auth_user_id uuid;
 BEGIN
-    authenticated_user := auth.uid();
+    auth_user_id := auth.uid();
     RETURN QUERY (
         SELECT
-            hidden.profiles_counters.id AS profile_id,
-            hidden.profiles_counters.unread_notifications_counter
+            id AS profile_id,
+            unread_notifications_counter
         FROM
             hidden.profiles_counters
         WHERE
-            id = authenticated_user
+            id = auth_user_id
     );
 END
 $$;

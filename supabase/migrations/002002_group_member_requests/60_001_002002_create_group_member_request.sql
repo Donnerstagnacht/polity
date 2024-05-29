@@ -1,9 +1,9 @@
 DROP FUNCTION IF EXISTS public.create_group_member_request(
-    group_id_in uuid
+    _group_id uuid
 );
 
 CREATE OR REPLACE FUNCTION public.create_group_member_request(
-    group_id_in uuid
+    _group_id uuid
 )
     RETURNS void
     LANGUAGE plpgsql
@@ -20,7 +20,7 @@ BEGIN
      member_id,
      member_type)
     VALUES
-        (group_id_in,
+        (_group_id,
          auth_user_id,
          'member');
 END;

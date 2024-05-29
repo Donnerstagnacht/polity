@@ -12,9 +12,9 @@ CREATE OR REPLACE FUNCTION public.read_followings_of_user()
 AS
 $$
 DECLARE
-    authenticated_user uuid;
+    auth_user_id uuid;
 BEGIN
-    authenticated_user := auth.uid();
+    auth_user_id := auth.uid();
     RETURN QUERY
         (
             SELECT
@@ -27,7 +27,7 @@ BEGIN
                 JOIN hidden.profiles
                 ON following_profiles.following = profiles.id
             WHERE
-                following_profiles.follower = authenticated_user
+                following_profiles.follower = auth_user_id
         );
 END
 $$;

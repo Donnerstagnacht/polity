@@ -1,8 +1,8 @@
 DROP FUNCTION IF EXISTS public.search_user(
-    search_term text
+    _search_term text
 );
 CREATE OR REPLACE FUNCTION public.search_user(
-    search_term text
+    _search_term text
 )
     RETURNS table
             (
@@ -18,13 +18,13 @@ $$
 BEGIN
     RETURN QUERY
         SELECT
-            hidden.profiles.id,
-            hidden.profiles.first_name,
-            hidden.profiles.last_name,
-            hidden.profiles.username
+            id,
+            first_name,
+            last_name,
+            username
         FROM
             hidden.profiles
         WHERE
-            fts @@ TO_TSQUERY('german', search_term);
+            fts @@ TO_TSQUERY('german', _search_term);
 END
 $$;

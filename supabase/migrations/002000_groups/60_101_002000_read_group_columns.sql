@@ -1,5 +1,9 @@
-DROP FUNCTION IF EXISTS public.read_group_columns(uuid);
-CREATE OR REPLACE FUNCTION public.read_group_columns(group_id uuid)
+DROP FUNCTION IF EXISTS public.read_group_columns(
+    _group_id uuid
+);
+CREATE OR REPLACE FUNCTION public.read_group_columns(
+    _group_id uuid
+)
     RETURNS table
             (
                 id          uuid,
@@ -14,14 +18,14 @@ $$
 BEGIN
     RETURN QUERY
         SELECT
-            hidden.groups.id,
-            hidden.groups.name,
-            hidden.groups.level,
-            hidden.groups.description
+            id,
+            name,
+            level,
+            description
         FROM
             hidden.groups
         WHERE
-            hidden.groups.id = group_id;
+            id = _group_id;
 END
 $$;
 

@@ -1,8 +1,8 @@
 DROP FUNCTION IF EXISTS public.read_follower_of_group(
-    group_id_in uuid
+    _group_id uuid
 );
 CREATE OR REPLACE FUNCTION public.read_follower_of_group(
-    group_id_in uuid
+    _group_id uuid
 )
     RETURNS table
             (
@@ -27,7 +27,7 @@ BEGIN
             JOIN hidden.profiles
             ON following_groups.follower = profiles.id
         WHERE
-            following_groups.following = group_id_in
+            following_groups.following = _group_id
     );
 END
 $$;

@@ -1,7 +1,9 @@
-DROP FUNCTION IF EXISTS hidden.read_meetings(uuid);
+DROP FUNCTION IF EXISTS hidden.read_meetings(
+    _group_id uuid
+);
 
 CREATE OR REPLACE FUNCTION hidden.read_meetings(
-    group_id_in uuid
+    _group_id uuid
 )
     RETURNS table
             (
@@ -25,6 +27,6 @@ BEGIN
         FROM
             hidden.meetings
         WHERE
-            hidden.group_id = group_id_in;
+            group_id = _group_id;
 END;
 $$;

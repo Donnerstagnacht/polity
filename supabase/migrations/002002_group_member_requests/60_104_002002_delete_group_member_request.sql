@@ -1,9 +1,9 @@
 DROP FUNCTION IF EXISTS public.delete_group_member_request(
-    group_id_in uuid
+    _group uuid
 );
 
 CREATE OR REPLACE FUNCTION public.delete_group_member_request(
-    group_id_in uuid
+    _group_id uuid
 )
     RETURNS membership
     LANGUAGE plpgsql
@@ -19,7 +19,7 @@ BEGIN
     FROM
         hidden.group_member_requests
     WHERE
-          group_id = group_id_in
+          group_id = _group_id
       AND member_id = auth_user_id
     RETURNING
         id,

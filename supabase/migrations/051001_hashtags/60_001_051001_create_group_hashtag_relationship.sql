@@ -1,11 +1,11 @@
 DROP FUNCTION IF EXISTS hidden.create_group_hashtag_relationship(
-    uuid,
-    uuid
+    _group_id uuid,
+    _hashtag_id uuid
 );
 
 CREATE OR REPLACE FUNCTION hidden.create_group_hashtag_relationship(
-    group_id uuid,
-    hashtag_id uuid
+    _group_id uuid,
+    _hashtag_id uuid
 )
     RETURNS void
     LANGUAGE plpgsql
@@ -17,7 +17,7 @@ BEGIN
         hidden.group_hashtags(group_id,
                               hashtag_id)
     VALUES
-        (group_id,
-         hashtag_id);
+        (_group_id,
+         _hashtag_id);
 END;
 $$

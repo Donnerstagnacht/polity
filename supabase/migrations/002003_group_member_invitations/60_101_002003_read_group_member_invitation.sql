@@ -1,11 +1,11 @@
 DROP FUNCTION IF EXISTS hidden.read_group_member_invitation(
-    group_id_in uuid,
-    user_id_in uuid
+    _group_id uuid,
+    _user_id uuid
 );
 
 CREATE OR REPLACE FUNCTION hidden.read_group_member_invitation(
-    group_id_in uuid,
-    user_id_in uuid
+    _group_id uuid,
+    _user_id uuid
 )
     RETURNS table
             (
@@ -26,7 +26,7 @@ BEGIN
         FROM
             hidden.group_invited_members
         WHERE
-              hidden.group_invited_members.group_id = group_id_in
-          AND hidden.group_invited_members.member_id = user_id_in;
+              group_id = _group_id
+          AND member_id = _user_id;
 END;
 $$;

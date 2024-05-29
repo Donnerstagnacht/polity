@@ -1,7 +1,9 @@
-DROP FUNCTION IF EXISTS hidden.delete_group_requested_relations(uuid);
+DROP FUNCTION IF EXISTS hidden.delete_group_relation_request(
+    _group_relation uuid
+);
 
-CREATE OR REPLACE FUNCTION hidden.delete_group_requested_relations(
-    group_relation_id uuid
+CREATE OR REPLACE FUNCTION hidden.delete_group_relation_request(
+    _group_relation uuid
 )
     RETURNS table
             (deleted_requested_group_relation record
@@ -15,9 +17,9 @@ DECLARE
 BEGIN
     DELETE
     FROM
-        group_requested_relations
+        hidden.group_requested_relations
     WHERE
-        id = group_relation_id
+        id = _group_relation
     RETURNING *
         INTO deleted_requested_group_relation;
     RETURN NEXT;
