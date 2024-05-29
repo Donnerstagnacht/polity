@@ -4,13 +4,13 @@ import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.short
 import {GroupInvitationsStoreService} from "./group-invitations.store.service";
 import {GroupStoreService} from "../../group/action-store-service/group.store.service";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
-import {supabasePublicClient} from "../../../auth/supabase-public-client";
+import {supabaseAuthenticatedClient} from "../../../auth/supabase-authenticated-client";
 
 @Injectable({
     providedIn: 'root'
 })
 export class GroupInvitationsActionService {
-    private readonly supabaseClient: SupabaseClient<DatabaseOverwritten> = supabasePublicClient;
+    private readonly supabaseClient: SupabaseClient<DatabaseOverwritten> = supabaseAuthenticatedClient;
 
     constructor(
         private readonly groupStoreService: GroupStoreService,

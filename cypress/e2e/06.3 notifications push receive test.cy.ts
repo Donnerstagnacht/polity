@@ -1,4 +1,4 @@
-import {supabasePublicClient} from "../../src/app/auth/supabase-public-client";
+import {supabaseAuthenticatedClient} from "../../src/app/auth/supabase-authenticated-client";
 import {AuthTokenResponse} from "@supabase/supabase-js";
 import {AUTH_DATA1, AUTH_DATA2, AuthData} from "../../seed_and_test_data/01_test_auth";
 
@@ -11,7 +11,7 @@ describe(`Push tests show that `, async (): Promise<void> => {
     const TEST_ID: string = otherUser.id;
 
     beforeEach(async (): Promise<void> => {
-        const response: AuthTokenResponse = await supabasePublicClient.auth.signInWithPassword(
+        const response: AuthTokenResponse = await supabaseAuthenticatedClient.auth.signInWithPassword(
             {
                 email: signedInUserAuth.email,
                 password: signedInUserAuth.password,

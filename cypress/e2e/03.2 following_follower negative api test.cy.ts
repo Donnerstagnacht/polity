@@ -1,4 +1,4 @@
-import {supabasePublicClient} from "../../src/app/auth/supabase-public-client";
+import {supabaseAuthenticatedClient} from "../../src/app/auth/supabase-authenticated-client";
 import {POSTGRES_ERRORS} from "../fixtures/postgres_errors";
 import {AuthTokenResponse} from "@supabase/supabase-js";
 import {AUTH_DATA1, AUTH_DATA2, AuthData} from "../../seed_and_test_data/01_test_auth";
@@ -12,7 +12,7 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
     const TEST_ID: string = otherUser.id;
 
     beforeEach(async (): Promise<void> => {
-        const response: AuthTokenResponse = await supabasePublicClient.auth.signInWithPassword(
+        const response: AuthTokenResponse = await supabaseAuthenticatedClient.auth.signInWithPassword(
             {
                 email: signedInUserAuth.email,
                 password: signedInUserAuth.password,
@@ -26,7 +26,7 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
 
     it('an authenticated user can call the follow transaction but can not call it twice', async (): Promise<void> => {
         cy.resetSupabase()
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         .rpc('follow_transaction',
             {
                 following_id: TEST_ID,
@@ -35,7 +35,7 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
         expect(response.data).to.be.null
         expect(response.error).to.be.null
 
-        const response2 = await supabasePublicClient
+        const response2 = await supabaseAuthenticatedClient
         .rpc('follow_transaction',
             {
                 following_id: TEST_ID,
@@ -48,7 +48,7 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
 
     it('an authenticated user can call the unfollow transaction but can not call it twice', async (): Promise<void> => {
         cy.resetSupabase()
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         .rpc('unfollow_transaction',
             {
                 following_id: TEST_ID,
@@ -57,7 +57,7 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
         expect(response.data).to.be.null
         expect(response.error).to.be.null
 
-        const response2 = await supabasePublicClient
+        const response2 = await supabaseAuthenticatedClient
         .rpc('unfollow_transaction',
             {
                 following_id: TEST_ID,
@@ -68,9 +68,9 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
     })
 
     it('a non authenticated user can not call the follow transaction', async (): Promise<void> => {
-        await supabasePublicClient.auth.signOut()
+        await supabaseAuthenticatedClient.auth.signOut()
 
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         .rpc('follow_transaction',
             {
                 following_id: TEST_ID,
@@ -81,9 +81,9 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
     })
 
     it('a non authenticated user can not execute the unfollow transaction', async (): Promise<void> => {
-        await supabasePublicClient.auth.signOut()
+        await supabaseAuthenticatedClient.auth.signOut()
 
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         .rpc('unfollow_transaction',
             {
                 following_id: TEST_ID,
@@ -94,7 +94,7 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
     })
 
     it('the profile_counter following increment function is not publicly available', async (): Promise<void> => {
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         // @ts-ignore
         .rpc('increment_following_counter', {user_id: TEST_ID})
         expect(response.data).to.be.null
@@ -102,7 +102,7 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
     })
 
     it('the profile_counter following decrement function is not publicly available', async (): Promise<void> => {
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         // @ts-ignore
         .rpc('decrement_following_counter', {user_id: TEST_ID})
         expect(response.data).to.be.null
@@ -110,7 +110,7 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
     })
 
     it('the profile_counter follower increment function is not publicly available', async (): Promise<void> => {
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         // @ts-ignore
         .rpc('increment_follower_counter', {user_id: TEST_ID})
         expect(response.data).to.be.null
@@ -118,7 +118,7 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
     })
 
     it('the profile_counter follower decrement function is not publicly available', async (): Promise<void> => {
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         // @ts-ignore
         .rpc('decrement_follower_counter', {user_id: TEST_ID})
         expect(response.data).to.be.null
@@ -126,7 +126,7 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
     })
 
     it('the insert_following_follower_relationship function is not publicly available', async (): Promise<void> => {
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         // @ts-ignore
         .rpc('insert_following_follower_relationship', {user_id: TEST_ID})
         expect(response.data).to.be.null
@@ -134,7 +134,7 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
     })
 
     it('the delete_following_follower_relationship function is not publicly available', async (): Promise<void> => {
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         // @ts-ignore
         .rpc('delete_following_follower_relationship', {user_id: TEST_ID})
         expect(response.data).to.be.null
@@ -142,7 +142,7 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
     })
 
     it('the profile_counter api table not public selectable', async (): Promise<void> => {
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         // @ts-ignore
         .from('profiles_counters')
         .select('')
@@ -153,7 +153,7 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
     })
 
     it('the following_profiles api table not public selectable', async (): Promise<void> => {
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         // @ts-ignore
         .from('following_profiles')
         .select('')
@@ -164,7 +164,7 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
     })
 
     it('an authenticated user only checks if he follows a user and not if other user follow each other', async (): Promise<void> => {
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         .rpc('check_if_following',
             {
                 following_id: TEST_ID,
@@ -177,7 +177,7 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
     })
 
     it('an authenticated user can only view its own followings', async (): Promise<void> => {
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         .rpc('read_following_of_user',
             {
                 // @ts-ignore
@@ -189,7 +189,7 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
     })
 
     it('an authenticated user can only view its own follower', async (): Promise<void> => {
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         .rpc('read_follower_of_user',
             {
                 // @ts-ignore
@@ -201,9 +201,9 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
     })
 
     it('a non authenticated user can not view counters', async (): Promise<void> => {
-        supabasePublicClient.auth.signOut()
+        supabaseAuthenticatedClient.auth.signOut()
 
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         .rpc('read_profile_counters',
             {
                 user_id: TEST_ID
@@ -214,7 +214,7 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
     })
 
     it('an authenticated user can only update its own receive_notification status.', async (): Promise<void> => {
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         .rpc('update_receive_notifications_from_follow',
             {
                 // @ts-ignore

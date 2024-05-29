@@ -15,14 +15,14 @@ import {SessionStoreService} from "./session.store.service";
 import {Router} from "@angular/router";
 import {DatabaseOverwritten} from "../../../../supabase/types/supabase.modified";
 import {ErrorStoreService} from "../../signal-store/error-store.service";
-import {supabasePublicClient} from "../supabase-public-client";
+import {supabaseAuthenticatedClient} from "../supabase-authenticated-client";
 import {TuiAlertService} from "@taiga-ui/core";
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthenticationService {
-    private readonly supabaseClient: SupabaseClient<DatabaseOverwritten> = supabasePublicClient;
+    private readonly supabaseClient: SupabaseClient<DatabaseOverwritten> = supabaseAuthenticatedClient;
 
     constructor(
         private readonly notificationService: ErrorStoreService,

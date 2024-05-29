@@ -1,4 +1,4 @@
-import {supabasePublicClient} from "../../src/app/auth/supabase-public-client";
+import {supabaseAuthenticatedClient} from "../../src/app/auth/supabase-authenticated-client";
 import {AuthTokenResponse} from "@supabase/supabase-js";
 import {AUTH_DATA1, AUTH_DATA9, AuthData} from "../../seed_and_test_data/01_test_auth";
 import {Group, GROUP1} from "../../seed_and_test_data/07_test_groups";
@@ -20,7 +20,7 @@ describe(`Negative api tests for the group following feature show that `, async 
     })
 
     beforeEach(async (): Promise<void> => {
-        const response: AuthTokenResponse = await supabasePublicClient.auth.signInWithPassword(
+        const response: AuthTokenResponse = await supabaseAuthenticatedClient.auth.signInWithPassword(
             {
                 email: followUser.email,
                 password: followUser.password,
@@ -33,7 +33,7 @@ describe(`Negative api tests for the group following feature show that `, async 
     })
 
     it('a non admin (e.g. member or no member) can not view followers of a group', async (): Promise<void> => {
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         .rpc('read_follower_of_group',
             {
                 group_id_in: GROUP_TEST_ID
@@ -47,7 +47,7 @@ describe(`Negative api tests for the group following feature show that `, async 
 
     it('an authenticated user can call the follow group transaction but can not call it twice', async (): Promise<void> => {
         cy.resetSupabase()
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         .rpc('follow_group_transaction',
             {
                 following_id: GROUP_TEST_ID,
@@ -56,7 +56,7 @@ describe(`Negative api tests for the group following feature show that `, async 
         expect(response.data).to.be.null
         expect(response.error).to.be.null
 
-        const response2 = await supabasePublicClient
+        const response2 = await supabaseAuthenticatedClient
         .rpc('follow_group_transaction',
             {
                 following_id: GROUP_TEST_ID,
@@ -69,7 +69,7 @@ describe(`Negative api tests for the group following feature show that `, async 
 
     it('an authenticated user can call the unfollow group transaction but can not call it twice', async (): Promise<void> => {
         cy.resetSupabase()
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         .rpc('unfollow_group_transaction',
             {
                 following_id: GROUP_TEST_ID,
@@ -78,7 +78,7 @@ describe(`Negative api tests for the group following feature show that `, async 
         expect(response.data).to.be.null
         expect(response.error).to.be.null
 
-        const response2 = await supabasePublicClient
+        const response2 = await supabaseAuthenticatedClient
         .rpc('unfollow_group_transaction',
             {
                 following_id: GROUP_TEST_ID,
@@ -89,9 +89,9 @@ describe(`Negative api tests for the group following feature show that `, async 
     })
 
     it('a non authenticated user can not call the follow group transaction', async (): Promise<void> => {
-        await supabasePublicClient.auth.signOut()
+        await supabaseAuthenticatedClient.auth.signOut()
 
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         .rpc('follow_group_transaction',
             {
                 following_id: GROUP_TEST_ID,
@@ -102,9 +102,9 @@ describe(`Negative api tests for the group following feature show that `, async 
     })
 
     it('a non authenticated user can not execute the unfollow group transaction', async (): Promise<void> => {
-        await supabasePublicClient.auth.signOut()
+        await supabaseAuthenticatedClient.auth.signOut()
 
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         .rpc('unfollow_group_transaction',
             {
                 following_id: GROUP_TEST_ID,
@@ -115,7 +115,7 @@ describe(`Negative api tests for the group following feature show that `, async 
     })
 
     it('the group_counter  increment function is not publicly available', async (): Promise<void> => {
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         // @ts-ignore
         .rpc('increment_group_follower_counter', {user_id: GROUP_TEST_ID})
         expect(response.data).to.be.null
@@ -123,7 +123,7 @@ describe(`Negative api tests for the group following feature show that `, async 
     })
 
     it('the group_counter following decrement function is not publicly available', async (): Promise<void> => {
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         // @ts-ignore
         .rpc('decrement_group_follower_counter', {user_id: GROUP_TEST_ID})
         expect(response.data).to.be.null
@@ -131,7 +131,7 @@ describe(`Negative api tests for the group following feature show that `, async 
     })
 
     it('the group_counter following increment function is not publicly available', async (): Promise<void> => {
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         // @ts-ignore
         .rpc('increment_group_following_counter', {user_id: GROUP_TEST_ID})
         expect(response.data).to.be.null
@@ -139,7 +139,7 @@ describe(`Negative api tests for the group following feature show that `, async 
     })
 
     it('the profile_counter following decrement function is not publicly available', async (): Promise<void> => {
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         // @ts-ignore
         .rpc('decrement_group_following_counter', {user_id: GROUP_TEST_ID})
         expect(response.data).to.be.null
@@ -147,7 +147,7 @@ describe(`Negative api tests for the group following feature show that `, async 
     })
 
     it('the create_group_following_follower_relationship function is not publicly available', async (): Promise<void> => {
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         // @ts-ignore
         .rpc('create_group_following_follower_relationship', {user_id: GROUP_TEST_ID})
         expect(response.data).to.be.null
@@ -155,7 +155,7 @@ describe(`Negative api tests for the group following feature show that `, async 
     })
 
     it('the delete_group_following_follower_relationship function is not publicly available', async (): Promise<void> => {
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         // @ts-ignore
         .rpc('delete_group_following_follower_relationship', {user_id: GROUP_TEST_ID})
         expect(response.data).to.be.null
@@ -163,7 +163,7 @@ describe(`Negative api tests for the group following feature show that `, async 
     })
 
     it('the group_counter api table not public selectable', async (): Promise<void> => {
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         // @ts-ignore
         .from('groups_counters')
         .select('')
@@ -174,7 +174,7 @@ describe(`Negative api tests for the group following feature show that `, async 
     })
 
     it('the following_groups api table not public selectable', async (): Promise<void> => {
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         // @ts-ignore
         .from('following_groups')
         .select('')
@@ -185,7 +185,7 @@ describe(`Negative api tests for the group following feature show that `, async 
     })
 
     it('an authenticated user only checks if he follows a user and not if other user follow each other', async (): Promise<void> => {
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         .rpc('check_if_following_group',
             {
                 following_id: GROUP_TEST_ID,
@@ -198,7 +198,7 @@ describe(`Negative api tests for the group following feature show that `, async 
     })
 
     it('an authenticated user can only view its own followings', async (): Promise<void> => {
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         .rpc('read_group_followings_of_user',
             {
                 // @ts-ignore
@@ -210,9 +210,9 @@ describe(`Negative api tests for the group following feature show that `, async 
     })
 
     it('a non authenticated user can not view counters', async (): Promise<void> => {
-        supabasePublicClient.auth.signOut()
+        supabaseAuthenticatedClient.auth.signOut()
 
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         .rpc('read_group_counter',
             {
                 group_id_in: GROUP_TEST_ID
@@ -232,7 +232,7 @@ describe(`Negative api tests for the group following feature show that `, async 
         //     },
         // )
 
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         .rpc('remove_group_follower_transaction',
             {
                 follower_id: followUser.id,// USER_TEST_ID,

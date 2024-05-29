@@ -7,7 +7,7 @@ import {
     SupabaseClient
 } from "@supabase/supabase-js";
 import {DatabaseOverwritten} from "../../../../../supabase/types/supabase.modified";
-import {supabasePublicClient} from "../../../auth/supabase-public-client";
+import {supabaseAuthenticatedClient} from "../../../auth/supabase-authenticated-client";
 import {SupabaseObjectReturn, SupabaseTable} from "../../../../../supabase/types/supabase.shorthand-types";
 import {SessionStoreService} from "../../../auth/services/session.store.service";
 
@@ -15,7 +15,7 @@ import {SessionStoreService} from "../../../auth/services/session.store.service"
     providedIn: 'root'
 })
 export class NotificationBadgeActionService {
-    private readonly supabaseClient: SupabaseClient<DatabaseOverwritten> = supabasePublicClient;
+    private readonly supabaseClient: SupabaseClient<DatabaseOverwritten> = supabaseAuthenticatedClient;
 
     private channel: RealtimeChannel = this.supabaseClient
     .channel('profiles_counters')
@@ -55,7 +55,7 @@ export class NotificationBadgeActionService {
 
     ngOnDestroy(): void {
         console.log('destoyed')
-        supabasePublicClient.removeAllChannels()
+        supabaseAuthenticatedClient.removeAllChannels()
         // this.channel.unsubscribe()
     }
 }

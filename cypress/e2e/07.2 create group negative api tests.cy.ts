@@ -1,4 +1,4 @@
-import {supabasePublicClient} from "../../src/app/auth/supabase-public-client";
+import {supabaseAuthenticatedClient} from "../../src/app/auth/supabase-authenticated-client";
 import {AUTH_DATA1, AUTH_DATA2, AuthData} from "../../seed_and_test_data/01_test_auth";
 import {AuthTokenResponse} from "@supabase/supabase-js";
 import {POSTGRES_ERRORS} from "../fixtures/postgres_errors";
@@ -12,7 +12,7 @@ describe(`Negative api tests for profile_counter table show that `, async (): Pr
     const TEST_ID: string = otherUser.id;
 
     beforeEach(async (): Promise<void> => {
-        const response: AuthTokenResponse = await supabasePublicClient.auth.signInWithPassword(
+        const response: AuthTokenResponse = await supabaseAuthenticatedClient.auth.signInWithPassword(
             {
                 email: signedInUserAuth.email,
                 password: signedInUserAuth.password,
@@ -25,9 +25,9 @@ describe(`Negative api tests for profile_counter table show that `, async (): Pr
     })
 
     it('a non authenticated user calling the create group transaction should return an error.', async (): Promise<void> => {
-        await supabasePublicClient.auth.signOut()
+        await supabaseAuthenticatedClient.auth.signOut()
 
-        const response = await supabasePublicClient
+        const response = await supabaseAuthenticatedClient
         .rpc('create_group_transaction',
             {
                 name: "test",
