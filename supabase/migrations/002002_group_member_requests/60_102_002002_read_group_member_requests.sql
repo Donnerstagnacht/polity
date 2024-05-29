@@ -36,7 +36,7 @@ BEGIN
             hidden.group_member_requests.group_id = _group_id;
 
     IF NOT FOUND THEN
-        RAISE EXCEPTION 'No group member request found for group id % and user id %', _group_id
+        RAISE EXCEPTION 'No group member request found for group id %', _group_id
             USING ERRCODE = 'P0002';
     END IF;
 END;
