@@ -22,7 +22,7 @@ export class HomeComponent {
     protected sessionId: string | null;
 
     protected isProfileLoading: WritableSignal<boolean> = signal(true)
-    protected profile: WritableSignal<SupabaseObjectReturn<'read_user'> | null> = signal(null)
+    protected profile: WritableSignal<SupabaseObjectReturn<'read_profile'> | null> = signal(null)
 
     protected areGroupsLoading: WritableSignal<boolean> = signal(true)
     protected groupsOfUser: WritableSignal<SupabaseObjectReturn<'read_groups_of_user'>[] | null> = signal(null)
