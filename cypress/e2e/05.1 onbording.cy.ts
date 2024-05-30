@@ -27,7 +27,7 @@ Sizes.forEach((size: Size): void => {
             cy.signIn(userFirstLoginDoingWelcomeTutorialAuth);
             cy.interceptSupabaseCall('read_assistant')
             .as('loadAssistant')
-            cy.interceptSupabaseCall('read_user')
+            cy.interceptSupabaseCall('read_profile')
             .as('loadUser')
             cy.wait(['@loadAssistant', '@loadUser'])
 
@@ -59,7 +59,7 @@ Sizes.forEach((size: Size): void => {
             cy.signIn(userFirstLoginDoingWelcomeTutorialAuth);
             cy.interceptSupabaseCall('read_assistant')
             .as('loadAssistant')
-            cy.interceptSupabaseCall('read_user')
+            cy.interceptSupabaseCall('read_profile')
             .as('loadUser')
             cy.wait(['@loadAssistant', '@loadUser'])
 
@@ -76,7 +76,7 @@ Sizes.forEach((size: Size): void => {
             cy.signIn(userDoingProfileTutorialAuth);
             cy.interceptSupabaseCall('read_assistant')
             .as('loadAssistant')
-            cy.interceptSupabaseCall('read_user')
+            cy.interceptSupabaseCall('read_profile')
             .as('loadUser')
             cy.wait(['@loadAssistant', '@loadUser'])
 
@@ -106,7 +106,7 @@ Sizes.forEach((size: Size): void => {
             cy.signIn(userDoingSearchTutorialAuth);
             cy.interceptSupabaseCall('read_assistant')
             .as('loadAssistant')
-            cy.interceptSupabaseCall('read_user')
+            cy.interceptSupabaseCall('read_profile')
             .as('loadUser')
             cy.wait(['@loadAssistant', '@loadUser'])
 
@@ -137,7 +137,7 @@ Sizes.forEach((size: Size): void => {
             cy.signIn(userRestartingTutorialAuth);
             cy.interceptSupabaseCall('read_assistant')
             .as('loadAssistant')
-            cy.interceptSupabaseCall('read_user')
+            cy.interceptSupabaseCall('read_profile')
             .as('loadUser')
             cy.wait(['@loadAssistant', '@loadUser'])
 
@@ -176,7 +176,7 @@ Sizes.forEach((size: Size): void => {
             cy.signIn(userDoingProfileTutorialAuth);
             cy.interceptSupabaseCall('read_assistant')
             .as('loadAssistant')
-            cy.interceptSupabaseCall('read_user')
+            cy.interceptSupabaseCall('read_profile')
             .as('loadUser')
             cy.wait(['@loadAssistant', '@loadUser'])
 

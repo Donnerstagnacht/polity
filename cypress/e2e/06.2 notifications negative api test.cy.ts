@@ -26,9 +26,9 @@ describe(`Negative api tests for the notifications feature show that `, async ()
 
     it('an authenticated user can call the follow transaction but can not call it twice', async (): Promise<void> => {
         const response = await supabaseAuthenticatedClient
-        .rpc('select_unread_notifications_counter', {
+        .rpc('read_unread_notifications_counter', {
             // @ts-ignore
-            user_id: TEST_ID
+            _user_id: TEST_ID
         })
         expect(response.data).to.be.null
         expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
@@ -36,9 +36,9 @@ describe(`Negative api tests for the notifications feature show that `, async ()
 
     it('an authenticated user can call the follow transaction but can not call it twice', async (): Promise<void> => {
         const response = await supabaseAuthenticatedClient
-        .rpc('read_notifications_of_users', {
+        .rpc('read_notifications_of_user', {
             // @ts-ignore
-            user_id: TEST_ID
+            _user_id: TEST_ID
         })
         expect(response.data).to.be.null
         expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)

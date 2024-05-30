@@ -32,15 +32,14 @@ describe(`Negative api tests for profile_counter table show that `, async (): Pr
         await supabaseAuthenticatedClient.auth.signOut()
 
         const response = await supabaseAuthenticatedClient
-        .rpc('update_user')
+        .rpc('update_profile')
         expect(response.data).to.be.null
         expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.noPermission)
     })
 
     it('an authenticated user can only update its own profile', async (): Promise<void> => {
         const response = await supabaseAuthenticatedClient
-        // @ts-ignore
-        .rpc('update_user', {user_id: TEST_ID})
+        .rpc('update_profile', {_first_name: TEST_ID})
         expect(response.data).to.be.null
         expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing)
     })
@@ -48,7 +47,7 @@ describe(`Negative api tests for profile_counter table show that `, async (): Pr
     it('a non authenticated user can not view profiles', async (): Promise<void> => {
         await supabaseAuthenticatedClient.auth.signOut()
         const response = await supabaseAuthenticatedClient
-        .rpc('read_user', {user_id: TEST_ID})
+        .rpc('read_profile', {_user_id: TEST_ID})
         expect(response.data).to.be.null
         expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.noPermission)
     })

@@ -27,18 +27,18 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
     it('an authenticated user can call the follow transaction but can not call it twice', async (): Promise<void> => {
         cy.resetSupabase()
         const response = await supabaseAuthenticatedClient
-        .rpc('follow_transaction',
+        .rpc('follow_profile_transaction',
             {
-                following_id: TEST_ID,
+                _following_id: TEST_ID,
             },
         )
         expect(response.data).to.be.null
         expect(response.error).to.be.null
 
         const response2 = await supabaseAuthenticatedClient
-        .rpc('follow_transaction',
+        .rpc('follow_profile_transaction',
             {
-                following_id: TEST_ID,
+                _following_id: TEST_ID,
             },
         )
         expect(response2.data).to.be.null
@@ -49,18 +49,18 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
     it('an authenticated user can call the unfollow transaction but can not call it twice', async (): Promise<void> => {
         cy.resetSupabase()
         const response = await supabaseAuthenticatedClient
-        .rpc('unfollow_transaction',
+        .rpc('unfollow_profile_transaction',
             {
-                following_id: TEST_ID,
+                _following_id: TEST_ID,
             },
         )
         expect(response.data).to.be.null
         expect(response.error).to.be.null
 
         const response2 = await supabaseAuthenticatedClient
-        .rpc('unfollow_transaction',
+        .rpc('unfollow_profile_transaction',
             {
-                following_id: TEST_ID,
+                _following_id: TEST_ID,
             },
         )
         expect(response2.data).to.be.null
@@ -71,9 +71,9 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
         await supabaseAuthenticatedClient.auth.signOut()
 
         const response = await supabaseAuthenticatedClient
-        .rpc('follow_transaction',
+        .rpc('follow_profile_transaction',
             {
-                following_id: TEST_ID,
+                _following_id: TEST_ID,
             },
         )
         expect(response.data).to.be.null
@@ -84,9 +84,9 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
         await supabaseAuthenticatedClient.auth.signOut()
 
         const response = await supabaseAuthenticatedClient
-        .rpc('unfollow_transaction',
+        .rpc('unfollow_profile_transaction',
             {
-                following_id: TEST_ID,
+                _following_id: TEST_ID,
             },
         )
         expect(response.data).to.be.null
@@ -165,9 +165,9 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
 
     it('an authenticated user only checks if he follows a user and not if other user follow each other', async (): Promise<void> => {
         const response = await supabaseAuthenticatedClient
-        .rpc('check_if_following',
+        .rpc('check_if_user_follows_profile',
             {
-                following_id: TEST_ID,
+                _following_id: TEST_ID,
                 // @ts-ignore
                 userid: TEST_ID
             },
@@ -178,10 +178,10 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
 
     it('an authenticated user can only view its own followings', async (): Promise<void> => {
         const response = await supabaseAuthenticatedClient
-        .rpc('read_following_of_user',
+        .rpc('read_followings_of_user',
             {
                 // @ts-ignore
-                userid: TEST_ID
+                _userid: TEST_ID
             },
         )
         expect(response.data).to.be.null
@@ -190,10 +190,10 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
 
     it('an authenticated user can only view its own follower', async (): Promise<void> => {
         const response = await supabaseAuthenticatedClient
-        .rpc('read_follower_of_user',
+        .rpc('read_followers_of_user',
             {
                 // @ts-ignore
-                userid: TEST_ID
+                _userid: TEST_ID
             },
         )
         expect(response.data).to.be.null
@@ -206,7 +206,7 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
         const response = await supabaseAuthenticatedClient
         .rpc('read_profile_counters',
             {
-                user_id: TEST_ID
+                _user_id: TEST_ID
             },
         )
         expect(response.data).to.be.null
@@ -215,10 +215,10 @@ describe(`Negative api tests for the following feature show that `, async (): Pr
 
     it('an authenticated user can only update its own receive_notification status.', async (): Promise<void> => {
         const response = await supabaseAuthenticatedClient
-        .rpc('update_receive_notifications_from_follow',
+        .rpc('update_profile_receive_notifications_from_follow',
             {
                 // @ts-ignore
-                user_id: TEST_ID
+                _user_id: TEST_ID
             },
         )
         expect(response.data).to.be.null

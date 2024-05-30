@@ -4,14 +4,8 @@ CREATE POLICY "Users can follow other users."
     FOR INSERT
     TO authenticated
     WITH CHECK (
-    EXISTS (
-        SELECT
-            1
-        FROM
-            hidden.following_profiles
-        WHERE
-            follower = auth.uid()
-    ));
+    follower = auth.uid()
+    );
 
 DROP POLICY IF EXISTS "Users can read their followers." ON hidden.following_profiles;
 CREATE POLICY "Users can read their followers."
@@ -19,14 +13,8 @@ CREATE POLICY "Users can read their followers."
     FOR SELECT
     TO authenticated
     USING (
-    EXISTS (
-        SELECT
-            1
-        FROM
-            hidden.following_profiles
-        WHERE
-            following = auth.uid()
-    ));
+    following = auth.uid()
+    );
 
 DROP POLICY IF EXISTS "Users can read their followings." ON hidden.following_profiles;
 CREATE POLICY "Users can read their followings."
@@ -34,14 +22,8 @@ CREATE POLICY "Users can read their followings."
     FOR SELECT
     TO authenticated
     USING (
-    EXISTS (
-        SELECT
-            1
-        FROM
-            hidden.following_profiles
-        WHERE
-            follower = auth.uid()
-    ));
+    follower = auth.uid()
+    );
 
 
 DROP POLICY IF EXISTS "Users can delete their own followers."
@@ -51,14 +33,8 @@ CREATE POLICY "Users can delete their own followers."
     FOR DELETE
     TO authenticated
     USING (
-    EXISTS (
-        SELECT
-            1
-        FROM
-            hidden.following_profiles
-        WHERE
-            following = auth.uid()
-    ));
+    following = auth.uid()
+    );
 
 DROP POLICY IF EXISTS "Users can delete their own followings."
     ON hidden.following_profiles;
@@ -67,11 +43,5 @@ CREATE POLICY "Users can delete their own followings."
     FOR DELETE
     TO authenticated
     USING (
-    EXISTS (
-        SELECT
-            1
-        FROM
-            hidden.following_profiles
-        WHERE
-            follower = auth.uid()
-    ));
+    follower = auth.uid()
+    );

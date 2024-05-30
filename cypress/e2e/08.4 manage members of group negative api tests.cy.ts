@@ -41,7 +41,7 @@ describe(`Negative api tests for the group membership management of a group show
         expect(token).to.be.not.null
 
         const response = await supabaseAuthenticatedClient
-        .rpc('read_group_members', {group_id_in: nonMemberGroup.id})
+        .rpc('read_group_members', {_group_id: nonMemberGroup.id})
         expect(response.data).to.be.an('array').empty
         expect(response.error?.code).to.be.undefined
     })
@@ -59,7 +59,7 @@ describe(`Negative api tests for the group membership management of a group show
         expect(token).to.be.not.null
 
         const response = await supabaseAuthenticatedClient
-        .rpc('leave_group_by_membership_id_transaction', {membership_id_in: membership.id})
+        .rpc('leave_group_by_membership_id_transaction', {_membership_id: membership.id})
         expect(response.data).to.be.null
         expect(response.error?.code).to.be.undefined
     })
@@ -78,7 +78,7 @@ describe(`Negative api tests for the group membership management of a group show
         expect(token).to.be.not.null
 
         const response = await supabaseAuthenticatedClient
-        .rpc('read_group_member_requests', {group_id_in: memberGroup.id})
+        .rpc('read_group_member_requests', {_group_id: memberGroup.id})
         expect(response.data).to.be.an('array').empty
         expect(response.error?.code).to.be.undefined
     })
@@ -97,7 +97,7 @@ describe(`Negative api tests for the group membership management of a group show
         expect(token).to.be.not.null
 
         const response = await supabaseAuthenticatedClient
-        .rpc('accept_group_membership_request_transaction', {request_id: memberGroup.id})
+        .rpc('accept_group_membership_request_transaction', {_request_id: memberGroup.id})
         expect(response.data).to.be.null
         expect(response.error?.code).to.be.oneOf([POSTGRES_ERRORS.noPermission, POSTGRES_ERRORS.function_not_existing])
     })
@@ -116,8 +116,8 @@ describe(`Negative api tests for the group membership management of a group show
         expect(token).to.be.not.null
 
         const response = await supabaseAuthenticatedClient
-        .rpc('delete_group_member_request_by_id', {request_id: memberGroup.id})
-        expect(response.data?.id).to.be.null
+        .rpc('delete_group_member_request_by_id', {_request_id: memberGroup.id})
+        expect(response.data).to.be.null
         expect(response.error?.code).to.be.undefined
     })
 
@@ -135,7 +135,7 @@ describe(`Negative api tests for the group membership management of a group show
         expect(token).to.be.not.null
 
         const response = await supabaseAuthenticatedClient
-        .rpc('read_group_member_invitations', {group_id_in: memberGroup.id})
+        .rpc('read_group_member_invitations', {_group_id: memberGroup.id})
         expect(response.data).to.be.an('array').empty
         expect(response.error?.code).to.be.undefined
     })
@@ -154,8 +154,8 @@ describe(`Negative api tests for the group membership management of a group show
 
         const response = await supabaseAuthenticatedClient
         .rpc('create_group_member_invitation', {
-            group_id: memberGroup.id,
-            member_id: invitedUser.id
+            _group_id: memberGroup.id,
+            _member_id: invitedUser.id
         })
         expect(response.data).to.be.null
         expect(response.error?.code).to.be.undefined

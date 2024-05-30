@@ -210,7 +210,7 @@ Sizes.forEach((size: Size): void => {
             .shouldBeVisible()
             .should('have.text', '3')
 
-            cy.interceptSupabaseCall('read_group_columns')
+            cy.interceptSupabaseCall('read_group')
             .as('readGroupColumns')
             cy.interceptSupabaseCall('check_group_membership_status')
             .as('checkGroupMembershipStatus')
@@ -258,7 +258,7 @@ Sizes.forEach((size: Size): void => {
 
             cy.searchGroup(groupToWithdrawRequestFrom.name)
 
-            cy.interceptSupabaseCall('read_group_columns')
+            cy.interceptSupabaseCall('read_group')
             .as('groupColumns')
 
             cy.interceptSupabaseCall('check_group_membership_status')
@@ -297,7 +297,7 @@ Sizes.forEach((size: Size): void => {
             cy.signIn(signedInUserAuthForInvitation)
             cy.searchGroup(groupWithInvitationToDecide.name)
 
-            cy.interceptSupabaseCall('read_group_columns')
+            cy.interceptSupabaseCall('read_group')
             .as('groupColumns')
 
             cy.interceptSupabaseCall('check_group_membership_status')
@@ -343,15 +343,15 @@ Sizes.forEach((size: Size): void => {
             cy.interceptSupabaseCall('read_profile_counters')
             .as('readProfileCounters')
 
-            cy.interceptSupabaseCall('read_user')
-            .as('readUser')
+            cy.interceptSupabaseCall('read_profile')
+            .as('readProfile')
 
             cy.getDataCy('user-search-results')
             .contains(signedInUserProfileForInvitation.first_name)
             .first()
             .click()
 
-            cy.wait(['@readProfileCounters', '@readUser'])
+            cy.wait(['@readProfileCounters', '@readProfile'])
 
             cy.getDataCy('membershipCounter')
             .shouldBeVisible()
@@ -362,8 +362,8 @@ Sizes.forEach((size: Size): void => {
             cy.signIn(signedInUserAuthForInvitation)
             cy.searchGroup(groupWithInvitationToDecide.name)
 
-            cy.interceptSupabaseCall('read_group_columns')
-            .as('groupColumns')
+            cy.interceptSupabaseCall('read_group')
+            .as('readGroup')
 
             cy.interceptSupabaseCall('check_group_membership_status')
             .as('groupMembershipStatus')
@@ -373,7 +373,7 @@ Sizes.forEach((size: Size): void => {
             .first()
             .click()
 
-            cy.wait(['@groupColumns', '@groupMembershipStatus'])
+            cy.wait(['@readGroup', '@groupMembershipStatus'])
 
             cy.interceptSupabaseCall('delete_group_member_invitation')
             .as('deleteGroupMemberInvitation')

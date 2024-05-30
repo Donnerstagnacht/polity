@@ -35,7 +35,7 @@ describe(`Negative api tests for the assistant feature show that `, async (): Pr
     it('an authenticated user can only update its own first_sign_in status.', async (): Promise<void> => {
         const response = await supabaseAuthenticatedClient
         .rpc('update_first_sign_in', {
-            new_status: false,
+            _new_status: false,
             // @ts-ignore
             user_id: TEST_ID
         })
@@ -46,7 +46,7 @@ describe(`Negative api tests for the assistant feature show that `, async (): Pr
     it('an authenticated user can only update its own last_tutorial status.', async (): Promise<void> => {
         const response = await supabaseAuthenticatedClient
         .rpc('update_last_tutorial', {
-            new_status: 'welcome',
+            _new_status: 'welcome',
             // @ts-ignore
             user_id: TEST_ID
         })
@@ -57,7 +57,7 @@ describe(`Negative api tests for the assistant feature show that `, async (): Pr
     it('an authenticated user can only update its own skip_tutorial status.', async (): Promise<void> => {
         const response = await supabaseAuthenticatedClient
         .rpc('update_skip_tutorial', {
-            new_status: true,
+            _new_status: true,
             // @ts-ignore
             user_id: TEST_ID
         })

@@ -27,7 +27,7 @@ describe(`Negative api tests for psearch feature show that `, async (): Promise<
     it('a non authenticated users can not search other users', async (): Promise<void> => {
         await supabaseAuthenticatedClient.auth.signOut()
         const response = await supabaseAuthenticatedClient
-        .rpc('search_user', {search_term: TEST_ID})
+        .rpc('search_user', {_search_term: TEST_ID})
         expect(response.data).to.be.null
         expect(response.error?.code).to.be.oneOf([POSTGRES_ERRORS.noPermission, POSTGRES_ERRORS.function_not_existing])
     })

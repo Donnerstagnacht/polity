@@ -60,16 +60,16 @@ Sizes.forEach((size: Size): void => {
         it('that users can unfollow another groups', (): void => {
             cy.signIn(userWhoFollowsAuth);
 
-            cy.interceptSupabaseCall('read_group_columns')
-            .as('readGroupColumns')
-            cy.interceptSupabaseCall('check_if_following_group')
+            cy.interceptSupabaseCall('read_group')
+            .as('readGroup')
+            cy.interceptSupabaseCall('check_if_user_follows_group')
             .as('checkIfFollowingGroup')
-            cy.interceptSupabaseCall('read_group_counter')
+            cy.interceptSupabaseCall('read_group_counters')
             .as('readGroupCounter')
 
             cy.searchGroup(groupWhichIsUnFollowed.name)
             .click()
-            cy.wait(['@readGroupColumns', '@checkIfFollowingGroup', '@readGroupCounter'])
+            cy.wait(['@readGroup', '@checkIfFollowingGroup', '@readGroupCounter'])
 
             cy.getDataCy('first-name')
             .shouldBeVisible()
@@ -111,17 +111,17 @@ Sizes.forEach((size: Size): void => {
             cy.signIn(userWhoFollowsAuth);
 
             cy.navigateToHome();
-            cy.interceptSupabaseCall('check_if_following')
+            cy.interceptSupabaseCall('check_if_user_follows_profile')
             .as('isFollowing')
             cy.interceptSupabaseCall('read_profile_counters')
             .as('followingCounter')
-            cy.interceptSupabaseCall('read_user')
+            cy.interceptSupabaseCall('read_profile')
             .as('user')
             cy.contains(userWhoFollowsProfile.first_name)
             .click();
             cy.wait(['@isFollowing', '@followingCounter', '@user'])
 
-            cy.interceptSupabaseCall('read_following_of_user').as('loadFollowingOfUser')
+            cy.interceptSupabaseCall('read_followings_of_user').as('loadFollowingsOfUser')
 
             console.log('size width', size.width)
             console.log('sizes[2] width', Sizes[2].width)
@@ -164,13 +164,13 @@ Sizes.forEach((size: Size): void => {
             .first()
             .click()
 
-            cy.interceptSupabaseCall('read_follower_of_group')
-            .as('readFollowerOfGroup')
+            cy.interceptSupabaseCall('read_followers_of_group')
+            .as('readFollowersOfGroup')
 
             cy.getDataCy('editGroupFollower')
             .click()
 
-            cy.wait('@readFollowerOfGroup')
+            cy.wait('@readFollowersOfGroup')
 
             cy.interceptSupabaseCall('remove_group_follower_transaction')
             .as('removeGroupFollowerTransaction')
