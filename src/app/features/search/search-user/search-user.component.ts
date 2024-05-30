@@ -67,7 +67,7 @@ export class SearchUserComponent {
             //     searchTerm = searchTerm.replace(/ /g, '|')
 
             await Promise.all([
-                await this.searchUserActionService.searchUser(searchTerm),
+                this.searchUserActionService.searchUser(searchTerm),
                 this.searchGroupActionService.searchGroup(searchTerm)
             ])
         }
