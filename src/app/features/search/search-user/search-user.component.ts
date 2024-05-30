@@ -31,6 +31,7 @@ export class SearchUserComponent {
     protected loading: WritableSignal<boolean> = signal(false);
     protected noSearchProfileResults: WritableSignal<boolean> = signal(false);
     protected noSearchGroupResults: WritableSignal<boolean> = signal(false);
+    protected dataRequested: WritableSignal<boolean> = signal(false);
 
     protected searchUserResults: WritableSignal<SupabaseObjectReturn<'search_user'>[]> = signal([]);
     protected searchGroupResults: WritableSignal<SupabaseObjectReturn<'search_group'>[]> = signal([]);
@@ -49,8 +50,9 @@ export class SearchUserComponent {
         private readonly searchGroupStoreService: SearchGroupStoreService
     ) {
         this.loading = this.searchUserStoreService.profilSearchResults.loading.getLoading() || this.searchGroupStoreService.groupSearchResults.loading.getLoading();
-        this.noSearchProfileResults = this.searchUserStoreService.profilSearchResults.uiFlagStore.getFlag('noResults')
-        this.noSearchGroupResults = this.searchGroupStoreService.groupSearchResults.uiFlagStore.getFlag('noResults');
+        this.dataRequested = this.searchUserStoreService.profilSearchResults.getDataRequested() || this.searchGroupStoreService.groupSearchResults.getDataRequested();
+        this.noSearchProfileResults = this.searchUserStoreService.profilSearchResults.getNoDataFound();
+        this.noSearchGroupResults = this.searchGroupStoreService.groupSearchResults.getNoDataFound();
         this.searchUserResults = this.searchUserStoreService.profilSearchResults.getObjects();
         this.searchGroupResults = this.searchGroupStoreService.groupSearchResults.getObjects();
         this.searchForm.get('search')?.valueChanges.pipe(
@@ -66,11 +68,6 @@ export class SearchUserComponent {
     private async onKeyUp(): Promise<void> {
         let searchTerm: string | null = this.searchForm.controls.search.value
         if (searchTerm) {
-            //     if (searchTerm.endsWith(' ')) {
-            //         searchTerm = searchTerm.substring(0, searchTerm.length - 1)
-            //     }
-            //     searchTerm = searchTerm.replace(/ /g, '|')
-
             await Promise.all([
                 this.searchUserActionService.searchUser(searchTerm),
                 this.searchGroupActionService.searchGroup(searchTerm)

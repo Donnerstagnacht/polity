@@ -1,4 +1,4 @@
-import {Inject, Injectable, signal, WritableSignal} from '@angular/core';
+import {effect, Inject, Injectable, signal, WritableSignal} from '@angular/core';
 import {TuiDay} from "@taiga-ui/cdk";
 import {WrapperStoreService} from "./wrapper-store.service";
 import {PaginationStoreService} from "./pagination-store.service";
@@ -22,6 +22,8 @@ export class ArrayStoreService<
     FlagKeyList extends string = string> extends WrapperStoreService<FlagKeyList> {
     public readonly pagination: PaginationStoreService;
     public readonly uiFlagStore: FlagStoreService<FlagKeyList>;
+    public dataRequested: WritableSignal<boolean> = signal(false);
+    private noDataFound: WritableSignal<boolean> = signal(false);
     private displayedObjects: WritableSignal<StoredObject[]> = signal([]);
     private storedObjects: WritableSignal<StoredObject[]> = signal([]);
 
@@ -38,6 +40,18 @@ export class ArrayStoreService<
             this.uiFlagStore = new FlagStoreService<FlagKeyList | any>({noFlag: signal(false)});
         }
         this.pagination = new PaginationStoreService(this.step);
+
+        effect(() => {
+            if (this.dataRequested()) {
+                if (this.storedObjects().length > 0) {
+                    console.log('stored object change', this.storedObjects())
+                    this.noDataFound.set(false)
+                } else {
+                    console.log('still empty')
+                    this.noDataFound.set(true)
+                }
+            }
+        }, {allowSignalWrites: true});
     }
 
     /**
@@ -68,6 +82,7 @@ export class ArrayStoreService<
      * @return {void}
      */
     public setObjects(objects: StoredObject[]): void {
+        this.dataRequested.set(true);
         if (!this.usePagination) {
             this.storedObjects.set(objects);
             this.displayedObjects.set(objects);
@@ -293,6 +308,26 @@ export class ArrayStoreService<
             return comparison;
         });
         return signal(results)
+    }
+
+    /**
+     * Returns a flag which is true if no data is stored in the array.
+     * If a data query returns an empty array, this flag is set to true even the array is empty and the data
+     * requested flag is true.
+     *
+     * @return {WritableSignal<boolean>} true if no data is stored in the array
+     */
+    public getNoDataFound(): WritableSignal<boolean> {
+        return this.noDataFound;
+    }
+
+    /**
+     * Returns a flag which is true if data was already requested.
+     *
+     * @return {WritableSignal<boolean>} true if data is already requested.
+     */
+    public getDataRequested(): WritableSignal<boolean> {
+        return this.dataRequested;
     }
 
     private initialObjectsWithPagination(): StoredObject[] {

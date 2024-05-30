@@ -26,7 +26,6 @@ export class SearchGroupActionService {
     public async searchGroup(searchTerm: string): Promise<void> {
         searchTerm = this.searchUtilitiesService.replaceSpacesWithPipe(searchTerm);
         this.searchStoreService.groupSearchResults.resetObjects()
-        this.searchStoreService.groupSearchResults.uiFlagStore.setFlagFalse('noResults')
         const response: PostgrestSingleResponse<SupabaseObjectReturn<'search_group'>[]> =
             await this.searchStoreService.groupSearchResults.manageSelectApiCall(async () => {
                     return this.supabaseClient.rpc(
@@ -41,7 +40,6 @@ export class SearchGroupActionService {
         console.log(response.error?.code)
         if (response.error?.code === 'P0002') {
             this.searchStoreService.groupSearchResults.setObjects([])
-            this.searchStoreService.groupSearchResults.uiFlagStore.setFlagTrue('noResults')
         }
     }
 }

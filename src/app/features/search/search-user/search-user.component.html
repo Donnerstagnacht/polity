@@ -57,6 +57,22 @@
     }
 </div>
 <div class="center-grid">
+    @if (loading() && dataRequested()) {
+        <p
+            [attr.data-cy]="'search-loading'"
+        >
+            Suche läuft...
+        </p>
+    }
+    @if (loading() && !dataRequested()) {
+        <p
+            [attr.data-cy]="'search-instruction'"
+        >
+            Suche nach Personen oder Gruppen.
+        </p>
+    }
+</div>
+<div class="center-grid">
 
     @if (noSearchProfileResults()) {
         <p [attr.data-cy]="'no-profile-search-results'">
