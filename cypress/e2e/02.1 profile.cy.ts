@@ -1,9 +1,9 @@
 import {Size, Sizes} from "../fixtures/size";
-import {AUTH_DATA1, AuthData} from "../../seed_and_test_data/01_test_auth";
-import {Profile, PROFILE1, PROFILE2} from "../../seed_and_test_data/02_test_profiles";
+import {AUTH_DATA7, AuthData} from "../../seed_and_test_data/01_test_auth";
+import {Profile, PROFILE2, PROFILE7} from "../../seed_and_test_data/02_test_profiles";
 
-const userWhoEditsItsProfileAuthData: AuthData = AUTH_DATA1;
-const userWhoEditsItsProfileProfileData: Profile = PROFILE1;
+const userWhoEditsItsProfileAuthData: AuthData = AUTH_DATA7;
+const userWhoEditsItsProfileProfileData: Profile = PROFILE7;
 const userWhosProfileIsChecked: Profile = PROFILE2;
 
 Sizes.forEach((size: Size): void => {
