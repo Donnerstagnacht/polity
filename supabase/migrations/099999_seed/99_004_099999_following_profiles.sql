@@ -224,10 +224,6 @@ WITH
                 },
                 {
                     "follower": "fefe27da-66ac-4d08-a8b3-c5adfb9bd5ce",
-                    "following": "b24f9e68-8fac-4525-b001-fffb91704d68"
-                },
-                {
-                    "follower": "fefe27da-66ac-4d08-a8b3-c5adfb9bd5ce",
                     "following": "71aa5d19-43d8-4063-839d-114a0ad49ed7"
                 },
                 {
