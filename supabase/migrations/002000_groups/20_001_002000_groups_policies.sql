@@ -1,23 +1,29 @@
-DROP POLICY IF EXISTS "Public groups can be created by by authenticated users."
-    ON hidden.groups;
-CREATE POLICY "Public groups can be created by by authenticated users."
+DROP POLICY IF EXISTS "Users can create groups." ON hidden.groups;
+CREATE POLICY "Users can create groups."
     ON hidden.groups
     FOR INSERT
     TO authenticated
     WITH CHECK (TRUE);
 
-DROP POLICY IF EXISTS "Public groups are viewable by everyone."
-    ON hidden.groups;
-CREATE POLICY "Public groups are viewable by everyone."
+DROP POLICY IF EXISTS "Users can read groups." ON hidden.groups;
+CREATE POLICY "Users can read groups."
     ON hidden.groups
     FOR SELECT
     USING (TRUE);
 
 -- TODO
-DROP POLICY IF EXISTS "Public groups can be updated by board members and presidents."
+DROP POLICY IF EXISTS "Board members and presidents can update groups."
     ON hidden.groups;
-CREATE POLICY "Public groups can be updated by board members and presidents."
+CREATE POLICY "Board members and presidents can update groups."
     ON hidden.groups
     FOR UPDATE
     TO authenticated
-    USING (TRUE);
+    USING (
+    EXISTS (
+        SELECT
+            1
+        FROM
+            board_memberships_of_authenticated_user AS bm
+        WHERE
+            bm.group_id = id
+    ));

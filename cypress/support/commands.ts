@@ -44,7 +44,7 @@ Cypress.Commands.add('andContain', {prevSubject: 'element'}, (subject, value): v
 });
 
 Cypress.Commands.add('signIn', (profile: AuthData): void => {
-    cy.get('input').clear()
+    cy.get('[data-cy="email"]').children().children().children().children().children().first().clear()
     cy.get('[data-cy="email"]').type(profile.email)
     cy.get('[data-cy="password"]').clear()
     cy.get('[data-cy="password"]').type(profile.password)
