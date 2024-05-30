@@ -7,7 +7,6 @@ type ProfileUIFlags =
     'isFollowing' |
     'isFollowingCheckLoading';
 
-
 @Injectable({
     providedIn: 'root'
 })

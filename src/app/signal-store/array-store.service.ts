@@ -17,7 +17,9 @@ import {FlagStoreService} from "./flag-store.service";
 @Injectable({
     providedIn: 'root'
 })
-export class ArrayStoreService<StoredObject, FlagKeyList extends string = string> extends WrapperStoreService<FlagKeyList> {
+export class ArrayStoreService<
+    StoredObject,
+    FlagKeyList extends string = string> extends WrapperStoreService<FlagKeyList> {
     public readonly pagination: PaginationStoreService;
     public readonly uiFlagStore: FlagStoreService<FlagKeyList>;
     private displayedObjects: WritableSignal<StoredObject[]> = signal([]);
@@ -26,7 +28,8 @@ export class ArrayStoreService<StoredObject, FlagKeyList extends string = string
     constructor(
         @Inject(false) private usePagination: boolean = false,
         @Inject(20) private step: number = 20,
-        @Inject({}) private uiFlags: Record<FlagKeyList, WritableSignal<boolean>> | null = null
+        @Inject({}) private uiFlags: Record<FlagKeyList,
+            WritableSignal<boolean>> | null = null
     ) {
         super();
         if (this.uiFlags) {

@@ -23,12 +23,17 @@ type pathsToValues<StoredObject> = StoredObject extends Record<string, unknown>
 @Injectable({
     providedIn: 'root'
 })
-export class ObjectStoreService<StoredObject, FlagKeyList extends string = string> extends WrapperStoreService<FlagKeyList> {
+export class ObjectStoreService<
+    StoredObject,
+    FlagKeyList extends string = string> extends WrapperStoreService<FlagKeyList> {
     public readonly uiFlagStore: FlagStoreService<FlagKeyList>;
     private storedObject: WritableSignal<StoredObject | null> = signal(null);
     private objectId: string | null = null;
 
-    constructor(@Inject({}) private uiFlags: Record<FlagKeyList, WritableSignal<boolean>> | null = null) {
+    constructor(
+        @Inject({}) private uiFlags: Record<FlagKeyList,
+            WritableSignal<boolean>> | null = null
+    ) {
         super();
         if (this.uiFlags) {
             this.uiFlagStore = new FlagStoreService<FlagKeyList>(this.uiFlags);
