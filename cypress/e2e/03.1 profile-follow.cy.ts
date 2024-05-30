@@ -1,16 +1,16 @@
 import {Size, Sizes} from "../fixtures/size";
-import {AUTH_DATA1, AUTH_DATA2, AUTH_DATA3, AuthData} from "../../seed_and_test_data/01_test_auth";
-import {Profile, PROFILE1, PROFILE2, PROFILE3} from "../../seed_and_test_data/02_test_profiles";
+import {AUTH_DATA2, AUTH_DATA3, AUTH_DATA7, AuthData} from "../../seed_and_test_data/01_test_auth";
+import {Profile, PROFILE2, PROFILE3, PROFILE7} from "../../seed_and_test_data/02_test_profiles";
 import {
-    PROFILE_COUNTER1,
     PROFILE_COUNTER2,
     PROFILE_COUNTER3,
+    PROFILE_COUNTER7,
     ProfileCounter
 } from "../../seed_and_test_data/04_test_profile_counters";
 
-const userWhoFollowsAuth: AuthData = AUTH_DATA1;
-const userWhoFollowsProfile: Profile = PROFILE1;
-const userWhoFollowsCounter: ProfileCounter = PROFILE_COUNTER1;
+const userWhoFollowsAuth: AuthData = AUTH_DATA7;
+const userWhoFollowsProfile: Profile = PROFILE7;
+const userWhoFollowsCounter: ProfileCounter = PROFILE_COUNTER7;
 
 const userWhoIsFollowedAuth: AuthData = AUTH_DATA2;
 const userWhoIsFollowedProfile: Profile = PROFILE2;
