@@ -23,17 +23,17 @@ export class ProfileActionService {
      * @return {Promise<void>}
      */
     public async readProfile(id: string): Promise<void> {
-        await this.profileStoreService.profile.wrapSelectFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_profile'>> = await this.supabase
+        const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_profile'>> = await this.profileStoreService.profile.manageSelectApiCall(async () => {
+            return this.supabase
             .rpc('read_profile', {_user_id: id})
             .single()
             .throwOnError()
-            if (response.data) {
-                const imgPath = await this.supabase.storage.from('profile_images').createSignedUrl(response.data.profile_image_, 3600 * 24 * 7);
-                response.data.profile_image_ = imgPath.data?.signedUrl as string;
-                this.profileStoreService.profile.setObject(response.data);
-            }
         })
+        if (response.data) {
+            const imgPath = await this.supabase.storage.from('profile_images').createSignedUrl(response.data.profile_image_, 3600 * 24 * 7);
+            response.data.profile_image_ = imgPath.data?.signedUrl as string;
+            this.profileStoreService.profile.setObject(response.data);
+        }
     }
 
     /**
@@ -43,18 +43,18 @@ export class ProfileActionService {
      * @return {Promise<void>}
      */
     public async updateProfile(profile: SupabaseObjectReturn<'read_profile'>): Promise<void> {
-        await this.profileStoreService.profile.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'update_profile'>> = await this.supabase
+        const response: PostgrestSingleResponse<SupabaseObjectReturn<'update_profile'>> = await this.profileStoreService.profile.manageUpdateApiCall(async () => {
+            return this.supabase
             .rpc('update_profile', {
                 _first_name: profile.first_name_,
                 _last_name: profile.last_name_,
                 _profile_image: profile.profile_image_
             })
             .single()
-            .throwOnError()
-            if (response.error) throw response.error
-            this.profileStoreService.profile.mutateObject(profile)
         }, true, 'Successful Updated your profile!')
+        if (!response.error) {
+            this.profileStoreService.profile.mutateObject(profile)
+        }
     }
 
     /**
@@ -64,14 +64,12 @@ export class ProfileActionService {
      * @return {Promise<void>}
      */
     async updateProfileImage(imageUrl: string): Promise<void> {
-        await this.profileStoreService.profile.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'update_profile'>> = await this.supabase
+        const response: PostgrestSingleResponse<SupabaseObjectReturn<'update_profile'>> = await this.profileStoreService.profile.manageUpdateApiCall(async () => {
+            return this.supabase
             .rpc('update_profile', {
                 _profile_image: imageUrl
             })
             .single()
-            .throwOnError()
-            if (response.error) throw response.error
         }, true, 'Successful Updated your profile image!')
     }
 

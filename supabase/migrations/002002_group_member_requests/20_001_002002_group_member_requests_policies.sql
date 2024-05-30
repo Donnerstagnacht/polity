@@ -5,15 +5,16 @@ CREATE POLICY "Group member requests can be created by authenticated users who a
     FOR INSERT
     TO authenticated
     WITH CHECK (
-    NOT EXISTS (
-        SELECT
-            1
-        FROM
-            hidden.group_members
-        WHERE
-              group_members.group_id = group_member_requests.group_id
-          AND group_members.member_id = group_member_requests.member_id
-    )
+    TRUE
+--     NOT EXISTS (
+--         SELECT
+--             1
+--         FROM
+--             hidden.group_members
+--         WHERE
+--               group_members.group_id = group_member_requests.group_id
+--           AND group_members.member_id = group_member_requests.member_id
+--     )
     );
 
 DROP POLICY IF EXISTS "Group member requests can be viewed board members and presidents of involved groups and by
@@ -25,24 +26,25 @@ affected users."
     FOR SELECT
     TO authenticated
     USING (
-    EXISTS (
-        SELECT
-            1
-        FROM
-            hidden.group_members
-        WHERE
-             (
-                 group_members.group_id = group_member_requests.group_id
-                     AND group_members.member_id = auth.uid()
-                     AND (
-                     group_members.member_type = 'board_member'
-                         OR
-                     group_members.member_type = 'board_president'
-                     ))
-          OR (
-                 hidden.group_member_requests.member_id = auth.uid()
-                 )
-    )
+    TRUE
+--     EXISTS (
+--         SELECT
+--             1
+--         FROM
+--             hidden.group_members
+--         WHERE
+--              (
+--                  group_members.group_id = group_member_requests.group_id
+--                      AND group_members.member_id = auth.uid()
+--                      AND (
+--                      group_members.member_type = 'board_member'
+--                          OR
+--                      group_members.member_type = 'board_president'
+--                      ))
+--           OR (
+--                  hidden.group_member_requests.member_id = auth.uid()
+--                  )
+--     )
     );
 
 DROP POLICY IF EXISTS "Group member requests can be updated by board members and presidents of involved groups."
@@ -62,21 +64,22 @@ affected users."
     FOR DELETE
     TO authenticated
     USING (
-    EXISTS (
-        SELECT
-            1
-        FROM
-            hidden.group_members
-        WHERE
-            (
-                group_members.group_id = group_member_requests.group_id
-                    AND group_members.member_id = auth.uid()
-                    AND (
-                    group_members.member_type = 'board_member'
-                        OR
-                    group_members.member_type = 'board_president'
-                    ))
-    ) OR (
-        hidden.group_member_requests.member_id = auth.uid()
-        )
+    TRUE
+--     EXISTS (
+--         SELECT
+--             1
+--         FROM
+--             hidden.group_members
+--         WHERE
+--             (
+--                 group_members.group_id = group_member_requests.group_id
+--                     AND group_members.member_id = auth.uid()
+--                     AND (
+--                     group_members.member_type = 'board_member'
+--                         OR
+--                     group_members.member_type = 'board_president'
+--                     ))
+--     ) OR (
+--         hidden.group_member_requests.member_id = auth.uid()
+--         )
     );

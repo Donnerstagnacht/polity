@@ -1,3 +1,17 @@
+DROP VIEW IF EXISTS board_memberships_of_authenticated_user CASCADE;
+CREATE OR REPLACE VIEW board_memberships_of_authenticated_user AS
+SELECT *
+FROM
+    hidden.group_members AS m
+WHERE
+      auth.uid() = m.member_id
+  AND (
+          m.member_type = 'board_member'
+              OR
+          m.member_type = 'board_president'
+          );
+
+
 DROP POLICY IF EXISTS "Users can create groups." ON hidden.groups;
 CREATE POLICY "Users can create groups."
     ON hidden.groups

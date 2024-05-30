@@ -45,21 +45,21 @@ BEGIN
                 SELECT
                     'requested'
                 FROM
-                    hidden.read_group_member_request(
-                        _group_id,
-                        auth_user_id
-                    )
-                --if row returned, return 'requested' instead of the row,
+                    hidden.group_member_requests
+                WHERE
+                      group_id = _group_id
+                  AND member_id = auth_user_id
+                LIMIT 1
             ),
             (
                 SELECT
                     'invited'
                 FROM
-                    hidden.read_group_member_invitation(
-                        _group_id,
-                        auth_user_id
-                    )
-                --if row returned, return 'invited' instead of the row,
+                    hidden.group_invited_members
+                WHERE
+                      group_id = _group_id
+                  AND member_id = auth_user_id
+                LIMIT 1
             ),
             'no_member'
         )

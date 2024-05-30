@@ -40,14 +40,14 @@ export class NotificationBadgeActionService {
     }
 
     public async selectUnreadNotificationsCounter(): Promise<void> {
-        await this.notificationBadgeStoreService.notificationBadge.wrapSelectFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_unread_notifications_counter'>> = await this.supabaseClient.rpc('read_unread_notifications_counter')
+        const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_unread_notifications_counter'>> = await this.notificationBadgeStoreService.notificationBadge.manageSelectApiCall(async () => {
+            return this.supabaseClient.rpc('read_unread_notifications_counter')
             .single()
             .throwOnError()
-            if (response.data) {
-                this.notificationBadgeStoreService.notificationBadge.setObject(response.data);
-            }
         })
+        if (response.data) {
+            this.notificationBadgeStoreService.notificationBadge.setObject(response.data);
+        }
     }
 
     ngOnDestroy(): void {

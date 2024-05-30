@@ -16,17 +16,16 @@ export class ProfileCountersActionService {
     }
 
     public async selectProfileCounter(userId: string): Promise<void> {
-        await this.profileCountersStoreService.profileCounters.wrapSelectFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_profile_counters'>> = await this.supabaseClient.rpc(
+        const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_profile_counters'>> = await this.profileCountersStoreService.profileCounters.manageSelectApiCall(async () => {
+            return this.supabaseClient.rpc(
                 'read_profile_counters',
                 {_user_id: userId}
             )
             .single()
-            .throwOnError();
-            if (response.data) {
-                this.profileCountersStoreService.profileCounters.setObject(response.data);
-            }
         })
+        if (response.data) {
+            this.profileCountersStoreService.profileCounters.setObject(response.data);
+        }
     }
 
 }

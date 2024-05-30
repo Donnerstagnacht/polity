@@ -22,20 +22,19 @@ export class GroupActionService {
      * @return {Promise<void>}
      */
     public async readGroup(id: string): Promise<void> {
-        await this.groupStoreService.group.wrapSelectFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_group'>> = await this.supabase
+        const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_group'>> = await this.groupStoreService.group.manageSelectApiCall(async () => {
+            return this.supabase
             .rpc('read_group', {_group_id: id})
             .single()
-            .throwOnError()
-            if (response.data) {
-                // const imgPath = await this.supabase.storage.from('profile_images').createSignedUrl(response.data.profile_image, 3600 * 24 * 7);
-                // response.data.profile_image = imgPath.data?.signedUrl as string;
-                if (response.data) {
-                    this.groupStoreService.group.setObject(response.data);
-                    console.log(response.data)
-                }
-            }
         })
+        if (response.data) {
+            // const imgPath = await this.supabase.storage.from('profile_images').createSignedUrl(response.data.profile_image, 3600 * 24 * 7);
+            // response.data.profile_image = imgPath.data?.signedUrl as string;
+            if (response.data) {
+                this.groupStoreService.group.setObject(response.data);
+                console.log(response.data)
+            }
+        }
     }
 
     /**

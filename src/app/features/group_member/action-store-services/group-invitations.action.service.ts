@@ -18,20 +18,19 @@ export class GroupInvitationsActionService {
     }
 
     public async readGroupInvitations(): Promise<void> {
-        await this.groupInvitationsStoreService.groupInvitations.wrapSelectFunction(async (): Promise<void> => {
-            const groupId: string | null = this.groupStoreService.group.getObjectId();
-            if (groupId) {
-                const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_group_member_invitations'>[]> = await this.supabaseClient.rpc(
+        const groupId: string | null = this.groupStoreService.group.getObjectId();
+        if (groupId) {
+            const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_group_member_invitations'>[]> = await this.groupInvitationsStoreService.groupInvitations.manageSelectApiCall(async () => {
+                return this.supabaseClient.rpc(
                     'read_group_member_invitations',
                     {
                         _group_id: groupId
                     }
                 )
-                .throwOnError()
-                if (response.data) {
-                    this.groupInvitationsStoreService.groupInvitations.setObjects(response.data)
-                }
+            })
+            if (response.data) {
+                this.groupInvitationsStoreService.groupInvitations.setObjects(response.data)
             }
-        })
+        }
     }
 }

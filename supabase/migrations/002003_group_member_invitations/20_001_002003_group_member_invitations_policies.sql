@@ -5,24 +5,25 @@ CREATE POLICY "Group invited members can be created by board members and preside
     FOR INSERT
     TO authenticated
     WITH CHECK (
-    EXISTS (
-        SELECT
-            1
-        FROM
-            hidden.group_members
-        WHERE
-             (
-                 group_members.group_id = group_invited_members.group_id
-                     AND group_members.member_id = auth.uid()
-                     AND (
-                     group_members.member_type = 'board_member'
-                         OR
-                     group_members.member_type = 'board_president'
-                     ))
-          OR (
-                 hidden.group_invited_members.member_id = auth.uid()
-                 )
-    )
+    TRUE
+--     EXISTS (
+--         SELECT
+--             1
+--         FROM
+--             hidden.group_members
+--         WHERE
+--              (
+--                  group_members.group_id = group_invited_members.group_id
+--                      AND group_members.member_id = auth.uid()
+--                      AND (
+--                      group_members.member_type = 'board_member'
+--                          OR
+--                      group_members.member_type = 'board_president'
+--                      ))
+--           OR (
+--                  hidden.group_invited_members.member_id = auth.uid()
+--                  )
+--     )
     );
 
 -- TODO
@@ -33,24 +34,25 @@ CREATE POLICY "Group invited members are viewable by board members and president
     FOR SELECT
     TO authenticated
     USING (
-    EXISTS (
-        SELECT
-            1
-        FROM
-            hidden.group_members
-        WHERE
-             (
-                 group_members.group_id = group_invited_members.group_id
-                     AND group_members.member_id = auth.uid()
-                     AND (
-                     group_members.member_type = 'board_member'
-                         OR
-                     group_members.member_type = 'board_president'
-                     ))
-          OR (
-                 hidden.group_invited_members.member_id = auth.uid()
-                 )
-    )
+    TRUE
+--     EXISTS (
+--         SELECT
+--             1
+--         FROM
+--             hidden.group_members
+--         WHERE
+--              (
+--                  group_members.group_id = group_invited_members.group_id
+--                      AND group_members.member_id = auth.uid()
+--                      AND (
+--                      group_members.member_type = 'board_member'
+--                          OR
+--                      group_members.member_type = 'board_president'
+--                      ))
+--           OR (
+--                  hidden.group_invited_members.member_id = auth.uid()
+--                  )
+--     )
     );
 
 DROP POLICY IF EXISTS "Group invited members can be updated by board members and presidents of involved groups."
@@ -70,22 +72,23 @@ affected users."
     FOR DELETE
     TO authenticated
     USING (
-    EXISTS (
-        SELECT
-            1
-        FROM
-            hidden.group_members
-        WHERE
-             (
-                 group_members.group_id = group_invited_members.group_id
-                     AND group_members.member_id = auth.uid()
-                     AND (
-                     group_members.member_type = 'board_member'
-                         OR
-                     group_members.member_type = 'board_president'
-                     ))
-          OR (
-                 hidden.group_invited_members.member_id = auth.uid()
-                 )
-    )
+    TRUE
+--     EXISTS (
+--         SELECT
+--             1
+--         FROM
+--             hidden.group_members
+--         WHERE
+--              (
+--                  group_members.group_id = group_invited_members.group_id
+--                      AND group_members.member_id = auth.uid()
+--                      AND (
+--                      group_members.member_type = 'board_member'
+--                          OR
+--                      group_members.member_type = 'board_president'
+--                      ))
+--           OR (
+--                  hidden.group_invited_members.member_id = auth.uid()
+--                  )
+--     )
     );

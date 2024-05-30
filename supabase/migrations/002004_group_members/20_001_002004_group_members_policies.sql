@@ -6,18 +6,7 @@ FROM
 WHERE
     auth.uid() = m.member_id;
 
-DROP VIEW IF EXISTS board_memberships_of_authenticated_user CASCADE;
-CREATE OR REPLACE VIEW board_memberships_of_authenticated_user AS
-SELECT *
-FROM
-    hidden.group_members AS m
-WHERE
-      auth.uid() = m.member_id
-  AND (
-          m.member_type = 'board_member'
-              OR
-          m.member_type = 'board_president'
-          );
+
 
 DROP POLICY IF EXISTS "Group members can be created by board members and presidents of involved groups."
     ON hidden.group_members;
@@ -66,20 +55,21 @@ itself."
     FOR DELETE
     TO authenticated
     USING (
-    EXISTS (
-        SELECT
-            1
-        FROM
-            board_memberships_of_authenticated_user AS bm
-        WHERE
-            -- allows access to all rows which have a group_id included in the board_membership view
-            hidden.group_members.group_id = bm.group_id
-        UNION
-        SELECT
-            1
-        FROM
-            memberships_of_authenticated_user AS m
-        WHERE
-            m.member_id = auth.uid()
-    )
+    TRUE
+--     EXISTS (
+--         SELECT
+--             1
+--         FROM
+--             board_memberships_of_authenticated_user AS bm
+--         WHERE
+--             -- allows access to all rows which have a group_id included in the board_membership view
+--             hidden.group_members.group_id = bm.group_id
+--         UNION
+--         SELECT
+--             1
+--         FROM
+--             memberships_of_authenticated_user AS m
+--         WHERE
+--             m.member_id = auth.uid()
+--     )
     );

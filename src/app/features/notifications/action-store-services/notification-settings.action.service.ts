@@ -14,16 +14,14 @@ export class NotificationSettingsActionService {
     }
 
     public async selectNotificationSettings(): Promise<void> {
-        await this.notificationSettingsStore.notificationSettings.wrapSelectFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_profile_notification_settings'>> = await this.supabaseClient
+        const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_profile_notification_settings'>> = await this.notificationSettingsStore.notificationSettings.manageSelectApiCall(async () => {
+            return this.supabaseClient
             .rpc('read_profile_notification_settings')
             .single()
-            .throwOnError()
-            console.log(response.data)
-            if (response.data) {
-                this.notificationSettingsStore.notificationSettings.setObject(response.data);
-            }
         })
+        if (response.data) {
+            this.notificationSettingsStore.notificationSettings.setObject(response.data);
+        }
     }
 
     public async updateNotificationsFromFollow(newStatus: boolean): Promise<void> {
@@ -31,14 +29,15 @@ export class NotificationSettingsActionService {
         if (newStatus) {
             message = 'Du bekommst wieder Nachrichten, wenn dir jemand folgt.'
         }
-        await this.notificationSettingsStore.notificationSettings.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<undefined> = await this.supabaseClient
+        const response: PostgrestSingleResponse<undefined> = await this.notificationSettingsStore.notificationSettings.manageUpdateApiCall(async () => {
+            return this.supabaseClient
             .rpc(
                 'update_profile_receive_notifications_from_follow',
                 {_new_status: newStatus})
-            .throwOnError()
-            this.notificationSettingsStore.notificationSettings.setObject({receive_follow_notifications_: newStatus})
 
         }, true, message)
+        if (!response.error) {
+            this.notificationSettingsStore.notificationSettings.setObject({receive_follow_notifications_: newStatus})
+        }
     }
 }

@@ -24,15 +24,15 @@ export class NotificationsActionService {
     }
 
     public async selectNotifications(): Promise<void> {
-        await this.notificationStoreService.notifications.wrapSelectFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_notifications_of_user'>[]> = await this.supabaseClient
+        const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_notifications_of_user'>[]> = await this.notificationStoreService.notifications.manageSelectApiCall(async () => {
+            return this.supabaseClient
             .rpc('read_notifications_of_user')
             .throwOnError()
-            if (response.data) {
-                const finalArray: SupabaseObjectReturn<'read_notifications_of_user'>[] = await this.profileActionService.transformImageNamesToUrls(response.data, 'profile_image_')
-                this.notificationStoreService.notifications.setObjects(finalArray);
-            }
         })
+        if (response.data) {
+            const finalArray: SupabaseObjectReturn<'read_notifications_of_user'>[] = await this.profileActionService.transformImageNamesToUrls(response.data, 'profile_image_')
+            this.notificationStoreService.notifications.setObjects(finalArray);
+        }
     }
 
     // public async insertNotification(
@@ -53,22 +53,20 @@ export class NotificationsActionService {
     // }
 
     public async resetNotificationCounter(): Promise<void> {
-        await this.notificationStoreService.notifications.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'reset_profile_notification_counter'>> = await this.supabaseClient
+        const response: PostgrestSingleResponse<SupabaseObjectReturn<'reset_profile_notification_counter'>> = await this.notificationStoreService.notifications.manageUpdateApiCall(async () => {
+            return this.supabaseClient
             .rpc('reset_profile_notification_counter')
             .single()
-            .throwOnError()
         }, false)
     }
 
     public async updateReceiveFollowNotificationStatus(): Promise<void> {
-        await this.notificationStoreService.notifications.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'update_profile_receive_notifications_from_follow'>> = await this.supabaseClient
+        const response: PostgrestSingleResponse<SupabaseObjectReturn<'update_profile_receive_notifications_from_follow'>> = await this.notificationStoreService.notifications.manageUpdateApiCall(async () => {
+            return this.supabaseClient
             .rpc('update_profile_receive_notifications_from_follow', {
                 _new_status: true
             })
             .single()
-            .throwOnError()
         }, true, 'You will not receive notifications anymore if someone follows you.')
     }
 

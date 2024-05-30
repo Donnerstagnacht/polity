@@ -16,22 +16,21 @@ export class GroupsOfUserActionService {
     }
 
     public async readGroupsOfUser(): Promise<void> {
-        await this.groupsOfUserStoreService.groupsOfUser.wrapSelectFunction(async (): Promise<void> => {
-            this.groupsOfUserStoreService.groupsOfUser.loading.startLoading();
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_groups_of_user'>[]> = await this.supabase
+        // this.groupsOfUserStoreService.groupsOfUser.loading.startLoading();
+        const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_groups_of_user'>[]> = await this.groupsOfUserStoreService.groupsOfUser.manageSelectApiCall(async () => {
+            return this.supabase
             .rpc('read_groups_of_user')
-            .throwOnError()
-            if (response.data) {
-                // const imgPath = await this.supabase.storage.from('profile_images').createSignedUrl(response.data.profile_image, 3600 * 24 * 7);
-                // response.data.profile_image = imgPath.data?.signedUrl as string;
-                if (response.data) {
-                    // this.groupStoreService.group.setObject(response.data);
-                    console.log(response.data)
-                    this.groupsOfUserStoreService.groupsOfUser.setObjects(response.data);
-                    this.groupsOfUserStoreService.groupsOfUser.loading.stopLoading();
-                }
-            }
         })
+        if (response.data) {
+            // const imgPath = await this.supabase.storage.from('profile_images').createSignedUrl(response.data.profile_image, 3600 * 24 * 7);
+            // response.data.profile_image = imgPath.data?.signedUrl as string;
+            if (response.data) {
+                // this.groupStoreService.group.setObject(response.data);
+                console.log(response.data)
+                this.groupsOfUserStoreService.groupsOfUser.setObjects(response.data);
+                // this.groupsOfUserStoreService.groupsOfUser.loading.stopLoading();
+            }
+        }
     }
 
 }

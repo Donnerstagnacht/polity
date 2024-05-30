@@ -16,21 +16,20 @@ export class GroupRequestsOfUserActionService {
     }
 
     public async readGroupRequestsOfUser(): Promise<void> {
-        await this.groupRequestsOfUserStoreService.groupRequestsOfUser.wrapSelectFunction(async (): Promise<void> => {
+        const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_group_requests_of_user'>[]> = await this.groupRequestsOfUserStoreService.groupRequestsOfUser.manageSelectApiCall(async () => {
             this.groupRequestsOfUserStoreService.groupRequestsOfUser.loading.startLoading();
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_group_requests_of_user'>[]> = await this.supabase
+            return this.supabase
             .rpc('read_group_requests_of_user')
-            .throwOnError()
-            if (response.data) {
-                // const imgPath = await this.supabase.storage.from('profile_images').createSignedUrl(response.data.profile_image, 3600 * 24 * 7);
-                // response.data.profile_image = imgPath.data?.signedUrl as string;
-                if (response.data) {
-                    // this.groupStoreService.group.setObject(response.data);
-                    console.log(response.data)
-                    this.groupRequestsOfUserStoreService.groupRequestsOfUser.setObjects(response.data);
-                    this.groupRequestsOfUserStoreService.groupRequestsOfUser.loading.stopLoading();
-                }
-            }
         })
+        if (response.data) {
+            // const imgPath = await this.supabase.storage.from('profile_images').createSignedUrl(response.data.profile_image, 3600 * 24 * 7);
+            // response.data.profile_image = imgPath.data?.signedUrl as string;
+            if (response.data) {
+                // this.groupStoreService.group.setObject(response.data);
+                console.log(response.data)
+                this.groupRequestsOfUserStoreService.groupRequestsOfUser.setObjects(response.data);
+                this.groupRequestsOfUserStoreService.groupRequestsOfUser.loading.stopLoading();
+            }
+        }
     }
 }

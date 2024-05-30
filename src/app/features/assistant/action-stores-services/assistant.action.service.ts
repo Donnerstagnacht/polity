@@ -24,15 +24,15 @@ export class AssistantActionService {
      * @return {Promise<void>}
      */
     public async readAssistant(): Promise<void> {
-        await this.assistantStoreService.assistant.wrapSelectFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_assistant'>> = await this.supabaseClient
+        const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_assistant'>> = await this.assistantStoreService.assistant.manageSelectApiCall(async () => {
+            return this.supabaseClient
             .rpc('read_assistant')
             .single()
             .throwOnError();
-            if (response.data) {
-                this.assistantStoreService.assistant.mutateObject(response.data);
-            }
         })
+        if (response.data) {
+            this.assistantStoreService.assistant.mutateObject(response.data);
+        }
     }
 
     /**
@@ -42,16 +42,16 @@ export class AssistantActionService {
      * @return {Promise<void>}
      */
     public async updateFirstSignIn(newStatus: boolean): Promise<void> {
-        await this.assistantStoreService.assistant.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<undefined> = await this.supabaseClient
+        const response: PostgrestSingleResponse<undefined> = await this.assistantStoreService.assistant.manageUpdateApiCall(async () => {
+            return this.supabaseClient
             .rpc('update_first_sign_in', {_new_status: newStatus})
-            .throwOnError()
-
+        }, false)
+        if (!response.error) {
             const updatedAssistant: SupabaseObjectReturn<'read_assistant'> = {
                 first_sign_in_: newStatus,
             } as SupabaseObjectReturn<'read_assistant'>
             this.assistantStoreService.assistant.mutateObject(updatedAssistant)
-        }, false)
+        }
     }
 
     /**
@@ -61,16 +61,17 @@ export class AssistantActionService {
      * @return {Promise<void>}
      */
     public async skipTutorial(newStatus: boolean): Promise<void> {
-        await this.assistantStoreService.assistant.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<undefined> = await this.supabaseClient
+        const response: PostgrestSingleResponse<undefined> = await this.assistantStoreService.assistant.manageUpdateApiCall(async () => {
+            return this.supabaseClient
             .rpc('update_skip_tutorial', {_new_status: newStatus})
-            .throwOnError()
 
+        }, true, 'You can reactivate your tutorials in your profile settings!')
+        if (!response.error) {
             const updatedAssistant: SupabaseObjectReturn<'read_assistant'> = {
                 skip_tutorial_: newStatus,
             } as SupabaseObjectReturn<'read_assistant'>
             this.assistantStoreService.assistant.mutateObject(updatedAssistant)
-        }, true, 'You can reactivate your tutorials in your profile settings!')
+        }
     }
 
     /**
@@ -80,15 +81,17 @@ export class AssistantActionService {
      * @return {Promise<void>}
      */
     public async updateLastTutorial(last_tutorial: DatabaseHiddenOverwritten["hidden"]["Enums"]["tutorial_enum"]): Promise<void> {
-        await this.assistantStoreService.assistant.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<undefined> = await this.supabaseClient
+        const response: PostgrestSingleResponse<undefined> = await this.assistantStoreService.assistant.manageUpdateApiCall(async () => {
+            return this.supabaseClient
             .rpc('update_last_tutorial', {_new_status: last_tutorial})
             .throwOnError()
 
+        }, false)
+        if (!response.error) {
             const updatedAssistant: SupabaseObjectReturn<'read_assistant'> = {
                 last_tutorial_: last_tutorial,
             } as SupabaseObjectReturn<'read_assistant'>
             this.assistantStoreService.assistant.mutateObject(updatedAssistant)
-        }, false)
+        }
     }
 }

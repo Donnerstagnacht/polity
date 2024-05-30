@@ -21,34 +21,35 @@ export class FollowingOfUserActionService {
 
 
     public async readFollowingsOfUser(): Promise<any> {
-        await this.followingOfUserStoreService.followingOfUser.wrapSelectFunction(async (): Promise<void> => {
-            const followingResponse: PostgrestSingleResponse<SupabaseObjectReturn<'read_followings_of_user'>[]> = await this.supabaseClient.rpc(
+        const followingResponse: PostgrestSingleResponse<SupabaseObjectReturn<'read_followings_of_user'>[]> = await this.followingOfUserStoreService.followingOfUser.manageSelectApiCall(async () => {
+            return this.supabaseClient.rpc(
                 'read_followings_of_user'
             )
-            .throwOnError()
-            if (followingResponse.data) {
-                const finalArray: SupabaseObjectReturn<'read_followings_of_user'>[] = await this.profileActionService.transformImageNamesToUrls(followingResponse.data, 'profile_image_')
-                this.followingOfUserStoreService.followingOfUser.setObjects(finalArray)
-            }
         })
+        if (followingResponse.data) {
+            const finalArray: SupabaseObjectReturn<'read_followings_of_user'>[] = await this.profileActionService.transformImageNamesToUrls(followingResponse.data, 'profile_image_')
+            this.followingOfUserStoreService.followingOfUser.setObjects(finalArray)
+        }
     }
 
     public async removeFollowingOfUser(userId: string): Promise<any> {
-        await this.followingOfUserStoreService.followingOfUser.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'unfollow_profile_transaction'>> = await this.supabaseClient.rpc(
+        const response: PostgrestSingleResponse<SupabaseObjectReturn<'unfollow_profile_transaction'>> = await this.followingOfUserStoreService.followingOfUser.manageUpdateApiCall(async () => {
+            return this.supabaseClient.rpc(
                 'unfollow_profile_transaction',
                 {
                     _following_id: userId
                 }
             )
             .single()
-            .throwOnError()
 
+        }, true, 'Following removed!')
+
+        if (!response.error) {
             this.followingOfUserStoreService.followingOfUser.removeObjectByPropertyValue(
                 'id_',
                 userId
             )
             this.profileCountersStoreService.profileCounters.decrementKey('following_counter')
-        }, true, 'Following removed!')
+        }
     }
 }

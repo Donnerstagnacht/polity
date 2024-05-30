@@ -17,35 +17,37 @@ export class FollowingGroupsOfUserActionService {
     }
 
     public async readFollowingGroupsOfUser(): Promise<any> {
-        await this.followingGroupsOfUserStoreService.followingGroupsOfUser.wrapSelectFunction(async (): Promise<void> => {
-            const followingResponse: PostgrestSingleResponse<SupabaseObjectReturn<'read_group_followings_of_user'>[]> = await this.supabaseClient.rpc(
-                'read_group_followings_of_user'
-            )
-            .throwOnError()
-            if (followingResponse.data) {
-                // const finalArray: SupabaseObjectReturn<'read_following_of_user'>[] = await this.profileActionService.transformImageNamesToUrls(followingResponse.data, 'img_url')
-                this.followingGroupsOfUserStoreService.followingGroupsOfUser.setObjects(followingResponse.data)
-            }
-        })
+        const followingResponse: PostgrestSingleResponse<SupabaseObjectReturn<'read_group_followings_of_user'>[]> =
+            await this.followingGroupsOfUserStoreService.followingGroupsOfUser.manageSelectApiCall(async () => {
+                return this.supabaseClient.rpc(
+                    'read_group_followings_of_user'
+                )
+                .throwOnError()
+            })
+        if (followingResponse.data) {
+            // const finalArray: SupabaseObjectReturn<'read_following_of_user'>[] = await this.profileActionService.transformImageNamesToUrls(followingResponse.data, 'img_url')
+            this.followingGroupsOfUserStoreService.followingGroupsOfUser.setObjects(followingResponse.data)
+        }
     }
 
 
     public async removeFollowingGroupOfUser(groupId: string): Promise<any> {
-        await this.followingGroupsOfUserStoreService.followingGroupsOfUser.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'unfollow_group_transaction'>> = await this.supabaseClient.rpc(
+        const response: PostgrestSingleResponse<SupabaseObjectReturn<'unfollow_group_transaction'>> = await this.followingGroupsOfUserStoreService.followingGroupsOfUser.manageUpdateApiCall(async () => {
+            return this.supabaseClient.rpc(
                 'unfollow_group_transaction',
                 {
                     _following_id: groupId
                 }
             )
             .single()
-            .throwOnError()
+        }, true, 'Following group removed!')
 
+        if (!response.error) {
             this.followingGroupsOfUserStoreService.followingGroupsOfUser.removeObjectByPropertyValue(
                 'id_',
                 groupId
             )
             this.profileCountersStoreService.profileCounters.decrementKey('following_counter')
-        }, true, 'Following group removed!')
+        }
     }
 }

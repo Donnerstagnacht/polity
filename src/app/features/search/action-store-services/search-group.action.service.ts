@@ -26,14 +26,15 @@ export class SearchGroupActionService {
     public async searchGroup(searchTerm: string): Promise<void> {
         searchTerm = this.searchUtilitiesService.replaceSpacesWithPipe(searchTerm);
         this.searchStoreService.groupSearchResults.resetObjects()
-        await this.searchStoreService.groupSearchResults.wrapSelectFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'search_group'>[]> = await this.supabaseClient.rpc(
-                'search_group',
-                {_search_term: searchTerm}
-            ).throwOnError()
-            if (response.data) {
-                this.searchStoreService.groupSearchResults.setObjects(response.data)
-            }
-        })
+        const response: PostgrestSingleResponse<SupabaseObjectReturn<'search_group'>[]> =
+            await this.searchStoreService.groupSearchResults.manageSelectApiCall(async () => {
+                return this.supabaseClient.rpc(
+                    'search_group',
+                    {_search_term: searchTerm}
+                ).throwOnError()
+            })
+        if (response.data) {
+            this.searchStoreService.groupSearchResults.setObjects(response.data)
+        }
     }
 }

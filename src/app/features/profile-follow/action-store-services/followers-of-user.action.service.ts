@@ -22,88 +22,88 @@ export class FollowersOfUserActionService {
     }
 
     public async readFollowersOfUser(): Promise<any> {
-        await this.followersOfUserStoreService.followersOfUser.wrapSelectFunction(async (): Promise<void> => {
-            const followerResponse: PostgrestSingleResponse<SupabaseObjectReturn<'read_followers_of_user'>[]> = await this.supabaseClient.rpc(
+        const followerResponse: PostgrestSingleResponse<SupabaseObjectReturn<'read_followers_of_user'>[]> = await this.followersOfUserStoreService.followersOfUser.manageSelectApiCall(async () => {
+            return this.supabaseClient.rpc(
                 'read_followers_of_user'
             )
-            .throwOnError()
-            if (followerResponse.data) {
-                const finalArray: SupabaseObjectReturn<'read_followers_of_user'>[] = await this.profileActionService.transformImageNamesToUrls(followerResponse.data, 'profile_image_')
-                this.followersOfUserStoreService.followersOfUser.setObjects(finalArray)
-            }
         })
+        if (followerResponse.data) {
+            const finalArray: SupabaseObjectReturn<'read_followers_of_user'>[] = await this.profileActionService.transformImageNamesToUrls(followerResponse.data, 'profile_image_')
+            this.followersOfUserStoreService.followersOfUser.setObjects(finalArray)
+        }
     }
 
     public async removeFollowerOfUser(userId: string): Promise<any> {
-        await this.followersOfUserStoreService.followersOfUser.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'remove_follower_of_authenticated_user_transaction'>> = await this.supabaseClient.rpc(
+        const response: PostgrestSingleResponse<SupabaseObjectReturn<'remove_follower_of_authenticated_user_transaction'>> = await this.followersOfUserStoreService.followersOfUser.manageUpdateApiCall(async () => {
+            return this.supabaseClient.rpc(
                 'remove_follower_of_authenticated_user_transaction',
                 {
                     _follower_id: userId,
                 }
             )
             .single()
-            .throwOnError()
+        }, true, 'Follower removed!')
 
+        if (!response.error) {
             this.followersOfUserStoreService.followersOfUser.removeObjectByPropertyValue(
                 'id_',
                 userId
             )
             this.profileCountersStoreService.profileCounters.decrementKey('follower_counter_')
-        }, true, 'Follower removed!')
+        }
     }
 
 
     public async checkIfFollowing(): Promise<void> {
         const followingId: string = this.profileCountersStoreService.profileCounters.getValueByKey('profile_id_')
 
-        await this.profileCountersStoreService.profileCounters.wrapSelectFunction(async (): Promise<void> => {
+        const response: PostgrestSingleResponse<SupabaseObjectReturn<'check_if_user_follows_profile'>> = await this.profileCountersStoreService.profileCounters.manageSelectApiCall(async () => {
             this.profileStoreService.profile.uiFlagStore.setFlagTrue('isFollowingCheckLoading')
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'check_if_user_follows_profile'>> = await this.supabaseClient.rpc(
+            return this.supabaseClient.rpc(
                 'check_if_user_follows_profile',
                 {
                     _following_id: followingId as string
                 }
             )
             .single()
-            .throwOnError();
-
-            if (response.data) {
-                this.profileStoreService.profile.uiFlagStore.setFlagTrue('isFollowing')
-            } else {
-                this.profileStoreService.profile.uiFlagStore.setFlagFalse('isFollowing')
-            }
-            this.profileStoreService.profile.uiFlagStore.setFlagFalse('isFollowingCheckLoading')
         })
+
+        if (response.data) {
+            this.profileStoreService.profile.uiFlagStore.setFlagTrue('isFollowing')
+        } else {
+            this.profileStoreService.profile.uiFlagStore.setFlagFalse('isFollowing')
+        }
+        this.profileStoreService.profile.uiFlagStore.setFlagFalse('isFollowingCheckLoading')
     }
 
     public async followProfile(): Promise<void> {
         const followingId: string = this.profileCountersStoreService.profileCounters.getValueByKey('profile_id_');
-        await this.profileCountersStoreService.profileCounters.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'follow_profile_transaction'>> = await this.supabaseClient.rpc(
+        const response: PostgrestSingleResponse<SupabaseObjectReturn<'follow_profile_transaction'>> = await this.profileCountersStoreService.profileCounters.manageUpdateApiCall(async () => {
+            return this.supabaseClient.rpc(
                 'follow_profile_transaction',
                 {
                     _following_id: followingId
-                }
-            ).throwOnError()
-
+                })
+        }, true, 'Successful followed!')
+        if (!response.error) {
             this.profileStoreService.profile.uiFlagStore.setFlagTrue('isFollowing')
             this.profileCountersStoreService.profileCounters.incrementKey('follower_counter_')
-        }, true, 'Successful followed!')
+        }
     }
 
     public async unFollowProfile(): Promise<void> {
         const followingId = this.profileCountersStoreService.profileCounters.getValueByKey('profile_id_');
-        await this.profileCountersStoreService.profileCounters.wrapUpdateFunction(async (): Promise<void> => {
-            const response: PostgrestSingleResponse<SupabaseObjectReturn<'unfollow_profile_transaction'>> = await this.supabaseClient.rpc(
+        const response: PostgrestSingleResponse<SupabaseObjectReturn<'unfollow_profile_transaction'>> = await this.profileCountersStoreService.profileCounters.manageUpdateApiCall(async () => {
+            return this.supabaseClient.rpc(
                 'unfollow_profile_transaction',
                 {
                     _following_id: followingId
                 }
-            ).throwOnError()
-
+            )
+        }, true, 'Successful unfollowed!')
+        if (!response.error) {
             this.profileStoreService.profile.uiFlagStore.setFlagFalse('isFollowing')
             this.profileCountersStoreService.profileCounters.decrementKey('follower_counter_')
-        }, true, 'Successful unfollowed!')
+        }
     }
 }
