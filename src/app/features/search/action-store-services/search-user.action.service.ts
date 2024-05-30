@@ -26,7 +26,6 @@ export class SearchUserActionService {
     public async searchUser(searchTerm: string): Promise<void> {
         searchTerm = this.searchUtilitiesService.replaceSpacesWithPipe(searchTerm);
         this.searchStoreService.profilSearchResults.resetObjects()
-        // this.searchStoreService.profilSearchResults.uiFlagStore.setFlagFalse('noResults')
         const response: PostgrestSingleResponse<SupabaseObjectReturn<'search_user'>[]> =
             await this.searchStoreService.profilSearchResults.manageSelectApiCall(async () => {
                     return this.supabaseClient.rpc(
@@ -38,10 +37,8 @@ export class SearchUserActionService {
         if (response.data) {
             this.searchStoreService.profilSearchResults.setObjects(response.data)
         }
-        console.log(response.error?.code)
         if (response.error?.code === 'P0002') {
             this.searchStoreService.profilSearchResults.setObjects([])
-            // this.searchStoreService.profilSearchResults.uiFlagStore.setFlagTrue('noResults')
         }
     }
 
