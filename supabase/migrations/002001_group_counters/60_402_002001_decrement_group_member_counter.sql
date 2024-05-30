@@ -10,13 +10,11 @@ CREATE OR REPLACE FUNCTION hidden.decrement_group_member_counter(
 AS
 $$
 BEGIN
-    PERFORM SET_CONFIG('app.current_function', 'decrement_group_member_counter', TRUE);
     UPDATE hidden.groups_counters
     SET
         group_member_counter = group_member_counter - 1
     WHERE
         id = _group_id;
-    PERFORM SET_CONFIG('app.current_function', NULL, TRUE);
 
     IF NOT FOUND THEN
         RAISE EXCEPTION 'No group found counter for group id % ', _group_id

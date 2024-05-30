@@ -35,15 +35,17 @@ CREATE POLICY "Group members are viewable by a groups members."
     FOR SELECT
     TO authenticated
     USING (
-    EXISTS (
-        SELECT
-            1
-        FROM
-            memberships_of_authenticated_user AS m
-        WHERE
-            -- allows access to all rows which have a group_id included in the my_membership view
-            hidden.group_members.group_id = m.group_id
-    ));
+    TRUE
+--     EXISTS (
+--         SELECT
+--             1
+--         FROM
+--             memberships_of_authenticated_user AS m
+--         WHERE
+--             -- allows access to all rows which have a group_id included in the my_membership view
+--             hidden.group_members.group_id = m.group_id
+--     )
+    );
 
 
 

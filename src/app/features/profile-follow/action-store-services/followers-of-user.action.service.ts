@@ -49,7 +49,7 @@ export class FollowersOfUserActionService {
                 'id_',
                 userId
             )
-            this.profileCountersStoreService.profileCounters.decrementKey('follower_counter')
+            this.profileCountersStoreService.profileCounters.decrementKey('follower_counter_')
         }, true, 'Follower removed!')
     }
 
@@ -88,7 +88,7 @@ export class FollowersOfUserActionService {
             ).throwOnError()
 
             this.profileStoreService.profile.uiFlagStore.setFlagTrue('isFollowing')
-            this.profileCountersStoreService.profileCounters.incrementKey('follower_counter')
+            this.profileCountersStoreService.profileCounters.incrementKey('follower_counter_')
         }, true, 'Successful followed!')
     }
 
@@ -103,7 +103,7 @@ export class FollowersOfUserActionService {
             ).throwOnError()
 
             this.profileStoreService.profile.uiFlagStore.setFlagFalse('isFollowing')
-            this.profileCountersStoreService.profileCounters.decrementKey('follower_counter')
+            this.profileCountersStoreService.profileCounters.decrementKey('follower_counter_')
         }, true, 'Successful unfollowed!')
     }
 }

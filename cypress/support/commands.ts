@@ -85,22 +85,22 @@ Cypress.Commands.add(
         userWhoFollowsCounter: ProfileCounter
     ): void => {
 
-        cy.interceptSupabaseCall('read_user')
-        .as('selectUser')
-        cy.interceptSupabaseCall('check_if_following')
+        cy.interceptSupabaseCall('read_profile')
+        .as('readProfile')
+        cy.interceptSupabaseCall('check_if_user_follows_profile')
         .as('isFollowing')
         cy.interceptSupabaseCall('read_profile_counters') //         cy.interceptSupabaseCall('read_following_counter')
         .as('followingCounter')
 
-        cy.searchUser(userWhoIsFollowedProfile.first_name as string)
+        cy.searchUser(userWhoIsFollowedProfile.first_name)
         .click()
-        // cy.wait(['@followingCounter', '@isFollowing', '@selectUser'])
+        cy.wait(['@followingCounter', '@isFollowing', '@readProfile'])
 
         cy.getDataCy('first-name')
         .shouldBeVisible()
-        .contains(userWhoIsFollowedProfile.first_name as string)
+        .contains(userWhoIsFollowedProfile.first_name)
 
-        cy.interceptSupabaseCall('follow_transaction')
+        cy.interceptSupabaseCall('follow_profile_transaction')
         .as('followTransaction')
 
         cy.getDataCy('followButton')
@@ -109,7 +109,7 @@ Cypress.Commands.add(
         .should('have.text', 'FOLLOW ')
         .click()
 
-        // cy.wait('@followTransaction')
+        cy.wait('@followTransaction')
         cy.contains('Successful followed')
         .should('be.visible')
 
@@ -122,12 +122,12 @@ Cypress.Commands.add(
         .shouldBeVisible()
         .contains(userWhoIsFollowedCounter.follower_counter + 1)
 
-        cy.searchUser(userWhoFollowsProfile.first_name as string)
+        cy.searchUser(userWhoFollowsProfile.first_name)
         .click()
 
         cy.getDataCy('first-name')
         .shouldBeVisible()
-        .contains(userWhoFollowsProfile.first_name as string)
+        .contains(userWhoFollowsProfile.first_name)
 
         cy.getDataCy('followingCounter')
         .shouldBeVisible()
@@ -144,11 +144,11 @@ Cypress.Commands.add(
         userWhoFollowsCounter: ProfileCounter
     ): void => {
 
-        cy.interceptSupabaseCall('read_group_columns')
+        cy.interceptSupabaseCall('read_group')
         .as('readGroupColumns')
-        cy.interceptSupabaseCall('check_if_following_group')
+        cy.interceptSupabaseCall('check_if_user_follows_group')
         .as('isFollowingGroup')
-        cy.interceptSupabaseCall('read_group_counter') //         cy.interceptSupabaseCall('read_following_counter')
+        cy.interceptSupabaseCall('read_group_counters') //         cy.interceptSupabaseCall('read_following_counter')
         .as('readGroupCounter')
 
         cy.searchGroup(groupWhichIsFollowed.name)
@@ -205,10 +205,10 @@ Cypress.Commands.add('navigateToHome', (): void => {
 })
 
 Cypress.Commands.add('navigateToEditGroupMembershipsOfUser', (userName: string): void => {
-    cy.interceptSupabaseCall('read_user')
-    .as('read_user')
+    cy.interceptSupabaseCall('read_profile')
+    .as('read_profile')
     cy.navigateToHome()
-    cy.wait('@read_user')
+    cy.wait('@read_profile')
 
     cy.contains(userName)
     .click();

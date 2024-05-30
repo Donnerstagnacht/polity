@@ -10,13 +10,11 @@ CREATE OR REPLACE FUNCTION hidden.decrement_profile_following_counter(
 AS
 $$
 BEGIN
-    PERFORM SET_CONFIG('app.current_function', 'decrement_following_counter', TRUE);
     UPDATE hidden.profiles_counters
     SET
         following_counter = following_counter - 1
     WHERE
         id = _user_id;
-    PERFORM SET_CONFIG('app.current_function', NULL, TRUE);
 
     IF NOT FOUND THEN
         RAISE EXCEPTION 'No profile counter found for user with id %', _user_id

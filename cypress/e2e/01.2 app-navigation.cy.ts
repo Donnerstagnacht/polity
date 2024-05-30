@@ -28,7 +28,7 @@ Sizes.forEach((size: Size): void => {
             .filter(':visible')
             .first()
             .click()
-            cy.contains('new works')
+            cy.contains('Create a new')
             // cy.getDataCy('search-instruction')
             // .shouldBeVisible()
         })
