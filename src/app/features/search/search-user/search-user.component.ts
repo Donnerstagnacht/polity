@@ -11,6 +11,7 @@ import {SearchUserActionService} from "../action-store-services/search-user.acti
 import {SearchGroupStoreService} from "../action-store-services/search-group.store.service";
 import {SearchGroupActionService} from "../action-store-services/search-group.action.service";
 import {SearchGroupResultComponent} from "../search-group-result/search-group-result.component";
+import {ArrayStoreConsumerDirective} from "../../../signal-store/array-store-consumer.directive";
 
 @Component({
     selector: 'polity-search-user',
@@ -27,13 +28,11 @@ import {SearchGroupResultComponent} from "../search-group-result/search-group-re
     ],
     standalone: true
 })
-export class SearchUserComponent {
-    protected loading: WritableSignal<boolean> = signal(false);
-    protected noSearchProfileResults: WritableSignal<boolean> = signal(false);
+export class SearchUserComponent extends ArrayStoreConsumerDirective<SupabaseObjectReturn<'search_user'>> {
+    // protected noSearchProfileResults: WritableSignal<boolean> = signal(false);
     protected noSearchGroupResults: WritableSignal<boolean> = signal(false);
-    protected dataRequested: WritableSignal<boolean> = signal(false);
 
-    protected searchUserResults: WritableSignal<SupabaseObjectReturn<'search_user'>[]> = signal([]);
+    // protected searchUserResults: WritableSignal<SupabaseObjectReturn<'search_user'>[]> = signal([]);
     protected searchGroupResults: WritableSignal<SupabaseObjectReturn<'search_group'>[]> = signal([]);
     protected searchForm: FormGroup<{
         search: FormControl<string | null>
@@ -49,12 +48,16 @@ export class SearchUserComponent {
         private readonly searchUserStoreService: SearchUserStoreService,
         private readonly searchGroupStoreService: SearchGroupStoreService
     ) {
-        this.loading = this.searchUserStoreService.profilSearchResults.loading.getLoading() || this.searchGroupStoreService.groupSearchResults.loading.getLoading();
+        super();
+        this.service = this.searchUserStoreService.profilSearchResults;
+        this.isLoading = this.searchUserStoreService.profilSearchResults.loading.getLoading() || this.searchGroupStoreService.groupSearchResults.loading.getLoading();
         this.dataRequested = this.searchUserStoreService.profilSearchResults.getDataRequested() || this.searchGroupStoreService.groupSearchResults.getDataRequested();
-        this.noSearchProfileResults = this.searchUserStoreService.profilSearchResults.getNoDataFound();
+        // this.noSearchProfileResults = this.searchUserStoreService.profilSearchResults.getNoDataFound();
         this.noSearchGroupResults = this.searchGroupStoreService.groupSearchResults.getNoDataFound();
-        this.searchUserResults = this.searchUserStoreService.profilSearchResults.getObjects();
+
+        // this.searchUserResults = this.searchUserStoreService.profilSearchResults.getObjects();
         this.searchGroupResults = this.searchGroupStoreService.groupSearchResults.getObjects();
+
         this.searchForm.get('search')?.valueChanges.pipe(
             debounceTime(1000)).subscribe(
             () => this.onKeyUp()

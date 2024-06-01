@@ -103,7 +103,9 @@ export type SupabaseCompositeType<T extends keyof DatabaseHiddenOverwritten['aut
  *  The main useage is make cypress api calls/interceptions type safe.
  *  @example see cypress commands.ts file
  */
-export type SupabaseFunctionName = keyof DatabaseHiddenOverwritten['authenticated']['Functions']
+export type SupabaseAuthenticatedFunctionName = keyof DatabaseHiddenOverwritten['authenticated']['Functions']
+
+export type SupabaseAutehnticatedFunctionArgs = DatabaseHiddenOverwritten['authenticated']['Functions'][SupabaseAuthenticatedFunctionName]['Args'];
 
 // helper types - used in SupabaseArrayReturn type
 /**

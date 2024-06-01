@@ -12,7 +12,7 @@
 //
 // -- This is a parent command --
 
-import {SupabaseFunctionName} from "../../supabase/types/supabase.authenticated.shorthand-types";
+import {SupabaseAuthenticatedFunctionName} from "../../supabase/types/supabase.authenticated.shorthand-types";
 import {environment} from "../../src/environments/environment";
 import {Profile} from "../../seed_and_test_data/02_test_profiles";
 import {ProfileCounter} from "../../seed_and_test_data/04_test_profile_counters";
@@ -30,7 +30,7 @@ Cypress.Commands.add('getDataCy', (value: string, value2?: string): void => {
     cy.get(`[data-cy=${value}], [data-cy=${value2}]`)
 });
 
-Cypress.Commands.add('interceptSupabaseCall', (endPoint: SupabaseFunctionName): void => {
+Cypress.Commands.add('interceptSupabaseCall', (endPoint: SupabaseAuthenticatedFunctionName): void => {
     const apiUrl = environment.supabaseProjectUrl;
     cy.intercept('POST', apiUrl + '/rest/v1/rpc/' + endPoint)
 });

@@ -17,22 +17,23 @@
         </tui-error>
     </div>
 </form>
-@if (searchUserResults() || loading()) {
+<!-- @if (searchUserResults() || isLoading()) { -->
+@if (data() || isLoading()) {
     <div class="grid tui-space_top-4">
-        @for (profile of searchUserResults();track profile) {
+        @for (profile of data();track profile) {
             <div
                 [attr.data-cy]="'user-search-results'"
                 class="grid-item tui-space_top-4"
             >
                 <polity-search-profile-result
-                    [isLoading]="this.loading"
+                    [isLoading]="this.isLoading"
                     [profile]="profile"
                 ></polity-search-profile-result>
             </div>
         }
     </div>
 }
-@if (searchGroupResults() || loading()) {
+@if (searchGroupResults() || isLoading()) {
     <div class="grid tui-space_top-4">
         @for (group of searchGroupResults();track group) {
             <div
@@ -40,7 +41,7 @@
                 class="grid-item tui-space_top-4"
             >
                 <polity-search-group-result
-                    [isLoading]="this.loading"
+                    [isLoading]="this.isLoading"
                     [group]="group"
                 ></polity-search-group-result>
             </div>
@@ -48,7 +49,8 @@
     </div>
 }
 <div class="center-grid">
-    @if (!searchUserResults()) {
+    <!-- @if (!searchUserResults()) { -->
+    @if (!data()) {
         <p
             [attr.data-cy]="'search-instruction'"
         >
@@ -57,14 +59,14 @@
     }
 </div>
 <div class="center-grid">
-    @if (loading() && dataRequested()) {
+    @if (isLoading() && dataRequested()) {
         <p
             [attr.data-cy]="'search-loading'"
         >
             Suche läuft...
         </p>
     }
-    @if (loading() && !dataRequested()) {
+    @if (isLoading() && !dataRequested()) {
         <p
             [attr.data-cy]="'search-instruction'"
         >
@@ -74,7 +76,8 @@
 </div>
 <div class="center-grid">
 
-    @if (noSearchProfileResults()) {
+    <!-- NoProfileDatafound -->
+    @if (noDataFound()) {
         <p [attr.data-cy]="'no-profile-search-results'">
             No profile search results.
         </p>
