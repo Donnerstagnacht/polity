@@ -1,18 +1,20 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {PostgrestSingleResponse} from "@supabase/supabase-js";
 import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
 import {FollowingGroupsOfUserStoreService} from "./following-groups-of-user.store.service";
 import {supabaseAuthenticatedClient} from "../../../auth/supabase-authenticated-client";
-import {ProfileCountersStoreService} from "./profile-counters.store.service";
+import {ProfileCounterStore} from "./profile-counter-store.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class FollowingGroupsOfUserActionService {
     private readonly supabaseClient = supabaseAuthenticatedClient;
+    private profileCountersStore: ProfileCounterStore = inject(ProfileCounterStore)
 
     constructor(
-        private readonly profileCountersStoreService: ProfileCountersStoreService,
+        // private readonly profileCountersStoreService: ProfileCountersStoreService,
+
         private readonly followingGroupsOfUserStoreService: FollowingGroupsOfUserStoreService) {
     }
 
@@ -47,7 +49,8 @@ export class FollowingGroupsOfUserActionService {
                 'id_',
                 groupId
             )
-            this.profileCountersStoreService.profileCounters.decrementKey('following_counter')
+            this.profileCountersStore.decrement('following_counter_')
+            // this.profileCountersStoreService.profileCounters.decrementKey('following_counter')
         }
     }
 }

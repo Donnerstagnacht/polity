@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {PostgrestSingleResponse} from "@supabase/supabase-js";
-import {DatabaseAuthenticatedOverwritten} from "../../../../../supabase/types/supabase.public.modified";
+import {DatabasePublicOverwritten} from "../../../../../supabase/types/supabase.public.modified";
 import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
 import {AssistantStoreService} from "./assistant.store.service";
 import {supabaseAuthenticatedClient} from "../../../auth/supabase-authenticated-client";
@@ -77,7 +77,7 @@ export class AssistantActionService {
     /**
      * Updates the last tutorial status and the assistant store.
      *
-     * @param {DatabaseAuthenticatedOverwritten["public"]["Enums"]["tutorial_enum"]} last_tutorial - The new value for the last tutorial.
+     * @param {DatabasePublicOverwritten["public"]["Enums"]["tutorial_enum"]} last_tutorial - The new value for the last tutorial.
      * @return {Promise<void>}
      */
     public async updateLastTutorial(last_tutorial: DatabaseHiddenOverwritten["hidden"]["Enums"]["tutorial_enum"]): Promise<void> {

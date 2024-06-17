@@ -1,4 +1,4 @@
-import {Component, Input, signal, WritableSignal} from '@angular/core';
+import {Component, Input, Signal, signal, WritableSignal} from '@angular/core';
 import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
 import {Router} from "@angular/router";
 import {TuiIslandModule} from "@taiga-ui/kit";
@@ -19,7 +19,7 @@ export class SearchGroupResultComponent {
      * @Input profile: Profile | null.
      */
     @Input({required: true}) public group: SupabaseObjectReturn<'search_group'> | null = null;
-    @Input({required: true}) public isLoading: WritableSignal<boolean> = signal(true);
+    @Input({required: true}) public isLoading: WritableSignal<boolean> | Signal<boolean> = signal(true);
 
     constructor(private readonly router: Router) {
     }

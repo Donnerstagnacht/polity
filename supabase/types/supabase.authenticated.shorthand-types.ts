@@ -1,4 +1,5 @@
-import {DatabaseHiddenOverwritten} from "./supabase.authenticated.modified";
+import {DatabaseAuthenticatedOverwritten} from "./supabase.authenticated.modified";
+import {PostgrestResponseSuccess} from "@supabase/postgrest-js";
 
 // Commonly used types
 // from functions
@@ -24,8 +25,8 @@ import {DatabaseHiddenOverwritten} from "./supabase.authenticated.modified";
  * It can be used to create an array of objects using typescript array notation:
  * protected notifications: WritableSignal<SupabaseObjectReturn<'select_notifications_of_users'>[]> = signal([]);
  * */
-export type SupabaseObjectReturn<T extends keyof DatabaseHiddenOverwritten['authenticated']['Functions']> =
-    DatabaseHiddenOverwritten['authenticated']['Functions'][T] extends { Returns: infer R } // Infer the return type
+export type SupabaseObjectReturn<T extends keyof DatabaseAuthenticatedOverwritten['authenticated']['Functions']> =
+    DatabaseAuthenticatedOverwritten['authenticated']['Functions'][T] extends { Returns: infer R } // Infer the return type
         ? R extends any[] // Check if the return type is an array
             ? R[number]  // In case 'Returns' is an array, infer the element type
             : R          // Otherwise, infer the return type directly
@@ -70,14 +71,14 @@ export type SupabaseObjectReturn<T extends keyof DatabaseHiddenOverwritten['auth
  *   name: string
  * }
  */
-export type SupabaseTable<T extends keyof DatabaseHiddenOverwritten['authenticated']['Tables']> = DatabaseHiddenOverwritten['authenticated']['Tables'][T]['Row']
+export type SupabaseTable<T extends keyof DatabaseAuthenticatedOverwritten['authenticated']['Tables']> = DatabaseAuthenticatedOverwritten['authenticated']['Tables'][T]['Row']
 
 /**
  *  Type that represents the definition of an enum in the database as typescript object.
  *  @example
  *  If a database enum is defined as "group_level", it should be used as SupabaseEnum<'group_level'>
  */
-export type SupabaseEnum<T extends keyof DatabaseHiddenOverwritten['authenticated']['Enums']> = DatabaseHiddenOverwritten['authenticated']['Enums'][T];
+export type SupabaseEnum<T extends keyof DatabaseAuthenticatedOverwritten['authenticated']['Enums']> = DatabaseAuthenticatedOverwritten['authenticated']['Enums'][T];
 
 /**
  *  Type that represents the definition of a postgres composite type in the database as typescript object.
@@ -96,16 +97,22 @@ export type SupabaseEnum<T extends keyof DatabaseHiddenOverwritten['authenticate
  *     member_id: string
  * }
  */
-export type SupabaseCompositeType<T extends keyof DatabaseHiddenOverwritten['authenticated']['CompositeTypes']> = DatabaseHiddenOverwritten['authenticated']['CompositeTypes'][T];
+export type SupabaseCompositeType<T extends keyof DatabaseAuthenticatedOverwritten['authenticated']['CompositeTypes']> = DatabaseAuthenticatedOverwritten['authenticated']['CompositeTypes'][T];
 
 /**
  *  Type that represents the names of postgres functions - e.g. database calls.
  *  The main useage is make cypress api calls/interceptions type safe.
  *  @example see cypress commands.ts file
  */
-export type SupabaseAuthenticatedFunctionName = keyof DatabaseHiddenOverwritten['authenticated']['Functions']
+export type SupabaseAuthenticatedFunctionName = keyof DatabaseAuthenticatedOverwritten['authenticated']['Functions']
+export type AuthenticatedSchema = DatabaseAuthenticatedOverwritten['authenticated'];
+export type SupabaseAuthenticatedFunctionArgs = DatabaseAuthenticatedOverwritten['authenticated']['Functions'][SupabaseAuthenticatedFunctionName]['Args'];
+export type test<T extends keyof DatabaseAuthenticatedOverwritten['authenticated']['Functions']> = DatabaseAuthenticatedOverwritten['authenticated']['Functions'][T]['Returns'];
+export type PostgrestResponseSuccessTest<T extends keyof DatabaseAuthenticatedOverwritten['authenticated']['Functions']> = PostgrestResponseSuccess<DatabaseAuthenticatedOverwritten['authenticated']['Functions'][T]['Returns']>;
 
-export type SupabaseAutehnticatedFunctionArgs = DatabaseHiddenOverwritten['authenticated']['Functions'][SupabaseAuthenticatedFunctionName]['Args'];
+
+// export type SupabaseAuthenticatedFunctionReturns = DatabaseHiddenOverwritten['authenticated']['Functions'][SupabaseAuthenticatedFunctionName]['Returns'];
+export type SupabaseAuthenticatedFunctionReturns<T extends keyof DatabaseAuthenticatedOverwritten['authenticated']['Functions'][SupabaseAuthenticatedFunctionName]> = DatabaseAuthenticatedOverwritten['authenticated']['Functions'][SupabaseAuthenticatedFunctionName]['Returns'];
 
 // helper types - used in SupabaseArrayReturn type
 /**

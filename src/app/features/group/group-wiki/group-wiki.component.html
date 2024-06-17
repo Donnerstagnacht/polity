@@ -1,39 +1,43 @@
 <div class="polity-center min-height">
     <polity-wiki-headline
-        [firstName]="group()?.name_"
-        [isLoading]="isGroupLoading"
+        [firstName]="this.groupStore.data().name_"
+        [isLoading]="signal(this.groupStore.loadingState().loading)"
     ></polity-wiki-headline>
 
     <div
-        class=" polity-flex-container polity-single-item-centered tui-space_right-4 tui-space_left-4">
+        class=" polity-flex-container polity-single-item-centered tui-space_right-4 tui-space_left-4"
+    >
         <polity-counter
             [counterTitle]="'Member'"
-            [counterValue]="this.groupCounter()?.group_member_counter_"
+            [counterValue]="this.groupCounterStore.data().group_member_counter_"
             [dataCyTag]="'memberCounter'"
             [isLoading]="isGroupMembershipStatusLoading"
             class="polity-flex-item-first"
         ></polity-counter>
         <polity-counter
             [counterTitle]="'Follower'"
-            [counterValue]="this.groupCounter()?.follower_counter_"
+            [counterValue]="this.groupCounterStore.data().follower_counter_"
             [dataCyTag]="'followerCounter'"
             [isLoading]="isGroupMembershipStatusLoading"
             class="polity-flex-item-first"
         ></polity-counter>
     </div>
 
+    <p>{{this.groupStore.loadingState().loading}}</p>
+
     <div class="tui-space_bottom-4">
         <polity-follow-button
             (toggledFollowing)="toggleFollow($event)"
-            [isFollowing]="isFollowing()"
-            [isLoading]="this.isFollowingCheckLoading"
+            [isFollowing]="this.groupFollowStore.data()"
+            [loadingState]="this.groupFollowStore.loadingState"
+            [isLoading]="signal(this.groupFollowStore.loadingState().loading)"
         ></polity-follow-button>
     </div>
 
     <div class="tui-space_bottom-4">
         <polity-request-button
             (toggledFollowing)="toggleMembership($event)"
-            [isLoading]="this.isFollowingCheckLoading"
+            [isLoading]="signal(false)"
             [isRequested]="isMember()"
             [requestTitleString]="buttonTextString"
             [toggledTitle]="'REQUEST MEMBERSHIP'"

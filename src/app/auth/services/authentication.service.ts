@@ -12,9 +12,9 @@ import {
 } from "@supabase/supabase-js";
 import {SessionStoreService} from "./session.store.service";
 import {Router} from "@angular/router";
-import {ErrorStoreService} from "../../signal-store/error-store.service";
 import {supabaseAuthenticatedClient} from "../supabase-authenticated-client";
 import {TuiAlertService} from "@taiga-ui/core";
+import {ErrorStoreService} from "../../store-signal-class/error-store.service";
 
 @Injectable({
     providedIn: 'root'

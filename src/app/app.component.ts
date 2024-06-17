@@ -1,13 +1,13 @@
 import {Component, WritableSignal} from '@angular/core';
-import {AuthenticationService} from "./auth/services/authentication.service";
-import {SessionStoreService} from "./auth/services/session.store.service";
-import {AuthChangeEvent, Session} from "@supabase/supabase-js";
-import {ErrorStoreService} from "./signal-store/error-store.service";
+import {AuthenticationService} from './auth/services/authentication.service';
+import {SessionStoreService} from './auth/services/session.store.service';
+import {AuthChangeEvent, Session} from '@supabase/supabase-js';
 import {RouterOutlet} from '@angular/router';
 import {TuiNotificationModule} from '@taiga-ui/core/components/notification';
 import {TuiRootModule} from '@taiga-ui/core';
-import {PushActionService} from "./features/notifications/action-store-services/push-action.service";
-import {SwUpdate} from "@angular/service-worker";
+import {PushActionService} from './features/notifications/action-store-services/push-action.service';
+import {SwUpdate} from '@angular/service-worker';
+import {ErrorStoreService} from './store-signal-class/error-store.service';
 
 @Component({
     selector: 'polity-root',
@@ -34,18 +34,18 @@ export class AppComponent {
     ) {
         this.authService.authChanges((_: AuthChangeEvent, session: Session | null): void => {
             this.sessionStoreService.setAuthData(session);
-        })
+        });
         this.notification = this.errorStoreService.selectError();
-        this.showErrorMessage = this.errorStoreService.selectShowError()
+        this.showErrorMessage = this.errorStoreService.selectShowError();
     }
 
     ngOnInit(): void {
-        this.subscribeToNotifications()
+        this.subscribeToNotifications();
         if (this.swUpdate.isEnabled) {
 
             this.swUpdate.versionUpdates.subscribe((): void => {
 
-                if (confirm("New version available. Load New Version?")) {
+                if (confirm('New version available. Load New Version?')) {
 
                     window.location.reload();
                 }
@@ -56,10 +56,10 @@ export class AppComponent {
     }
 
     onClose(): void {
-        this.errorStoreService.setErrorStatus(false)
+        this.errorStoreService.setErrorStatus(false);
     }
 
     subscribeToNotifications(): void {
-        this.pushService.subscribeToNotifications()
+        this.pushService.subscribeToNotifications();
     }
 }

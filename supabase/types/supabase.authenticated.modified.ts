@@ -11,7 +11,7 @@ This seems to occur often with supabase real time.
 Currently, overwritten types:
 public - tables - profiles - row - updated_at
  */
-export type DatabaseHiddenOverwritten = MergeDeep<
+export type DatabaseAuthenticatedOverwritten = MergeDeep<
     DatabaseGenerated,
     {
         authenticated: {
@@ -55,6 +55,38 @@ export type DatabaseHiddenOverwritten = MergeDeep<
                 //         created_at?: Date
                 //     }
                 // }
+            }
+            Functions: {
+                accept_group_invitation_by_id_transaction: {
+                    Args: {
+                        _invitation_id: string
+                    }
+                    Returns: any
+                }
+                delete_group_member_invitation: {
+                    Args: {
+                        _group_id: string
+                    }
+                    Returns: any
+                }
+                delete_group_member_invitation_by_id: {
+                    Args: {
+                        _invitation_id: string
+                    }
+                    Returns: any
+                }
+                delete_group_member_request: {
+                    Args: {
+                        _group_id: string
+                    }
+                    Returns: any
+                }
+                delete_group_member_request_by_id: {
+                    Args: {
+                        _request_id: string
+                    }
+                    Returns: any
+                }
             }
             // Functions: {
             //     select_notifications_of_users: {

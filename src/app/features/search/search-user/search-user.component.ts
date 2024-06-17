@@ -1,17 +1,14 @@
-import {Component, signal, WritableSignal} from '@angular/core';
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {Component, inject} from '@angular/core';
+import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {debounceTime} from "rxjs";
-import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
 import {TuiFieldErrorPipeModule, TuiInputModule} from "@taiga-ui/kit";
 import {TuiErrorModule} from "@taiga-ui/core";
 import {SearchProfileResult} from "../search-profile-result/search-profile-result.component";
 import {CommonModule} from "@angular/common";
-import {SearchUserStoreService} from "../action-store-services/search-user.store.service";
-import {SearchUserActionService} from "../action-store-services/search-user.action.service";
-import {SearchGroupStoreService} from "../action-store-services/search-group.store.service";
-import {SearchGroupActionService} from "../action-store-services/search-group.action.service";
 import {SearchGroupResultComponent} from "../search-group-result/search-group-result.component";
-import {ArrayStoreConsumerDirective} from "../../../signal-store/array-store-consumer.directive";
+import {NewSearchUserStore} from "../action-store-services/new-search-user-store.service";
+import {FollowingsOfUserStore} from "../../profile-follow/action-store-services/followings-of-user-store.service";
+import {SearchGroupStore} from "../action-store-services/search-group.store";
 
 @Component({
     selector: 'polity-search-user',
@@ -28,52 +25,33 @@ import {ArrayStoreConsumerDirective} from "../../../signal-store/array-store-con
     ],
     standalone: true
 })
-export class SearchUserComponent extends ArrayStoreConsumerDirective<SupabaseObjectReturn<'search_user'>> {
-    // protected noSearchProfileResults: WritableSignal<boolean> = signal(false);
-    protected noSearchGroupResults: WritableSignal<boolean> = signal(false);
-
-    // protected searchUserResults: WritableSignal<SupabaseObjectReturn<'search_user'>[]> = signal([]);
-    protected searchGroupResults: WritableSignal<SupabaseObjectReturn<'search_group'>[]> = signal([]);
+export class SearchUserComponent {
+    //protected readonly searchUserStore = inject(SearchUserStore);
+    protected readonly searchUserStore = inject(NewSearchUserStore);
+    protected readonly searchGroupStore = inject(SearchGroupStore);
+    protected readonly test = inject(FollowingsOfUserStore)
     protected searchForm: FormGroup<{
         search: FormControl<string | null>
     }> = new FormGroup({
         search: new FormControl(
-            '',
-            Validators.required),
+            ''
+        )
     })
 
-    constructor(
-        private readonly searchUserActionService: SearchUserActionService,
-        private readonly searchGroupActionService: SearchGroupActionService,
-        private readonly searchUserStoreService: SearchUserStoreService,
-        private readonly searchGroupStoreService: SearchGroupStoreService
-    ) {
-        super();
-        this.service = this.searchUserStoreService.profilSearchResults;
-        this.isLoading = this.searchUserStoreService.profilSearchResults.loading.getLoading() || this.searchGroupStoreService.groupSearchResults.loading.getLoading();
-        this.dataRequested = this.searchUserStoreService.profilSearchResults.getDataRequested() || this.searchGroupStoreService.groupSearchResults.getDataRequested();
-        // this.noSearchProfileResults = this.searchUserStoreService.profilSearchResults.getNoDataFound();
-        this.noSearchGroupResults = this.searchGroupStoreService.groupSearchResults.getNoDataFound();
-
-        // this.searchUserResults = this.searchUserStoreService.profilSearchResults.getObjects();
-        this.searchGroupResults = this.searchGroupStoreService.groupSearchResults.getObjects();
-
+    constructor() {
         this.searchForm.get('search')?.valueChanges.pipe(
             debounceTime(1000)).subscribe(
             () => this.onKeyUp()
-        )
-    }
+        );
 
-    public focused(): void {
-        this.searchUserStoreService.profilSearchResults.resetObjects()
-    };
+    }
 
     private async onKeyUp(): Promise<void> {
         let searchTerm: string | null = this.searchForm.controls.search.value
         if (searchTerm) {
             await Promise.all([
-                this.searchUserActionService.searchUser(searchTerm),
-                this.searchGroupActionService.searchGroup(searchTerm)
+                this.searchUserStore.searchUser(searchTerm),
+                this.searchGroupStore.searchGroup(searchTerm),
             ])
         }
     }

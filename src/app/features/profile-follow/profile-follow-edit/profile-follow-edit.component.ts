@@ -1,4 +1,4 @@
-import {Component, signal, WritableSignal} from '@angular/core';
+import {Component, inject, signal, WritableSignal} from '@angular/core';
 import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
 import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
@@ -10,11 +10,10 @@ import {FilterClearComponent} from "../../../ui/polity-filter/filter-clear/filte
 import {FilterHeadlineComponent} from "../../../ui/polity-filter/filter-headline/filter-headline.component";
 import {FilterStringComponent} from "../../../ui/polity-filter/filter-string/filter-string.component";
 import {FollowersOfUserStoreService} from "../action-store-services/followers-of-user.store.service";
-import {FollowingOfUserStoreService} from "../action-store-services/following-of-user.store.service";
 import {FollowersOfUserActionService} from "../action-store-services/followers-of-user.action.service";
-import {FollowingOfUserActionService} from "../action-store-services/following-of-user.action.service";
 import {FollowingGroupsOfUserStoreService} from "../action-store-services/following-groups-of-user.store.service";
 import {FollowingGroupsOfUserActionService} from "../action-store-services/following-groups-of-user.action.service";
+import {FollowingsOfUserStore} from "../action-store-services/followings-of-user-store.service";
 
 @Component({
     selector: 'polity-follow-button-edit',
@@ -33,8 +32,7 @@ import {FollowingGroupsOfUserActionService} from "../action-store-services/follo
 
 })
 export class ProfileFollowEditComponent {
-    protected isFollowingLoading: WritableSignal<boolean> = signal(true);
-    protected followingsOfUser: WritableSignal<SupabaseObjectReturn<'read_followings_of_user'>[]> = signal([]);
+    protected followingStore: FollowingsOfUserStore = inject(FollowingsOfUserStore)
 
     protected isFollowingGroupLoading: WritableSignal<boolean> = signal(true);
     protected followingsOfUserGroup: WritableSignal<SupabaseObjectReturn<'read_group_followings_of_user'>[]> = signal([]);
@@ -50,18 +48,16 @@ export class ProfileFollowEditComponent {
     protected showFollowers: boolean = true;
     protected showFollowing: boolean = false;
     protected showFollowingGroups: boolean = false;
+    protected readonly signal = signal;
 
     constructor(
         private readonly followersOfUserActionService: FollowersOfUserActionService,
         private readonly followersOfUserStoreService: FollowersOfUserStoreService,
-        private readonly followingOfUserActionService: FollowingOfUserActionService,
-        private readonly followingOfUserStoreService: FollowingOfUserStoreService,
         private readonly followingGroupsOfUserActionService: FollowingGroupsOfUserActionService,
         private readonly followingGroupsOfUserStoreService: FollowingGroupsOfUserStoreService,
         private readonly formBuilder: FormBuilder
     ) {
         this.isFollowersLoading = this.followersOfUserStoreService.followersOfUser.loading.getLoading();
-        this.isFollowingLoading = this.followingOfUserStoreService.followingOfUser.loading.getLoading();
         this.isFollowingGroupLoading = this.followingGroupsOfUserStoreService.followingGroupsOfUser.loading.getLoading();
 
         this.combinedForm = this.formBuilder.group({
@@ -75,16 +71,8 @@ export class ProfileFollowEditComponent {
     }
 
     async ngOnInit(): Promise<void> {
-        // await Promise.all(
-        //     [
-        //         this.followersOfUserService.readFollowersOfUser(),
-        //         this.followingOfUserService.readFollowingsOfUser(),
-        //         this.followingGroupsOfUserActionService.readFollowingsOfUser(),
-        //     ]
-        // )
         await this.followersOfUserActionService.readFollowersOfUser();
         this.followersOfUser = this.followersOfUserStoreService.followersOfUser.getObjects();
-        this.followingsOfUser = this.followingOfUserStoreService.followingOfUser.getObjects();
         this.followingsOfUserGroup = this.followingGroupsOfUserStoreService.followingGroupsOfUser.getObjects();
     }
 
@@ -103,10 +91,12 @@ export class ProfileFollowEditComponent {
                 stringFilter,
             )
         } else {
-            this.followingOfUserStoreService.followingOfUser.filterArray(
-                filterByString,
-                ['first_name_', 'last_name_'],
-                stringFilter
+            this.followingStore.setFilterState(
+                {
+                    filterByString: filterByString,
+                    stringSearchKeys: ['first_name_', 'last_name_'],
+                    searchString: stringFilter
+                }
             )
         }
     }
@@ -119,7 +109,7 @@ export class ProfileFollowEditComponent {
     }
 
     protected showFollowingList(): void {
-        this.followingOfUserActionService.readFollowingsOfUser()
+        this.followingStore.read()
         this.showFollowers = false;
         this.showFollowing = true;
         this.showFollowingGroups = false;
@@ -137,7 +127,7 @@ export class ProfileFollowEditComponent {
     }
 
     protected async removeFollowing(id: string): Promise<void> {
-        await this.followingOfUserActionService.removeFollowingOfUser(id);
+        await this.followingStore.delete(id);
     }
 
     protected async removeFollowingGroup(id: string): Promise<void> {
@@ -148,8 +138,6 @@ export class ProfileFollowEditComponent {
         this.combinedForm.reset()
         if (this.showFollowers) {
             this.followersOfUserStoreService.followersOfUser.resetDisplayedObjects();
-        } else if (this.showFollowing) {
-            this.followingOfUserStoreService.followingOfUser.resetDisplayedObjects();
         } else if (this.showFollowingGroups) {
             this.followingGroupsOfUserStoreService.followingGroupsOfUser.resetDisplayedObjects();
         }

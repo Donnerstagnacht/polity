@@ -1,7 +1,7 @@
 import {Injectable, signal, WritableSignal} from '@angular/core';
 import {AuthSession} from "@supabase/supabase-js";
 import {Router} from "@angular/router";
-import {LoadingStoreService} from "../../signal-store/loading-store.service";
+import {LoadingStoreService} from "../../store-signal-class/loading-store.service";
 
 @Injectable({
     providedIn: 'root'

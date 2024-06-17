@@ -1,4 +1,4 @@
-import {DatabaseAuthenticatedOverwritten} from "./supabase.public.modified";
+import {DatabasePublicOverwritten} from "./supabase.public.modified";
 
 // Commonly used types
 // from functions
@@ -24,8 +24,8 @@ import {DatabaseAuthenticatedOverwritten} from "./supabase.public.modified";
  * It can be used to create an array of objects using typescript array notation:
  * protected notifications: WritableSignal<SupabaseObjectReturn<'select_notifications_of_users'>[]> = signal([]);
  * */
-export type SupabaseObjectReturn<T extends keyof DatabaseAuthenticatedOverwritten['public']['Functions']> =
-    DatabaseAuthenticatedOverwritten['public']['Functions'][T] extends { Returns: infer R } // Infer the return type
+export type SupabaseObjectReturn<T extends keyof DatabasePublicOverwritten['public']['Functions']> =
+    DatabasePublicOverwritten['public']['Functions'][T] extends { Returns: infer R } // Infer the return type
         ? R extends any[] // Check if the return type is an array
             ? R[number]  // In case 'Returns' is an array, infer the element type
             : R          // Otherwise, infer the return type directly
@@ -70,14 +70,14 @@ export type SupabaseObjectReturn<T extends keyof DatabaseAuthenticatedOverwritte
  *   name: string
  * }
  */
-export type SupabaseTable<T extends keyof DatabaseAuthenticatedOverwritten['public']['Tables']> = DatabaseAuthenticatedOverwritten['public']['Tables'][T]['Row']
+export type SupabaseTable<T extends keyof DatabasePublicOverwritten['public']['Tables']> = DatabasePublicOverwritten['public']['Tables'][T]['Row']
 
 /**
  *  Type that represents the definition of an enum in the database as typescript object.
  *  @example
  *  If a database enum is defined as "group_level", it should be used as SupabaseEnum<'group_level'>
  */
-export type SupabaseEnum<T extends keyof DatabaseAuthenticatedOverwritten['public']['Enums']> = DatabaseAuthenticatedOverwritten['public']['Enums'][T];
+export type SupabaseEnum<T extends keyof DatabasePublicOverwritten['public']['Enums']> = DatabasePublicOverwritten['public']['Enums'][T];
 
 /**
  *  Type that represents the definition of a postgres composite type in the database as typescript object.
@@ -96,14 +96,14 @@ export type SupabaseEnum<T extends keyof DatabaseAuthenticatedOverwritten['publi
  *     member_id: string
  * }
  */
-export type SupabaseCompositeType<T extends keyof DatabaseAuthenticatedOverwritten['public']['CompositeTypes']> = DatabaseAuthenticatedOverwritten['public']['CompositeTypes'][T];
+export type SupabaseCompositeType<T extends keyof DatabasePublicOverwritten['public']['CompositeTypes']> = DatabasePublicOverwritten['public']['CompositeTypes'][T];
 
 /**
  *  Type that represents the names of postgres functions - e.g. database calls.
  *  The main useage is make cypress api calls/interceptions type safe.
  *  @example see cypress commands.ts file
  */
-export type SupabaseFunctionName = keyof DatabaseAuthenticatedOverwritten['public']['Functions']
+export type SupabaseFunctionName = keyof DatabasePublicOverwritten['public']['Functions']
 
 // helper types - used in SupabaseArrayReturn type
 /**

@@ -4,6 +4,7 @@ import {SearchUserStoreService} from "./search-user.store.service";
 import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
 import {supabaseAuthenticatedClient} from "../../../auth/supabase-authenticated-client";
 import {SearchUtilitiesService} from "./search-utilities.service";
+import {AbstractRpcService} from "../../../store-signal-class/abstract-rpc.service";
 
 @Injectable({
     providedIn: 'root'
@@ -13,7 +14,8 @@ export class SearchUserActionService {
 
     constructor(
         private readonly searchStoreService: SearchUserStoreService,
-        private readonly searchUtilitiesService: SearchUtilitiesService
+        private readonly searchUtilitiesService: SearchUtilitiesService,
+        private readonly abstractRpcService: AbstractRpcService
     ) {
     }
 
@@ -28,10 +30,16 @@ export class SearchUserActionService {
         this.searchStoreService.profilSearchResults.resetObjects()
         const response: PostgrestSingleResponse<SupabaseObjectReturn<'search_user'>[]> =
             await this.searchStoreService.profilSearchResults.manageSelectApiCall(async () => {
-                    return this.supabaseClient.rpc(
+                    const test1: PostgrestSingleResponse<SupabaseObjectReturn<'search_user'>[]> = await this.supabaseClient.rpc(
                         'search_user',
                         {_search_term: searchTerm}
                     )
+
+                    const test4 = await this.abstractRpcService.abstractRpc6(
+                        'search_user',
+                        {_search_term: searchTerm}
+                    )
+                    return test4
                 },
                 false)
         if (response.data) {

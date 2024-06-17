@@ -1,12 +1,10 @@
 import {Injectable} from '@angular/core';
-import {PostgrestSingleResponse} from "@supabase/supabase-js";
-import {supabaseAuthenticatedClient} from "../../../auth/supabase-authenticated-client";
-import {GroupStoreService} from "./group.store.service";
-import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
+import {supabaseAuthenticatedClient} from '../../../auth/supabase-authenticated-client';
+import {GroupStoreService} from './group.store.service';
 
 @Injectable({
-    providedIn: 'root'
-})
+                providedIn: 'root'
+            })
 export class GroupActionService {
     private readonly supabase = supabaseAuthenticatedClient;
 
@@ -21,21 +19,21 @@ export class GroupActionService {
      * @param {string} id - The ID of the group to retrieve.
      * @return {Promise<void>}
      */
-    public async readGroup(id: string): Promise<void> {
-        const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_group'>> = await this.groupStoreService.group.manageSelectApiCall(async () => {
-            return this.supabase
-            .rpc('read_group', {_group_id: id})
-            .single()
-        })
-        if (response.data) {
-            // const imgPath = await this.supabase.storage.from('profile_images').createSignedUrl(response.data.profile_image, 3600 * 24 * 7);
-            // response.data.profile_image = imgPath.data?.signedUrl as string;
-            if (response.data) {
-                this.groupStoreService.group.setObject(response.data);
-                console.log(response.data)
-            }
-        }
-    }
+    // public async readGroup(id: string): Promise<void> {
+    //     const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_group'>> = await this.groupStoreService.group.manageSelectApiCall(async () => {
+    //         return this.supabase
+    //         .rpc('read_group', {_group_id: id})
+    //         .single()
+    //     })
+    //     if (response.data) {
+    //         // const imgPath = await this.supabase.storage.from('profile_images').createSignedUrl(response.data.profile_image, 3600 * 24 * 7);
+    //         // response.data.profile_image = imgPath.data?.signedUrl as string;
+    //         if (response.data) {
+    //             this.groupStoreService.group.setObject(response.data);
+    //             console.log(response.data)
+    //         }
+    //     }
+    // }
 
     /**
      * Retrieves private URLs for the given image File names.
@@ -56,7 +54,7 @@ export class GroupActionService {
             error: string | null;
             path: string | null;
             signedUrl: string
-        }) => obj.signedUrl)
+        }) => obj.signedUrl);
         return signedImageUrlsAsStrings;
     }
 
@@ -71,7 +69,8 @@ export class GroupActionService {
      */
     public async transformImageNamesToUrls<storedObject extends object>(
         objectArray: storedObject[],
-        key: keyof storedObject): Promise<storedObject[]> {
+        key: keyof storedObject
+    ): Promise<storedObject[]> {
         const imgNames: string[] = objectArray.map((obj: storedObject) => obj[key]) as string[];
         const imgPaths: string[] = await this.getSignedImageUrls(imgNames) as string[];
 

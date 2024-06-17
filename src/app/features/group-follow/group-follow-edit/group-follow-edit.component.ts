@@ -1,32 +1,32 @@
 import {Component, signal, WritableSignal} from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
-import {FollowerOfGroupActionService} from "../action-store-services/follower-of-group.action.service";
-import {FollowingOfGroupActionService} from "../action-store-services/following-of-group.action.service";
-import {FollowerOfGroupStoreService} from "../action-store-services/follower-of-group.store.service";
-import {FollowingOfGroupStoreService} from "../action-store-services/following-of-group.store.service";
-import {FilterClearComponent} from "../../../ui/polity-filter/filter-clear/filter-clear.component";
-import {FilterHeadlineComponent} from "../../../ui/polity-filter/filter-headline/filter-headline.component";
-import {FilterStringComponent} from "../../../ui/polity-filter/filter-string/filter-string.component";
+import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {SupabaseObjectReturn} from '../../../../../supabase/types/supabase.authenticated.shorthand-types';
+import {FollowerOfGroupActionService} from '../action-store-services/follower-of-group.action.service';
+import {FollowingOfGroupActionService} from '../action-store-services/following-of-group.action.service';
+import {FollowerOfGroupStoreService} from '../action-store-services/follower-of-group.store.service';
+import {FollowingOfGroupStoreService} from '../action-store-services/following-of-group.store.service';
+import {FilterClearComponent} from '../../../ui/polity-filter/filter-clear/filter-clear.component';
+import {FilterHeadlineComponent} from '../../../ui/polity-filter/filter-headline/filter-headline.component';
+import {FilterStringComponent} from '../../../ui/polity-filter/filter-string/filter-string.component';
 import {
     TableThreeIconTextDeleteComponent
-} from "../../../ui/polity-table/table-three-icon-text-delete/table-three-icon-text-delete.component";
-import {TuiTabsModule} from "@taiga-ui/kit";
+} from '../../../ui/polity-table/table-three-icon-text-delete/table-three-icon-text-delete.component';
+import {TuiTabsModule} from '@taiga-ui/kit';
 
 @Component({
-    selector: 'polity-group-follow-edit',
-    standalone: true,
-    imports: [
-        FilterClearComponent,
-        FilterHeadlineComponent,
-        FilterStringComponent,
-        ReactiveFormsModule,
-        TableThreeIconTextDeleteComponent,
-        TuiTabsModule
-    ],
-    templateUrl: './group-follow-edit.component.html',
-    styleUrl: './group-follow-edit.component.less'
-})
+               selector: 'polity-group-follow-edit',
+               standalone: true,
+               imports: [
+                   FilterClearComponent,
+                   FilterHeadlineComponent,
+                   FilterStringComponent,
+                   ReactiveFormsModule,
+                   TableThreeIconTextDeleteComponent,
+                   TuiTabsModule
+               ],
+               templateUrl: './group-follow-edit.component.html',
+               styleUrl: './group-follow-edit.component.less'
+           })
 export class GroupFollowEditComponent {
     protected followersOfGroup: WritableSignal<SupabaseObjectReturn<'read_followers_of_group'>[]> = signal([]);
     protected followingsOfGroup: WritableSignal<SupabaseObjectReturn<'read_followings_of_group'>[]> = signal([]);
@@ -49,10 +49,10 @@ export class GroupFollowEditComponent {
         this.isFollowingLoading = this.followingOfGroupStoreService.followingOfGroup.loading.getLoading();
 
         this.combinedForm = this.formBuilder.group({
-            filterStringForm: this.formBuilder.group({
-                searchString: [],
-            })
-        })
+                                                       filterStringForm: this.formBuilder.group({
+                                                                                                    searchString: []
+                                                                                                })
+                                                   });
         this.combinedForm.valueChanges.subscribe(
             () => this.onCombinedFormChange());
     }
@@ -61,9 +61,9 @@ export class GroupFollowEditComponent {
         await Promise.all(
             [
                 this.followersOfGroupService.readFollowersOfGroup(),
-                this.followingOfGroupService.readFollowingsOfGroup(),
+                this.followingOfGroupService.readFollowingsOfGroup()
             ]
-        )
+        );
         this.followersOfGroup = this.followersOfGroupStoreService.followersOfGroup.getObjects();
         this.followingsOfGroup = this.followingOfGroupStoreService.followingOfGroup.getObjects();
     }
@@ -81,13 +81,13 @@ export class GroupFollowEditComponent {
                 filterByString,
                 ['first_name_', 'last_name_'],
                 stringFilter
-            )
+            );
         } else {
             this.followingOfGroupStoreService.followingOfGroup.filterArray(
                 filterByString,
                 ['first_name_', 'last_name_'],
                 stringFilter
-            )
+            );
         }
     }
 
@@ -108,7 +108,7 @@ export class GroupFollowEditComponent {
     }
 
     protected clearFilter(): void {
-        this.combinedForm.reset()
+        this.combinedForm.reset();
         if (this.showFollowers) {
             this.followersOfGroupStoreService.followersOfGroup.resetDisplayedObjects();
         } else {
@@ -117,8 +117,8 @@ export class GroupFollowEditComponent {
     }
 
     protected toggleShowFilter(): void {
-        this.showFilter = !this.showFilter
-        this.clearFilter()
+        this.showFilter = !this.showFilter;
+        this.clearFilter();
     }
 
 }

@@ -1,53 +1,43 @@
-import {DatabaseAuthenticatedOverwritten} from "../../../../../supabase/types/supabase.authenticated.modified";
-import {patchState, signalStore, withMethods, withState} from "@ngrx/signals";
-import {withRpcHandler} from "./StoreFeatures/rpcHandler.feature";
+import {signalStore, withComputed, withMethods} from "@ngrx/signals";
+import {computed} from "@angular/core";
+import {withRpcHandler} from "../../../store-ngrx/rpcHandler.feature";
 
-type SearchUserState = {
-    searchUserResults: DatabaseAuthenticatedOverwritten['authenticated']['Functions']['search_user']['Returns']
-}
+// type SearchUserState = {
+//     searchUserResults: DatabaseAuthenticatedOverwritten['authenticated']['Functions']['search_group']['Returns']
+// }
+//
+// const initialState: SearchUserState = {
+//     searchUserResults: []
+// }
 
-const initialState: SearchUserState = {
-    searchUserResults: []
-}
-
-export const SearchUserStore = signalStore(
+export const SearchGroupStore = signalStore(
     {providedIn: 'root'},
-    withState(initialState),
+    // withState(initialState),
 
-    withRpcHandler<'search_user'>(
-        'search_user',
-        // [{
-        //     id_: 'ssdfd',
-        //     first_name_: 'Testname',
-        //     last_name_: 'Testname',
-        //     username_: 'Testname'
-        // }]
+    withRpcHandler<'search_group'>(
+        'search_group',
         []
     ),
 
     withMethods((store) => {
-
         return {
-            async searchUser(searchTerm: string) {
+            async searchGroup(searchTerm: string) {
                 const results = await store.rpcHandler(
-                    'search_user',
+                    'search_group',
                     {_search_term: searchTerm}
                 )
-                // if (results.data) {
-                //     patchState(store, {searchUserResults: results.data})
-                // }
             },
-
-            async searchUser2(searchTerm: string) {
-                const results = await store.rpc(
-                    'search_user',
-                    {_search_term: searchTerm}
-                )
-                if (results.data) {
-                    patchState(store, {searchUserResults: results.data})
-                }
-            }
         }
+    }),
 
-    })
+    withComputed((store) => ({
+            noData: computed((): boolean => {
+                if (store.data().length > 0) {
+                    return false
+                } else {
+                    return true
+                }
+            })
+        }),
+    )
 )

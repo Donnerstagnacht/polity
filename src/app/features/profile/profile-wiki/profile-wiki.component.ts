@@ -1,14 +1,14 @@
-import {Component, signal, Signal, WritableSignal} from '@angular/core';
+import {Component, effect, inject, signal, Signal, WritableSignal} from '@angular/core';
 import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
 import {WikiHeadlineComponent} from "../../../ui/polity-wiki/wiki-headline/wiki-headline.component";
 import {CounterComponent} from "../../../ui/polity-wiki/counter/counter.component";
 import {FollowButton} from "../../../ui/polity-wiki/follow-button/follow-button.component";
 import {WikiImageComponent} from "../../../ui/polity-wiki/wiki-image/wiki-image.component";
 import {ProfileStoreService} from "../action-store-services/profile.store.service";
-import {ProfileCountersStoreService} from "../../profile-follow/action-store-services/profile-counters.store.service";
 import {
     FollowersOfUserActionService
 } from "../../profile-follow/action-store-services/followers-of-user.action.service";
+import {ProfileCounterStore} from "../../profile-follow/action-store-services/profile-counter-store.service";
 
 @Component({
     selector: 'polity-profile-wiki',
@@ -24,22 +24,24 @@ import {
 })
 export class ProfileWikiComponent {
     protected isProfileLoading: WritableSignal<boolean> = signal(true);
-    protected isProfileCounterLoading: WritableSignal<boolean> = signal(true);
+    protected profileCounterStore: ProfileCounterStore = inject(ProfileCounterStore);
+    // protected isProfileCounterLoading: WritableSignal<boolean> = signal(true);
     protected isFollowingCheckLoading: WritableSignal<boolean> = signal(true);
     protected profile: Signal<SupabaseObjectReturn<'read_profile'> | null>;
-    protected profileCounter: WritableSignal<SupabaseObjectReturn<'read_profile_counters'> | null> = signal(null);
+    // protected profileCounter: WritableSignal<SupabaseObjectReturn<'read_profile_counters'> | null> = signal(null);
     protected isOwner: WritableSignal<boolean>;
     protected isFollowing: WritableSignal<boolean>;
+    protected readonly signal = signal;
 
     constructor(
         private readonly profileStoreService: ProfileStoreService,
-        private readonly profileCountersStoreService: ProfileCountersStoreService,
+        // private readonly profileCountersStoreService: ProfileCountersStoreService,
         private readonly followersOfUserActionService: FollowersOfUserActionService
     ) {
         this.isFollowingCheckLoading = this.profileStoreService.profile.uiFlagStore.getFlag('isFollowingCheckLoading')
         this.isProfileLoading = this.profileStoreService.profile.loading.getLoading()
-        this.isProfileCounterLoading = this.profileCountersStoreService.profileCounters.loading.getLoading()
-        this.profileCounter = this.profileCountersStoreService.profileCounters.getObject()
+        // this.isProfileCounterLoading = this.profileCountersStoreService.profileCounters.loading.getLoading()
+        // this.profileCounter = this.profileCountersStoreService.profileCounters.getObject()
         this.profile = this.profileStoreService.profile.getObject()
         this.isOwner = this.profileStoreService.profile.uiFlagStore.getFlag('isOwner')
         this.isFollowing = this.profileStoreService.profile.uiFlagStore.getFlag('isFollowing')

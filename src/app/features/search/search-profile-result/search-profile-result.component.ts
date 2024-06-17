@@ -1,7 +1,8 @@
-import {Component, Input, signal, WritableSignal} from '@angular/core';
+import {Component, Input, Signal, signal} from '@angular/core';
 import {Router} from "@angular/router";
 import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
 import {TuiIslandModule} from "@taiga-ui/kit";
+import {LoadingState} from "../../../store-signal-functions/loadingFeature";
 
 @Component({
     selector: 'polity-search-profile-result',
@@ -19,7 +20,10 @@ export class SearchProfileResult {
      * @Input profile: Profile | null.
      */
     @Input({required: true}) public profile: SupabaseObjectReturn<'search_user'> | null = null;
-    @Input({required: true}) public isLoading: WritableSignal<boolean> = signal(true);
+    @Input({required: true}) public isLoading: Signal<LoadingState> = signal({
+        dataRequested: false,
+        loading: false
+    });
 
     constructor(private readonly router: Router) {
     }

@@ -3,9 +3,9 @@
     [hoverable]="true"
 >
     <p
-        [class.tui-skeleton]="isLoading()"
+        [class.tui-skeleton]="isLoading().loading"
         class="tui-island__category">USER</p>
-    <h3 [class.tui-skeleton]="isLoading()"
+    <h3 [class.tui-skeleton]="isLoading().loading"
         class="tui-island__title">
         {{ profile?.first_name_ }} {{ profile?.last_name_ }}
     </h3>

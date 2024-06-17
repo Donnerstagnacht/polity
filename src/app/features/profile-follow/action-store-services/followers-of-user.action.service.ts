@@ -1,21 +1,22 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {PostgrestSingleResponse} from "@supabase/supabase-js";
 import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
 import {FollowersOfUserStoreService} from "./followers-of-user.store.service";
-import {ProfileCountersStoreService} from "./profile-counters.store.service";
 import {supabaseAuthenticatedClient} from "../../../auth/supabase-authenticated-client";
 import {ProfileActionService} from "../../profile/action-store-services/profile.action.service";
 import {ProfileStoreService} from "../../profile/action-store-services/profile.store.service";
+import {ProfileCounterStore} from "./profile-counter-store.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class FollowersOfUserActionService {
     private readonly supabaseClient = supabaseAuthenticatedClient;
+    private profileCounterStore = inject(ProfileCounterStore)
 
     constructor(
         private followersOfUserStoreService: FollowersOfUserStoreService,
-        private profileCountersStoreService: ProfileCountersStoreService,
+        // private profileCountersStoreService: ProfileCountersStoreService,
         private profileActionService: ProfileActionService,
         private profileStoreService: ProfileStoreService
     ) {
@@ -49,15 +50,16 @@ export class FollowersOfUserActionService {
                 'id_',
                 userId
             )
-            this.profileCountersStoreService.profileCounters.decrementKey('follower_counter_')
+            this.profileCounterStore.decrement('follower_counter_')
+            // this.profileCountersStoreService.profileCounters.decrementKey('follower_counter_')
         }
     }
 
 
     public async checkIfFollowing(): Promise<void> {
-        const followingId: string = this.profileCountersStoreService.profileCounters.getValueByKey('profile_id_')
+        const followingId: string = this.profileStoreService.profile.getValueByKey('profile_id_')
 
-        const response: PostgrestSingleResponse<SupabaseObjectReturn<'check_if_user_follows_profile'>> = await this.profileCountersStoreService.profileCounters.manageSelectApiCall(async () => {
+        const response: PostgrestSingleResponse<SupabaseObjectReturn<'check_if_user_follows_profile'>> = await this.profileStoreService.profile.manageSelectApiCall(async () => {
             this.profileStoreService.profile.uiFlagStore.setFlagTrue('isFollowingCheckLoading')
             return this.supabaseClient.rpc(
                 'check_if_user_follows_profile',
@@ -77,8 +79,8 @@ export class FollowersOfUserActionService {
     }
 
     public async followProfile(): Promise<void> {
-        const followingId: string = this.profileCountersStoreService.profileCounters.getValueByKey('profile_id_');
-        const response: PostgrestSingleResponse<SupabaseObjectReturn<'follow_profile_transaction'>> = await this.profileCountersStoreService.profileCounters.manageUpdateApiCall(async () => {
+        const followingId: string = this.profileStoreService.profile.getValueByKey('profile_id_');
+        const response: PostgrestSingleResponse<SupabaseObjectReturn<'follow_profile_transaction'>> = await this.profileStoreService.profile.manageUpdateApiCall(async () => {
             return this.supabaseClient.rpc(
                 'follow_profile_transaction',
                 {
@@ -87,13 +89,14 @@ export class FollowersOfUserActionService {
         }, true, 'Successful followed!')
         if (!response.error) {
             this.profileStoreService.profile.uiFlagStore.setFlagTrue('isFollowing')
-            this.profileCountersStoreService.profileCounters.incrementKey('follower_counter_')
+            this.profileCounterStore.increment('follower_counter_')
+            // this.profileCountersStoreService.profileCounters.incrementKey('follower_counter_')
         }
     }
 
     public async unFollowProfile(): Promise<void> {
-        const followingId = this.profileCountersStoreService.profileCounters.getValueByKey('profile_id_');
-        const response: PostgrestSingleResponse<SupabaseObjectReturn<'unfollow_profile_transaction'>> = await this.profileCountersStoreService.profileCounters.manageUpdateApiCall(async () => {
+        const followingId = this.profileStoreService.profile.getValueByKey('profile_id_');
+        const response: PostgrestSingleResponse<SupabaseObjectReturn<'unfollow_profile_transaction'>> = await this.profileStoreService.profile.manageUpdateApiCall(async () => {
             return this.supabaseClient.rpc(
                 'unfollow_profile_transaction',
                 {
@@ -103,7 +106,8 @@ export class FollowersOfUserActionService {
         }, true, 'Successful unfollowed!')
         if (!response.error) {
             this.profileStoreService.profile.uiFlagStore.setFlagFalse('isFollowing')
-            this.profileCountersStoreService.profileCounters.decrementKey('follower_counter_')
+            this.profileCounterStore.decrement('follower_counter_')
+            // this.profileCountersStoreService.profileCounters.decrementKey('follower_counter_')
         }
     }
 }

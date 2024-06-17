@@ -15,8 +15,8 @@ DROP POLICY IF EXISTS "Users can not update <%= underscore(name) %>." ON hidden.
 CREATE POLICY "Users can not update <%= underscore(name) %>."
     ON hidden.<%= underscore(name) %>
     FOR UPDATE
-                          USING (FALSE)
-WITH CHECK (FALSE);
+    USING (FALSE)
+    WITH CHECK (FALSE);
 
 DROP POLICY IF EXISTS "Board members and presidents can update <%= underscore(name) %>."
     ON hidden.<%= underscore(name) %>;

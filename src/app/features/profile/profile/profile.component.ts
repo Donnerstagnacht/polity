@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {SessionStoreService} from "../../../auth/services/session.store.service";
 import {ActivatedRoute, RouterOutlet} from "@angular/router";
 import {NavigationItem} from "../../../navigation/types-and-interfaces/navigationItem";
@@ -7,13 +7,12 @@ import {SecondBarRightComponent} from "../../../navigation/second-bar-right/seco
 import {CommonModule} from "@angular/common";
 import {ProfileStoreService} from "../action-store-services/profile.store.service";
 import {ProfileActionService} from "../action-store-services/profile.action.service";
-import {ProfileCountersStoreService} from "../../profile-follow/action-store-services/profile-counters.store.service";
-import {ProfileCountersActionService} from "../../profile-follow/action-store-services/profile-counters.action.service";
 import {NAVIGATION_ITEMS_PROFILE} from "../profile-navigation-signed-in";
 import {NAVIGATION_ITEMS_PROFILE_OWNER} from "../profile-navigation-owner";
 import {
     FollowersOfUserActionService
 } from "../../profile-follow/action-store-services/followers-of-user.action.service";
+import {ProfileCounterStore} from "../../profile-follow/action-store-services/profile-counter-store.service";
 
 @Component({
     selector: 'polity-profile',
@@ -29,14 +28,15 @@ import {
 })
 export class ProfileComponent {
     protected menuItemsProfile: NavigationItem[] = NAVIGATION_ITEMS_PROFILE;
+    protected profileCounterStore: ProfileCounterStore = inject(ProfileCounterStore)
 
     constructor(
         private readonly sessionStoreService: SessionStoreService,
         private readonly profileStoreService: ProfileStoreService,
         private readonly profileService: ProfileActionService,
         private route: ActivatedRoute,
-        private readonly profileCounterService: ProfileCountersActionService,
-        private readonly profileCountersStoreService: ProfileCountersStoreService,
+        // private readonly profileCounterService: ProfileCountersActionService,
+        // private readonly profileCountersStoreService: ProfileCountersStoreService,
         private readonly followersOfUserActionService: FollowersOfUserActionService
     ) {
     }
@@ -48,14 +48,15 @@ export class ProfileComponent {
 
         await Promise.all([
             this.profileService.readProfile(urlId),
-            this.profileCounterService.selectProfileCounter(urlId)
+            this.profileCounterStore.read(urlId)
+            // this.profileCounterService.selectProfileCounter(urlId)
         ])
         await this.followersOfUserActionService.checkIfFollowing();
     }
 
     ngOnDestroy(): void {
         this.profileStoreService.profile.resetObject();
-        this.profileCountersStoreService.profileCounters.resetObject()
+        // this.profileCountersStoreService.profileCounters.resetObject()
     }
 
     private checkIsOwner(urlId: string, sessionId: string | null): void {

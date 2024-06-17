@@ -1,6 +1,5 @@
-import {Component, effect, signal, WritableSignal} from '@angular/core';
+import {Component, inject, signal, WritableSignal} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
 import {TuiDay} from "@taiga-ui/cdk";
 import {IInfiniteScrollEvent, InfiniteScrollModule} from "ngx-infinite-scroll";
 import {CommonModule} from "@angular/common";
@@ -15,6 +14,7 @@ import {
 import {NotificationsActionService} from "../action-store-services/notifications.action.service";
 import {NotificationsStoreService} from "../action-store-services/notifications.store.service";
 import {Filter_TYPES, filterTag} from "../constants-types-interfaces/notificationFilterTypes";
+import {NotificationStore} from "../action-store-services/notification-store.service";
 
 @Component({
     selector: 'polity-notification',
@@ -35,13 +35,14 @@ import {Filter_TYPES, filterTag} from "../constants-types-interfaces/notificatio
 })
 export class NotificationComponent {
     public combinedForm: FormGroup;
+    protected notificationStore: NotificationStore = inject(NotificationStore)
     protected throttle: number = 300;
     protected scrollDistance: number = 1;
     protected scrollUpDistance: number = 2;
-    protected notifications: WritableSignal<SupabaseObjectReturn<'read_notifications_of_user'>[]> = signal([]);
     protected isNotificationsLoading: WritableSignal<boolean> = signal(true);
     protected showFilter: boolean = true;
     protected readonly filterTypes: filterTag[] = Filter_TYPES;
+    protected readonly signal = signal;
 
     constructor(
         private readonly notificationsService: NotificationsActionService,
@@ -65,15 +66,10 @@ export class NotificationComponent {
             () => this.onCombinedFormChange()
         )
         this.notificationsService.resetNotificationCounter()
-
-        effect(() => {
-            console.log('data', this.notifications())
-        })
     }
 
     async ngOnInit(): Promise<void> {
-        this.notificationsService.selectNotifications()
-        this.notifications = this.notificationStoreService.notifications.getObjects();
+        this.notificationStore.read()
         this.notificationsService.subscribeToRealtimeNotifications()
     }
 
@@ -122,19 +118,21 @@ export class NotificationComponent {
             this.notificationStoreService.notifications.resetDisplayedObjects()
         }
 
-        this.notificationStoreService.notifications.filterArray(
-            filterByString,
-            ['first_name_', 'last_name_'],
-            stringFilter,
+        this.notificationStore.setFilterState(
+            {
+                filterByString: filterByString,
+                stringSearchKeys: ['first_name_', 'last_name_'],
+                searchString: stringFilter,
 
-            filterByType,
-            'type_of_notification_',
-            typeKeyValues,
+                filterByTag: filterByType,
+                tagSearchKeys: 'type_of_notification_',
+                tagValues: typeKeyValues,
 
-            filterByDate,
-            'created_at_',
-            dateFilterFrom,
-            dateFilterTo
+                filterByDateRange: filterByDate,
+                dateSearchKey: 'created_at_',
+                startDate: dateFilterFrom,
+                endDate: dateFilterTo
+            }
         )
     }
 }

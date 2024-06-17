@@ -64,9 +64,9 @@
         [dataCyTagsHeadline]="['following_profile_image_headline', 'following_first_name_headline',
         'following_remove_headline']"
         [dataKeysForColumns]="['profile_image_', 'first_name_', 'id_']"
-        [data]="followingsOfUser"
+        [data]="this.followingStore.dataFiltered"
         [headings]="['Foto', 'Name', 'Entfernen']"
-        [isLoading]="isFollowingLoading"
+        [isLoading]="signal(this.followingStore.loadingState().loading)"
     >
     </polity-table-three-icon-text-delete>
 }

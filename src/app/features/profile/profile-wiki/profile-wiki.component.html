@@ -9,23 +9,23 @@
         class=" polity-flex-container polity-single-item-centered tui-space_right-4 tui-space_left-4">
         <polity-counter
             [counterTitle]="'Follower'"
-            [counterValue]="this.profileCounter()?.follower_counter_"
+            [counterValue]="this.profileCounterStore.data().follower_counter_"
             [dataCyTag]="'followerCounter'"
-            [isLoading]="this.isProfileCounterLoading"
+            [isLoading]="signal(this.profileCounterStore.loadingState().loading)"
             class="polity-flex-item-first"
         ></polity-counter>
         <polity-counter
             [counterTitle]="'Following'"
-            [counterValue]="this.profileCounter()?.following_counter_"
+            [counterValue]="this.profileCounterStore.data().following_counter_"
             [dataCyTag]="'followingCounter'"
-            [isLoading]="this.isProfileCounterLoading"
+            [isLoading]="signal(this.profileCounterStore.loadingState().loading)"
             class="polity-flex-item-last"
         ></polity-counter>
         <polity-counter
             [counterTitle]="'Memberships'"
-            [counterValue]="this.profileCounter()?.group_membership_counter_"
+            [counterValue]="this.profileCounterStore.data().group_membership_counter_"
             [dataCyTag]="'membershipCounter'"
-            [isLoading]="this.isProfileCounterLoading"
+            [isLoading]="signal(this.profileCounterStore.loadingState().loading)"
             class="polity-flex-item-last"
         ></polity-counter>
     </div>

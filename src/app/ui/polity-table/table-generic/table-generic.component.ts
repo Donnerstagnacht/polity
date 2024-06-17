@@ -1,4 +1,4 @@
-import {Component, Input, signal, WritableSignal} from '@angular/core';
+import {Component, Input, Signal, signal, WritableSignal} from '@angular/core';
 
 /**
  * A generic table componen that offers generic functionality for tui tables
@@ -21,7 +21,7 @@ import {Component, Input, signal, WritableSignal} from '@angular/core';
 export class TableGenericComponent<ObjectType> {
     @Input({required: true}) public dataKeysForColumns: (keyof ObjectType)[] = [];
     @Input() public bonusKeys: (keyof ObjectType)[] = [];
-    @Input({required: true}) public data: WritableSignal<ObjectType[]> = signal([]);
+    @Input({required: true}) public data: WritableSignal<ObjectType[]> | Signal<ObjectType[]> = signal([]);
     @Input({required: true}) public isLoading: WritableSignal<boolean> = signal(true);
     @Input({required: true}) public headings: string[] = [];
     @Input() dataCyTags: string[] = [];
