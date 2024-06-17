@@ -14,7 +14,7 @@ export class ArrayStoreConsumerDirective<T> implements OnInit {
         getNoDataFound: () => WritableSignal<boolean>
     };
 
-    protected isLoading: WritableSignal<boolean> = signal(false);
+    // protected isLoading: WritableSignal<boolean> = signal(false);
     protected dataRequested: WritableSignal<boolean> = signal(false);
     protected noDataFound: WritableSignal<boolean> = signal(false);
     protected data: WritableSignal<T[]> = signal([]);
@@ -25,7 +25,7 @@ export class ArrayStoreConsumerDirective<T> implements OnInit {
 
     ngOnInit() {
         if (this.service && typeof this.service.loading.getLoading === 'function') {
-            this.isLoading = this.service.loading.getLoading();
+            // this.isLoading = this.service.loading.getLoading();
             this.noDataFound = this.service.getNoDataFound();
             this.dataRequested = this.service.getDataRequested();
             this.data = this.service.getObjects();
