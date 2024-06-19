@@ -12,7 +12,7 @@ import {of} from 'rxjs';
 import {TuiButtonModule, TuiErrorModule, TuiSvgModule, TuiTextfieldControllerModule} from '@taiga-ui/core';
 import {CommonModule} from '@angular/common';
 import {RouterLink} from '@angular/router';
-import {AuthenticationService} from '../store/authentication.service';
+import {AuthenticationService} from '../state/authentication.service';
 
 @Component({
     selector: 'polity-sign-in',

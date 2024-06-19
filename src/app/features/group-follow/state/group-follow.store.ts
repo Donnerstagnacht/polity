@@ -1,33 +1,25 @@
 import {inject, Injectable} from '@angular/core';
-import {ProfileStore} from '../../profile/store/profile.store';
-import {ProfileCounterStore} from './profile-counter.store';
-import {rpcArrayHandler} from '../../../store-signal-functions/array/rpcArrayHandlerFeature';
 import {BaseObjectStore} from '../../../store-signal-functions/object/base-object-store.service';
+import {rpcObjectHandler} from '../../../store-signal-functions/object/rpcObjectHandlerFeature';
+import {GroupStore} from '../../group/state/group.store.';
+import {GroupCounterStore} from './group-counter.store';
 
 @Injectable()
-export class ProfileFollowStore extends BaseObjectStore<'check_if_user_follows_profile'> {
-    private profileStore: ProfileStore = inject(ProfileStore);
-    private profileCouterStore: ProfileCounterStore = inject(ProfileCounterStore);
+export class GroupFollowStore extends BaseObjectStore<'check_if_user_follows_group'> {
+    private groupCounterStore: GroupCounterStore = inject(GroupCounterStore);
+    private groupStore: GroupStore = inject(GroupStore);
 
     constructor() {
-        super(
-            true
-            ,
-            {
-                loading: false,
-                dataRequested: false
-            }
-        );
+        super(false);
     }
 
-    public async checkIfFollowing(userId: string): Promise<void> {
-        await rpcArrayHandler(
+    public async checkIfFollowing(groupId: string): Promise<void> {
+        const result = await rpcObjectHandler(
             {
-                fn: 'check_if_user_follows_profile',
-                args:
-                    {
-                        _following_id: userId
-                    }
+                fn: 'check_if_user_follows_group',
+                args: {
+                    _following_id: groupId
+                }
             },
             {
                 useLoading: true,
@@ -37,25 +29,26 @@ export class ProfileFollowStore extends BaseObjectStore<'check_if_user_follows_p
                 useStore: true,
                 dataState: this.data_
             },
+
             {
                 useError: true,
                 errorStoreService: this.errorStoreService
             },
             {
-                useSuccess: true,
-                alertService: this.tuiAlertService,
-                successMessage: 'CheckFollowerStatus loaded!'
+                useSuccess: false
             }
         );
     }
 
     public async follow(): Promise<void> {
-        const followingId: string = this.profileStore.data().profile_id_;
-        await rpcArrayHandler(
+        // console.log('groupStore: ', this.groupStore.data());
+        const groupId = this.groupStore.data().id_;
+        console.log('groupId: ', groupId);
+        const result = await rpcObjectHandler(
             {
-                fn: 'follow_profile_transaction',
+                fn: 'follow_group_transaction',
                 args: {
-                    _following_id: followingId
+                    _following_id: groupId
                 }
             },
             {
@@ -65,6 +58,7 @@ export class ProfileFollowStore extends BaseObjectStore<'check_if_user_follows_p
             {
                 useStore: false
             },
+
             {
                 useError: true,
                 errorStoreService: this.errorStoreService
@@ -72,20 +66,20 @@ export class ProfileFollowStore extends BaseObjectStore<'check_if_user_follows_p
             {
                 useSuccess: true,
                 alertService: this.tuiAlertService,
-                successMessage: 'Followed!'
+                successMessage: 'Followed successful!'
             }
         );
-        this.profileCouterStore.increment('follower_counter_');
+        this.groupCounterStore.increment('follower_counter_');
         this.updateFollowStatus(true);
     }
 
-    public async unfollow(): Promise<void> {
-        const followingId: string = this.profileStore.data().profile_id_;
-        await rpcArrayHandler(
+    public async unFollow(): Promise<void> {
+        const groupId = this.groupStore.data().id_;
+        const result = await rpcObjectHandler(
             {
-                fn: 'unfollow_profile_transaction',
+                fn: 'unfollow_group_transaction',
                 args: {
-                    _following_id: followingId
+                    _following_id: groupId
                 }
             },
             {
@@ -95,6 +89,7 @@ export class ProfileFollowStore extends BaseObjectStore<'check_if_user_follows_p
             {
                 useStore: false
             },
+
             {
                 useError: true,
                 errorStoreService: this.errorStoreService
@@ -102,13 +97,12 @@ export class ProfileFollowStore extends BaseObjectStore<'check_if_user_follows_p
             {
                 useSuccess: true,
                 alertService: this.tuiAlertService,
-                successMessage: 'Followed!'
+                successMessage: 'Unfollowed successful!'
             }
         );
-        this.profileCouterStore.decrement('follower_counter_');
+        this.groupCounterStore.decrement('follower_counter_');
         this.updateFollowStatus(false);
     }
-
 
     private updateFollowStatus(newStatus: boolean): void {
         this.data_.set(newStatus);

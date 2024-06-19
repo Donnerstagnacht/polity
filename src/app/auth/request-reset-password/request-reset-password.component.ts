@@ -3,7 +3,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {AsyncPipe} from '@angular/common';
 import {TuiButtonModule, TuiErrorModule, TuiSvgModule, TuiTextfieldControllerModule} from '@taiga-ui/core';
 import {TUI_VALIDATION_ERRORS, TuiFieldErrorPipeModule, TuiInputModule, TuiIslandModule} from '@taiga-ui/kit';
-import {AuthenticationService} from '../store/authentication.service';
+import {AuthenticationService} from '../state/authentication.service';
 
 @Component({
     selector: 'polity-request-reset-password',

@@ -10,9 +10,9 @@ import {TuiTabsModule} from '@taiga-ui/kit';
 import {
     TableThreeIconTextTwoActionsComponent
 } from '../../../ui/polity-table/table-three-icon-text-two-actions/table-three-icon-text-two-actions.component';
-import {InvitationsOfUserStore} from '../store/invitations-of-user.store';
-import {RequestsOfUserStore} from '../store/requests-of-user.store';
-import {MembershipsOfUserStore} from '../store/memberships-of-user.store';
+import {InvitationsOfUserStore} from '../state/invitations-of-user.store';
+import {RequestsOfUserStore} from '../state/requests-of-user.store';
+import {MembershipsOfUserStore} from '../state/memberships-of-user.store';
 
 @Component({
     selector: 'polity-profile-groups-edit',

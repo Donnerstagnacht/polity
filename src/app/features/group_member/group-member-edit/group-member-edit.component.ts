@@ -12,9 +12,9 @@ import {
     TableThreeIconTextTwoActionsComponent
 } from '../../../ui/polity-table/table-three-icon-text-two-actions/table-three-icon-text-two-actions.component';
 import {SearchProfilesBarComponent} from '../../search/search-profiles-bar/search-profiles-bar.component';
-import {GroupRequestsStore} from '../store/group-requests.store';
-import {GroupMembersStore} from '../store/group-members.store';
-import {GroupInvitationsStore} from '../store/group-invitations.store';
+import {GroupRequestsStore} from '../state/group-requests.store';
+import {GroupMembersStore} from '../state/group-members.store';
+import {GroupInvitationsStore} from '../state/group-invitations.store';
 
 @Component({
     selector: 'polity-group-member-edit',

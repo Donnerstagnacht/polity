@@ -11,8 +11,8 @@ import {
     NotficationsFromFollowToggleComponent
 } from '../../notifications/notfications-from-follow-toggle/notfications-from-follow-toggle.component';
 import {UpdateEmailComponent} from '../../../auth/update-email/update-email.component';
+import {ProfileStore} from '../state/profile.store';
 import {UpdatePasswordComponent} from '../../../auth/update-password/update-password.component';
-import {ProfileStore} from '../store/profile.store';
 
 @Component({
     selector: 'polity-profile-edit',

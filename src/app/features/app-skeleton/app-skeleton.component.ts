@@ -5,7 +5,7 @@ import {FirstBarBottomComponent} from '../../navigation/first-bar-bottom/first-b
 import {FirstBarLeftComponent} from '../../navigation/first-bar-left/first-bar-left.component';
 import {RouterOutlet} from '@angular/router';
 import {AssistantComponent} from '../assistant/assistant/assistant.component';
-import {NotificationCounterStore} from '../notifications/store/notification-counter.store';
+import {NotificationCounterStore} from '../notifications/state/notification-counter.store';
 
 @Component({
     selector: 'polity-app-skeleton',

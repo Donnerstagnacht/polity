@@ -9,9 +9,9 @@ import {TuiTabsModule} from '@taiga-ui/kit';
 import {FilterClearComponent} from '../../../ui/polity-filter/filter-clear/filter-clear.component';
 import {FilterHeadlineComponent} from '../../../ui/polity-filter/filter-headline/filter-headline.component';
 import {FilterStringComponent} from '../../../ui/polity-filter/filter-string/filter-string.component';
-import {FollowingsOfUserStore} from '../store/followings-of-user.store';
-import {FollowersOfUserStore} from '../store/followers-of-user.store';
-import {FollowingsOfUserGroupStore} from '../store/followings-of-user-group.store';
+import {FollowingsOfUserStore} from '../state/followings-of-user.store';
+import {FollowersOfUserStore} from '../state/followers-of-user.store';
+import {FollowingsOfUserGroupStore} from '../state/followings-of-user-group.store';
 
 @Component({
     selector: 'polity-follow-button-edit',

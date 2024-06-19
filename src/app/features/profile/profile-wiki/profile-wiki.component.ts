@@ -3,9 +3,9 @@ import {WikiHeadlineComponent} from '../../../ui/polity-wiki/wiki-headline/wiki-
 import {CounterComponent} from '../../../ui/polity-wiki/counter/counter.component';
 import {FollowButton} from '../../../ui/polity-wiki/follow-button/follow-button.component';
 import {WikiImageComponent} from '../../../ui/polity-wiki/wiki-image/wiki-image.component';
-import {ProfileCounterStore} from '../../profile-follow/store/profile-counter.store';
-import {ProfileFollowStore} from '../../profile-follow/store/profile-follow-store.service';
-import {ProfileStore} from '../store/profile.store';
+import {ProfileCounterStore} from '../../profile-follow/state/profile-counter.store';
+import {ProfileFollowStore} from '../../profile-follow/state/profile-follow-store.service';
+import {ProfileStore} from '../state/profile.store';
 
 @Component({
     selector: 'polity-profile-wiki',

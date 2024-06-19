@@ -2,7 +2,7 @@ import {Component, effect, inject} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {TuiToggleModule} from '@taiga-ui/kit';
-import {NotificationSettingsStore} from '../store/notification-settings.store';
+import {NotificationSettingsStore} from '../state/notification-settings.store';
 
 @Component({
     selector: 'polity-notfications-from-follow-toggle',

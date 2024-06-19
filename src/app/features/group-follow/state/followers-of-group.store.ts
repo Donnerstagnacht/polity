@@ -1,13 +1,13 @@
 import {inject, Injectable} from '@angular/core';
 import {BaseArrayStore} from '../../../store-signal-functions/array/base-array-store.service';
 import {rpcArrayHandler} from '../../../store-signal-functions/array/rpcArrayHandlerFeature';
-import {GroupStore} from '../../group/store/group.store.';
+import {GroupStore} from '../../group/state/group.store.';
 import {GroupCounterStore} from './group-counter.store';
 import {removeObjectByPropertyValue} from '../../../store-signal-functions/array/removeItemFeatue';
 import {SupabaseObjectReturn} from '../../../../../supabase/types/supabase.authenticated.shorthand-types';
 
 @Injectable()
-export class FollowingsOfGroupStore extends BaseArrayStore<'read_followings_of_group'> {
+export class FollowersOfGroupStore extends BaseArrayStore<'read_followers_of_group'> {
     private groupStore: GroupStore = inject(GroupStore);
     private groupCounterStore: GroupCounterStore = inject(GroupCounterStore);
 
@@ -22,7 +22,7 @@ export class FollowingsOfGroupStore extends BaseArrayStore<'read_followings_of_g
         const groupId: string = this.groupStore.data().id_;
         await rpcArrayHandler(
             {
-                fn: 'read_followings_of_group',
+                fn: 'read_followers_of_group',
                 args: {_group_id: groupId}
             },
             {
@@ -46,10 +46,14 @@ export class FollowingsOfGroupStore extends BaseArrayStore<'read_followings_of_g
     }
 
     public async remove(userId: string): Promise<void> {
+        const groupId: string = this.groupStore.data().id_;
         await rpcArrayHandler(
             {
-                fn: 'unfollow_group_transaction',
-                args: {_following_id: userId}
+                fn: 'remove_group_follower_transaction',
+                args: {
+                    _follower_id: userId,
+                    _group_id_in: groupId
+                }
             },
             {
                 useLoading: true,

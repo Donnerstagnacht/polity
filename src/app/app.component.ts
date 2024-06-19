@@ -3,11 +3,11 @@ import {AuthChangeEvent, Session} from '@supabase/supabase-js';
 import {RouterOutlet} from '@angular/router';
 import {TuiNotificationModule} from '@taiga-ui/core/components/notification';
 import {TuiRootModule} from '@taiga-ui/core';
-import {PushActionService} from './features/notifications/store/push-action.service';
+import {PushActionService} from './features/notifications/state/push-action.service';
 import {SwUpdate} from '@angular/service-worker';
-import {SessionStore} from './auth/store/session.store';
+import {SessionStore} from './auth/state/session.store';
 import {ErrorStoreService} from './store-signal-functions/error-store.service';
-import {AuthenticationService} from './auth/store/authentication.service';
+import {AuthenticationService} from './auth/state/authentication.service';
 
 @Component({
     selector: 'polity-root',
@@ -27,7 +27,6 @@ export class AppComponent {
 
     constructor(
         private readonly authService: AuthenticationService,
-        // private sessionStoreService: SessionStoreService,
         private errorStoreService: ErrorStoreService,
         private pushService: PushActionService,
         private swUpdate: SwUpdate
@@ -42,17 +41,12 @@ export class AppComponent {
     ngOnInit(): void {
         this.subscribeToNotifications();
         if (this.swUpdate.isEnabled) {
-
             this.swUpdate.versionUpdates.subscribe((): void => {
-
                 if (confirm('New version available. Load New Version?')) {
-
                     window.location.reload();
                 }
             });
         }
-
-
     }
 
     onClose(): void {

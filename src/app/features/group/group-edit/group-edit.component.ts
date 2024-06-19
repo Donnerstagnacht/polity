@@ -1,6 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {LinkCardComponent} from '../../../ui/cards/link-card/link-card.component';
-import {GroupStore} from '../store/group.store.';
+import {GroupStore} from '../state/group.store.';
 
 @Component({
     selector: 'polity-group-edit',

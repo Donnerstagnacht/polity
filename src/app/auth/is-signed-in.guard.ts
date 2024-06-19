@@ -1,7 +1,7 @@
 import {CanActivateFn, Router} from '@angular/router';
 import {inject, Signal} from '@angular/core';
 import {Session} from '@supabase/supabase-js';
-import {SessionStore} from './store/session.store';
+import {SessionStore} from './state/session.store';
 
 /**
  * A guard that checks if the user is signed in.

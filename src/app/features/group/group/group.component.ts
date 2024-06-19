@@ -10,10 +10,10 @@ import {SecondBarRightComponent} from '../../../navigation/second-bar-right/seco
 import {NavigationItem} from '../../../navigation/types-and-interfaces/navigationItem';
 import {NAVIGATION_ITEMS_GROUP} from '../group-navigation-signed-in';
 import {NAVIGATION_ITEMS_GROUP_BOARD_MEMBER} from '../group-navigation-board-member';
-import {GroupCounterStore} from '../../group-follow/store/group-counter.store';
-import {GroupFollowStore} from '../../group-follow/store/group-follow.store';
-import {GroupStore} from '../store/group.store.';
-import {GroupMembershipStatusStore} from '../../group_member/store/group-membership-status.store';
+import {GroupCounterStore} from '../../group-follow/state/group-counter.store';
+import {GroupFollowStore} from '../../group-follow/state/group-follow.store';
+import {GroupStore} from '../state/group.store.';
+import {GroupMembershipStatusStore} from '../../group_member/state/group-membership-status.store';
 
 @Component({
     selector: 'polity-group',

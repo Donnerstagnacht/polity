@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {TuiButtonModule} from '@taiga-ui/core';
-import {AuthenticationService} from '../store/authentication.service';
+import {AuthenticationService} from '../state/authentication.service';
 
 @Component({
     selector: 'polity-sign-out',

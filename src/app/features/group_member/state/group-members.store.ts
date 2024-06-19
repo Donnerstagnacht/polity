@@ -1,9 +1,9 @@
 import {inject, Injectable} from '@angular/core';
 import {BaseArrayStore} from '../../../store-signal-functions/array/base-array-store.service';
 import {rpcArrayHandler} from '../../../store-signal-functions/array/rpcArrayHandlerFeature';
-import {GroupStore} from '../../group/store/group.store.';
+import {GroupStore} from '../../group/state/group.store.';
 import {GroupMembershipStatusStore} from './group-membership-status.store';
-import {GroupCounterStore} from '../../group-follow/store/group-counter.store';
+import {GroupCounterStore} from '../../group-follow/state/group-counter.store';
 import {removeObjectByPropertyValue} from '../../../store-signal-functions/array/removeItemFeatue';
 
 @Injectable({

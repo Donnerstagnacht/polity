@@ -4,7 +4,7 @@ import {AssistantWelcomeDialogComponent} from '../assistant-welcome-dialog/assis
 import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus';
 import {AssistantIconComponent} from '../assistant-icon/assistant-icon.component';
 import {CommonModule} from '@angular/common';
-import {AssistantStore} from '../store/assistant.store';
+import {AssistantStore} from '../state/assistant.store';
 
 @Component({
     selector: 'polity-assistant',

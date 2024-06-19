@@ -35,7 +35,7 @@ import {CREATE_GROUP_STEPPER_ITEMS} from '../../../navigation/create-groupe-step
 import {GroupNew} from '../../new/types/group-new';
 import {SearchProfilesBarComponent} from '../../search/search-profiles-bar/search-profiles-bar.component';
 import {DatabaseHiddenOverwritten} from '../../../../../supabase/types/supabase.hidden.modified';
-import {CreateGroupStore} from '../../new/store/create-group.store';
+import {CreateGroupStore} from '../../new/state/create-group.store';
 
 @Component({
     selector: 'polity-group-new',

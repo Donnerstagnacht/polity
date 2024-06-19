@@ -5,7 +5,7 @@ import {TuiButtonModule, TuiDialogService} from '@taiga-ui/core';
 import {TuiActionModule, TuiMarkerIconModule} from '@taiga-ui/kit';
 import {CommonModule} from '@angular/common';
 import {Tutorial, TUTORIALS} from '../constants-stypes-interfaces/tutorial';
-import {AssistantStore} from '../store/assistant.store';
+import {AssistantStore} from '../state/assistant.store';
 
 
 @Component({

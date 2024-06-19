@@ -1,7 +1,7 @@
 import {Component, effect, inject} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {TuiToggleModule} from '@taiga-ui/kit';
-import {AssistantStore} from '../store/assistant.store';
+import {AssistantStore} from '../state/assistant.store';
 
 @Component({
     selector: 'polity-assistant-toggle',

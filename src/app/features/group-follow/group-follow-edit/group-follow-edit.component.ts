@@ -7,8 +7,8 @@ import {
     TableThreeIconTextDeleteComponent
 } from '../../../ui/polity-table/table-three-icon-text-delete/table-three-icon-text-delete.component';
 import {TuiTabsModule} from '@taiga-ui/kit';
-import {FollowingsOfGroupStore} from '../store/followings-of-group.store';
-import {FollowersOfGroupStore} from '../store/followers-of-group.store';
+import {FollowingsOfGroupStore} from '../state/followings-of-group.store';
+import {FollowersOfGroupStore} from '../state/followers-of-group.store';
 
 @Component({
     selector: 'polity-group-follow-edit',

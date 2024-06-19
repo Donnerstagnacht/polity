@@ -8,13 +8,13 @@ import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus';
 import {
     GroupAcceptDeclineMembershipComponent
 } from '../../group_member/group-accept-decline-membership/group-accept-decline-membership.component';
-import {GroupCounterStore} from '../../group-follow/store/group-counter.store';
-import {GroupFollowStore} from '../../group-follow/store/group-follow.store';
-import {GroupStore} from '../store/group.store.';
-import {GroupMembershipStatusStore} from '../../group_member/store/group-membership-status.store';
-import {GroupRequestsStore} from '../../group_member/store/group-requests.store';
-import {GroupInvitationsStore} from '../../group_member/store/group-invitations.store';
-import {GroupMembersStore} from '../../group_member/store/group-members.store';
+import {GroupCounterStore} from '../../group-follow/state/group-counter.store';
+import {GroupFollowStore} from '../../group-follow/state/group-follow.store';
+import {GroupStore} from '../state/group.store.';
+import {GroupMembershipStatusStore} from '../../group_member/state/group-membership-status.store';
+import {GroupRequestsStore} from '../../group_member/state/group-requests.store';
+import {GroupInvitationsStore} from '../../group_member/state/group-invitations.store';
+import {GroupMembersStore} from '../../group_member/state/group-members.store';
 
 @Component({
     selector: 'polity-group-wiki',

@@ -25,7 +25,6 @@ export class AuthenticationService {
 
     constructor(
         private readonly notificationService: ErrorStoreService,
-        // private readonly sessionStoreService: SessionStoreService,
         private readonly tuiAlertService: TuiAlertService,
         private readonly router: Router
     ) {
@@ -53,7 +52,7 @@ export class AuthenticationService {
         try {
             this.sessionStore.startLoading();
             const authResponse: AuthResponse = await this.supabaseClient.auth.signUp(credentials);
-            console.log(authResponse)
+            console.log(authResponse);
             if (authResponse.error) {
                 throw authResponse.error;
             }

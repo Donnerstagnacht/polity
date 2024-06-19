@@ -12,7 +12,7 @@ import {
     TableFourIconTextTagDateComponent
 } from '../../../ui/polity-table/table-four-icon-text-tag-date/table-four-icon-text-tag-date.component';
 import {Filter_TYPES, filterTag} from '../constants-types-interfaces/notificationFilterTypes';
-import {NotificationsStore} from '../store/notification-store.service';
+import {NotificationsStore} from '../state/notification-store.service';
 
 @Component({
     selector: 'polity-notification',

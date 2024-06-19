@@ -12,7 +12,7 @@ import {
 } from '@taiga-ui/kit';
 import {TuiTextfieldControllerModule} from '@taiga-ui/core';
 import {SupabaseObjectReturn} from '../../../../../supabase/types/supabase.authenticated.shorthand-types';
-import {SearchUserStore} from '../store/search-user.store';
+import {SearchUserStore} from '../state/search-user.store';
 
 @Component({
     selector: 'polity-search-profiles-bar',

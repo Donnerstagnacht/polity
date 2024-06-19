@@ -1,6 +1,6 @@
 import {ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot} from '@angular/router';
 import {inject, Signal} from '@angular/core';
-import {GroupMembershipStatusStore} from '../group_member/store/group-membership-status.store';
+import {GroupMembershipStatusStore} from '../group_member/state/group-membership-status.store';
 
 export const isBoardMemberGuard: CanActivateFn = (
     route: ActivatedRouteSnapshot,

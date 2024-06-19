@@ -1,15 +1,17 @@
 import {inject, Injectable} from '@angular/core';
 import {BaseArrayStore} from '../../../store-signal-functions/array/base-array-store.service';
 import {rpcArrayHandler} from '../../../store-signal-functions/array/rpcArrayHandlerFeature';
-import {GroupStore} from '../../group/store/group.store.';
+import {GroupStore} from '../../group/state/group.store.';
 import {GroupMembershipStatusStore} from './group-membership-status.store';
 import {removeObjectByPropertyValue} from '../../../store-signal-functions/array/removeItemFeatue';
+import {GroupCounterStore} from '../../group-follow/state/group-counter.store';
 
 @Injectable({
     providedIn: 'root'
 })
-export class GroupRequestsStore extends BaseArrayStore<'read_group_member_requests'> {
+export class GroupInvitationsStore extends BaseArrayStore<'read_group_member_invitations'> {
     private groupStore: GroupStore = inject(GroupStore);
+    private groupCountersStore: GroupCounterStore = inject(GroupCounterStore);
     private groupMembershipStatusStore: GroupMembershipStatusStore = inject(GroupMembershipStatusStore);
 
     constructor() {
@@ -23,7 +25,7 @@ export class GroupRequestsStore extends BaseArrayStore<'read_group_member_reques
         const groupId: string = this.groupStore.data().id_;
         await rpcArrayHandler(
             {
-                fn: 'read_group_member_requests',
+                fn: 'read_group_member_invitations',
                 args: {
                     _group_id: groupId
                 }
@@ -43,22 +45,52 @@ export class GroupRequestsStore extends BaseArrayStore<'read_group_member_reques
             {
                 useSuccess: true,
                 alertService: this.tuiAlertService,
-                successMessage: 'GroupRequests loaded!'
+                successMessage: 'GroupInvitations loaded!'
             }
         );
     }
 
-    public async request(): Promise<void> {
+    public async invite(user_id: string): Promise<void> {
         const groupId: string = this.groupStore.data().id_;
         await rpcArrayHandler(
             {
-                fn: 'create_group_member_request',
+                fn: 'create_group_member_invitation',
+                args: {
+                    _group_id: groupId,
+                    _member_id: user_id
+                }
+            },
+            {
+                useLoading: true,
+                loadingState: this.loadingState_
+            },
+            {
+                useStore: false
+            },
+            {
+                useError: true,
+                errorStoreService: this.errorStoreService
+            },
+            {
+                useSuccess: true,
+                alertService: this.tuiAlertService,
+                successMessage: 'Group invitation sent!'
+            }
+        );
+    }
+
+    public async accept(): Promise<void> {
+        const groupId: string = this.groupStore.data().id_;
+        await rpcArrayHandler(
+            {
+                fn: 'accept_group_invitation_transaction',
                 args: {
                     _group_id: groupId
                 }
             },
             {
-                useLoading: true
+                useLoading: true,
+                loadingState: this.loadingState_
             },
             {
                 useStore: false
@@ -70,22 +102,25 @@ export class GroupRequestsStore extends BaseArrayStore<'read_group_member_reques
             {
                 useSuccess: true,
                 alertService: this.tuiAlertService,
-                successMessage: 'Request send!'
+                successMessage: 'Group invitation sent!'
             }
         );
-        this.groupMembershipStatusStore.updateGroupMembershipStatus('requested');
+        this.groupCountersStore.increment('group_member_counter_');
+        this.groupMembershipStatusStore.updateGroupMembershipStatus('member');
     }
 
-    public async accept(membershipRequestId: string): Promise<void> {
+
+    public async acceptById(invitation_id: string): Promise<void> {
         await rpcArrayHandler(
             {
-                fn: 'accept_group_membership_request_transaction',
+                fn: 'accept_group_invitation_by_id_transaction',
                 args: {
-                    _request_id: membershipRequestId
+                    _invitation_id: invitation_id
                 }
             },
             {
-                useLoading: true
+                useLoading: true,
+                loadingState: this.loadingState_
             },
             {
                 useStore: false
@@ -97,97 +132,78 @@ export class GroupRequestsStore extends BaseArrayStore<'read_group_member_reques
             {
                 useSuccess: true,
                 alertService: this.tuiAlertService,
-                successMessage: 'Group membership accepted!'
-            }
-        );
-        // this.groupMembershipStatusStore.updateGroupMembershipStatus('requested');
-    }
-
-    public async decline(membershipRequestId: string): Promise<void> {
-        await rpcArrayHandler(
-            {
-                fn: 'delete_group_member_request',
-                args: {
-                    _group_id: membershipRequestId
-                }
-            },
-            {
-                useLoading: true
-            },
-            {
-                useStore: false
-            },
-            {
-                useError: true,
-                errorStoreService: this.errorStoreService
-            },
-            {
-                useSuccess: true,
-                alertService: this.tuiAlertService,
-                successMessage: 'Group membership accepted!'
-            }
-        );
-        // this.groupMembershipStatusStore.updateGroupMembershipStatus('requested');
-    }
-
-    public async withdraw(): Promise<void> {
-        const groupId: string = this.groupStore.data().id_;
-        await rpcArrayHandler(
-            {
-                fn: 'delete_group_member_request',
-                args: {
-                    _group_id: groupId
-                }
-            },
-            {
-                useLoading: true
-            },
-            {
-                useStore: false
-            },
-            {
-                useError: true,
-                errorStoreService: this.errorStoreService
-            },
-            {
-                useSuccess: true,
-                alertService: this.tuiAlertService,
-                successMessage: 'Group membership accepted!'
-            }
-        );
-        this.groupMembershipStatusStore.updateGroupMembershipStatus('no_member');
-    }
-
-    public async deleteById(requestId: string): Promise<void> {
-        await rpcArrayHandler(
-            {
-                fn: 'delete_group_member_request_by_id',
-                args: {
-                    _request_id: requestId
-                }
-            },
-            {
-                useLoading: true
-            },
-            {
-                useStore: false
-            },
-            {
-                useError: true,
-                errorStoreService: this.errorStoreService
-            },
-            {
-                useSuccess: true,
-                alertService: this.tuiAlertService,
-                successMessage: 'Group membership accepted!'
+                successMessage: 'Group invitation sent!'
             }
         );
         removeObjectByPropertyValue(
             'id_',
-            requestId,
+            invitation_id,
             this.data_
         );
+        this.groupCountersStore.increment('group_member_counter_');
+        this.groupMembershipStatusStore.updateGroupMembershipStatus('member');
     }
 
+    public async remove(invitation_id: string): Promise<void> {
+        await rpcArrayHandler(
+            {
+                fn: 'delete_group_member_invitation_by_id',
+                args: {
+                    _invitation_id: invitation_id
+                }
+            },
+            {
+                useLoading: true,
+                loadingState: this.loadingState_
+            },
+            {
+                useStore: false
+            },
+            {
+                useError: true,
+                errorStoreService: this.errorStoreService
+            },
+            {
+                useSuccess: true,
+                alertService: this.tuiAlertService,
+                successMessage: 'Group invitation sent!'
+            }
+        );
+        removeObjectByPropertyValue(
+            'id_',
+            invitation_id,
+            this.data_
+        );
+        this.groupCountersStore.increment('group_member_counter_');
+    }
+
+    public async decline(): Promise<void> {
+        const groupId: string = this.groupStore.data().id_;
+        await rpcArrayHandler(
+            {
+                fn: 'delete_group_member_invitation',
+                args: {
+                    _group_id: groupId
+                }
+            },
+            {
+                useLoading: true,
+                loadingState: this.loadingState_
+            },
+            {
+                useStore: false
+            },
+            {
+                useError: true,
+                errorStoreService: this.errorStoreService
+            },
+            {
+                useSuccess: true,
+                alertService: this.tuiAlertService,
+                successMessage: 'Group invitation sent!'
+            }
+        );
+        this.groupMembershipStatusStore.updateGroupMembershipStatus('no_member');
+    }
 
 }

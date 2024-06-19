@@ -1,9 +1,9 @@
 import {Component, inject, signal} from '@angular/core';
 import {ProfileLinkCardComponent} from '../../../ui/cards/profile-link-card/profile-link-card.component';
 import {GroupLinkCardComponent} from '../../../ui/cards/group-link-card/group-link-card.component';
-import {MembershipsOfUserStore} from '../../profile-groups/store/memberships-of-user.store';
-import {ProfileStore} from '../../profile/store/profile.store';
-import {SessionStore} from '../../../auth/store/session.store';
+import {MembershipsOfUserStore} from '../../profile-groups/state/memberships-of-user.store';
+import {ProfileStore} from '../../profile/state/profile.store';
+import {SessionStore} from '../../../auth/state/session.store';
 
 @Component({
     selector: 'polity-home',

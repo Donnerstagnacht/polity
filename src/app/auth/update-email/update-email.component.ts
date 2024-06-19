@@ -9,7 +9,7 @@ import {
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AsyncPipe} from '@angular/common';
 import {TuiButtonModule, TuiErrorModule, TuiSvgModule, TuiTextfieldControllerModule} from '@taiga-ui/core';
-import {AuthenticationService} from '../store/authentication.service';
+import {AuthenticationService} from '../state/authentication.service';
 
 @Component({
     selector: 'polity-update-email',

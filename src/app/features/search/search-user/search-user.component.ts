@@ -6,8 +6,8 @@ import {TuiErrorModule} from '@taiga-ui/core';
 import {SearchProfileResult} from '../search-profile-result/search-profile-result.component';
 import {CommonModule} from '@angular/common';
 import {SearchGroupResultComponent} from '../search-group-result/search-group-result.component';
-import {SearchUserStore} from '../store/search-user.store';
-import {SearchGroupStore} from '../store/search-group.store';
+import {SearchUserStore} from '../state/search-user.store';
+import {SearchGroupStore} from '../state/search-group.store';
 
 @Component({
     selector: 'polity-search-user',

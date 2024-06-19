@@ -6,10 +6,10 @@ import {SecondBarRightComponent} from '../../../navigation/second-bar-right/seco
 import {CommonModule} from '@angular/common';
 import {NAVIGATION_ITEMS_PROFILE} from '../profile-navigation-signed-in';
 import {NAVIGATION_ITEMS_PROFILE_OWNER} from '../profile-navigation-owner';
-import {ProfileCounterStore} from '../../profile-follow/store/profile-counter.store';
-import {ProfileStore} from '../store/profile.store';
-import {ProfileFollowStore} from '../../profile-follow/store/profile-follow-store.service';
-import {SessionStore} from '../../../auth/store/session.store';
+import {ProfileCounterStore} from '../../profile-follow/state/profile-counter.store';
+import {ProfileStore} from '../state/profile.store';
+import {ProfileFollowStore} from '../../profile-follow/state/profile-follow-store.service';
+import {SessionStore} from '../../../auth/state/session.store';
 
 @Component({
     selector: 'polity-profile',

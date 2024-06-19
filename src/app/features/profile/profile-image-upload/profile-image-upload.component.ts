@@ -3,7 +3,7 @@ import {TuiFileLike, TuiInputFilesModule} from '@taiga-ui/kit';
 import {from, Observable, of, Subject, switchMap} from 'rxjs';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
-import {ProfileStore} from '../store/profile.store';
+import {ProfileStore} from '../state/profile.store';
 import {uploadImage} from '../../../store-signal-functions/object/imageFeature';
 
 @Component({
