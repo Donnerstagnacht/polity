@@ -5,8 +5,8 @@ import {FollowButton} from '../../../ui/polity-wiki/follow-button/follow-button.
 import {RequestButton} from '../../../ui/polity-wiki/request-button/request-button.component';
 import {CounterComponent} from '../../../ui/polity-wiki/counter/counter.component';
 import {GroupWikiComponent} from '../group-wiki/group-wiki.component';
-import {SecondBarTopComponent} from '../../../navigation/second-bar-top/second-bar-top.component';
-import {SecondBarRightComponent} from '../../../navigation/second-bar-right/second-bar-right.component';
+import {SecondBarTopComponent} from '../../../navigation/second-bar/second-bar-top/second-bar-top.component';
+import {SecondBarRightComponent} from '../../../navigation/second-bar/second-bar-right/second-bar-right.component';
 import {NavigationItem} from '../../../navigation/types-and-interfaces/navigationItem';
 import {NAVIGATION_ITEMS_GROUP} from '../group-navigation-signed-in';
 import {NAVIGATION_ITEMS_GROUP_BOARD_MEMBER} from '../group-navigation-board-member';

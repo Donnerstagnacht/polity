@@ -1,8 +1,8 @@
 import {Component, inject} from '@angular/core';
 import {ActivatedRoute, RouterOutlet} from '@angular/router';
 import {NavigationItem} from '../../../navigation/types-and-interfaces/navigationItem';
-import {SecondBarTopComponent} from '../../../navigation/second-bar-top/second-bar-top.component';
-import {SecondBarRightComponent} from '../../../navigation/second-bar-right/second-bar-right.component';
+import {SecondBarTopComponent} from '../../../navigation/second-bar/second-bar-top/second-bar-top.component';
+import {SecondBarRightComponent} from '../../../navigation/second-bar/second-bar-right/second-bar-right.component';
 import {CommonModule} from '@angular/common';
 import {NAVIGATION_ITEMS_PROFILE} from '../profile-navigation-signed-in';
 import {NAVIGATION_ITEMS_PROFILE_OWNER} from '../profile-navigation-owner';

@@ -1,7 +1,7 @@
 import {Component, inject, signal} from '@angular/core';
-import {StepperRightComponent} from '../../../navigation/stepper-right/stepper-right.component';
-import {StepperTopComponent} from '../../../navigation/stepper-top/stepper-top.component';
-import {SecondBarTopComponent} from '../../../navigation/second-bar-top/second-bar-top.component';
+import {StepperRightComponent} from '../../../navigation/stepper/stepper-right/stepper-right.component';
+import {StepperTopComponent} from '../../../navigation/stepper/stepper-top/stepper-top.component';
+import {SecondBarTopComponent} from '../../../navigation/second-bar/second-bar-top/second-bar-top.component';
 import {AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {
     TuiComboBoxModule,
@@ -31,7 +31,7 @@ import {SupabaseObjectReturn} from '../../../../../supabase/types/supabase.authe
 import {
     TableThreeIconTextDeleteComponent
 } from '../../../ui/polity-table/table-three-icon-text-delete/table-three-icon-text-delete.component';
-import {CREATE_GROUP_STEPPER_ITEMS} from '../../../navigation/create-groupe-stepper';
+import {CREATE_GROUP_STEPPER_ITEMS} from '../../../navigation/create-group-stepper';
 import {GroupNew} from '../../new/types/group-new';
 import {SearchProfilesBarComponent} from '../../search/search-profiles-bar/search-profiles-bar.component';
 import {DatabaseHiddenOverwritten} from '../../../../../supabase/types/supabase.hidden.modified';
