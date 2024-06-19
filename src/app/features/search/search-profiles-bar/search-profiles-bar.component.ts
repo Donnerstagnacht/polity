@@ -1,19 +1,18 @@
-import {Component, EventEmitter, Output, signal, WritableSignal} from '@angular/core';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {Component, EventEmitter, inject, Output, signal, WritableSignal} from '@angular/core';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
     TableThreeIconTextDeleteComponent
-} from "../../../ui/polity-table/table-three-icon-text-delete/table-three-icon-text-delete.component";
+} from '../../../ui/polity-table/table-three-icon-text-delete/table-three-icon-text-delete.component';
 import {
     TuiComboBoxModule,
     TuiDataListWrapperModule,
     TuiFilterByInputPipeModule,
     TuiInputModule,
     TuiStringifyContentPipeModule
-} from "@taiga-ui/kit";
-import {TuiTextfieldControllerModule} from "@taiga-ui/core";
-import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
-import {SearchUserActionService} from "../action-store-services/search-user.action.service";
-import {SearchUserStoreService} from "../action-store-services/search-user.store.service";
+} from '@taiga-ui/kit';
+import {TuiTextfieldControllerModule} from '@taiga-ui/core';
+import {SupabaseObjectReturn} from '../../../../../supabase/types/supabase.authenticated.shorthand-types';
+import {SearchUserStore} from '../store/search-user.store';
 
 @Component({
     selector: 'polity-search-profiles-bar',
@@ -30,62 +29,73 @@ import {SearchUserStoreService} from "../action-store-services/search-user.store
         TuiTextfieldControllerModule
     ],
     templateUrl: './search-profiles-bar.component.html',
-    styleUrl: './search-profiles-bar.component.less'
+    styleUrl: './search-profiles-bar.component.less',
+    providers: [
+        SearchUserStore
+    ]
 })
 export class SearchProfilesBarComponent {
-    selectedUsers: SupabaseObjectReturn<'search_user'>[] = []
-    selectedUsersAsSignal: WritableSignal<SupabaseObjectReturn<'search_user'>[]> = signal([])
-    @Output() onUpdateSelectedUsers: EventEmitter<SupabaseObjectReturn<'search_user'>[]> = new EventEmitter<SupabaseObjectReturn<'search_user'>[]>()
-    protected searchResults: WritableSignal<SupabaseObjectReturn<'search_user'>[]> = signal([]);
+    @Output() onUpdateSelectedUsers: EventEmitter<SupabaseObjectReturn<'search_user'>[]> = new EventEmitter<SupabaseObjectReturn<'search_user'>[]>();
+    protected searchUserStore: SearchUserStore = inject(SearchUserStore);
     protected readonly signal = signal;
-
     protected searchUserForm: FormGroup<{
         members: FormControl<string | null>
     }> = new FormGroup({
-        members: new FormControl(''),
+        members: new FormControl('')
     });
+    protected selectedUsers: WritableSignal<SupabaseObjectReturn<'search_user'>[]> = signal([]);
 
-    constructor(
-        private searchUserActionService: SearchUserActionService,
-        private searchUserStoreService: SearchUserStoreService) {
-        this.searchResults = this.searchUserStoreService.profilSearchResults.getObjects();
-
-        this.searchUserForm.controls['members'].valueChanges.subscribe((value: any): void => {
-            console.log('value changed', value)
-            if (value) {
-                const choosenObject: SupabaseObjectReturn<'search_user'> | undefined = this.searchResults().find((searchResult: SupabaseObjectReturn<'search_user'>): boolean => {
-                    return value.id === searchResult.id_
-                })
-
-                if (choosenObject && !this.selectedUsers.some((item: SupabaseObjectReturn<'search_user'>): boolean => item.id_ === choosenObject.id_)) {
-                    this.selectedUsers.push(choosenObject);
-                    this.selectedUsersAsSignal.update((selectedUser: SupabaseObjectReturn<'search_user'>[]) => ([...selectedUser, choosenObject]))
-                    this.onUpdateSelectedUsers.emit(this.selectedUsersAsSignal())
-                    this.searchUserForm.controls['members'].setValue(null);
-                } else {
-                    this.searchUserForm.controls['members'].setValue(null);
-                }
-            }
-        })
+    constructor() {
+        this.addMember();
     }
 
     protected onRemove(id: string): void {
-        this.selectedUsers = this.selectedUsers.filter((item: SupabaseObjectReturn<'search_user'>): boolean => item.id_ !== id);
-        this.selectedUsersAsSignal.set(this.selectedUsers);
-        this.onUpdateSelectedUsers.emit(this.selectedUsersAsSignal())
+        this.selectedUsers.set(this.selectedUsers().filter((item: SupabaseObjectReturn<'search_user'>): boolean => item.id_ !== id));
+        this.onUpdateSelectedUsers.emit(this.selectedUsers());
     }
 
     protected stringify(searchResult: { first_name_: string; last_name_: string }): string {
         if (searchResult.first_name_ && searchResult.last_name_) {
-            return `${searchResult.first_name_} ${searchResult.last_name_}`
+            return `${searchResult.first_name_} ${searchResult.last_name_}`;
         } else {
-            return ''
+            return '';
         }
     }
 
     protected onSearchChange(search: string | null): void {
         if (search) {
-            this.searchUserActionService.searchUser(search);
+            this.searchUserStore.search(search);
         }
+    }
+
+    private addMember(): void {
+        this.searchUserForm.controls['members'].valueChanges.subscribe((value: any): void => {
+            if (value) {
+                const choosenObject = this.chosenObjectFromSearchResults(value);
+
+                if (choosenObject && this.objectIsNotYetSelected(choosenObject)) {
+                    this.selectedUsers.update((selectedUser: SupabaseObjectReturn<'search_user'>[]) => ([...selectedUser, choosenObject]));
+                    this.onUpdateSelectedUsers.emit(this.selectedUsers());
+                    this.searchUserForm.controls['members'].setValue(null);
+                } else {
+                    this.searchUserForm.controls['members'].setValue(null);
+                }
+
+            }
+        });
+    }
+
+    private objectIsNotYetSelected(choosenObject: SupabaseObjectReturn<'search_user'>): boolean {
+        return !this.selectedUsers().some(
+            (item: SupabaseObjectReturn<'search_user'>): boolean => {
+                return item.id_ === choosenObject.id_;
+            });
+    }
+
+    private chosenObjectFromSearchResults(value: SupabaseObjectReturn<'search_user'>): SupabaseObjectReturn<'search_user'> | undefined {
+        return this.searchUserStore.data().find(
+            (searchResult: SupabaseObjectReturn<'search_user'>): boolean => {
+                return value.id_ === searchResult.id_;
+            });
     }
 }

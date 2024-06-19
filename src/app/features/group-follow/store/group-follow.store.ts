@@ -1,30 +1,24 @@
-import {effect, inject, Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {BaseObjectStore} from '../../../store-signal-functions/object/base-object-store.service';
 import {rpcObjectHandler} from '../../../store-signal-functions/object/rpcObjectHandlerFeature';
 import {GroupStore} from '../../group/store/group.store.';
+import {GroupCounterStore} from './group-counter.store';
 
-@Injectable({
-                providedIn: 'any'
-            })
+@Injectable()
 export class GroupFollowStore extends BaseObjectStore<'check_if_user_follows_group'> {
+    private groupCounterStore: GroupCounterStore = inject(GroupCounterStore);
     private groupStore: GroupStore = inject(GroupStore);
 
     constructor() {
         super(false);
-
-        effect((): void => {
-            console.log('loadingState changed: ', this.loadingState())});
     }
 
-    public async checkIfFollowing(userId: string): Promise<void> {
-        // this.loadingState().loading = true;
-        console.log('loadingState: ', this.loadingState());
-        console.log('checkIfFollowing before: ', this.data());
+    public async checkIfFollowing(groupId: string): Promise<void> {
         const result = await rpcObjectHandler(
             {
                 fn: 'check_if_user_follows_group',
                 args: {
-                    _following_id: userId
+                    _following_id: groupId
                 }
             },
             {
@@ -44,14 +38,10 @@ export class GroupFollowStore extends BaseObjectStore<'check_if_user_follows_gro
                 useSuccess: false
             }
         );
-        console.log('checkIfFollowing after: ', this.data());
-                this.loadingState().loading = false;
-                console.log('loadingState after: ', this.loadingState());
-
     }
 
     public async follow(): Promise<void> {
-        console.log('groupStore: ', this.groupStore.data());
+        // console.log('groupStore: ', this.groupStore.data());
         const groupId = this.groupStore.data().id_;
         console.log('groupId: ', groupId);
         const result = await rpcObjectHandler(
@@ -79,6 +69,8 @@ export class GroupFollowStore extends BaseObjectStore<'check_if_user_follows_gro
                 successMessage: 'Followed successful!'
             }
         );
+        this.groupCounterStore.increment('follower_counter_');
+        this.updateFollowStatus(true);
     }
 
     public async unFollow(): Promise<void> {
@@ -108,6 +100,12 @@ export class GroupFollowStore extends BaseObjectStore<'check_if_user_follows_gro
                 successMessage: 'Unfollowed successful!'
             }
         );
+        this.groupCounterStore.decrement('follower_counter_');
+        this.updateFollowStatus(false);
+    }
+
+    private updateFollowStatus(newStatus: boolean): void {
+        this.data_.set(newStatus);
     }
 
 }

@@ -4,7 +4,13 @@ DROP FUNCTION IF EXISTS authenticated.update_last_tutorial(
 CREATE OR REPLACE FUNCTION authenticated.update_last_tutorial(
     _new_status hidden.tutorial_enum
 )
-    RETURNS void
+    RETURNS table
+            (
+                id_            uuid,
+                first_sign_in_ boolean,
+                skip_tutorial_ boolean,
+                last_tutorial_ text
+            )
     LANGUAGE plpgsql
     SECURITY INVOKER
 AS
@@ -13,11 +19,13 @@ DECLARE
     auth_user_id uuid;
 BEGIN
     auth_user_id := auth.uid();
-    UPDATE hidden.assistants
-    SET
-        last_tutorial = _new_status
-    WHERE
-        id = auth_user_id;
+    RETURN QUERY
+        UPDATE hidden.assistants
+            SET
+                last_tutorial = _new_status
+            WHERE
+                id = auth_user_id
+            RETURNING id_, first_sign_in, skip_tutorial, last_tutorial;
 
     IF NOT FOUND THEN
         RAISE EXCEPTION 'No assistant found for user id %', auth_user_id

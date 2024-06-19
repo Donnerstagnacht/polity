@@ -1,20 +1,18 @@
-import {Component, inject, signal, WritableSignal} from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {TuiDay} from "@taiga-ui/cdk";
-import {IInfiniteScrollEvent, InfiniteScrollModule} from "ngx-infinite-scroll";
-import {CommonModule} from "@angular/common";
-import {FilterHeadlineComponent} from "../../../ui/polity-filter/filter-headline/filter-headline.component";
-import {FilterStringComponent} from "../../../ui/polity-filter/filter-string/filter-string.component";
-import {FilterDateRangeComponent} from "../../../ui/polity-filter/filter-date-range/filter-date-range.component";
-import {FilterTagsComponent} from "../../../ui/polity-filter/filter-tags/filter-tags.component";
-import {FilterClearComponent} from "../../../ui/polity-filter/filter-clear/filter-clear.component";
+import {Component, inject, signal} from '@angular/core';
+import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {TuiDay} from '@taiga-ui/cdk';
+import {IInfiniteScrollEvent, InfiniteScrollModule} from 'ngx-infinite-scroll';
+import {CommonModule} from '@angular/common';
+import {FilterHeadlineComponent} from '../../../ui/polity-filter/filter-headline/filter-headline.component';
+import {FilterStringComponent} from '../../../ui/polity-filter/filter-string/filter-string.component';
+import {FilterDateRangeComponent} from '../../../ui/polity-filter/filter-date-range/filter-date-range.component';
+import {FilterTagsComponent} from '../../../ui/polity-filter/filter-tags/filter-tags.component';
+import {FilterClearComponent} from '../../../ui/polity-filter/filter-clear/filter-clear.component';
 import {
     TableFourIconTextTagDateComponent
-} from "../../../ui/polity-table/table-four-icon-text-tag-date/table-four-icon-text-tag-date.component";
-import {NotificationsActionService} from "../action-store-services/notifications.action.service";
-import {NotificationsStoreService} from "../action-store-services/notifications.store.service";
-import {Filter_TYPES, filterTag} from "../constants-types-interfaces/notificationFilterTypes";
-import {NotificationStore} from "../action-store-services/notification-store.service";
+} from '../../../ui/polity-table/table-four-icon-text-tag-date/table-four-icon-text-tag-date.component';
+import {Filter_TYPES, filterTag} from '../constants-types-interfaces/notificationFilterTypes';
+import {NotificationsStore} from '../store/notification-store.service';
 
 @Component({
     selector: 'polity-notification',
@@ -34,61 +32,67 @@ import {NotificationStore} from "../action-store-services/notification-store.ser
     ]
 })
 export class NotificationComponent {
+    //TODO install infinity scroll
     public combinedForm: FormGroup;
-    protected notificationStore: NotificationStore = inject(NotificationStore)
     protected throttle: number = 300;
     protected scrollDistance: number = 1;
     protected scrollUpDistance: number = 2;
-    protected isNotificationsLoading: WritableSignal<boolean> = signal(true);
+    // protected isNotificationsLoading: WritableSignal<boolean> = signal(true);
     protected showFilter: boolean = true;
     protected readonly filterTypes: filterTag[] = Filter_TYPES;
     protected readonly signal = signal;
+    protected notificationsStore: NotificationsStore = inject(NotificationsStore);
 
     constructor(
-        private readonly notificationsService: NotificationsActionService,
-        private readonly notificationStoreService: NotificationsStoreService,
+        // private readonly notificationsService: NotificationsActionService,
+        // private readonly notificationStoreService: NotificationsStoreService,
         private readonly formBuilder: FormBuilder
     ) {
         this.combinedForm = this.formBuilder.group({
             filterStringForm: this.formBuilder.group({
-                searchString: [],
+                searchString: []
             }),
             filterDateRangeForm: this.formBuilder.group({
                 from: [],
-                to: [],
+                to: []
             }),
             filterTypesForm: this.formBuilder.group({
-                filters: [],
+                filters: []
             })
-        })
-        this.isNotificationsLoading = this.notificationStoreService.notifications.loading.getLoading();
+        });
+        // this.isNotificationsLoading = this.notificationStoreService.notifications.loading.getLoading();
         this.combinedForm.valueChanges.subscribe(
             () => this.onCombinedFormChange()
-        )
-        this.notificationsService.resetNotificationCounter()
+        );
+        this.notificationsStore.resetCounter();
+        // this.notificationsService.resetNotificationCounter();
     }
 
     async ngOnInit(): Promise<void> {
-        this.notificationStore.read()
-        this.notificationsService.subscribeToRealtimeNotifications()
+        this.notificationsStore.read();
+        this.notificationsStore.subscribeToRealtimeNotifications();
+        // this.notificationsService.subscribeToRealtimeNotifications();
     }
 
     async ngOnDestroy(): Promise<void> {
-        await this.notificationsService.unsubscribeToRealtimeNotifications()
-        console.log('called')
+        this.notificationsStore.unsubscribeToRealtimeNotifications();
+        // await this.notificationsService.unsubscribeToRealtimeNotifications();
+        console.log('called');
     }
 
     protected onScrollDown(event: IInfiniteScrollEvent): void {
-        this.notificationStoreService.notifications.onScrollToBottom()
+        console.log(scroll());
+        // this.notificationStoreService.notifications.onScrollToBottom();
     }
 
     protected clearFilter(): void {
-        this.combinedForm.reset()
-        this.notificationStoreService.notifications.resetDisplayedObjects()
+        this.combinedForm.reset();
+        this.notificationsStore.resetState();
+        // this.notificationStoreService.notifications.resetDisplayedObjects();
     }
 
     protected toggleShowFilter(): void {
-        this.showFilter = !this.showFilter
+        this.showFilter = !this.showFilter;
     }
 
     private onCombinedFormChange(): void {
@@ -115,10 +119,11 @@ export class NotificationComponent {
         }
 
         if (!filterByString && !typeKeyValues && !filterByDate) {
-            this.notificationStoreService.notifications.resetDisplayedObjects()
+            this.notificationsStore.resetState();
+            // this.notificationStoreService.notifications.resetDisplayedObjects();
         }
 
-        this.notificationStore.setFilterState(
+        this.notificationsStore.setFilterState(
             {
                 filterByString: filterByString,
                 stringSearchKeys: ['first_name_', 'last_name_'],
@@ -133,6 +138,6 @@ export class NotificationComponent {
                 startDate: dateFilterFrom,
                 endDate: dateFilterTo
             }
-        )
+        );
     }
 }

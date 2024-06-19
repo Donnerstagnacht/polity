@@ -2,12 +2,14 @@
     <polity-filter-headline
         (showFilter)="toggleShowFilter()"
         [dataCyTag]="'edit-group-memberships-and-group-requests'"
-        [headline]="'Deine Mitgliedschaften & Mitgliedsanfragen'"></polity-filter-headline>
+        [headline]="'Deine Mitgliedschaften & Mitgliedsanfragen'"
+    ></polity-filter-headline>
     @if (showFilter) {
         <ng-container [formGroup]="combinedForm">
             <polity-filter-string
                 placeholderText="Suche nach einer Gruppe"
-                formGroupName="filterStringForm">
+                formGroupName="filterStringForm"
+            >
             </polity-filter-string>
         </ng-container>
     }
@@ -48,9 +50,9 @@
         [dataCyTagsHeadline]="['group_membership_image_headline', 'group_membership_name_headline',
         'group_membership_leave_headline']"
         [dataKeysForColumns]="['group_name_', 'group_name_', 'id_']"
-        [data]="groupMembershipsOfUser"
+        [data]="membershipsOfUserStore.data"
         [headings]="['Foto', 'Name', 'Verlassen']"
-        [isLoading]="isGroupMembershipsLoading"
+        [isLoading]="signal(membershipsOfUserStore.loadingState().loading)"
     >
     </polity-table-three-icon-text-delete>
 }
@@ -63,24 +65,24 @@
         [dataCyTagsHeadline]="['group_request_image_headline', 'group_request_name_headline',
         'group_request_withdraw_headline']"
         [dataKeysForColumns]="['group_name_', 'group_name_', 'id_']"
-        [data]="groupRequestsOfUser"
+        [data]="requestsOfUserStore.data"
         [headings]="['Foto', 'Name', 'Entfernen']"
-        [isLoading]="isGroupRequestsLoading"
+        [isLoading]="signal(requestsOfUserStore.loadingState().loading)"
     >
     </polity-table-three-icon-text-delete>
 }
 @if (showGroupInvitations) {
     <polity-table-three-icon-text-two-actions
         (firstAction)="acceptGroupInvitation($event)"
-        (secondAction)="declineGroupInvitation($event)"
+        (secondAction)="removeGroupInvitation($event)"
         [bonusKeys]="['group_level_']"
         [dataCyTags]="['group_invitation_image', 'group_invitation_name', 'group_invitation_accept']"
         [dataCyTagsHeadline]="['group_invitation_image_headline', 'group_invitation_name_headline',
         'group_invitation_accept_headline']"
         [dataKeysForColumns]="['group_name_', 'group_name_', 'id_']"
-        [data]="groupInvitationsOfUser"
+        [data]="invitationsOfUserStore.data"
         [headings]="['Foto', 'Name', 'Entscheiden']"
-        [isLoading]="isGroupInvitationsLoading"
+        [isLoading]="signal(invitationsOfUserStore.loadingState().loading)"
         [firstActionIcon]="'tuiIconCheck'"
         [secondActionIcon]="'tuiIconX'"
         [firstActionText]="'Accept'"

@@ -2,12 +2,14 @@
     <polity-filter-headline
         (showFilter)="toggleShowFilter()"
         [dataCyTag]="'edit-member-and-followings'"
-        [headline]="'Group Members'"></polity-filter-headline>
+        [headline]="'Group Members'"
+    ></polity-filter-headline>
     @if (showFilter) {
         <ng-container [formGroup]="combinedForm">
             <polity-filter-string
                 placeholderText="Suche nach einem Vornamen"
-                formGroupName="filterStringForm">
+                formGroupName="filterStringForm"
+            >
             </polity-filter-string>
         </ng-container>
     }
@@ -55,9 +57,9 @@
         [dataCyTagsHeadline]="['member_profile_image_headline', 'member_first_name_headline',
         'member_remove_headline']"
         [dataKeysForColumns]="['profile_image_', 'first_name_', 'id_']"
-        [data]="members"
+        [data]="groupMemberStore.data"
         [headings]="['Foto', 'Name', 'Entfernen']"
-        [isLoading]="isMembersLoading"
+        [isLoading]="signal(groupMemberStore.loadingState().loading)"
     >
     </polity-table-three-icon-text-delete>
 }
@@ -70,9 +72,9 @@
         [dataCyTagsHeadline]="['group_invitation_image_headline', 'group_invitation_name_headline',
         'group_request_withdraw_headline']"
         [dataKeysForColumns]="['profile_image_', 'first_name_', 'id_']"
-        [data]="invitations"
+        [data]="groupInvitationsStore.data"
         [headings]="['Foto', 'Name', 'Entfernen']"
-        [isLoading]="isInvitationsLoading"
+        [isLoading]="signal(groupInvitationsStore.loadingState().loading)"
     >
     </polity-table-three-icon-text-delete>
 }
@@ -85,9 +87,9 @@
         [dataCyTagsHeadline]="['group_request_image_headline', 'group_request_name_headline',
         'group_invitation_accept_headline']"
         [dataKeysForColumns]="['profile_image_', 'first_name_', 'id_']"
-        [data]="requests"
+        [data]="groupRequestsStore.data"
         [headings]="['Foto', 'Name', 'Entscheiden']"
-        [isLoading]="isRequestsLoading"
+        [isLoading]="signal(groupRequestsStore.loadingState().loading)"
         [firstActionIcon]="'tuiIconCheck'"
         [secondActionIcon]="'tuiIconX'"
         [firstActionText]="'Accept'"

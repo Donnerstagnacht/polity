@@ -1,13 +1,14 @@
 import {ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot} from '@angular/router';
-import {inject, WritableSignal} from "@angular/core";
-import {GroupStoreService} from "./action-store-service/group.store.service";
+import {inject, Signal} from '@angular/core';
+import {GroupMembershipStatusStore} from '../group_member/store/group-membership-status.store';
 
 export const isBoardMemberGuard: CanActivateFn = (
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): boolean => {
-    const groupStoreService: GroupStoreService = inject(GroupStoreService);
+    state: RouterStateSnapshot
+): boolean => {
+    const groupMembershipStatusStore: GroupMembershipStatusStore = inject(GroupMembershipStatusStore);
     const router: Router = inject(Router);
-    const isBoardMember: WritableSignal<boolean> = groupStoreService.group.uiFlagStore.getFlag('isBoardMember');
+    const isBoardMember: Signal<boolean> = groupMembershipStatusStore.isBoardMember;
 
     if (isBoardMember()) {
         return true;

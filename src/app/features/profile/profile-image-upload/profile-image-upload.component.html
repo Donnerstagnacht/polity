@@ -2,14 +2,17 @@
     <tui-input-files
         (reject)="onReject($event)"
         [attr.data-cy]="'uploadImage'"
-        [class.tui-skeleton]="isProfileLoading()"
+        [class.tui-skeleton]="profileStore.loadingState().loading"
         [formControl]="imageControl"
         accept="image/*"
     ></tui-input-files>
 }
 
 
-<tui-files [attr.data-cy]="'loading'" class="tui-space_top-1">
+<tui-files
+    [attr.data-cy]="'loading'"
+    class="tui-space_top-1"
+>
     @if (loadedFiles$ | async;as file) {
         <tui-file
             (removed)="removeFile()"
@@ -40,9 +43,9 @@
 <div class="polity-center tui-space_top-5">
     <img
         [attr.data-cy]="'uploadedImage'"
-        [class.tui-skeleton]="isProfileLoading()"
+        [class.tui-skeleton]="profileStore.loadingState().loading"
         alt="Italian Trulli"
-        src="{{profileWriteable()?.profile_image_}}"
+        src="{{profileStore.data().profile_image_}}"
         width="60%"
     >
 </div>

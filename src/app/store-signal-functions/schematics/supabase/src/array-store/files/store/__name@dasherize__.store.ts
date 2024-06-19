@@ -1,9 +1,14 @@
 import {Injectable} from '@angular/core';
 
-@Injectable({
-    providedIn:'root'
-})
+@Injectable()
 export class <%= classify(name)%>Store extends BaseArrayStore<'<%= classify(rpc)%>'> {
+
+    constructor() {
+        super({
+            loading: false,
+            dataRequested: false
+        });
+    }
 
     public async read(): Promise<void> {
         await rpcArrayHandler(

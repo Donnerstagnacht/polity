@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {
     AuthChangeEvent,
     AuthError,
@@ -9,22 +9,23 @@ import {
     Subscription,
     User,
     UserResponse
-} from "@supabase/supabase-js";
-import {SessionStoreService} from "./session.store.service";
-import {Router} from "@angular/router";
-import {supabaseAuthenticatedClient} from "../supabase-authenticated-client";
-import {TuiAlertService} from "@taiga-ui/core";
-import {ErrorStoreService} from "../../store-signal-class/error-store.service";
+} from '@supabase/supabase-js';
+import {Router} from '@angular/router';
+import {supabaseAuthenticatedClient} from '../supabase-authenticated-client';
+import {TuiAlertService} from '@taiga-ui/core';
+import {ErrorStoreService} from '../../store-signal-class/error-store.service';
+import {SessionStore} from './session.store';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthenticationService {
+    private sessionStore: SessionStore = inject(SessionStore);
     private readonly supabaseClient = supabaseAuthenticatedClient;
 
     constructor(
         private readonly notificationService: ErrorStoreService,
-        private readonly sessionStoreService: SessionStoreService,
+        // private readonly sessionStoreService: SessionStoreService,
         private readonly tuiAlertService: TuiAlertService,
         private readonly router: Router
     ) {
@@ -39,7 +40,7 @@ export class AuthenticationService {
     public authChanges(callback: (event: AuthChangeEvent, session: Session | null) => void): {
         data: { subscription: Subscription }
     } {
-        return this.supabaseClient.auth.onAuthStateChange(callback)
+        return this.supabaseClient.auth.onAuthStateChange(callback);
     }
 
     /**
@@ -50,20 +51,21 @@ export class AuthenticationService {
      */
     public async signUp(credentials: SignInWithPasswordCredentials): Promise<AuthResponse | Error | unknown> {
         try {
-            this.sessionStoreService.loading.startLoading()
+            this.sessionStore.startLoading();
             const authResponse: AuthResponse = await this.supabaseClient.auth.signUp(credentials);
+            console.log(authResponse)
             if (authResponse.error) {
-                throw authResponse.error
+                throw authResponse.error;
             }
-            await this.router.navigate(['/landing/sign-in'])
+            await this.router.navigate(['/landing/sign-in']);
             return authResponse;
         } catch (error) {
             if (error instanceof Error) {
-                this.notificationService.updateError(error.message, true)
+                this.notificationService.updateError(error.message, true);
             }
-            return error
+            return error;
         } finally {
-            this.sessionStoreService.loading.stopLoading()
+            this.sessionStore.stopLoading();
         }
     }
 
@@ -76,23 +78,23 @@ export class AuthenticationService {
      */
     public async signIn(credentials: SignInWithPasswordCredentials): Promise<AuthTokenResponse | Error | unknown> {
         try {
-            this.sessionStoreService.loading.startLoading()
+            this.sessionStore.startLoading();
             const authResponse: AuthTokenResponse = await this.supabaseClient.auth.signInWithPassword(credentials);
 
             if (authResponse.error) {
-                throw authResponse.error
+                throw authResponse.error;
             }
-            await this.sessionStoreService.setAuthData(authResponse.data.session)
+            await this.sessionStore.setAuthData(authResponse.data.session);
             await this.router.navigate(['/profile', authResponse.data.session.user.id]);
             return authResponse;
         } catch (error) {
             if (error instanceof Error) {
                 this.notificationService.updateError(error.message, true);
-                return error
+                return error;
             }
-            return error
+            return error;
         } finally {
-            this.sessionStoreService.loading.stopLoading()
+            this.sessionStore.stopLoading();
         }
     }
 
@@ -104,21 +106,21 @@ export class AuthenticationService {
      */
     public async signOut(): Promise<{ error: AuthError | null } | unknown> {
         try {
-            this.sessionStoreService.loading.startLoading()
-            this.supabaseClient.removeAllChannels()
+            this.sessionStore.startLoading();
+            this.supabaseClient.removeAllChannels();
             const authResponse: { error: AuthError | null } = await this.supabaseClient.auth.signOut();
             if (authResponse.error) {
                 throw authResponse.error;
             }
             await this.router.navigate(['/landing/sign-in']);
-            return authResponse
+            return authResponse;
         } catch (error) {
             if (error instanceof Error) {
                 this.notificationService.updateError(error.message, true);
             }
-            return error
+            return error;
         } finally {
-            this.sessionStoreService.loading.stopLoading()
+            this.sessionStore.stopLoading();
         }
     }
 
@@ -130,8 +132,8 @@ export class AuthenticationService {
      */
     public async updateEmail(newEmail: string): Promise<{ user: User } | unknown> {
         try {
-            this.sessionStoreService.loading.startLoading()
-            const userResponse: UserResponse = await this.supabaseClient.auth.updateUser({email: newEmail})
+            this.sessionStore.startLoading();
+            const userResponse: UserResponse = await this.supabaseClient.auth.updateUser({email: newEmail});
             if (userResponse.error) {
                 throw userResponse.error;
             }
@@ -139,8 +141,9 @@ export class AuthenticationService {
                 'Email erfolgreich geändert. Die Änderung muss in der Alten und Neuen Email-Adresse bestätigt werden' +
                 ' und wird dann beim nächsten Login benötigt.',
                 {
-                    status: 'success',
-                }).subscribe()
+                    status: 'success'
+                }
+            ).subscribe();
             return userResponse.data;
         } catch (error) {
             if (error instanceof Error) {
@@ -148,7 +151,7 @@ export class AuthenticationService {
             }
             return error;
         } finally {
-            this.sessionStoreService.loading.stopLoading()
+            this.sessionStore.stopLoading();
         }
     }
 
@@ -161,16 +164,17 @@ export class AuthenticationService {
      */
     public async updatePassword(newPassword: string): Promise<{ user: User } | unknown> {
         try {
-            this.sessionStoreService.loading.startLoading()
-            const userResponse: UserResponse = await this.supabaseClient.auth.updateUser({password: newPassword})
+            this.sessionStore.startLoading();
+            const userResponse: UserResponse = await this.supabaseClient.auth.updateUser({password: newPassword});
             if (userResponse.error) {
                 throw userResponse.error;
             }
             this.tuiAlertService.open(
                 'Passwort erfolgreich geändert und beim nächsten Login benötigt.',
                 {
-                    status: 'success',
-                }).subscribe()
+                    status: 'success'
+                }
+            ).subscribe();
             return userResponse.data;
         } catch (error) {
             if (error instanceof Error) {
@@ -178,7 +182,7 @@ export class AuthenticationService {
             }
             return error;
         } finally {
-            this.sessionStoreService.loading.stopLoading()
+            this.sessionStore.stopLoading();
         }
     }
 
@@ -190,22 +194,23 @@ export class AuthenticationService {
      */
     public async requestPasswordReset(emailResetShouldBeSend: string): Promise<any> {
         try {
-            this.sessionStoreService.loading.startLoading()
+            this.sessionStore.startLoading();
             const userResponse: { data: {}; error: null } | {
                 data: null;
                 error: AuthError
             } = await this.supabaseClient.auth.resetPasswordForEmail(
                 emailResetShouldBeSend,
                 {redirectTo: 'http://localhost:4200/landing/reset-password'}
-            )
+            );
             if (userResponse.error) {
                 throw userResponse.error;
             }
             this.tuiAlertService.open(
                 'Email erfolgreich versendet. Öffne deinen Email Account.',
                 {
-                    status: 'success',
-                }).subscribe()
+                    status: 'success'
+                }
+            ).subscribe();
             return userResponse.data;
         } catch (error) {
             if (error instanceof Error) {
@@ -213,7 +218,7 @@ export class AuthenticationService {
             }
             return error;
         } finally {
-            this.sessionStoreService.loading.stopLoading()
+            this.sessionStore.stopLoading();
         }
     }
 }

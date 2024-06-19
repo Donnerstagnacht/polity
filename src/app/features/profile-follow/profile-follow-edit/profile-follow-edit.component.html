@@ -2,12 +2,14 @@
     <polity-filter-headline
         (showFilter)="toggleShowFilter()"
         [dataCyTag]="'edit-follower-and-followings'"
-        [headline]="'Deine Follower & Followings'"></polity-filter-headline>
+        [headline]="'Deine Follower & Followings'"
+    ></polity-filter-headline>
     @if (showFilter) {
         <ng-container [formGroup]="combinedForm">
             <polity-filter-string
                 placeholderText="Suche nach einem Vornamen"
-                formGroupName="filterStringForm">
+                formGroupName="filterStringForm"
+            >
             </polity-filter-string>
         </ng-container>
     }
@@ -49,14 +51,14 @@
         [dataCyTagsHeadline]="['follower_profile_image_headline', 'follower_first_name_headline',
         'follower_remove_headline']"
         [dataKeysForColumns]="['profile_image_', 'first_name_', 'id_']"
-        [data]="followersOfUser"
+        [data]="followersOfUserStore.data"
         [headings]="['Foto', 'Name', 'Entfernen']"
-        [isLoading]="isFollowersLoading"
+        [isLoading]="signal(followersOfUserStore.loadingState().loading)"
     >
     </polity-table-three-icon-text-delete>
 }
 
-@if (showFollowing) {
+@if (showFollowings) {
     <polity-table-three-icon-text-delete
         (remove)="removeFollowing($event)"
         [bonusKeys]="['last_name_']"
@@ -64,9 +66,9 @@
         [dataCyTagsHeadline]="['following_profile_image_headline', 'following_first_name_headline',
         'following_remove_headline']"
         [dataKeysForColumns]="['profile_image_', 'first_name_', 'id_']"
-        [data]="this.followingStore.dataFiltered"
+        [data]="followingsOfUserStore.dataFiltered"
         [headings]="['Foto', 'Name', 'Entfernen']"
-        [isLoading]="signal(this.followingStore.loadingState().loading)"
+        [isLoading]="signal(followingsOfUserStore.loadingState().loading)"
     >
     </polity-table-three-icon-text-delete>
 }

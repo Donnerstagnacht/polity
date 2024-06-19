@@ -1,7 +1,6 @@
-import {Component, WritableSignal} from '@angular/core';
-import {LinkCardComponent} from "../../../ui/cards/link-card/link-card.component";
-import {GroupStoreService} from "../action-store-service/group.store.service";
-import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
+import {Component, inject} from '@angular/core';
+import {LinkCardComponent} from '../../../ui/cards/link-card/link-card.component';
+import {GroupStore} from '../store/group.store.';
 
 @Component({
     selector: 'polity-group-edit',
@@ -13,18 +12,19 @@ import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authe
     styleUrl: './group-edit.component.less'
 })
 export class GroupEditComponent {
+    groupStore: GroupStore = inject(GroupStore);
     protected editGroupUrl: string = '';
     protected editGroupFollowerUrl: string = '';
     protected editGroupMemberUrl: string = '';
 
     constructor(
-        private readonly groupStoreService: GroupStoreService
+        // private readonly groupStoreService: GroupStoreService
     ) {
     }
 
     ngOnInit(): void {
-        const group: WritableSignal<SupabaseObjectReturn<'read_group'> | null> = this.groupStoreService.group.getObject()
-        const urlId: string | undefined = group()?.id_
+        // const group: WritableSignal<SupabaseObjectReturn<'read_group'> | null> = this.groupStoreService.group.getObject()
+        const urlId: string | undefined = this.groupStore.data().id_;
         this.editGroupUrl = 'group/' + urlId + '/settings/edit';
         this.editGroupMemberUrl = 'group/' + urlId + '/member/edit';
         this.editGroupFollowerUrl = 'group/' + urlId + '/follower/edit';

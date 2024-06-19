@@ -22,7 +22,7 @@ BEGIN
     PERFORM hidden.increment_group_follower_counter(
         _following_id
             );
-    PERFORM hidden.increment_group_following_counter(
+    PERFORM hidden.increment_profile_following_counter(
         follower_id
             );
     --     PERFORM hidden.create_notification_from_user_transaction(

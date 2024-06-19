@@ -77,6 +77,97 @@
 <!--    }-->
 <!--</div>-->
 
+<!--<form-->
+<!--    [formGroup]="searchForm"-->
+<!--&gt;-->
+<!--    <div class="tui-form__row">-->
+<!--        <tui-input-->
+<!--            [attr.data-cy]="'search'"-->
+<!--            formControlName="search"-->
+<!--            tuiHintContent="Bitte einen Suchterm eingeben"-->
+<!--        >-->
+<!--            Gebe einen Suchterm ein-->
+<!--        </tui-input>-->
+<!--        <tui-error-->
+<!--            [error]="[] | tuiFieldError | async"-->
+<!--            formControlName="search"-->
+<!--        >-->
+<!--        </tui-error>-->
+<!--    </div>-->
+<!--</form>-->
+
+<!--<div class="center-grid">-->
+<!--    @if ((!this.newSearchUserStore.loadingState().dataRequested || !this.searchGroupStore.dataRequested())-->
+<!--    &&-->
+<!--    (!newSearchUserStore.loadingState().loading && !searchGroupStore.loading())) {-->
+<!--        <p-->
+<!--            [attr.data-cy]="'search-instruction'"-->
+<!--        >-->
+<!--            Suche etwas.-->
+<!--        </p>-->
+<!--    }-->
+<!--</div>-->
+<!--<div class="center-grid">-->
+<!--    @if (newSearchUserStore.loadingState().loading || searchGroupStore.loading()) {-->
+<!--        <p-->
+<!--            [attr.data-cy]="'search-loading'"-->
+<!--        >-->
+<!--            Suche läuft...-->
+<!--        </p>-->
+<!--    }-->
+<!--</div>-->
+<!--<div class="center-grid">-->
+<!--    @if (this.newSearchUserStore.noDataFound()-->
+<!--    &&-->
+<!--    this.newSearchUserStore.loadingState().dataRequested-->
+<!--    && !this.newSearchUserStore.loadingState().loading) {-->
+<!--        <p [attr.data-cy]="'no-profile-search-results'">-->
+<!--            No profile search results.-->
+<!--        </p>-->
+<!--    }-->
+<!--</div>-->
+<!--<div class="center-grid">-->
+<!--    @if (this.searchGroupStore.noData()-->
+<!--    &&-->
+<!--    this.searchGroupStore.dataRequested()-->
+<!--    && !searchGroupStore.loading()) {-->
+<!--        <p [attr.data-cy]="'no-group-search-results'">-->
+<!--            No group search results.-->
+<!--        </p>-->
+<!--    }-->
+<!--</div>-->
+
+<!--<div class="grid tui-space_top-4">-->
+<!--    @for (group of this.searchGroupStore.data();track group) {-->
+<!--        <div-->
+<!--            [attr.data-cy]="'group-search-results'"-->
+<!--            class="grid-item tui-space_top-4"-->
+<!--        >-->
+<!--            <polity-search-group-result-->
+<!--                [isLoading]="this.searchGroupStore.loading"-->
+<!--                [group]="group"-->
+<!--            ></polity-search-group-result>-->
+<!--        </div>-->
+<!--    }-->
+<!--</div>-->
+<!--<div class="grid tui-space_top-4">-->
+<!--    @for (profile of this.newSearchUserStore.data();track profile) {-->
+<!--        <div-->
+<!--            [attr.data-cy]="'user-search-results'"-->
+<!--            class="grid-item tui-space_top-4"-->
+<!--        >-->
+<!--            <polity-search-profile-result-->
+<!--                [isLoading]="this.newSearchUserStore.loadingState"-->
+<!--                [profile]="profile"-->
+<!--            ></polity-search-profile-result>-->
+<!--        </div>-->
+<!--    }-->
+<!--</div>-->
+<!--<div>-->
+<!--    <p>Data found: {{ this.newSearchUserStore.noDataFound() }}</p>-->
+<!--</div>-->
+
+
 <form
     [formGroup]="searchForm"
 >
@@ -97,9 +188,9 @@
 </form>
 
 <div class="center-grid">
-    @if ((!this.searchUserStore.loadingState().dataRequested || !this.searchGroupStore.dataRequested())
+    @if ((!this.searchUserStore.loadingState().dataRequested || !this.searchUserStore.loadingState().dataRequested)
     &&
-    (!searchUserStore.loadingState().loading && !searchGroupStore.loading())) {
+    (!searchUserStore.loadingState().loading && !searchGroupStore.loadingState().loading)) {
         <p
             [attr.data-cy]="'search-instruction'"
         >
@@ -108,7 +199,7 @@
     }
 </div>
 <div class="center-grid">
-    @if (searchUserStore.loadingState().loading || searchGroupStore.loading()) {
+    @if (searchUserStore.loadingState().loading || searchGroupStore.loadingState().loading) {
         <p
             [attr.data-cy]="'search-loading'"
         >
@@ -117,7 +208,7 @@
     }
 </div>
 <div class="center-grid">
-    @if (this.searchUserStore.noDataFound()
+    @if (this.searchUserStore.noData()
     &&
     this.searchUserStore.loadingState().dataRequested
     && !this.searchUserStore.loadingState().loading) {
@@ -129,8 +220,8 @@
 <div class="center-grid">
     @if (this.searchGroupStore.noData()
     &&
-    this.searchGroupStore.dataRequested()
-    && !searchGroupStore.loading()) {
+    this.searchGroupStore.loadingState().dataRequested
+    && !searchGroupStore.loadingState().loading) {
         <p [attr.data-cy]="'no-group-search-results'">
             No group search results.
         </p>
@@ -144,7 +235,7 @@
             class="grid-item tui-space_top-4"
         >
             <polity-search-group-result
-                [isLoading]="this.searchGroupStore.loading"
+                [isLoading]="signal(this.searchGroupStore.loadingState().loading)"
                 [group]="group"
             ></polity-search-group-result>
         </div>
@@ -164,5 +255,8 @@
     }
 </div>
 <div>
-    <p>Data found: {{ this.searchUserStore.noDataFound() }}</p>
+    <p>Loading: {{ this.searchUserStore.loadingState().loading }}</p>
+    <p>Data requested: {{ this.searchUserStore.loadingState().dataRequested }}</p>
+    <p>data length: {{ this.searchUserStore.data().length }}</p>
+    <p>No Data found: {{ this.searchUserStore.noData() }}</p>
 </div>

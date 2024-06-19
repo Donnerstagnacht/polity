@@ -1,7 +1,7 @@
-import {Component, Input, signal, WritableSignal} from '@angular/core';
-import {Router} from "@angular/router";
-import {TuiIslandModule} from "@taiga-ui/kit";
-import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
+import {Component, Input, Signal, signal, WritableSignal} from '@angular/core';
+import {Router} from '@angular/router';
+import {TuiIslandModule} from '@taiga-ui/kit';
+import {SupabaseObjectReturn} from '../../../../../supabase/types/supabase.authenticated.shorthand-types';
 
 @Component({
     selector: 'polity-profile-link-card',
@@ -23,15 +23,15 @@ export class ProfileLinkCardComponent {
      */
     @Input({required: true}) public sessionId: string | null = null;
     @Input({required: true}) public isLoading: WritableSignal<boolean> = signal(true);
-    @Input({required: true}) public profile: WritableSignal<
+    @Input({required: true}) public profile: Signal<
         SupabaseObjectReturn<'read_profile'> | null | undefined
     > = signal(
         null
-    )
+    );
     @Input() public dataCyTag: string = 'profile-link-card';
 
     constructor(
-        private readonly router: Router,
+        private readonly router: Router
     ) {
     }
 

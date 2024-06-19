@@ -1,31 +1,32 @@
 <div class="polity-center min-height">
     <polity-wiki-headline
-        [firstName]="profile()?.first_name_"
-        [isLoading]="isProfileLoading"
-        [lastName]="profile()?.last_name_"
+        [firstName]="profileStore.data().first_name_"
+        [isLoading]="signal(profileStore.loadingState().loading)"
+        [lastName]="profileStore.data().last_name_"
     ></polity-wiki-headline>
 
     <div
-        class=" polity-flex-container polity-single-item-centered tui-space_right-4 tui-space_left-4">
+        class=" polity-flex-container polity-single-item-centered tui-space_right-4 tui-space_left-4"
+    >
         <polity-counter
             [counterTitle]="'Follower'"
-            [counterValue]="this.profileCounterStore.data().follower_counter_"
+            [counterValue]="profileCounterStore.data().follower_counter_"
             [dataCyTag]="'followerCounter'"
-            [isLoading]="signal(this.profileCounterStore.loadingState().loading)"
+            [isLoading]="signal(profileCounterStore.loadingState().loading)"
             class="polity-flex-item-first"
         ></polity-counter>
         <polity-counter
             [counterTitle]="'Following'"
-            [counterValue]="this.profileCounterStore.data().following_counter_"
+            [counterValue]="profileCounterStore.data().following_counter_"
             [dataCyTag]="'followingCounter'"
-            [isLoading]="signal(this.profileCounterStore.loadingState().loading)"
+            [isLoading]="signal(profileCounterStore.loadingState().loading)"
             class="polity-flex-item-last"
         ></polity-counter>
         <polity-counter
             [counterTitle]="'Memberships'"
-            [counterValue]="this.profileCounterStore.data().group_membership_counter_"
+            [counterValue]="profileCounterStore.data().group_membership_counter_"
             [dataCyTag]="'membershipCounter'"
-            [isLoading]="signal(this.profileCounterStore.loadingState().loading)"
+            [isLoading]="signal(profileCounterStore.loadingState().loading)"
             class="polity-flex-item-last"
         ></polity-counter>
     </div>
@@ -33,14 +34,14 @@
     <div class="tui-space_bottom-4">
         <polity-follow-button
             (toggledFollowing)="toggleFollow($event)"
-            [isFollowing]="isFollowing()"
-            [isLoading]="this.isFollowingCheckLoading"
-            [isOwner]="isOwner()"
+            [isFollowing]="profileFollowStore.data()"
+            [isLoading]="signal(profileFollowStore.loadingState().loading)"
+            [isOwner]="profileStore.isOwner()"
         ></polity-follow-button>
     </div>
 
     <polity-wiki-image
-        [isLoading]="isProfileLoading"
-        [src]="profile()?.profile_image_"
+        [isLoading]="signal(profileStore.loadingState().loading)"
+        [src]="profileStore.data().profile_image_"
     ></polity-wiki-image>
 </div>

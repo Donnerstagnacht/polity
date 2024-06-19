@@ -1,7 +1,7 @@
 import {ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot} from '@angular/router';
-import {SessionStoreService} from "../../auth/services/session.store.service";
-import {inject, WritableSignal} from "@angular/core";
-import {Session} from "@supabase/supabase-js";
+import {inject, Signal} from '@angular/core';
+import {Session} from '@supabase/supabase-js';
+import {SessionStore} from '../../auth/services/session.store';
 
 /**
  * A guard that checks if the user is signed in.
@@ -12,9 +12,9 @@ export const isOwnerGuard: CanActivateFn = (
     routeSnapshot: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
 ): boolean => {
-    const sessionStoreService: SessionStoreService = inject(SessionStoreService);
+    const sessionStore: SessionStore = inject(SessionStore);
     const router: Router = inject(Router);
-    let sessionAsSignal: WritableSignal<Session | null> = sessionStoreService.selectSession();
+    let sessionAsSignal: Signal<Session | null> = sessionStore.selectSession();
     const loggedInUserId: string | undefined = sessionAsSignal()?.user.id;
     // const id: string = routeSnapshot.paramMap.get('id') as string; // OLD solution, does not work without
     // ngModule routing
@@ -23,6 +23,6 @@ export const isOwnerGuard: CanActivateFn = (
         return true;
     } else {
         router.navigate(['/home']);
-        return false
+        return false;
     }
 };

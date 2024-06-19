@@ -1,14 +1,13 @@
-import {Component, inject} from '@angular/core';
-import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {debounceTime} from "rxjs";
-import {TuiFieldErrorPipeModule, TuiInputModule} from "@taiga-ui/kit";
-import {TuiErrorModule} from "@taiga-ui/core";
-import {SearchProfileResult} from "../search-profile-result/search-profile-result.component";
-import {CommonModule} from "@angular/common";
-import {SearchGroupResultComponent} from "../search-group-result/search-group-result.component";
-import {NewSearchUserStore} from "../action-store-services/new-search-user-store.service";
-import {FollowingsOfUserStore} from "../../profile-follow/action-store-services/followings-of-user-store.service";
-import {SearchGroupStore} from "../action-store-services/search-group.store";
+import {Component, inject, signal} from '@angular/core';
+import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {debounceTime} from 'rxjs';
+import {TuiFieldErrorPipeModule, TuiInputModule} from '@taiga-ui/kit';
+import {TuiErrorModule} from '@taiga-ui/core';
+import {SearchProfileResult} from '../search-profile-result/search-profile-result.component';
+import {CommonModule} from '@angular/common';
+import {SearchGroupResultComponent} from '../search-group-result/search-group-result.component';
+import {SearchUserStore} from '../store/search-user.store';
+import {SearchGroupStore} from '../store/search-group.store';
 
 @Component({
     selector: 'polity-search-user',
@@ -27,16 +26,17 @@ import {SearchGroupStore} from "../action-store-services/search-group.store";
 })
 export class SearchUserComponent {
     //protected readonly searchUserStore = inject(SearchUserStore);
-    protected readonly searchUserStore = inject(NewSearchUserStore);
+    protected readonly searchUserStore = inject(SearchUserStore);
+    // protected readonly newSearchUserStore = inject(NewSearchUserStore);
     protected readonly searchGroupStore = inject(SearchGroupStore);
-    protected readonly test = inject(FollowingsOfUserStore)
     protected searchForm: FormGroup<{
         search: FormControl<string | null>
     }> = new FormGroup({
         search: new FormControl(
             ''
         )
-    })
+    });
+    protected readonly signal = signal;
 
     constructor() {
         this.searchForm.get('search')?.valueChanges.pipe(
@@ -47,12 +47,13 @@ export class SearchUserComponent {
     }
 
     private async onKeyUp(): Promise<void> {
-        let searchTerm: string | null = this.searchForm.controls.search.value
+        let searchTerm: string | null = this.searchForm.controls.search.value;
         if (searchTerm) {
             await Promise.all([
-                this.searchUserStore.searchUser(searchTerm),
-                this.searchGroupStore.searchGroup(searchTerm),
-            ])
+                this.searchUserStore.search(searchTerm),
+                // this.newSearchUserStore.searchUser(searchTerm),
+                this.searchGroupStore.search(searchTerm)
+            ]);
         }
     }
 }

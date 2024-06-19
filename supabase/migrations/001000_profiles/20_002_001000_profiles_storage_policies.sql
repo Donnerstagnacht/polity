@@ -6,7 +6,7 @@ CREATE POLICY "Profile images are accessible for authenticated users."
     FOR SELECT
     TO authenticated
     USING (
-    bucket_id = 'profile_images'
+    TRUE
     );
 
 DROP POLICY IF EXISTS "Authenticated users can upload images" ON storage.objects;
@@ -15,5 +15,5 @@ CREATE POLICY "Authenticated users can upload images"
     FOR INSERT
     TO authenticated
     WITH CHECK (
-    bucket_id = 'profile_images'
+    TRUE
     );

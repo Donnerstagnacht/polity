@@ -1,18 +1,15 @@
 import {Component, inject} from '@angular/core';
-import {SessionStoreService} from "../../../auth/services/session.store.service";
-import {ActivatedRoute, RouterOutlet} from "@angular/router";
-import {NavigationItem} from "../../../navigation/types-and-interfaces/navigationItem";
-import {SecondBarTopComponent} from "../../../navigation/second-bar-top/second-bar-top.component";
-import {SecondBarRightComponent} from "../../../navigation/second-bar-right/second-bar-right.component";
-import {CommonModule} from "@angular/common";
-import {ProfileStoreService} from "../action-store-services/profile.store.service";
-import {ProfileActionService} from "../action-store-services/profile.action.service";
-import {NAVIGATION_ITEMS_PROFILE} from "../profile-navigation-signed-in";
-import {NAVIGATION_ITEMS_PROFILE_OWNER} from "../profile-navigation-owner";
-import {
-    FollowersOfUserActionService
-} from "../../profile-follow/action-store-services/followers-of-user.action.service";
-import {ProfileCounterStore} from "../../profile-follow/action-store-services/profile-counter-store.service";
+import {ActivatedRoute, RouterOutlet} from '@angular/router';
+import {NavigationItem} from '../../../navigation/types-and-interfaces/navigationItem';
+import {SecondBarTopComponent} from '../../../navigation/second-bar-top/second-bar-top.component';
+import {SecondBarRightComponent} from '../../../navigation/second-bar-right/second-bar-right.component';
+import {CommonModule} from '@angular/common';
+import {NAVIGATION_ITEMS_PROFILE} from '../profile-navigation-signed-in';
+import {NAVIGATION_ITEMS_PROFILE_OWNER} from '../profile-navigation-owner';
+import {ProfileCounterStore} from '../../profile-follow/store/profile-counter.store';
+import {ProfileStore} from '../store/profile.store';
+import {ProfileFollowStore} from '../../profile-follow/store/profile-follow-store.service';
+import {SessionStore} from '../../../auth/services/session.store';
 
 @Component({
     selector: 'polity-profile',
@@ -27,50 +24,55 @@ import {ProfileCounterStore} from "../../profile-follow/action-store-services/pr
     standalone: true
 })
 export class ProfileComponent {
+    protected profileStore: ProfileStore = inject(ProfileStore);
+    protected profileFollowStore: ProfileFollowStore = inject(ProfileFollowStore);
+    protected sessionStore: SessionStore = inject(SessionStore);
     protected menuItemsProfile: NavigationItem[] = NAVIGATION_ITEMS_PROFILE;
-    protected profileCounterStore: ProfileCounterStore = inject(ProfileCounterStore)
+    protected profileCounterStore: ProfileCounterStore = inject(ProfileCounterStore);
 
     constructor(
-        private readonly sessionStoreService: SessionStoreService,
-        private readonly profileStoreService: ProfileStoreService,
-        private readonly profileService: ProfileActionService,
-        private route: ActivatedRoute,
+        // private readonly sessionStoreService: SessionStoreService,
+        // private readonly profileStoreService: ProfileStoreService,
+        // private readonly profileService: ProfileActionService,
+        private route: ActivatedRoute
         // private readonly profileCounterService: ProfileCountersActionService,
         // private readonly profileCountersStoreService: ProfileCountersStoreService,
-        private readonly followersOfUserActionService: FollowersOfUserActionService
+        // private readonly followersOfUserActionService: FollowersOfUserActionService
     ) {
     }
 
     async ngOnInit(): Promise<void> {
         const urlId: string = this.route.snapshot.params['id'];
-        const sessionId: string | null = this.sessionStoreService.getSessionId();
-        this.checkIsOwner(urlId, sessionId)
+        const sessionId: string | null = this.sessionStore.getSessionId();
+        // const sessionId: string | null = this.sessionStoreService.getSessionId();
+        this.checkIsOwner(urlId, sessionId);
 
         await Promise.all([
-            this.profileService.readProfile(urlId),
+            this.profileStore.read(urlId),
+            // this.profileService.readProfile(urlId),
             this.profileCounterStore.read(urlId)
             // this.profileCounterService.selectProfileCounter(urlId)
-        ])
-        await this.followersOfUserActionService.checkIfFollowing();
+        ]);
+        await this.profileFollowStore.checkIfFollowing(urlId);
+        // await this.followersOfUserActionService.checkIfFollowing();
     }
 
     ngOnDestroy(): void {
-        this.profileStoreService.profile.resetObject();
+        // this.profileStoreService.profile.resetObject();
         // this.profileCountersStoreService.profileCounters.resetObject()
     }
 
     private checkIsOwner(urlId: string, sessionId: string | null): void {
-        if (sessionId == urlId) {
-            this.profileStoreService.profile.uiFlagStore.setFlagTrue('isOwner')
+        this.profileStore.checkIsOwner(urlId, sessionId);
+        if (this.profileStore.isOwner()) {
             this.menuItemsProfile = NAVIGATION_ITEMS_PROFILE_OWNER;
-            this.menuItemsProfile[0].link = '/profile/' + urlId
-            this.menuItemsProfile[1].link = '/profile/' + urlId + '/edit'
-            this.menuItemsProfile[2].link = '/profile/' + urlId + '/groups/edit'
-            this.menuItemsProfile[3].link = '/profile/' + urlId + '/follower/edit'
+            this.menuItemsProfile[0].link = '/profile/' + urlId;
+            this.menuItemsProfile[1].link = '/profile/' + urlId + '/edit';
+            this.menuItemsProfile[2].link = '/profile/' + urlId + '/groups/edit';
+            this.menuItemsProfile[3].link = '/profile/' + urlId + '/follower/edit';
         } else {
-            this.profileStoreService.profile.uiFlagStore.setFlagFalse('isOwner')
             this.menuItemsProfile = NAVIGATION_ITEMS_PROFILE;
-            this.menuItemsProfile[0].link = '/profile/' + urlId
+            this.menuItemsProfile[0].link = '/profile/' + urlId;
         }
     }
 }

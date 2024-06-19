@@ -1,11 +1,11 @@
-import {Component, effect, Input, signal, WritableSignal} from '@angular/core';
-import {NAVIGATION_ITEMS_SIGNED_OUT} from "../navigation-item";
-import {NavigationItem} from "../types-and-interfaces/navigationItem";
-import {TuiTabBarModule} from "@taiga-ui/addon-mobile";
-import {RouterModule} from "@angular/router";
-import {TuiHintModule} from "@taiga-ui/core";
-import {CommonModule} from "@angular/common";
-import {SupabaseObjectReturn} from "../../../../supabase/types/supabase.authenticated.shorthand-types";
+import {Component, effect, Input, Signal, signal} from '@angular/core';
+import {NAVIGATION_ITEMS_SIGNED_OUT} from '../navigation-item';
+import {NavigationItem} from '../types-and-interfaces/navigationItem';
+import {TuiTabBarModule} from '@taiga-ui/addon-mobile';
+import {RouterModule} from '@angular/router';
+import {TuiHintModule} from '@taiga-ui/core';
+import {CommonModule} from '@angular/common';
+import {SupabaseObjectReturn} from '../../../../supabase/types/supabase.authenticated.shorthand-types';
 
 @Component({
     selector: 'polity-main-bar-bottom',
@@ -26,7 +26,7 @@ export class FirstBarBottomComponent {
      * @Input items: Item[]. Default is signed out items.
      */
     @Input({required: true}) public items: NavigationItem[] = NAVIGATION_ITEMS_SIGNED_OUT;
-    @Input() public notificationBadge: WritableSignal<SupabaseObjectReturn<'read_unread_notifications_counter'> | null> = signal({
+    @Input() public notificationBadge: Signal<SupabaseObjectReturn<'read_unread_notifications_counter'> | null> = signal({
         profile_id_: '',
         unread_notifications_counter_: 0
     });
@@ -34,7 +34,7 @@ export class FirstBarBottomComponent {
 
     constructor() {
         effect((): void => {
-            this.items[2].badge = this.notificationBadge()?.unread_notifications_counter_
-        })
+            this.items[2].badge = this.notificationBadge()?.unread_notifications_counter_;
+        });
     }
 }

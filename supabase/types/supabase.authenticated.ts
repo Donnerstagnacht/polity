@@ -371,13 +371,23 @@ export type Database = {
         Args: {
           _new_status: boolean
         }
-        Returns: undefined
+        Returns: {
+          id_: string
+          first_sign_in_: boolean
+          skip_tutorial_: boolean
+          last_tutorial_: string
+        }[]
       }
       update_last_tutorial: {
         Args: {
           _new_status: "welcome" | "profile" | "search"
         }
-        Returns: undefined
+        Returns: {
+          id_: string
+          first_sign_in_: boolean
+          skip_tutorial_: boolean
+          last_tutorial_: string
+        }[]
       }
       update_profile: {
         Args: {
@@ -388,19 +398,31 @@ export type Database = {
           _profile_image?: string
           _receive_follow_notifications?: boolean
         }
-        Returns: undefined
+        Returns: {
+          profile_id_: string
+          first_name_: string
+          last_name_: string
+          profile_image_: string
+        }[]
       }
       update_profile_receive_notifications_from_follow: {
         Args: {
           _new_status: boolean
         }
-        Returns: undefined
+        Returns: {
+          receive_follow_notifications_: boolean
+        }[]
       }
       update_skip_tutorial: {
         Args: {
           _new_status: boolean
         }
-        Returns: undefined
+        Returns: {
+          id_: string
+          first_sign_in_: boolean
+          skip_tutorial_: boolean
+          last_tutorial_: string
+        }[]
       }
       upsert_push_subscription: {
         Args: {

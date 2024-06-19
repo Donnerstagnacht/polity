@@ -1,4 +1,4 @@
-import {computed, Signal, WritableSignal} from "@angular/core";
+import {computed, Signal, WritableSignal} from '@angular/core';
 
 export type LoadingState = {
     loading: boolean,
@@ -9,7 +9,8 @@ export type LoadingState = {
 export function loadingStarted(loadingState: WritableSignal<LoadingState>) {
     loadingState.set({
         ...loadingState(),
-        loading: true
+        loading: true,
+        dataRequested: true
     });
 }
 
@@ -24,11 +25,11 @@ export function checkIfDataFound
 ): Signal<boolean> {
     return computed((): boolean => {
         if (data().length > 0) {
-            return false
+            return false;
         } else {
-            return true
+            return true;
         }
-    })
+    });
 }
 
 

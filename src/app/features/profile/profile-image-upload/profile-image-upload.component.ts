@@ -1,11 +1,10 @@
-import {Component, signal, WritableSignal} from '@angular/core';
-import {TuiFileLike, TuiInputFilesModule} from "@taiga-ui/kit";
-import {from, Observable, of, Subject, switchMap} from "rxjs";
-import {FormControl, ReactiveFormsModule} from "@angular/forms";
-import {CommonModule} from "@angular/common";
-import {ProfileActionService} from "../action-store-services/profile.action.service";
-import {ProfileStoreService} from "../action-store-services/profile.store.service";
-import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
+import {Component, inject} from '@angular/core';
+import {TuiFileLike, TuiInputFilesModule} from '@taiga-ui/kit';
+import {from, Observable, of, Subject, switchMap} from 'rxjs';
+import {FormControl, ReactiveFormsModule} from '@angular/forms';
+import {CommonModule} from '@angular/common';
+import {ProfileStore} from '../store/profile.store';
+import {getSignedUrlFromPath, uploadImage} from '../../../store-signal-functions/object/imageFeature';
 
 @Component({
     selector: 'polity-profile-image-upload',
@@ -19,34 +18,35 @@ import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authe
     standalone: true
 })
 export class ProfileImageUploadComponent {
-    protected isProfileLoading: WritableSignal<boolean> = signal(true)
+    protected profileStore: ProfileStore = inject(ProfileStore);
+    // protected isProfileLoading: WritableSignal<boolean> = signal(true);
     protected imageControl: FormControl<any> = new FormControl();
     protected rejectedFiles$: Subject<TuiFileLike | null> = new Subject<TuiFileLike | null>();
     protected loadingFiles$: Subject<TuiFileLike | null> = new Subject<TuiFileLike | null>();
     protected loadedFiles$: Observable<TuiFileLike | null> = this.imageControl.valueChanges.pipe(
-        switchMap(file => (file ? this.returnRequestAsObservable(file) : of(null))),
+        switchMap(file => (file ? this.returnRequestAsObservable(file) : of(null)))
     );
-    protected profileWriteable: WritableSignal<SupabaseObjectReturn<'read_profile'> | null | undefined>;
+    // protected profileWriteable: WritableSignal<SupabaseObjectReturn<'read_profile'> | null | undefined>;
     private avatarUrl: string = '';
 
     constructor(
-        private readonly profileStoreService: ProfileStoreService,
-        private readonly profileService: ProfileActionService
+        // private readonly profileStoreService: ProfileStoreService
+        // private readonly profileService: ProfileActionService
     ) {
-        this.isProfileLoading = this.profileStoreService.profile.loading.getLoading()
-        this.profileWriteable = this.profileStoreService.profile.getObject()
+        // this.isProfileLoading = this.profileStoreService.profile.loading.getLoading();
+        // this.profileWriteable = this.profileStoreService.profile.getObject();
     }
 
     returnRequestAsObservable(file: TuiFileLike): Observable<TuiFileLike | null> {
-        const request: Promise<TuiFileLike | null> = this.makeRequest(file)
-        const requestAsObservable: Observable<TuiFileLike | null> = from(request)
+        const request: Promise<TuiFileLike | null> = this.makeRequest(file);
+        const requestAsObservable: Observable<TuiFileLike | null> = from(request);
         return requestAsObservable;
     }
 
     async makeRequest(file: TuiFileLike): Promise<TuiFileLike | null> {
         this.loadingFiles$.next(file);
-        const fileExtension: string | undefined = file.name.split('.').pop()
-        const filePath: string = `${Math.random()}.${fileExtension}`
+        const fileExtension: string | undefined = file.name.split('.').pop();
+        const filePath: string = `${Math.random()}.${fileExtension}`;
         try {
             const response: {
                 data: { path: string };
@@ -54,21 +54,26 @@ export class ProfileImageUploadComponent {
             } | {
                 data: null;
                 error: Error
-            } = await this.profileService.uploadImage(filePath, file);
+            } = await uploadImage(filePath, 'profile_images', file);
 
             if (response.error) {
-                throw Error
+                throw Error;
             } else {
                 try {
-                    const privateUrl: string | undefined = await this.profileService.getSignedImageUrl(response.data.path);
+                    const privateUrl: string | undefined = await getSignedUrlFromPath(
+                        response.data.path,
+                        'profile_images'
+                    );
+                    // const privateUrl: string | undefined = await this.profileService.getSignedImageUrl(response.data.path);
                     try {
-                        await this.profileService.updateProfileImage(response.data.path);
+                        await this.profileStore.update({profile_image_: response.data.path});
+                        // await this.profileService.updateProfileImage(response.data.path);
                     } catch (error) {
                     } finally {
-                        const profile: SupabaseObjectReturn<"read_profile"> = {
-                            profile_image_: privateUrl
-                        } as SupabaseObjectReturn<'read_profile'>;
-                        this.profileStoreService.profile.mutateObject(profile);
+                        // const profile: SupabaseObjectReturn<'read_profile'> = {
+                        //     profile_image_: privateUrl
+                        // } as SupabaseObjectReturn<'read_profile'>;
+                        // this.profileStoreService.profile.mutateObject(profile);
                     }
                 } catch (error) {
                 }
@@ -78,7 +83,7 @@ export class ProfileImageUploadComponent {
             this.rejectedFiles$.next(file);
             return null;
         } finally {
-            this.loadingFiles$.next(null)
+            this.loadingFiles$.next(null);
             return null;
         }
     }

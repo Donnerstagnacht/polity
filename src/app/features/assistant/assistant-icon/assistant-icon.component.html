@@ -1,22 +1,24 @@
 <button
-		(click)="showDialog()"
-		[attr.data-cy]="this.activatedTutorial.dataCy"
-		tuiAction
-		type="button"
+    (click)="showDialog()"
+    [attr.data-cy]="this.activatedTutorial.dataCy"
+    tuiAction
+    type="button"
 
 >
-	<tui-marker-icon
-			[class.tui-skeleton]="isAssistantLoading()"
-			class="tui-island__marker positive"
-			size="s"
-			src="assets/assistants/aria.svg"
-	></tui-marker-icon>
-	<div>
-		<h3
-				[class.tui-skeleton]="isAssistantLoading()"
-				class="header tui-text_body-s">{{activatedTutorial.title}}</h3>
-		<p
-				[class.tui-skeleton]="isAssistantLoading()"
-				class="description tui-text_body-xs">{{activatedTutorial.description}}</p>
-	</div>
+    <tui-marker-icon
+        [class.tui-skeleton]="assistantStore.loadingState().loading"
+        class="tui-island__marker positive"
+        size="s"
+        src="assets/assistants/aria.svg"
+    ></tui-marker-icon>
+    <div>
+        <h3
+            [class.tui-skeleton]="assistantStore.loadingState().loading"
+            class="header tui-text_body-s"
+        >{{ activatedTutorial.title }}</h3>
+        <p
+            [class.tui-skeleton]="assistantStore.loadingState().loading"
+            class="description tui-text_body-xs"
+        >{{ activatedTutorial.description }}</p>
+    </div>
 </button>

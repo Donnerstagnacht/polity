@@ -20,7 +20,7 @@ BEGIN
     PERFORM hidden.decrement_group_follower_counter(
         _group_id_in
             );
-    PERFORM hidden.decrement_group_following_counter(
+    PERFORM hidden.decrement_profile_following_counter(
         _follower_id
             );
 END;

@@ -2,12 +2,14 @@
     <polity-filter-headline
         (showFilter)="toggleShowFilter()"
         [dataCyTag]="'notifications-headline'"
-        [headline]="'Benachrichtigungen'"></polity-filter-headline>
+        [headline]="'Benachrichtigungen'"
+    ></polity-filter-headline>
     @if (showFilter) {
         <ng-container [formGroup]="combinedForm">
             <polity-filter-string
                 placeholderText="Suche nach einer Benachrichtigung"
-                formGroupName="filterStringForm">
+                formGroupName="filterStringForm"
+            >
             </polity-filter-string>
 
             <polity-filter-date-range formGroupName="filterDateRangeForm">
@@ -15,7 +17,8 @@
 
             <polity-filter-tags
                 [filterTypes]="filterTypes"
-                formGroupName="filterTypesForm">
+                formGroupName="filterTypesForm"
+            >
             </polity-filter-tags>
 
             <polity-filter-clear (clearFilter)="clearFilter()">
@@ -37,9 +40,9 @@
 			'created_at_headline']"
         [dataCyTags]="['profile_image', 'first_name', 'type_of_notification', 'created_at']"
         [dataKeysForColumns]="['profile_image_', 'first_name_', 'type_of_notification_', 'created_at_']"
-        [data]="this.notificationStore.dataFiltered"
+        [data]="this.notificationsStore.dataFiltered"
         [headings]="['Foto', 'Name', 'Typ', 'Datum']"
-        [isLoading]="signal(this.notificationStore.loadingState().loading)"
+        [isLoading]="signal(this.notificationsStore.loadingState().loading)"
     >
     </polity-table-four-icon-text-tag-date>
 </div>

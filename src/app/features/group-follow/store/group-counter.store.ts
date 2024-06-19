@@ -8,18 +8,16 @@ type Read_group_key = keyof SupabaseObjectReturn<'read_group_counters'>;
 type KeysExceptGroupId = Exclude<Read_group_key, 'group_id_'>;
 
 
-@Injectable({
-                providedIn: 'root'
-            })
+@Injectable()
 export class GroupCounterStore extends BaseObjectStore<'read_group_counters'> {
 
     constructor() {
         super({
-                  group_id_: '',
-                  follower_counter_: 0,
-                  following_counter_: 0,
-                  group_member_counter_: 0
-              });
+            group_id_: '',
+            follower_counter_: 0,
+            following_counter_: 0,
+            group_member_counter_: 0
+        });
     }
 
     public async read(groupId: string): Promise<void> {
