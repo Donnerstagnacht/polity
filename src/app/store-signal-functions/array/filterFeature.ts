@@ -1,84 +1,50 @@
-import {DatabaseAuthenticatedOverwritten} from "../../../../supabase/types/supabase.authenticated.modified";
-import {TuiDay} from "@taiga-ui/cdk";
-import {SupabaseObjectReturn} from "../../../../supabase/types/supabase.authenticated.shorthand-types";
-
-export type FilterState<FunctionName extends keyof DatabaseAuthenticatedOverwritten["authenticated"]["Functions"]> = {
-    filterByString: boolean,
-    stringSearchKeys: (keyof SupabaseObjectReturn<FunctionName>)[],
-    searchString: string,
-    // filterTag parameter,
-    filterByTag?: boolean,
-    tagSearchKeys?: keyof SupabaseObjectReturn<FunctionName>,
-    tagValues?: SupabaseObjectReturn<FunctionName>[keyof SupabaseObjectReturn<FunctionName>][],
-    // filterDate parameter
-    filterByDateRange?: boolean,
-    dateSearchKey?: keyof SupabaseObjectReturn<FunctionName>,
-    startDate?: Date | TuiDay,
-    endDate?: Date | TuiDay
-}
+import {TuiDay} from '@taiga-ui/cdk';
+import {FilterByDateRangeState, FilterByStringState, FilterByTagState} from '../types/filterState.type';
 
 /**
- * Filters an array based on various criteria such as string, tag, and date. If one filter criteria is not
- * given, the criteria is excluded from the search.
+ * Filters an array of StoredObject based on the provided filter states.
+ * Each filter states consists out of a flag if the filter is applied, an array of keys which should be searched and the filter values (strings, tags or dates)
  *
- * @param {boolean} filterByString - Determines if the array should be filtered by string.
- * @param {(keyof StoredObject)[]} stringSearchKeys - The keys specifying the properties to be searched
- * for. Multiple keys for can be chosen.
- * @param {string} searchString - The string to be found in the specified properties.
- * @param {boolean} filterByTag - Determines if the array should be filtered by tags.
- * @param {keyof StoredObject} tagSearchKeys - The key specifies the property to be searched.
- * @param {StoredObject[keyof StoredObject][]} tagValues - The tag values to be searched in the specified property.
- * @param {boolean} filterByDateRange - Determines if the array should be filtered by date range.
- * @param {keyof StoredObject} dateSearchKey - The key specifies the property to be searched.
- * @param {Date | TuiDay} startDate - The start date for the date range.
- * @param {Date | TuiDay} endDate - The end date for the date range.
- * @param {WritableSignal<StoredObject[]>} array - The optional array to remove objects from. Defaults to the stored objects array.
- * @return {WritableSignal<StoredObject[]>} The filtered array of objects as signal.
+ * @param {StoredObject[]} array - The array of StoredObject to filter.
+ * @param {FilterByStringState<StoredObject>} filterByStringState - The filter state for string search.
+ * @param {FilterByTagState<StoredObject> | undefined} [filterByTagState] - The filter state for tag search.
+ * @param {FilterByDateRangeState<StoredObject> | undefined} [filterByDateRangeState] - The filter state for date range search.
+ * @return {StoredObject[]} - The filtered array of objects.
  */
 export function filterArray<StoredObject>(
-    // filterString parameter
     array: StoredObject[],
-    // filterState: FilterState<any>
-    filterByString: boolean = false,
-    stringSearchKeys?: (keyof StoredObject)[],
-    searchString?: string,
-    // filterTag parameter
-    filterByTag: boolean = false,
-    tagSearchKeys?: keyof StoredObject,
-    tagValues?: StoredObject[keyof StoredObject][],
-    // filterDate parameter
-    filterByDateRange: boolean = false,
-    dateSearchKey?: keyof StoredObject,
-    startDate?: Date | TuiDay,
-    endDate?: Date | TuiDay
+    filterByStringState: FilterByStringState<StoredObject>,
+    filterByTagState?: FilterByTagState<StoredObject>,
+    filterByDateRangeState?: FilterByDateRangeState<StoredObject>
 ): StoredObject[] {
     let results: StoredObject[] = array;
-    if (filterByString && searchString && stringSearchKeys) {
+    if (filterByStringState.filterByString && filterByStringState.searchString && filterByStringState.stringSearchKeys) {
         results = filterMultipleArrayFieldsByString(
-            stringSearchKeys,
-            searchString,
+            filterByStringState.stringSearchKeys,
+            filterByStringState.searchString,
             results
         );
     }
 
-    if (filterByTag && tagSearchKeys && tagValues) {
+    if (filterByTagState?.filterByTag && filterByTagState.tagSearchKeys && filterByTagState.tagValues) {
         results = filterArrayByDisjunctiveValues(
-            tagSearchKeys,
-            tagValues,
+            filterByTagState.tagSearchKeys,
+            filterByTagState.tagValues,
             results
         );
     }
 
-    if (filterByDateRange && dateSearchKey && startDate && endDate) {
+    if (filterByDateRangeState?.filterByDateRange && filterByDateRangeState.dateSearchKey && filterByDateRangeState.startDate && filterByDateRangeState.endDate) {
         results = filterArrayByDateRange(
-            dateSearchKey,
-            startDate,
-            endDate,
+            filterByDateRangeState.dateSearchKey,
+            filterByDateRangeState.startDate,
+            filterByDateRangeState.endDate,
             results
         );
     }
     return results;
 }
+
 
 /**
  * Filters multiple array fields by a given string.
@@ -99,19 +65,19 @@ export function filterMultipleArrayFieldsByString<StoredObject>(
 
     keys.forEach((key: keyof StoredObject): void => {
         const matches: StoredObject[] = arrayToFilter.filter((item: StoredObject) => {
-                const matchComparison: boolean = String(item[key]).toLowerCase().includes(lowerSearchString)
-                return matchComparison
+                const matchComparison: boolean = String(item[key]).toLowerCase().includes(lowerSearchString);
+                return matchComparison;
             }
         );
         const mismatches: StoredObject[] = arrayToFilter.filter((item: StoredObject) => {
-            const mismatchComparison: boolean = String(item[key]).toLowerCase().includes(lowerSearchString)
-            return !mismatchComparison
+            const mismatchComparison: boolean = String(item[key]).toLowerCase().includes(lowerSearchString);
+            return !mismatchComparison;
         });
 
         arrayToFilter = mismatches;
         finalResults.push(...matches);
-    })
-    return finalResults
+    });
+    return finalResults;
 }
 
 /**
@@ -129,7 +95,7 @@ export function filterArrayByDisjunctiveValues<StoredObject>(
     array: StoredObject[]
 ): StoredObject[] {
     const filteredResults: StoredObject[] = array.filter((item: StoredObject) => values.includes(item[key]));
-    return filteredResults
+    return filteredResults;
 }
 
 /**
@@ -145,21 +111,21 @@ export function filterArrayByDateRange<StoredObject>(
     dateKey: keyof StoredObject,
     startDate: Date | TuiDay,
     endDate: Date | TuiDay,
-    array: StoredObject[],
+    array: StoredObject[]
 ): StoredObject[] {
     if (endDate instanceof TuiDay) {
-        endDate = endDate.toLocalNativeDate()
+        endDate = endDate.toLocalNativeDate();
     }
     if (startDate instanceof TuiDay) {
-        startDate = startDate.toLocalNativeDate()
+        startDate = startDate.toLocalNativeDate();
     }
     const startDateNoHours: number = startDate.setHours(0, 0, 0, 0);
     const endDateTransNoHours: number = endDate.setHours(0, 0, 0, 0);
     const results: StoredObject[] = array.filter((item: StoredObject) => {
         const storedDate: Date = new Date(item[dateKey] as Date);
         const storedDateNoHours: number = storedDate.setHours(0, 0, 0, 0);
-        const comparison: boolean = (startDateNoHours <= storedDateNoHours) && (storedDateNoHours <= endDateTransNoHours)
+        const comparison: boolean = (startDateNoHours <= storedDateNoHours) && (storedDateNoHours <= endDateTransNoHours);
         return comparison;
     });
-    return results
+    return results;
 }

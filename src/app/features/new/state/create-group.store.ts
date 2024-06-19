@@ -4,7 +4,7 @@ import {BaseObjectStore} from '../../../store-signal-functions/object/base-objec
 import {GroupNew} from '../types/group-new';
 import {Router} from '@angular/router';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class CreateGroupStore extends BaseObjectStore<'create_group_transaction'> {
     private router: Router = inject(Router);
 

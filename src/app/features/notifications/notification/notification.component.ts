@@ -71,7 +71,7 @@ export class NotificationComponent {
 
     protected clearFilter(): void {
         this.combinedForm.reset();
-        this.notificationsStore.resetState();
+        this.notificationsStore.resetFilterState();
     }
 
     protected toggleShowFilter(): void {
@@ -102,23 +102,27 @@ export class NotificationComponent {
         }
 
         if (!filterByString && !typeKeyValues && !filterByDate) {
-            this.notificationsStore.resetState();
+            this.notificationsStore.resetFilterState();
         }
 
         this.notificationsStore.setFilterState(
             {
-                filterByString: filterByString,
-                stringSearchKeys: ['first_name_', 'last_name_'],
-                searchString: stringFilter,
-
-                filterByTag: filterByType,
-                tagSearchKeys: 'type_of_notification_',
-                tagValues: typeKeyValues,
-
-                filterByDateRange: filterByDate,
-                dateSearchKey: 'created_at_',
-                startDate: dateFilterFrom,
-                endDate: dateFilterTo
+                filterByStringState: {
+                    filterByString: filterByString,
+                    stringSearchKeys: ['first_name_', 'last_name_'],
+                    searchString: stringFilter
+                },
+                filterByTagState: {
+                    filterByTag: filterByType,
+                    tagSearchKeys: 'type_of_notification_',
+                    tagValues: typeKeyValues
+                },
+                filterByDateRangeState: {
+                    filterByDateRange: filterByDate,
+                    dateSearchKey: 'created_at_',
+                    startDate: dateFilterFrom,
+                    endDate: dateFilterTo
+                }
             }
         );
     }

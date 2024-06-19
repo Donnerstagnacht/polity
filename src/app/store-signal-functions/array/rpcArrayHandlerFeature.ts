@@ -1,48 +1,29 @@
 import {AuthenticatedSchema} from '../../../../supabase/types/supabase.authenticated.shorthand-types';
 import {PostgrestResponseFailure, PostgrestResponseSuccess} from '@supabase/postgrest-js';
 import {DatabaseAuthenticatedOverwritten} from '../../../../supabase/types/supabase.authenticated.modified';
-import {loadingStarted, LoadingState, loadingStopped} from '../loadingFeature';
-import {signal, WritableSignal} from '@angular/core';
+import {loadingStarted, loadingStopped} from '../loadingFeature';
+import {signal} from '@angular/core';
 import {showAlert} from '../alertFeature';
-import {TuiAlertService} from '@taiga-ui/core';
 import {updateErrorGlobal} from '../errorFeature';
 import {rpcArray} from './rpcArrayFeature';
-import {ErrorStoreService} from '../error-store.service';
+import {ArrayStoreConfig, ErrorConfig, LoadingConfig, SuccessConfig, SupabaseConfig} from '../types/rpc.type';
 
-type SupabaseConfig<
-    FunctionName extends string & keyof AuthenticatedSchema['Functions'],
-    Function_ extends AuthenticatedSchema['Functions'][FunctionName],
-> = {
-    fn: FunctionName,
-    args?: Function_['Args'],
-    options?: {
-        head?: boolean
-        count?: 'exact' | 'planned' | 'estimated'
-    },
-}
-
-type LoadingConfig = {
-    useLoading?: boolean
-    loadingState?: WritableSignal<LoadingState>
-}
-
-type StoreConfig<FunctionName extends string & keyof AuthenticatedSchema['Functions']> = {
-    useStore?: boolean
-    dataState?: WritableSignal<DatabaseAuthenticatedOverwritten['authenticated']['Functions'][FunctionName]['Returns']>
-    defaultReturn?: DatabaseAuthenticatedOverwritten['authenticated']['Functions'][FunctionName]['Returns'] | [] | {}
-}
-
-type SuccessConfig = {
-    useSuccess?: boolean
-    alertService?: TuiAlertService,
-    successMessage?: string
-}
-
-type ErrorConfig = {
-    useError?: boolean
-    errorStoreService?: ErrorStoreService
-}
-
+/**
+ * Asynchronously handles a Supabase RPC array function call by performing the following steps:
+ * 1. Checks if loading is enabled and starts the loading state if provided.
+ * 2. Calls the `rpcArray` function with the provided `supabaseConfig` and stores the result.
+ * 3. If an error occurred during the RPC call, checks if error handling is enabled and updates the global error state if provided.
+ * 4. If a success message is provided and no error occurred, shows an alert with the provided alert service and success message.
+ * 5. If the RPC call was successful and data storage is enabled, stores the returned data in the provided data state.
+ * 6. If loading is enabled, stops the loading state if provided.
+ *
+ * @param {SupabaseConfig<FunctionName, Function_>} supabaseConfig - The Supabase configuration object containing the function name, arguments, and options.
+ * @param {LoadingConfig} [loadingConfig={useLoading: false}] - The loading configuration object.
+ * @param {ArrayStoreConfig<FunctionName>} [storeConfig={useStore: false}] - The store configuration object.
+ * @param {ErrorConfig} [errorConfig={useError: false}] - The error configuration object.
+ * @param {SuccessConfig} [successConfig={useSuccess: false}] - The success configuration object.
+ * @return {Signal<PostgrestResponseSuccess<DatabaseAuthenticatedOverwritten['authenticated']['Functions'][FunctionName]['Returns']> | PostgrestResponseFailure>} A signal of the RPC call result.
+ */
 export async function rpcArrayHandler<
     FunctionName extends string & keyof AuthenticatedSchema['Functions'],
     Function_ extends AuthenticatedSchema['Functions'][FunctionName],
@@ -51,7 +32,7 @@ export async function rpcArrayHandler<
     loadingConfig: LoadingConfig = {
         useLoading: false
     },
-    storeConfig: StoreConfig<FunctionName> = {
+    storeConfig: ArrayStoreConfig<FunctionName> = {
         useStore: false
     },
     errorConfig: ErrorConfig = {

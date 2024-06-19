@@ -6,7 +6,7 @@ import {GroupCounterStore} from './group-counter.store';
 import {removeObjectByPropertyValue} from '../../../store-signal-functions/array/removeItemFeatue';
 import {SupabaseObjectReturn} from '../../../../../supabase/types/supabase.authenticated.shorthand-types';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class FollowingsOfGroupStore extends BaseArrayStore<'read_followings_of_group'> {
     private groupStore: GroupStore = inject(GroupStore);
     private groupCounterStore: GroupCounterStore = inject(GroupCounterStore);
@@ -38,22 +38,19 @@ export class FollowingsOfGroupStore extends BaseArrayStore<'read_followings_of_g
                 errorStoreService: this.errorStoreService
             },
             {
-                useSuccess: true,
-                alertService: this.tuiAlertService,
-                successMessage: 'Followings of group loaded!'
+                useSuccess: false
             }
         );
     }
 
     public async remove(userId: string): Promise<void> {
-        await rpcArrayHandler(
+        const result = await rpcArrayHandler(
             {
                 fn: 'unfollow_group_transaction',
                 args: {_following_id: userId}
             },
             {
-                useLoading: true,
-                loadingState: this.loadingState_
+                useLoading: false
             },
             {
                 useStore: false
@@ -68,12 +65,14 @@ export class FollowingsOfGroupStore extends BaseArrayStore<'read_followings_of_g
                 successMessage: 'Followings of group loaded!'
             }
         );
-        removeObjectByPropertyValue<SupabaseObjectReturn<'read_followings_of_group'>>(
-            'id_',
-            userId,
-            this.data_
-        );
-        this.groupCounterStore.decrement('following_counter_');
+        if (!result().error) {
+            removeObjectByPropertyValue<SupabaseObjectReturn<'read_followings_of_group'>>(
+                'id_',
+                userId,
+                this.data_
+            );
+            this.groupCounterStore.decrement('following_counter_');
+        }
     }
 
 }

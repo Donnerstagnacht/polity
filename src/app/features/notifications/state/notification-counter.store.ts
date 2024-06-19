@@ -9,9 +9,7 @@ import {
 } from '../../../../../supabase/types/supabase.authenticated.shorthand-types';
 import {SessionStore} from '../../../auth/state/session.store';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class NotificationCounterStore extends BaseObjectStore<'read_unread_notifications_counter'> {
     private sessionStore: SessionStore = inject(SessionStore);
     private readonly supabaseClient = supabaseAuthenticatedClient;
@@ -62,9 +60,7 @@ export class NotificationCounterStore extends BaseObjectStore<'read_unread_notif
                 errorStoreService: this.errorStoreService
             },
             {
-                useSuccess: true,
-                alertService: this.tuiAlertService,
-                successMessage: 'NotificationBadge loaded!'
+                useSuccess: false
             }
         );
     }

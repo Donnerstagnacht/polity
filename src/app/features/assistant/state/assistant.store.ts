@@ -36,9 +36,7 @@ export class AssistantStore extends BaseObjectStore<'read_assistant'> {
                 errorStoreService: this.errorStoreService
             },
             {
-                useSuccess: true,
-                alertService: this.tuiAlertService,
-                successMessage: 'Assistant loaded!'
+                useSuccess: false
             }
         );
     }

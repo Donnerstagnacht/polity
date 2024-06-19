@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {BaseObjectStore} from '../../../store-signal-functions/object/base-object-store.service';
 import {rpcObjectHandler} from '../../../store-signal-functions/object/rpcObjectHandlerFeature';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class NotificationSettingsStore extends BaseObjectStore<'read_profile_notification_settings'> {
 
     constructor() {
@@ -30,9 +30,7 @@ export class NotificationSettingsStore extends BaseObjectStore<'read_profile_not
                 errorStoreService: this.errorStoreService
             },
             {
-                useSuccess: true,
-                alertService: this.tuiAlertService,
-                successMessage: 'NotificationSettings loaded!'
+                useSuccess: false
             }
         );
     }

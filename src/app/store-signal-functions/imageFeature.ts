@@ -1,18 +1,19 @@
 import {
     AuthenticatedSchema,
     SupabaseObjectReturn
-} from '../../../../supabase/types/supabase.authenticated.shorthand-types';
+} from '../../../supabase/types/supabase.authenticated.shorthand-types';
 import {WritableSignal} from '@angular/core';
 import {PostgrestResponseFailure, PostgrestResponseSuccess} from '@supabase/postgrest-js';
-import {supabaseAuthenticatedClient} from '../../auth/supabase-authenticated-client';
+import {supabaseAuthenticatedClient} from '../auth/supabase-authenticated-client';
 import {TuiFileLike} from '@taiga-ui/kit';
 
 /**
- * Retrieves private URLs for the given image File names.
+ * Retrieves a signed URL of an supabase object from a Supabase bucket.
  *
- * @param {string[]} imgFileNames - The paths of the images.
- * @returns {Promise<string[] | undefined>} - A promise that resolves to an array of signed image URLs or
- * undefined if there was an error.
+ * @param {WritableSignal<PostgrestResponseSuccess<SupabaseObjectReturn<FunctionName>> | PostgrestResponseFailure>} resultDataIn - The signal containing the result data.
+ * @param {string} bucket - The name of the bucket.
+ * @param {keyof SupabaseObjectReturn<FunctionName>} key - The key of the object in the result data.
+ * @return {Promise<void>} A promise that resolves when the signed URL is retrieved and applied to the result data.
  */
 export async function getSignedUrlFromSupabaseObject<FunctionName extends keyof AuthenticatedSchema['Functions']>(
     resultDataIn: WritableSignal<PostgrestResponseSuccess<SupabaseObjectReturn<FunctionName>> | PostgrestResponseFailure>,
@@ -38,12 +39,13 @@ export async function getSignedUrlFromSupabaseObject<FunctionName extends keyof 
     }
 }
 
+
 /**
  * Retrieves a private image URL for a given image file from a path.
  *
- * @param {string} imgFileName - The file name.
- * @returns {Promise<string | undefined>} The signed url to the img.
- *          It returns undefined if an error occurred.
+ * @param {string} path - The file path.
+ * @param {string} bucket - The bucket name.
+ * @returns {Promise<string | undefined>} The signed URL to the image file.
  */
 export async function getSignedUrlFromPath(
     path: string,
@@ -61,11 +63,10 @@ export async function getSignedUrlFromPath(
 }
 
 /**
- * Retrieves private URLs for the given image File names.
+ * Retrieves signed URLs for a list of image file names.
  *
- * @param {string[]} imgFileNames - The paths of the images.
- * @returns {Promise<string[] | undefined>} - A promise that resolves to an array of signed image URLs or
- * undefined if there was an error.
+ * @param {string[]} imgFileNames - An array of image file names.
+ * @returns {Promise<string[] | undefined>} - A promise that resolves to an array of signed URLs, or undefined if an error occurs.
  */
 export async function getSignedImageUrls(
     imgFileNames: string[]
@@ -86,12 +87,14 @@ export async function getSignedImageUrls(
     return signedImageUrlsAsStrings;
 }
 
+
 /**
- * Uploads an image file to the specified file path in the Supabase storage.
+ * Uploads an image file to a specified bucket using Supabase's storage API.
  *
- * @param {string} filePath - The path where the file will be uploaded.
- * @param {TuiFileLike} file - The file to be uploaded.
- * @return {Promise<{data: {path: string}, error: null} | {data: null, error: any}>}
+ * @param {string} filePath - The path where the image file will be stored in the bucket.
+ * @param {string} bucket - The name of the bucket where the image file will be uploaded.
+ * @param {TuiFileLike} file - The image file to be uploaded.
+ * @return {Promise<{data: {path: string}, error: null} | {data: null, error: Error}>} A promise that resolves to an object containing the path of the uploaded image file and a null error, or an object containing a null data and an error if the upload fails.
  */
 export function uploadImage(
     filePath: string,

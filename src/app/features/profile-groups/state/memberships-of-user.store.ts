@@ -1,12 +1,12 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {BaseArrayStore} from '../../../store-signal-functions/array/base-array-store.service';
 import {rpcArrayHandler} from '../../../store-signal-functions/array/rpcArrayHandlerFeature';
 import {removeObjectByPropertyValue} from '../../../store-signal-functions/array/removeItemFeatue';
+import {ProfileCounterStore} from '../../profile-follow/state/profile-counter.store';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class MembershipsOfUserStore extends BaseArrayStore<'read_groups_of_user'> {
+    private profileCounterStore: ProfileCounterStore = inject(ProfileCounterStore);
 
     constructor() {
         super({
@@ -33,15 +33,13 @@ export class MembershipsOfUserStore extends BaseArrayStore<'read_groups_of_user'
                 errorStoreService: this.errorStoreService
             },
             {
-                useSuccess: true,
-                alertService: this.tuiAlertService,
-                successMessage: 'MembershipsOfUser loaded!'
+                useSuccess: false
             }
         );
     }
 
     public async remove(membershipId: string): Promise<void> {
-        await rpcArrayHandler(
+        const result = await rpcArrayHandler(
             {
                 fn: 'leave_group_by_membership_id_transaction',
                 args: {
@@ -49,8 +47,7 @@ export class MembershipsOfUserStore extends BaseArrayStore<'read_groups_of_user'
                 }
             },
             {
-                useLoading: true,
-                loadingState: this.loadingState_
+                useLoading: false
             },
             {
                 useStore: false
@@ -65,13 +62,14 @@ export class MembershipsOfUserStore extends BaseArrayStore<'read_groups_of_user'
                 successMessage: 'Member removed'
             }
         );
-        //TODO decrement profile membership store
-        // this.groupCounterStore.decrement('group_member_counter_');
-        removeObjectByPropertyValue(
-            'id_',
-            membershipId,
-            this.data_
-        );
+        if (!result().error) {
+            removeObjectByPropertyValue(
+                'id_',
+                membershipId,
+                this.data_
+            );
+            this.profileCounterStore.decrement('group_membership_counter_');
+        }
     }
 
 }

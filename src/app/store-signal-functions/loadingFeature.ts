@@ -1,12 +1,14 @@
 import {computed, Signal, WritableSignal} from '@angular/core';
-
-export type LoadingState = {
-    loading: boolean,
-    dataRequested: boolean
-}
+import {LoadingState} from './types/loadingState.type';
 
 
-export function loadingStarted(loadingState: WritableSignal<LoadingState>) {
+/**
+ * Updates the loading state to indicate that loading has started.
+ *
+ * @param {WritableSignal<LoadingState>} loadingState - The writable signal for the loading state.
+ * @return {void} This function does not return a value.
+ */
+export function loadingStarted(loadingState: WritableSignal<LoadingState>): void {
     loadingState.set({
         ...loadingState(),
         loading: true,
@@ -14,14 +16,25 @@ export function loadingStarted(loadingState: WritableSignal<LoadingState>) {
     });
 }
 
-export function loadingStopped(loadingState: WritableSignal<LoadingState>) {
+/**
+ * Updates the loading state to indicate that loading has stopped.
+ *
+ * @param {WritableSignal<LoadingState>} loadingState - The writable signal for the loading state.
+ * @return {void} This function does not return a value.
+ */
+export function loadingStopped(loadingState: WritableSignal<LoadingState>): void {
     loadingState.set({...loadingState(), loading: false});
 }
 
+/**
+ * Checks if the given data signal contains data.
+ *
+ * @param {WritableSignal<any>} data - The signal containing the data.
+ * @return {Signal<boolean>} A signal indicating whether data exists or not.
+ */
 export function checkIfDataFound
 (
-    data: WritableSignal<any>,
-    loadingState: WritableSignal<LoadingState>
+    data: WritableSignal<any>
 ): Signal<boolean> {
     return computed((): boolean => {
         if (data().length > 0) {
@@ -31,26 +44,3 @@ export function checkIfDataFound
         }
     });
 }
-
-
-// type BooleanKeys<T> = {
-//     [K in keyof T]: T[K] extends boolean ? K : never
-// }[keyof T];
-
-
-// export function loadingStarted<FlexibleObject>(object: WritableSignal<FlexibleObject>, key: BooleanKeys<FlexibleObject>) {
-//     object.set({...object(), [key]: true});
-// }
-//
-// export function loadingStopped<FlexibleObject>(object: WritableSignal<FlexibleObject>, key: BooleanKeys<FlexibleObject>) {
-//     object.set({...object(), [key]: false});
-// }
-
-// export function loadingStarted<FlexibleObject>(object: WritableSignal<boolean>) {
-//     object.set(true);
-// }
-//
-// export function loadingStopped<FlexibleObject>(object: WritableSignal<boolean>) {
-//     object.set(false);
-// }
-

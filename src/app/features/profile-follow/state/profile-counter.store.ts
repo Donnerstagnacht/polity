@@ -8,7 +8,7 @@ import {decrement, increment} from '../../../store-signal-functions/object/count
 type Read_profile_key = keyof SupabaseObjectReturn<'read_profile_counters'>;
 type KeysExceptProfileId = Exclude<Read_profile_key, 'profile_id_'>;
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class ProfileCounterStore extends BaseObjectStore<'read_profile_counters'> {
 
     constructor() {
@@ -42,9 +42,7 @@ export class ProfileCounterStore extends BaseObjectStore<'read_profile_counters'
                 errorStoreService: this.errorStoreService
             },
             {
-                useSuccess: true,
-                alertService: this.tuiAlertService,
-                successMessage: 'Profile geladen!'
+                useSuccess: false
             }
         );
     }

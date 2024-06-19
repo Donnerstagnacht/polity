@@ -77,9 +77,31 @@ export class GroupMemberEditComponent {
         if (this.showMembers) {
             this.groupMemberStore.setFilterState(
                 {
-                    filterByString: filterByString,
-                    stringSearchKeys: ['first_name_', 'last_name_'],
-                    searchString: stringFilter
+                    filterByStringState: {
+                        filterByString: filterByString,
+                        stringSearchKeys: ['first_name_', 'last_name_'],
+                        searchString: stringFilter
+                    }
+                }
+            );
+        } else if (this.showRequests) {
+            this.groupRequestsStore.setFilterState(
+                {
+                    filterByStringState: {
+                        filterByString: filterByString,
+                        stringSearchKeys: ['first_name_', 'last_name_'],
+                        searchString: stringFilter
+                    }
+                }
+            );
+        } else if (this.showInvitations) {
+            this.groupInvitationsStore.setFilterState(
+                {
+                    filterByStringState: {
+                        filterByString: filterByString,
+                        stringSearchKeys: ['first_name_', 'last_name_'],
+                        searchString: stringFilter
+                    }
                 }
             );
         }
@@ -92,14 +114,11 @@ export class GroupMemberEditComponent {
     protected clearFilter(): void {
         this.combinedForm.reset();
         if (this.showMembers) {
-            // this.groupMemberStoreService.groupMembers.resetDisplayedObjects();
-            this.groupMemberStore.resetState();
+            this.groupMemberStore.resetFilterState();
         } else if (this.showRequests) {
-            this.groupRequestsStore.resetState();
-            // this.groupRequestsStoreService.groupRequests.resetDisplayedObjects();
+            this.groupRequestsStore.resetFilterState();
         } else if (this.showInvitations) {
-            this.groupInvitationsStore.resetState();
-            // this.groupInvitationsStoreService.groupInvitations.resetDisplayedObjects();
+            this.groupInvitationsStore.resetFilterState();
         }
     }
 

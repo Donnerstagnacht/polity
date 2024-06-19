@@ -1,12 +1,12 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {BaseArrayStore} from '../../../store-signal-functions/array/base-array-store.service';
 import {rpcArrayHandler} from '../../../store-signal-functions/array/rpcArrayHandlerFeature';
 import {removeObjectByPropertyValue} from '../../../store-signal-functions/array/removeItemFeatue';
+import {GroupCounterStore} from '../../group-follow/state/group-counter.store';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class InvitationsOfUserStore extends BaseArrayStore<'read_group_member_invitations_of_user'> {
+    private groupCounterStore: GroupCounterStore = inject(GroupCounterStore);
 
     constructor() {
         super({
@@ -33,15 +33,13 @@ export class InvitationsOfUserStore extends BaseArrayStore<'read_group_member_in
                 errorStoreService: this.errorStoreService
             },
             {
-                useSuccess: true,
-                alertService: this.tuiAlertService,
-                successMessage: 'InvitationsOfUser loaded!'
+                useSuccess: false
             }
         );
     }
 
     public async acceptById(invitation_id: string): Promise<void> {
-        await rpcArrayHandler(
+        const result = await rpcArrayHandler(
             {
                 fn: 'accept_group_invitation_by_id_transaction',
                 args: {
@@ -49,8 +47,7 @@ export class InvitationsOfUserStore extends BaseArrayStore<'read_group_member_in
                 }
             },
             {
-                useLoading: true,
-                loadingState: this.loadingState_
+                useLoading: false
             },
             {
                 useStore: false
@@ -65,22 +62,18 @@ export class InvitationsOfUserStore extends BaseArrayStore<'read_group_member_in
                 successMessage: 'Group invitation sent!'
             }
         );
-        removeObjectByPropertyValue(
-            'id_',
-            invitation_id,
-            this.data_
-        );
-        //TODO increment user membership counter
-        // this.groupCountersStore.increment('group_member_counter_');
-        removeObjectByPropertyValue(
-            'id_',
-            invitation_id,
-            this.data_
-        );
+        if (!result().error) {
+            removeObjectByPropertyValue(
+                'id_',
+                invitation_id,
+                this.data_
+            );
+            this.groupCounterStore.increment('group_member_counter_');
+        }
     }
 
     public async remove(invitation_id: string): Promise<void> {
-        await rpcArrayHandler(
+        const result = await rpcArrayHandler(
             {
                 fn: 'delete_group_member_invitation_by_id',
                 args: {
@@ -88,8 +81,7 @@ export class InvitationsOfUserStore extends BaseArrayStore<'read_group_member_in
                 }
             },
             {
-                useLoading: true,
-                loadingState: this.loadingState_
+                useLoading: false
             },
             {
                 useStore: false
@@ -104,18 +96,13 @@ export class InvitationsOfUserStore extends BaseArrayStore<'read_group_member_in
                 successMessage: 'Group invitation sent!'
             }
         );
-        removeObjectByPropertyValue(
-            'id_',
-            invitation_id,
-            this.data_
-        );
-        //TODO increment user member store
-        // this.groupCountersStore.increment('group_member_counter_');
-        removeObjectByPropertyValue(
-            'id_',
-            invitation_id,
-            this.data_
-        );
+        if (!result().error) {
+            removeObjectByPropertyValue(
+                'id_',
+                invitation_id,
+                this.data_
+            );
+        }
     }
 
 }

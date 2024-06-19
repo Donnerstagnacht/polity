@@ -1,7 +1,8 @@
 import {Injectable, signal, Signal, WritableSignal} from '@angular/core';
-import {loadingStarted, LoadingState, loadingStopped} from '../../store-signal-functions/loadingFeature';
+import {loadingStarted, loadingStopped} from '../../store-signal-functions/loadingFeature';
 import {AuthSession} from '@supabase/supabase-js';
 import {Router} from '@angular/router';
+import {LoadingState} from '../../store-signal-functions/types/loadingState.type';
 
 @Injectable({providedIn: 'root'})
 export class SessionStore {

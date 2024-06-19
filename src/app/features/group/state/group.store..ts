@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {BaseObjectStore} from '../../../store-signal-functions/object/base-object-store.service';
 import {rpcObjectHandler} from '../../../store-signal-functions/object/rpcObjectHandlerFeature';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class GroupStore extends BaseObjectStore<'read_group'> {
 
     constructor() {

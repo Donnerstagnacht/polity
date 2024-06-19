@@ -3,7 +3,7 @@ import {BaseObjectStore} from '../../../store-signal-functions/object/base-objec
 import {rpcObjectHandler} from '../../../store-signal-functions/object/rpcObjectHandlerFeature';
 
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class GroupMembershipStatusStore extends BaseObjectStore<'check_group_membership_status'> {
 
     public isNoMember = computed(() => {
@@ -71,9 +71,7 @@ export class GroupMembershipStatusStore extends BaseObjectStore<'check_group_mem
                 errorStoreService: this.errorStoreService
             },
             {
-                useSuccess: true,
-                alertService: this.tuiAlertService,
-                successMessage: 'CheckMemberStatus loaded!'
+                useSuccess: false
             }
         );
     }

@@ -22,7 +22,7 @@ export class SearchGroupStore extends BaseArrayStore<'search_group'> {
     }
 
     public async search(searchTerm: string): Promise<void> {
-        this.resetState();
+        this.emptyStore();
         searchTerm = replaceSpacesWithPipe(searchTerm);
         await rpcArrayHandler(
             {

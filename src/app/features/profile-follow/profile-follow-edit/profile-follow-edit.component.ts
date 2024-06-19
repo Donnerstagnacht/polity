@@ -1,5 +1,4 @@
-import {Component, inject, signal, WritableSignal} from '@angular/core';
-import {SupabaseObjectReturn} from '../../../../../supabase/types/supabase.authenticated.shorthand-types';
+import {Component, inject, signal} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {
@@ -33,8 +32,6 @@ export class ProfileFollowEditComponent {
     protected followingsOfUserStore: FollowingsOfUserStore = inject(FollowingsOfUserStore);
     protected followersOfUserStore: FollowersOfUserStore = inject(FollowersOfUserStore);
     protected followingsOfUserGroupStore: FollowingsOfUserGroupStore = inject(FollowingsOfUserGroupStore);
-    protected isFollowingGroupLoading: WritableSignal<boolean> = signal(true);
-    protected followingsOfUserGroup: WritableSignal<SupabaseObjectReturn<'read_group_followings_of_user'>[]> = signal([]);
 
     protected readonly columns: string[] = ['first_name', 'last_name', 'actions'];
     protected activeItemIndex: number = 0;
@@ -73,21 +70,27 @@ export class ProfileFollowEditComponent {
 
         if (this.showFollowers) {
             this.followersOfUserStore.setFilterState({
-                filterByString: filterByString,
-                stringSearchKeys: ['first_name_', 'last_name_'],
-                searchString: stringFilter
+                filterByStringState: {
+                    filterByString: filterByString,
+                    stringSearchKeys: ['first_name_', 'last_name_'],
+                    searchString: stringFilter
+                }
             });
         } else if (this.showFollowings) {
             this.followingsOfUserStore.setFilterState({
-                filterByString: filterByString,
-                stringSearchKeys: ['first_name_', 'last_name_'],
-                searchString: stringFilter
+                filterByStringState: {
+                    filterByString: filterByString,
+                    stringSearchKeys: ['first_name_', 'last_name_'],
+                    searchString: stringFilter
+                }
             });
         } else if (this.showFollowingGroups) {
             this.followingsOfUserGroupStore.setFilterState({
-                filterByString: filterByString,
-                stringSearchKeys: ['name_'],
-                searchString: stringFilter
+                filterByStringState: {
+                    filterByString: filterByString,
+                    stringSearchKeys: ['name_'],
+                    searchString: stringFilter
+                }
             });
         }
     }
@@ -128,11 +131,11 @@ export class ProfileFollowEditComponent {
     protected clearFilter(): void {
         this.combinedForm.reset();
         if (this.showFollowers) {
-            this.followersOfUserStore.resetState();
+            this.followersOfUserStore.emptyStore();
         } else if (this.showFollowings) {
-            this.followingsOfUserStore.resetState();
+            this.followingsOfUserStore.emptyStore();
         } else if (this.showFollowingGroups) {
-            this.followingsOfUserGroupStore.resetState();
+            this.followingsOfUserGroupStore.emptyStore();
         }
     }
 

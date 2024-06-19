@@ -68,21 +68,27 @@ export class ProfileGroupsEditComponent {
 
         if (this.showGroupMemberships) {
             this.membershipsOfUserStore.setFilterState({
-                filterByString: filterByString,
-                stringSearchKeys: ['group_name_', 'group_level_'],
-                searchString: stringFilter
+                filterByStringState: {
+                    filterByString: filterByString,
+                    stringSearchKeys: ['group_name_', 'group_level_'],
+                    searchString: stringFilter
+                }
             });
         } else if (this.showGroupInvitations) {
             this.invitationsOfUserStore.setFilterState({
-                filterByString: filterByString,
-                stringSearchKeys: ['group_name_', 'group_level_'],
-                searchString: stringFilter
+                filterByStringState: {
+                    filterByString: filterByString,
+                    stringSearchKeys: ['group_name_', 'group_level_'],
+                    searchString: stringFilter
+                }
             });
         } else {
             this.requestsOfUserStore.setFilterState({
-                filterByString: filterByString,
-                stringSearchKeys: ['group_name_', 'group_level_'],
-                searchString: stringFilter
+                filterByStringState: {
+                    filterByString: filterByString,
+                    stringSearchKeys: ['group_name_', 'group_level_'],
+                    searchString: stringFilter
+                }
             });
         }
     }
@@ -127,11 +133,11 @@ export class ProfileGroupsEditComponent {
     protected clearFilter(): void {
         this.combinedForm.reset();
         if (this.showGroupMemberships) {
-            this.membershipsOfUserStore.resetState();
+            this.membershipsOfUserStore.resetFilterState();
         } else if (this.showGroupInvitations) {
-            this.invitationsOfUserStore.resetState();
+            this.invitationsOfUserStore.resetFilterState();
         } else {
-            this.requestsOfUserStore.resetState();
+            this.requestsOfUserStore.resetFilterState();
         }
     }
 

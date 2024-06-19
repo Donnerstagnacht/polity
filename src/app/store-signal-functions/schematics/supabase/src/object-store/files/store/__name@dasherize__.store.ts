@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class <%= classify(name)%>Store extends BaseObjectStore<'<%= classify(rpc)%>'> {
 
     constructor() {
@@ -14,7 +14,6 @@ export class <%= classify(name)%>Store extends BaseObjectStore<'<%= classify(rpc
             {
                 fn: '<%= classify(rpc)%>',
                 args: {
-
                 }
             },
             {
@@ -24,6 +23,29 @@ export class <%= classify(name)%>Store extends BaseObjectStore<'<%= classify(rpc
             {
                 useStore: true,
                 dataState: this.data_
+            },
+            {
+                useError: true,
+                errorStoreService: this.errorStoreService
+            },
+            {
+                useSuccess: false
+            }
+        )
+    }
+
+    public async update(userId: string): Promise<void> {
+        const result = await rpcObjectHandler(
+            {
+                fn: '<%= classify(rpc)%>',
+                args: {
+                }
+            },
+            {
+                useLoading: false
+            },
+            {
+                useStore: false
             },
 
             {
@@ -36,6 +58,10 @@ export class <%= classify(name)%>Store extends BaseObjectStore<'<%= classify(rpc
                 successMessage: '<%= classify(name)%> loaded!'
             }
         )
+        if(!result().error) {
+
+        }
     }
+
 
 }

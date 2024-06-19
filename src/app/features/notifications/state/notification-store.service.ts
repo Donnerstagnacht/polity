@@ -7,9 +7,7 @@ import {supabaseAuthenticatedClient} from '../../../auth/supabase-authenticated-
 import {SupabaseTable} from '../../../../../supabase/types/supabase.authenticated.shorthand-types';
 import {SessionStore} from '../../../auth/state/session.store';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class NotificationsStore extends BaseArrayStore<'read_notifications_of_user'> {
     private readonly supabaseClient = supabaseAuthenticatedClient;
     private currentNotificationsChannel: RealtimeChannel | null = null;
@@ -41,9 +39,7 @@ export class NotificationsStore extends BaseArrayStore<'read_notifications_of_us
                 errorStoreService: this.errorStoreService
             },
             {
-                useSuccess: true,
-                alertService: this.tuiAlertService,
-                successMessage: 'Notifications geladen!'
+                useSuccess: false
             }
         );
     }
@@ -54,8 +50,7 @@ export class NotificationsStore extends BaseArrayStore<'read_notifications_of_us
                 fn: 'reset_profile_notification_counter'
             },
             {
-                useLoading: true,
-                loadingState: this.loadingState_
+                useLoading: false
             },
             {
                 useStore: false
@@ -65,9 +60,7 @@ export class NotificationsStore extends BaseArrayStore<'read_notifications_of_us
                 errorStoreService: this.errorStoreService
             },
             {
-                useSuccess: true,
-                alertService: this.tuiAlertService,
-                successMessage: 'Notifications counter reset!'
+                useSuccess: false
             }
         );
     }

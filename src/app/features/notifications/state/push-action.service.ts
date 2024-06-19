@@ -1,15 +1,13 @@
 import {Injectable} from '@angular/core';
-import {SwPush} from "@angular/service-worker";
-import {environment} from "../../../../environments/environment";
-import {PushSubscriptionStringifies} from "../pushSubscription";
-import {supabaseAuthenticatedClient} from "../../../auth/supabase-authenticated-client";
-import {PostgrestSingleResponse} from "@supabase/supabase-js";
-import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
-import {TuiAlertService} from "@taiga-ui/core";
+import {SwPush} from '@angular/service-worker';
+import {environment} from '../../../../environments/environment';
+import {PushSubscriptionStringifies} from '../pushSubscription';
+import {supabaseAuthenticatedClient} from '../../../auth/supabase-authenticated-client';
+import {PostgrestSingleResponse} from '@supabase/supabase-js';
+import {SupabaseObjectReturn} from '../../../../../supabase/types/supabase.authenticated.shorthand-types';
+import {TuiAlertService} from '@taiga-ui/core';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class PushActionService {
     private readonly VAPID_PUBLIC_KEY: string = environment.vapidPublicKey;
     private supabaseClient = supabaseAuthenticatedClient;
@@ -27,22 +25,24 @@ export class PushActionService {
             _auth: pushSubscriptionStringifies.keys.auth,
             _p256dh: pushSubscriptionStringifies.keys.p256dh
         })
-        .single()
-        .throwOnError();
+                                                                                                              .single()
+                                                                                                              .throwOnError();
 
         if (response.error) {
-            console.log(response.error)
+            console.log(response.error);
             this.tuiAlertService.open(
                 'Database error!',
                 {
-                    status: 'error',
-                }).subscribe();
+                    status: 'error'
+                }
+            ).subscribe();
         } else {
             this.tuiAlertService.open(
                 'Wir halten dich mit Push Nachrichten Up to Date!',
                 {
-                    status: 'success',
-                }).subscribe();
+                    status: 'success'
+                }
+            ).subscribe();
         }
     }
 
@@ -57,8 +57,9 @@ export class PushActionService {
             this.tuiAlertService.open(
                 'Push subscription ist nicht supported. Probiere einen anderen Browser bitte!',
                 {
-                    status: 'error',
-                }).subscribe();
+                    status: 'error'
+                }
+            ).subscribe();
         }
     }
 }

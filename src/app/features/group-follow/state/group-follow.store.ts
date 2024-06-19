@@ -4,7 +4,7 @@ import {rpcObjectHandler} from '../../../store-signal-functions/object/rpcObject
 import {GroupStore} from '../../group/state/group.store.';
 import {GroupCounterStore} from './group-counter.store';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class GroupFollowStore extends BaseObjectStore<'check_if_user_follows_group'> {
     private groupCounterStore: GroupCounterStore = inject(GroupCounterStore);
     private groupStore: GroupStore = inject(GroupStore);
@@ -41,9 +41,7 @@ export class GroupFollowStore extends BaseObjectStore<'check_if_user_follows_gro
     }
 
     public async follow(): Promise<void> {
-        // console.log('groupStore: ', this.groupStore.data());
         const groupId = this.groupStore.data().id_;
-        console.log('groupId: ', groupId);
         const result = await rpcObjectHandler(
             {
                 fn: 'follow_group_transaction',
@@ -69,8 +67,10 @@ export class GroupFollowStore extends BaseObjectStore<'check_if_user_follows_gro
                 successMessage: 'Followed successful!'
             }
         );
-        this.groupCounterStore.increment('follower_counter_');
-        this.updateFollowStatus(true);
+        if (!result().error) {
+            this.groupCounterStore.increment('follower_counter_');
+            this.updateFollowStatus(true);
+        }
     }
 
     public async unFollow(): Promise<void> {
@@ -100,8 +100,10 @@ export class GroupFollowStore extends BaseObjectStore<'check_if_user_follows_gro
                 successMessage: 'Unfollowed successful!'
             }
         );
-        this.groupCounterStore.decrement('follower_counter_');
-        this.updateFollowStatus(false);
+        if (!result().error) {
+            this.groupCounterStore.decrement('follower_counter_');
+            this.updateFollowStatus(false);
+        }
     }
 
     private updateFollowStatus(newStatus: boolean): void {

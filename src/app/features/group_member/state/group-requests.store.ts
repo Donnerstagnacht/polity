@@ -5,9 +5,7 @@ import {GroupStore} from '../../group/state/group.store.';
 import {GroupMembershipStatusStore} from './group-membership-status.store';
 import {removeObjectByPropertyValue} from '../../../store-signal-functions/array/removeItemFeatue';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class GroupRequestsStore extends BaseArrayStore<'read_group_member_requests'> {
     private groupStore: GroupStore = inject(GroupStore);
     private groupMembershipStatusStore: GroupMembershipStatusStore = inject(GroupMembershipStatusStore);
@@ -41,9 +39,7 @@ export class GroupRequestsStore extends BaseArrayStore<'read_group_member_reques
                 errorStoreService: this.errorStoreService
             },
             {
-                useSuccess: true,
-                alertService: this.tuiAlertService,
-                successMessage: 'GroupRequests loaded!'
+                useSuccess: false
             }
         );
     }
@@ -85,7 +81,7 @@ export class GroupRequestsStore extends BaseArrayStore<'read_group_member_reques
                 }
             },
             {
-                useLoading: true
+                useLoading: false
             },
             {
                 useStore: false
@@ -167,7 +163,7 @@ export class GroupRequestsStore extends BaseArrayStore<'read_group_member_reques
                 }
             },
             {
-                useLoading: true
+                useLoading: false
             },
             {
                 useStore: false

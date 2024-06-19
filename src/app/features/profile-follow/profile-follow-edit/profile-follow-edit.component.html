@@ -51,7 +51,7 @@
         [dataCyTagsHeadline]="['follower_profile_image_headline', 'follower_first_name_headline',
         'follower_remove_headline']"
         [dataKeysForColumns]="['profile_image_', 'first_name_', 'id_']"
-        [data]="followersOfUserStore.data"
+        [data]="followersOfUserStore.dataFiltered"
         [headings]="['Foto', 'Name', 'Entfernen']"
         [isLoading]="signal(followersOfUserStore.loadingState().loading)"
     >
@@ -81,9 +81,9 @@
         [dataCyTagsHeadline]="['following_group_image_headline', 'following_group_name_headline',
         'following_group_remove_headline']"
         [dataKeysForColumns]="['img_url_', 'name_', 'id_']"
-        [data]="followingsOfUserGroup"
+        [data]="followingsOfUserGroupStore.dataFiltered"
         [headings]="['Foto', 'Name', 'Entfernen']"
-        [isLoading]="isFollowingGroupLoading"
+        [isLoading]="signal(followingsOfUserGroupStore.loadingState().loading)"
     >
     </polity-table-three-icon-text-delete>
 }

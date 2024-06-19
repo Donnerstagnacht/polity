@@ -1,9 +1,13 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {BaseArrayStore} from '../../../store-signal-functions/array/base-array-store.service';
 import {rpcArrayHandler} from '../../../store-signal-functions/array/rpcArrayHandlerFeature';
+import {ProfileCounterStore} from './profile-counter.store';
+import {removeObjectByPropertyValue} from '../../../store-signal-functions/array/removeItemFeatue';
+import {SupabaseObjectReturn} from '../../../../../supabase/types/supabase.authenticated.shorthand-types';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class FollowersOfUserStore extends BaseArrayStore<'read_followers_of_user'> {
+    private profileCounterStore: ProfileCounterStore = inject(ProfileCounterStore);
 
     constructor() {
         super({
@@ -30,15 +34,13 @@ export class FollowersOfUserStore extends BaseArrayStore<'read_followers_of_user
                 errorStoreService: this.errorStoreService
             },
             {
-                useSuccess: true,
-                alertService: this.tuiAlertService,
-                successMessage: 'FollowersOfUser loaded!'
+                useSuccess: false
             }
         );
     }
 
     public async remove(userId: string): Promise<void> {
-        await rpcArrayHandler(
+        const result = await rpcArrayHandler(
             {
                 fn: 'remove_follower_of_authenticated_user_transaction',
                 args: {
@@ -46,8 +48,7 @@ export class FollowersOfUserStore extends BaseArrayStore<'read_followers_of_user
                 }
             },
             {
-                useLoading: true,
-                loadingState: this.loadingState_
+                useLoading: false
             },
             {
                 useStore: false
@@ -62,6 +63,14 @@ export class FollowersOfUserStore extends BaseArrayStore<'read_followers_of_user
                 successMessage: 'FollowersOfUser loaded!'
             }
         );
+        if (!result().error) {
+            removeObjectByPropertyValue<SupabaseObjectReturn<'read_followers_of_user'>>(
+                'id_',
+                userId,
+                this.data_
+            );
+            this.profileCounterStore.decrement('follower_counter_');
+        }
     }
 
 }

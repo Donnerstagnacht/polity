@@ -4,7 +4,7 @@ import {ProfileCounterStore} from './profile-counter.store';
 import {rpcArrayHandler} from '../../../store-signal-functions/array/rpcArrayHandlerFeature';
 import {BaseObjectStore} from '../../../store-signal-functions/object/base-object-store.service';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class ProfileFollowStore extends BaseObjectStore<'check_if_user_follows_profile'> {
     private profileStore: ProfileStore = inject(ProfileStore);
     private profileCouterStore: ProfileCounterStore = inject(ProfileCounterStore);
@@ -42,9 +42,7 @@ export class ProfileFollowStore extends BaseObjectStore<'check_if_user_follows_p
                 errorStoreService: this.errorStoreService
             },
             {
-                useSuccess: true,
-                alertService: this.tuiAlertService,
-                successMessage: 'CheckFollowerStatus loaded!'
+                useSuccess: false
             }
         );
     }

@@ -57,7 +57,7 @@
         [dataCyTagsHeadline]="['member_profile_image_headline', 'member_first_name_headline',
         'member_remove_headline']"
         [dataKeysForColumns]="['profile_image_', 'first_name_', 'id_']"
-        [data]="groupMemberStore.data"
+        [data]="groupMemberStore.dataFiltered"
         [headings]="['Foto', 'Name', 'Entfernen']"
         [isLoading]="signal(groupMemberStore.loadingState().loading)"
     >
@@ -72,7 +72,7 @@
         [dataCyTagsHeadline]="['group_invitation_image_headline', 'group_invitation_name_headline',
         'group_request_withdraw_headline']"
         [dataKeysForColumns]="['profile_image_', 'first_name_', 'id_']"
-        [data]="groupInvitationsStore.data"
+        [data]="groupInvitationsStore.dataFiltered"
         [headings]="['Foto', 'Name', 'Entfernen']"
         [isLoading]="signal(groupInvitationsStore.loadingState().loading)"
     >
@@ -87,7 +87,7 @@
         [dataCyTagsHeadline]="['group_request_image_headline', 'group_request_name_headline',
         'group_invitation_accept_headline']"
         [dataKeysForColumns]="['profile_image_', 'first_name_', 'id_']"
-        [data]="groupRequestsStore.data"
+        [data]="groupRequestsStore.dataFiltered"
         [headings]="['Foto', 'Name', 'Entscheiden']"
         [isLoading]="signal(groupRequestsStore.loadingState().loading)"
         [firstActionIcon]="'tuiIconCheck'"

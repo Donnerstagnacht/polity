@@ -1,8 +1,8 @@
 import {Component, Input, Signal, signal} from '@angular/core';
-import {Router} from "@angular/router";
-import {SupabaseObjectReturn} from "../../../../../supabase/types/supabase.authenticated.shorthand-types";
-import {TuiIslandModule} from "@taiga-ui/kit";
-import {LoadingState} from "../../../store-signal-functions/loadingFeature";
+import {Router} from '@angular/router';
+import {SupabaseObjectReturn} from '../../../../../supabase/types/supabase.authenticated.shorthand-types';
+import {TuiIslandModule} from '@taiga-ui/kit';
+import {LoadingState} from '../../../store-signal-functions/types/loadingState.type';
 
 @Component({
     selector: 'polity-search-profile-result',

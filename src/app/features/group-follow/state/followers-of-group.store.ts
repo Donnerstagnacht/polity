@@ -6,7 +6,7 @@ import {GroupCounterStore} from './group-counter.store';
 import {removeObjectByPropertyValue} from '../../../store-signal-functions/array/removeItemFeatue';
 import {SupabaseObjectReturn} from '../../../../../supabase/types/supabase.authenticated.shorthand-types';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class FollowersOfGroupStore extends BaseArrayStore<'read_followers_of_group'> {
     private groupStore: GroupStore = inject(GroupStore);
     private groupCounterStore: GroupCounterStore = inject(GroupCounterStore);
@@ -38,16 +38,14 @@ export class FollowersOfGroupStore extends BaseArrayStore<'read_followers_of_gro
                 errorStoreService: this.errorStoreService
             },
             {
-                useSuccess: true,
-                alertService: this.tuiAlertService,
-                successMessage: 'Followings of group loaded!'
+                useSuccess: false
             }
         );
     }
 
     public async remove(userId: string): Promise<void> {
         const groupId: string = this.groupStore.data().id_;
-        await rpcArrayHandler(
+        const result = await rpcArrayHandler(
             {
                 fn: 'remove_group_follower_transaction',
                 args: {
@@ -56,8 +54,7 @@ export class FollowersOfGroupStore extends BaseArrayStore<'read_followers_of_gro
                 }
             },
             {
-                useLoading: true,
-                loadingState: this.loadingState_
+                useLoading: false
             },
             {
                 useStore: false
@@ -72,12 +69,14 @@ export class FollowersOfGroupStore extends BaseArrayStore<'read_followers_of_gro
                 successMessage: 'Followings of group loaded!'
             }
         );
-        removeObjectByPropertyValue<SupabaseObjectReturn<'read_followings_of_group'>>(
-            'id_',
-            userId,
-            this.data_
-        );
-        this.groupCounterStore.decrement('following_counter_');
+        if (!result().error) {
+            removeObjectByPropertyValue<SupabaseObjectReturn<'read_followings_of_group'>>(
+                'id_',
+                userId,
+                this.data_
+            );
+            this.groupCounterStore.decrement('follower_counter_');
+        }
     }
 
 }

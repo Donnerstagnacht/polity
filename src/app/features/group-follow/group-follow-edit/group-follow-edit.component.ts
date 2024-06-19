@@ -62,19 +62,21 @@ export class GroupFollowEditComponent {
         }
 
         if (this.showFollowers) {
-            this.followersOfGroupStore.setFilterState(
-                {
-                    filterByString: filterByString,
-                    stringSearchKeys: ['first_name_', 'last_name_'],
-                    searchString: stringFilter
+            this.followersOfGroupStore.setFilterState({
+                    filterByStringState: {
+                        filterByString: filterByString,
+                        stringSearchKeys: ['first_name_', 'last_name_'],
+                        searchString: stringFilter
+                    }
                 }
             );
         } else {
-            this.followingsOfGroupStore.setFilterState(
-                {
-                    filterByString: filterByString,
-                    stringSearchKeys: ['first_name_', 'last_name_'],
-                    searchString: stringFilter
+            this.followingsOfGroupStore.setFilterState({
+                    filterByStringState: {
+                        filterByString: filterByString,
+                        stringSearchKeys: ['first_name_', 'last_name_'],
+                        searchString: stringFilter
+                    }
                 }
             );
         }
@@ -99,9 +101,9 @@ export class GroupFollowEditComponent {
     protected clearFilter(): void {
         this.combinedForm.reset();
         if (this.showFollowers) {
-            this.followersOfGroupStore.resetState();
+            this.followersOfGroupStore.resetFilterState();
         } else {
-            this.followingsOfGroupStore.resetState();
+            this.followingsOfGroupStore.resetFilterState();
         }
     }
 

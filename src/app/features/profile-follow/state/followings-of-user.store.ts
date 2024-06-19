@@ -1,13 +1,15 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 
 import {SupabaseObjectReturn} from '../../../../../supabase/types/supabase.authenticated.shorthand-types';
 import {BaseArrayStore} from '../../../store-signal-functions/array/base-array-store.service';
 import {rpcArrayHandler} from '../../../store-signal-functions/array/rpcArrayHandlerFeature';
 import {removeObjectByPropertyValue} from '../../../store-signal-functions/array/removeItemFeatue';
+import {ProfileCounterStore} from './profile-counter.store';
 
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class FollowingsOfUserStore extends BaseArrayStore<'read_followings_of_user'> {
+    private profileCounterStore: ProfileCounterStore = inject(ProfileCounterStore);
 
     constructor() {
         super({
@@ -34,9 +36,7 @@ export class FollowingsOfUserStore extends BaseArrayStore<'read_followings_of_us
                 errorStoreService: this.errorStoreService
             },
             {
-                useSuccess: true,
-                alertService: this.tuiAlertService,
-                successMessage: 'Followings geladen!'
+                useSuccess: false
             }
         );
     }
@@ -71,6 +71,7 @@ export class FollowingsOfUserStore extends BaseArrayStore<'read_followings_of_us
                 userId,
                 this.data_
             );
+            this.profileCounterStore.decrement('following_counter_');
         }
     }
 

@@ -6,6 +6,14 @@ import {PostgrestResponseFailure, PostgrestResponseSuccess} from "@supabase/post
 import {DatabaseAuthenticatedOverwritten} from "../../../../supabase/types/supabase.authenticated.modified";
 import {supabaseAuthenticatedClient} from "../../auth/supabase-authenticated-client";
 
+/**
+ * Executes a remote procedure call (RPC) to a Supabase authenticated function.
+ *
+ * @param {string & keyof AuthenticatedSchema['Functions']} fn - The name of the Supabase authenticated function to call.
+ * @param {Function_['Args']} [args={}] - The arguments to pass to the function. Defaults to an empty object.
+ * @param {{ head?: boolean; count?: 'exact' | 'planned' | 'estimated'; }} [options] - Optional parameters for the RPC call.
+ * @return {Promise<PostgrestResponseSuccess<DatabaseAuthenticatedOverwritten["authenticated"]["Functions"][FunctionName]["Returns"]> | PostgrestResponseFailure>} - A Promise that resolves to the result of the RPC call.
+ */
 export async function rpcObject<
     FunctionName extends string & keyof AuthenticatedSchema['Functions'],
     Function_ extends AuthenticatedSchema['Functions'][FunctionName]

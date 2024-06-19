@@ -8,7 +8,7 @@ type Read_group_key = keyof SupabaseObjectReturn<'read_group_counters'>;
 type KeysExceptGroupId = Exclude<Read_group_key, 'group_id_'>;
 
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class GroupCounterStore extends BaseObjectStore<'read_group_counters'> {
 
     constructor() {

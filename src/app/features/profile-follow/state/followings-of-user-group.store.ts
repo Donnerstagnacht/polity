@@ -2,8 +2,10 @@ import {inject, Injectable} from '@angular/core';
 import {rpcArrayHandler} from '../../../store-signal-functions/array/rpcArrayHandlerFeature';
 import {BaseArrayStore} from '../../../store-signal-functions/array/base-array-store.service';
 import {ProfileCounterStore} from './profile-counter.store';
+import {removeObjectByPropertyValue} from '../../../store-signal-functions/array/removeItemFeatue';
+import {SupabaseObjectReturn} from '../../../../../supabase/types/supabase.authenticated.shorthand-types';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class FollowingsOfUserGroupStore extends BaseArrayStore<'read_group_followings_of_user'> {
     protected profileCounterStore: ProfileCounterStore = inject(ProfileCounterStore);
 
@@ -32,15 +34,13 @@ export class FollowingsOfUserGroupStore extends BaseArrayStore<'read_group_follo
                 errorStoreService: this.errorStoreService
             },
             {
-                useSuccess: true,
-                alertService: this.tuiAlertService,
-                successMessage: 'FollowingsOfUserGroup loaded!'
+                useSuccess: false
             }
         );
     }
 
     public async remove(groupId: string): Promise<void> {
-        await rpcArrayHandler(
+        const result = await rpcArrayHandler(
             {
                 fn: 'unfollow_group_transaction',
                 args: {
@@ -48,8 +48,7 @@ export class FollowingsOfUserGroupStore extends BaseArrayStore<'read_group_follo
                 }
             },
             {
-                useLoading: true,
-                loadingState: this.loadingState_
+                useLoading: false
             },
             {
                 useStore: false
@@ -64,7 +63,14 @@ export class FollowingsOfUserGroupStore extends BaseArrayStore<'read_group_follo
                 successMessage: 'FollowingsOfUserGroup loaded!'
             }
         );
-        this.profileCounterStore.decrement('group_membership_counter_');
+        if (!result().error) {
+            removeObjectByPropertyValue<SupabaseObjectReturn<'read_group_followings_of_user'>>(
+                'id_',
+                groupId,
+                this.data_
+            );
+            this.profileCounterStore.decrement('group_membership_counter_');
+        }
     }
 
 }

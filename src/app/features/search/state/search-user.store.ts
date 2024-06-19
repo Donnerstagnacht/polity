@@ -23,7 +23,7 @@ export class SearchUserStore extends BaseArrayStore<'search_user'> {
 
     public async search(searchTerm: string): Promise<void> {
         searchTerm = replaceSpacesWithPipe(searchTerm);
-        this.resetState();
+        this.emptyStore();
         await rpcArrayHandler(
             {
                 fn: 'search_user',

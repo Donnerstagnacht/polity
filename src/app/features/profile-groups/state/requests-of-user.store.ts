@@ -3,9 +3,7 @@ import {BaseArrayStore} from '../../../store-signal-functions/array/base-array-s
 import {rpcArrayHandler} from '../../../store-signal-functions/array/rpcArrayHandlerFeature';
 import {removeObjectByPropertyValue} from '../../../store-signal-functions/array/removeItemFeatue';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class RequestsOfUserStore extends BaseArrayStore<'read_group_requests_of_user'> {
 
     constructor() {
@@ -33,15 +31,13 @@ export class RequestsOfUserStore extends BaseArrayStore<'read_group_requests_of_
                 errorStoreService: this.errorStoreService
             },
             {
-                useSuccess: true,
-                alertService: this.tuiAlertService,
-                successMessage: 'RequestsOfUser loaded!'
+                useSuccess: false
             }
         );
     }
 
     public async deleteById(requestId: string): Promise<void> {
-        await rpcArrayHandler(
+        const result = await rpcArrayHandler(
             {
                 fn: 'delete_group_member_request_by_id',
                 args: {
@@ -49,7 +45,7 @@ export class RequestsOfUserStore extends BaseArrayStore<'read_group_requests_of_
                 }
             },
             {
-                useLoading: true
+                useLoading: false
             },
             {
                 useStore: false
@@ -64,11 +60,13 @@ export class RequestsOfUserStore extends BaseArrayStore<'read_group_requests_of_
                 successMessage: 'Group membership accepted!'
             }
         );
-        removeObjectByPropertyValue(
-            'id_',
-            requestId,
-            this.data_
-        );
+        if (!result().error) {
+            removeObjectByPropertyValue(
+                'id_',
+                requestId,
+                this.data_
+            );
+        }
     }
 
 }
