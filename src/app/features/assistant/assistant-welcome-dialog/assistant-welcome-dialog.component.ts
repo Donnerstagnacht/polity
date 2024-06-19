@@ -52,17 +52,12 @@ export class AssistantWelcomeDialogComponent {
     protected index: number = 0;
     private readonly sessionId: string | null = null;
 
-    // private assistant: WritableSignal<SupabaseObjectReturn<'read_assistant'> | null> = signal(null);
 
     constructor(
         @Inject(POLYMORPHEUS_CONTEXT) private readonly dialogContext: TuiDialogContext<boolean>,
-        // private profilService: ProfileActionService,
-        // private assistantService: AssistantActionService,
-        // private assistantStoreService: AssistantStoreService,
         private router: Router
     ) {
         this.sessionId = this.sessionStore.getSessionId();
-        // this.assistant = this.assistantStoreService.assistant.getObject();
 
         if (this.assistantStore.data().last_tutorial_ === 'welcome') {
             this.index = 0;
@@ -77,7 +72,6 @@ export class AssistantWelcomeDialogComponent {
         await Promise.all([
             this.updateProfileName(),
             this.assistantStore.updateFirstSignIn(false),
-            // this.assistantService.updateFirstSignIn(false),
             this.setLastTutorial('profile')
         ]);
         this.index = (this.index + delta) % 3;
@@ -87,7 +81,6 @@ export class AssistantWelcomeDialogComponent {
         await Promise.all([
             this.updateProfileName(),
             this.assistantStore.updateFirstSignIn(false),
-            // this.assistantService.updateFirstSignIn(false),
             this.setLastTutorial('profile')
         ]);
         this.closeDialog();
@@ -97,7 +90,6 @@ export class AssistantWelcomeDialogComponent {
         await Promise.all([
             this.setLastTutorial('search'),
             this.assistantStore.skipTutorial(true)
-            // this.assistantService.skipTutorial(true)
         ]);
         this.closeDialog();
     }
@@ -114,9 +106,7 @@ export class AssistantWelcomeDialogComponent {
         await this.router.navigate(['/search']);
         await Promise.all([
             this.assistantStore.updateLastTutorial('search'),
-            // this.assistantService.updateLastTutorial('search'),
             this.assistantStore.skipTutorial(true)
-            // this.assistantService.skipTutorial(true)
         ]);
         this.closeDialog();
     }
@@ -125,7 +115,6 @@ export class AssistantWelcomeDialogComponent {
         await Promise.all([
             this.setLastTutorial('search'),
             this.assistantStore.skipTutorial(true)
-            // this.assistantService.skipTutorial(true)
         ]);
         this.closeDialog();
     }
@@ -136,7 +125,6 @@ export class AssistantWelcomeDialogComponent {
 
     private async setLastTutorial(newStatus: DatabaseHiddenOverwritten['hidden']['Enums']['tutorial_enum']): Promise<void> {
         await this.assistantStore.updateLastTutorial(newStatus);
-        // await this.assistantService.updateLastTutorial(newStatus);
     }
 
     private async updateProfileName(): Promise<void> {
@@ -147,9 +135,7 @@ export class AssistantWelcomeDialogComponent {
         } as SupabaseObjectReturn<'read_profile'>;
         await Promise.all([
             this.profileStore.update(profile),
-            // this.profilService.updateProfile(profile),
             this.assistantStore.updateLastTutorial('profile')
-            // this.assistantService.updateLastTutorial('profile')
         ]);
     }
 }

@@ -16,8 +16,6 @@ export const isOwnerGuard: CanActivateFn = (
     const router: Router = inject(Router);
     let sessionAsSignal: Signal<Session | null> = sessionStore.selectSession();
     const loggedInUserId: string | undefined = sessionAsSignal()?.user.id;
-    // const id: string = routeSnapshot.paramMap.get('id') as string; // OLD solution, does not work without
-    // ngModule routing
 
     if (loggedInUserId && state.url.includes(loggedInUserId)) {
         return true;

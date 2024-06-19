@@ -1,7 +1,7 @@
 import {Component, inject, signal} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {TuiDay} from '@taiga-ui/cdk';
-import {IInfiniteScrollEvent, InfiniteScrollModule} from 'ngx-infinite-scroll';
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {CommonModule} from '@angular/common';
 import {FilterHeadlineComponent} from '../../../ui/polity-filter/filter-headline/filter-headline.component';
 import {FilterStringComponent} from '../../../ui/polity-filter/filter-string/filter-string.component';
@@ -32,20 +32,13 @@ import {NotificationsStore} from '../store/notification-store.service';
     ]
 })
 export class NotificationComponent {
-    //TODO install infinity scroll
     public combinedForm: FormGroup;
-    protected throttle: number = 300;
-    protected scrollDistance: number = 1;
-    protected scrollUpDistance: number = 2;
-    // protected isNotificationsLoading: WritableSignal<boolean> = signal(true);
     protected showFilter: boolean = true;
     protected readonly filterTypes: filterTag[] = Filter_TYPES;
     protected readonly signal = signal;
     protected notificationsStore: NotificationsStore = inject(NotificationsStore);
 
     constructor(
-        // private readonly notificationsService: NotificationsActionService,
-        // private readonly notificationStoreService: NotificationsStoreService,
         private readonly formBuilder: FormBuilder
     ) {
         this.combinedForm = this.formBuilder.group({
@@ -60,35 +53,25 @@ export class NotificationComponent {
                 filters: []
             })
         });
-        // this.isNotificationsLoading = this.notificationStoreService.notifications.loading.getLoading();
         this.combinedForm.valueChanges.subscribe(
             () => this.onCombinedFormChange()
         );
         this.notificationsStore.resetCounter();
-        // this.notificationsService.resetNotificationCounter();
     }
 
     async ngOnInit(): Promise<void> {
         this.notificationsStore.read();
         this.notificationsStore.subscribeToRealtimeNotifications();
-        // this.notificationsService.subscribeToRealtimeNotifications();
     }
 
     async ngOnDestroy(): Promise<void> {
         this.notificationsStore.unsubscribeToRealtimeNotifications();
-        // await this.notificationsService.unsubscribeToRealtimeNotifications();
-        console.log('called');
     }
 
-    protected onScrollDown(event: IInfiniteScrollEvent): void {
-        console.log(scroll());
-        // this.notificationStoreService.notifications.onScrollToBottom();
-    }
 
     protected clearFilter(): void {
         this.combinedForm.reset();
         this.notificationsStore.resetState();
-        // this.notificationStoreService.notifications.resetDisplayedObjects();
     }
 
     protected toggleShowFilter(): void {
@@ -120,7 +103,6 @@ export class NotificationComponent {
 
         if (!filterByString && !typeKeyValues && !filterByDate) {
             this.notificationsStore.resetState();
-            // this.notificationStoreService.notifications.resetDisplayedObjects();
         }
 
         this.notificationsStore.setFilterState(

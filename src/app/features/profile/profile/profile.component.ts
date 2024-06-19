@@ -31,35 +31,20 @@ export class ProfileComponent {
     protected profileCounterStore: ProfileCounterStore = inject(ProfileCounterStore);
 
     constructor(
-        // private readonly sessionStoreService: SessionStoreService,
-        // private readonly profileStoreService: ProfileStoreService,
-        // private readonly profileService: ProfileActionService,
         private route: ActivatedRoute
-        // private readonly profileCounterService: ProfileCountersActionService,
-        // private readonly profileCountersStoreService: ProfileCountersStoreService,
-        // private readonly followersOfUserActionService: FollowersOfUserActionService
     ) {
     }
 
     async ngOnInit(): Promise<void> {
         const urlId: string = this.route.snapshot.params['id'];
         const sessionId: string | null = this.sessionStore.getSessionId();
-        // const sessionId: string | null = this.sessionStoreService.getSessionId();
         this.checkIsOwner(urlId, sessionId);
 
         await Promise.all([
             this.profileStore.read(urlId),
-            // this.profileService.readProfile(urlId),
             this.profileCounterStore.read(urlId)
-            // this.profileCounterService.selectProfileCounter(urlId)
         ]);
         await this.profileFollowStore.checkIfFollowing(urlId);
-        // await this.followersOfUserActionService.checkIfFollowing();
-    }
-
-    ngOnDestroy(): void {
-        // this.profileStoreService.profile.resetObject();
-        // this.profileCountersStoreService.profileCounters.resetObject()
     }
 
     private checkIsOwner(urlId: string, sessionId: string | null): void {

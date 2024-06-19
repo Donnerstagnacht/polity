@@ -33,7 +33,7 @@ import {GroupMembershipStatusStore} from '../../group_member/store/group-members
 })
 export class GroupComponent {
     protected groupStore: GroupStore = inject(GroupStore);
-    protected groupMembershipStatusStore = inject(GroupMembershipStatusStore);
+    protected groupMembershipStatusStore: GroupMembershipStatusStore = inject(GroupMembershipStatusStore);
     protected groupCounterStore: GroupCounterStore = inject(GroupCounterStore);
     protected groupFollowStore: GroupFollowStore = inject(GroupFollowStore);
     protected menuItemsGroup: NavigationItem[] = NAVIGATION_ITEMS_GROUP;

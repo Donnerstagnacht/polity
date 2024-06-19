@@ -22,17 +22,8 @@ import {NotificationCounterStore} from '../notifications/store/notification-coun
 export class AppSkeletonComponent {
     protected notificationCounterStore: NotificationCounterStore = inject(NotificationCounterStore);
     protected items: NavigationItem[] = NAVIGATION_ITEMS;
-    // protected notificationBadge: WritableSignal<SupabaseObjectReturn<'read_unread_notifications_counter'> | null> = signal({
-    //     profile_id_: '',
-    //     unread_notifications_counter_: 50
-    // });
 
-    constructor(
-        // private readonly notificationBadgeService: NotificationBadgeStoreService,
-        // private readonly notificationBadgeActionService: NotificationBadgeActionService
-    ) {
-        // this.notificationBadge = this.notificationBadgeService.notificationBadge.getObject();
-        // this.notificationBadgeActionService.selectUnreadNotificationsCounter()
+    constructor() {
         this.notificationCounterStore.read();
     }
 

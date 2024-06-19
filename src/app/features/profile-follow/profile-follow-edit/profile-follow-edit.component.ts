@@ -36,9 +36,6 @@ export class ProfileFollowEditComponent {
     protected isFollowingGroupLoading: WritableSignal<boolean> = signal(true);
     protected followingsOfUserGroup: WritableSignal<SupabaseObjectReturn<'read_group_followings_of_user'>[]> = signal([]);
 
-    // protected isFollowersLoading: WritableSignal<boolean> = signal(true);
-    // protected followersOfUser: WritableSignal<SupabaseObjectReturn<'read_followers_of_user'>[]> = signal([]);
-
     protected readonly columns: string[] = ['first_name', 'last_name', 'actions'];
     protected activeItemIndex: number = 0;
     protected combinedForm: FormGroup;
@@ -49,16 +46,8 @@ export class ProfileFollowEditComponent {
     protected showFollowingGroups: boolean = false;
     protected readonly signal = signal;
 
-    constructor(
-        // private readonly followersOfUserActionService: FollowersOfUserActionService,
-        // private readonly followersOfUserStoreService: FollowersOfUserStoreService,
-        // private readonly followingGroupsOfUserActionService: FollowingGroupsOfUserActionService,
-        // private readonly followingGroupsOfUserStoreService: FollowingGroupsOfUserStoreService,
-        private readonly formBuilder: FormBuilder
+    constructor(private readonly formBuilder: FormBuilder
     ) {
-        // this.isFollowersLoading = this.followersOfUserStoreService.followersOfUser.loading.getLoading();
-        // this.isFollowingGroupLoading = this.followingGroupsOfUserStoreService.followingGroupsOfUser.loading.getLoading();
-
         this.combinedForm = this.formBuilder.group({
             filterStringForm: this.formBuilder.group({
                 searchString: []
@@ -72,9 +61,6 @@ export class ProfileFollowEditComponent {
     async ngOnInit(): Promise<void> {
         await this.followingsOfUserStore.read();
         await this.followersOfUserStore.read();
-        // await this.followersOfUserActionService.readFollowersOfUser();
-        // this.followersOfUser = this.followersOfUserStoreService.followersOfUser.getObjects();
-        // this.followingsOfUserGroup = this.followingGroupsOfUserStoreService.followingGroupsOfUser.getObjects();
     }
 
     onCombinedFormChange(): void {
@@ -91,24 +77,12 @@ export class ProfileFollowEditComponent {
                 stringSearchKeys: ['first_name_', 'last_name_'],
                 searchString: stringFilter
             });
-            // this.followersOfUserStoreService.followersOfUser.filterArray(
-            //     filterByString,
-            //     ['first_name_', 'last_name_'],
-            //     stringFilter
-            // );
-        } else if(this.showFollowings) {
+        } else if (this.showFollowings) {
             this.followingsOfUserStore.setFilterState({
                 filterByString: filterByString,
                 stringSearchKeys: ['first_name_', 'last_name_'],
                 searchString: stringFilter
             });
-            // this.followingsOfUserStore.setFilterState(
-            //     {
-            //         filterByString: filterByString,
-            //         stringSearchKeys: ['first_name_', 'last_name_'],
-            //         searchString: stringFilter
-            //     }
-            // );
         } else if (this.showFollowingGroups) {
             this.followingsOfUserGroupStore.setFilterState({
                 filterByString: filterByString,
@@ -120,7 +94,6 @@ export class ProfileFollowEditComponent {
 
     protected showFollowerList(): void {
         this.followersOfUserStore.read();
-        // this.followersOfUserActionService.readFollowersOfUser();
         this.showFollowers = true;
         this.showFollowings = false;
         this.showFollowingGroups = false;
@@ -135,15 +108,13 @@ export class ProfileFollowEditComponent {
 
     protected showFollowingGroupList(): void {
         this.followingsOfUserGroupStore.read();
-        // this.followingGroupsOfUserActionService.readFollowingGroupsOfUser();
         this.showFollowers = false;
         this.showFollowings = false;
         this.showFollowingGroups = true;
     }
 
     protected async removeFollower(id: string): Promise<void> {
-        await this.followersOfUserStore.remove(id)
-        // await this.followersOfUserActionService.removeFollowerOfUser(id);
+        await this.followersOfUserStore.remove(id);
     }
 
     protected async removeFollowing(id: string): Promise<void> {
@@ -152,19 +123,16 @@ export class ProfileFollowEditComponent {
 
     protected async removeFollowingGroup(id: string): Promise<void> {
         this.followingsOfUserGroupStore.remove(id);
-        // await this.followingGroupsOfUserActionService.removeFollowingGroupOfUser(id);
     }
 
     protected clearFilter(): void {
         this.combinedForm.reset();
         if (this.showFollowers) {
-            this.followersOfUserStore.resetState()
-            // this.followersOfUserStoreService.followersOfUser.resetDisplayedObjects();
-        } else if(this.showFollowings) {
+            this.followersOfUserStore.resetState();
+        } else if (this.showFollowings) {
             this.followingsOfUserStore.resetState();
-        }else if (this.showFollowingGroups) {
+        } else if (this.showFollowingGroups) {
             this.followingsOfUserGroupStore.resetState();
-            // this.followingGroupsOfUserStoreService.followingGroupsOfUser.resetDisplayedObjects();
         }
     }
 

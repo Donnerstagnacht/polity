@@ -22,19 +22,13 @@ import {AssistantStore} from '../store/assistant.store';
 })
 export class AssistantIconComponent {
     protected assistantStore: AssistantStore = inject(AssistantStore);
-    // protected isAssistantLoading: WritableSignal<boolean> = signal(true)
-    // private assistant: WritableSignal<SupabaseObjectReturn<'read_assistant'> | null> = signal(null)
     private tutorials: Tutorial[] = TUTORIALS;
     protected activatedTutorial: Tutorial = this.tutorials[0];
 
     constructor(
         @Inject(TuiDialogService) private readonly dialogs: TuiDialogService,
         @Inject(Injector) private readonly injector: Injector
-        // private readonly assistantStoreService: AssistantStoreService
     ) {
-        // this.isAssistantLoading = this.assistantStoreService.assistant.loading.getLoading();
-        // this.assistant = this.assistantStoreService.assistant.getObject()
-
         effect((): void => {
             if (this.assistantStore.data().last_tutorial_ === 'welcome') {
                 this.activatedTutorial = this.tutorials[0];

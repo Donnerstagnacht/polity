@@ -24,36 +24,13 @@ export class ProfileWikiComponent {
     protected profileCounterStore: ProfileCounterStore = inject(ProfileCounterStore);
     protected profileStore: ProfileStore = inject(ProfileStore);
 
-    // protected isProfileLoading: WritableSignal<boolean> = signal(true);
-    // protected isProfileCounterLoading: WritableSignal<boolean> = signal(true);
-    // protected isFollowingCheckLoading: WritableSignal<boolean> = signal(true);
-    // protected profile: Signal<SupabaseObjectReturn<'read_profile'> | null>;
-    // protected profileCounter: WritableSignal<SupabaseObjectReturn<'read_profile_counters'> | null> = signal(null);
-    // protected isOwner: WritableSignal<boolean>;
-    // protected isFollowing: WritableSignal<boolean>;
     protected readonly signal = signal;
-
-    constructor(
-        // private readonly profileStoreService: ProfileStoreService
-        // private readonly profileCountersStoreService: ProfileCountersStoreService,
-        // private readonly followersOfUserActionService: FollowersOfUserActionService
-    ) {
-        // this.isFollowingCheckLoading = this.profileStoreService.profile.uiFlagStore.getFlag('isFollowingCheckLoading');
-        // this.isProfileLoading = this.profileStoreService.profile.loading.getLoading();
-        // this.isProfileCounterLoading = this.profileCountersStoreService.profileCounters.loading.getLoading()
-        // this.profileCounter = this.profileCountersStoreService.profileCounters.getObject()
-        // this.profile = this.profileStoreService.profile.getObject();
-        // this.isOwner = this.profileStoreService.profile.uiFlagStore.getFlag('isOwner');
-        // this.isFollowing = this.profileStoreService.profile.uiFlagStore.getFlag('isFollowing');
-    }
 
     async toggleFollow(newIsFollowing: boolean): Promise<void> {
         if (newIsFollowing) {
             await this.profileFollowStore.follow();
-            // await this.followersOfUserActionService.followProfile();
         } else {
-            this.profileFollowStore.unfollow();
-            // await this.followersOfUserActionService.unFollowProfile();
+            await this.profileFollowStore.unfollow();
         }
     }
 }

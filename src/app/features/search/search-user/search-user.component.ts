@@ -25,9 +25,7 @@ import {SearchGroupStore} from '../store/search-group.store';
     standalone: true
 })
 export class SearchUserComponent {
-    //protected readonly searchUserStore = inject(SearchUserStore);
     protected readonly searchUserStore = inject(SearchUserStore);
-    // protected readonly newSearchUserStore = inject(NewSearchUserStore);
     protected readonly searchGroupStore = inject(SearchGroupStore);
     protected searchForm: FormGroup<{
         search: FormControl<string | null>
@@ -51,7 +49,6 @@ export class SearchUserComponent {
         if (searchTerm) {
             await Promise.all([
                 this.searchUserStore.search(searchTerm),
-                // this.newSearchUserStore.searchUser(searchTerm),
                 this.searchGroupStore.search(searchTerm)
             ]);
         }

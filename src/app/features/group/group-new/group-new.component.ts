@@ -87,11 +87,6 @@ export class GroupNewComponent {
     protected menuItems: StepperItem[] = CREATE_GROUP_STEPPER_ITEMS;
     protected readonly signal = signal;
 
-    constructor(
-        // private createGroupService: CreateGroupService
-    ) {
-    }
-
     ngOnInit(): void {
         this.createGroupForm.valueChanges.subscribe((value): void => {
             this.updateMenuItemIcon('name', 0);

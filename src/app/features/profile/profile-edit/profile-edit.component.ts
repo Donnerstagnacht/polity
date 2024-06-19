@@ -46,7 +46,6 @@ import {ProfileStore} from '../store/profile.store';
 })
 export class ProfileEditComponent {
     protected profileStore: ProfileStore = inject(ProfileStore);
-    // protected profile: WritableSignal<SupabaseObjectReturn<'read_profile'> | null> = signal(null);
     protected editProfileForm: FormGroup<{
         firstName: FormControl<string | null>,
         lastName: FormControl<string | null>
@@ -55,19 +54,9 @@ export class ProfileEditComponent {
         lastName: new FormControl('', Validators.required)
     });
 
-    // protected isProfileLoading: WritableSignal<boolean> = signal(true);
-
-    constructor(
-        // private readonly profileService: ProfileActionService,
-        // private readonly profileStoreService: ProfileStoreService
-    ) {
-        // this.isProfileLoading = this.profileStoreService.profile.loading.getLoading();
-        // this.profile = this.profileStoreService.profile.getObject();
-
+    constructor() {
         effect((): void => {
             this.editProfileForm.patchValue({
-                // firstName: this.profile()?.first_name_ as string,
-                // lastName: this.profile()?.last_name_ as string
                 firstName: this.profileStore.data().first_name_,
                 lastName: this.profileStore.data().last_name_
             });
@@ -82,6 +71,5 @@ export class ProfileEditComponent {
                 last_name_: this.editProfileForm.value.lastName
             } as SupabaseObjectReturn<'read_profile'>;
         await this.profileStore.update(profile);
-        // await this.profileService.updateProfile(profile);
     }
 }

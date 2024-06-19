@@ -1,6 +1,6 @@
 import {Component, Inject} from '@angular/core';
-import {TuiButtonModule, TuiDialogContext, TuiDialogService} from "@taiga-ui/core";
-import {POLYMORPHEUS_CONTEXT} from "@tinkoff/ng-polymorpheus";
+import {TuiButtonModule, TuiDialogContext, TuiDialogService} from '@taiga-ui/core';
+import {POLYMORPHEUS_CONTEXT} from '@tinkoff/ng-polymorpheus';
 
 @Component({
     selector: 'polity-group-accept-decline-membership',
@@ -17,7 +17,6 @@ export class GroupAcceptDeclineMembershipComponent {
         @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
         @Inject(POLYMORPHEUS_CONTEXT) private readonly context: TuiDialogContext<string, number>
     ) {
-
     }
 
     protected accept(): void {

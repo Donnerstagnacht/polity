@@ -18,24 +18,16 @@ import {AssistantStore} from '../store/assistant.store';
 })
 export class AssistantComponent {
     protected readonly assistantStore: AssistantStore = inject(AssistantStore);
-    // protected assistant: WritableSignal<SupabaseObjectReturn<'read_assistant'> | null> = signal({
-    //     skip_tutorial_: true
-    // }) as WritableSignal<SupabaseObjectReturn<'read_assistant'> | null>;
 
     constructor(
         @Inject(TuiDialogService) private readonly dialogs: TuiDialogService,
         @Inject(Injector) private readonly injector: Injector
-        // private readonly assistantService: AssistantActionService,
-        // private readonly assistantStoreService: AssistantStoreService
     ) {
     }
 
     async ngOnInit(): Promise<void> {
         await this.assistantStore.read();
-        // await this.assistantService.readAssistant();
-        // this.assistant = this.assistantStoreService.assistant.getObject();
 
-        // if (this.assistant()?.first_sign_in_) {
         // TODO: needs to be activated in production
         // is deactivated since conditional testing makes Cypress tests flaky
         // and would affect all test since this affects the reused login tests

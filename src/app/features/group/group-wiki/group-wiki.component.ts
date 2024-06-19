@@ -37,38 +37,17 @@ export class GroupWikiComponent {
     protected groupRequestsStore: GroupRequestsStore = inject(GroupRequestsStore);
     protected groupMembersStore: GroupMembersStore = inject(GroupMembersStore);
 
-    // protected isGroupLoading: WritableSignal<boolean> = signal(true);
-    // protected group: Signal<SupabaseObjectReturn<'read_group'> | null> = signal(null);
-
-    // protected isGroupCounterLoading: WritableSignal<boolean> = signal(true);
-    // protected groupCounter: WritableSignal<SupabaseObjectReturn<'read_group_counters'> | null> = signal(null);
-
-    // protected isFollowingCheckLoading: WritableSignal<boolean> = signal(false);
-    // protected isFollowing: WritableSignal<boolean> = signal(false);
-
-    // protected isGroupMembershipStatusLoading: WritableSignal<boolean> = signal(false);
-    // protected isMember: WritableSignal<boolean> = signal(false);
-    // protected isBoardMember: WritableSignal<boolean> = signal(false);
-    // protected isRequested: WritableSignal<boolean> = signal(false);
-    // protected isInvited: WritableSignal<boolean> = signal(false);
-    // protected isNoMember: WritableSignal<boolean> = signal(true);
     protected buttonTextString: string = 'Request Membership';
     protected readonly signal = signal;
-    // protected readonly GroupMembershipStatusStore = GroupMembershipStatusStore;
     private readonly dialog = this.dialogService.open<string>(
         new PolymorpheusComponent(GroupAcceptDeclineMembershipComponent, this.injector),
         {
-            // data: 237,
             dismissible: true,
             label: 'Heading'
         }
     );
 
     constructor(
-        // private groupStoreService: GroupStoreService,
-        // private groupCountersStoreService: GroupCountersStoreService,
-        // private groupCountersActionService: GroupCountersActionService,
-        // private groupMemberActionService: GroupMemberActionService,
         @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
         @Inject(Injector) private injector: Injector
     ) {
@@ -85,39 +64,12 @@ export class GroupWikiComponent {
 
         });
 
-
-        // effect(() => {
-        //     // console.log('followStatus component', this.groupStore.data());
-        //     console.log('followStatus component', this.groupFollowStore.data());
-        // });
-    }
-
-    async ngOnInit(): Promise<void> {
-        // this.isGroupLoading = this.groupStoreService.group.loading.getLoading();
-        // this.group = this.groupStoreService.group.getObject();
-
-        // this.isFollowingCheckLoading = this.groupStoreService.group.uiFlagStore.getFlag('isFollowingCheckLoading');
-        // this.isFollowing = this.groupStoreService.group.uiFlagStore.getFlag('isFollowing');
-
-        // this.isGroupCounterLoading = this.groupCountersStoreService.groupCounters.loading.getLoading();
-        // this.groupCounter = this.groupCountersStoreService.groupCounters.getObject();
-
-        // this.isGroupMembershipStatusLoading = this.groupStoreService.group.uiFlagStore.getFlag('isGroupMembershipStatusLoading');
-        // this.isMember = this.groupStoreService.group.uiFlagStore.getFlag('isMember');
-        // this.isBoardMember = this.groupStoreService.group.uiFlagStore.getFlag('isBoardMember');
-        // this.isRequested = this.groupStoreService.group.uiFlagStore.getFlag('isRequested');
-        // this.isInvited = this.groupStoreService.group.uiFlagStore.getFlag('isInvited');
-        // this.isNoMember = this.groupStoreService.group.uiFlagStore.getFlag('isNotMember');
     }
 
     async toggleFollow(newIsFollowing: boolean): Promise<void> {
         if (newIsFollowing) {
-            // console.log('follow');
-            // this.isFollowing.set(true);
             await this.groupFollowStore.follow();
         } else {
-            // console.log('unfollow');
-            // this.isFollowing.set(false);
             await this.groupFollowStore.unFollow();
         }
     }
@@ -125,12 +77,10 @@ export class GroupWikiComponent {
     async toggleMembership(newIsMember: boolean): Promise<void> {
         if (this.groupMembershipStatusStore.isNoMember()) {
             await this.groupRequestsStore.request();
-            // await this.groupMemberActionService.requestGroupMembership();
         } else if (this.groupMembershipStatusStore.isMember() || this.groupMembershipStatusStore.isBoardMember()) {
             await this.groupMembersStore.leave();
         } else if (this.groupMembershipStatusStore.isRequested()) {
             await this.groupRequestsStore.withdraw();
-            // await this.groupMemberActionService.withDrawGroupRequest();
         } else if (this.groupMembershipStatusStore.isInvited()) {
             this.showDialog();
             //TODO open dialog
@@ -150,7 +100,6 @@ export class GroupWikiComponent {
                     this.groupInvitationsStore.accept();
                 } else if (data === 'decline') {
                     this.groupInvitationsStore.decline();
-                    // this.groupMemberActionService.declineGroupInvitation();
                 }
             },
             complete: () => {

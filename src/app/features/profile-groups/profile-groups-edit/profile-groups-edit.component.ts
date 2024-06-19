@@ -31,21 +31,9 @@ import {MembershipsOfUserStore} from '../store/memberships-of-user.store';
     styleUrl: './profile-groups-edit.component.less'
 })
 export class ProfileGroupsEditComponent {
-    // protected groupRequestsStore: GroupRequestsStore = inject(GroupRequestsStore);
-    // protected groupInvitationsStore: GroupInvitationsStore = inject(GroupInvitationsStore);
-    // protected groupMembersStore: GroupMembersStore = inject(GroupMembersStore);
     protected invitationsOfUserStore: InvitationsOfUserStore = inject(InvitationsOfUserStore);
     protected requestsOfUserStore: RequestsOfUserStore = inject(RequestsOfUserStore);
     protected membershipsOfUserStore: MembershipsOfUserStore = inject(MembershipsOfUserStore);
-
-    // protected isGroupMembershipsLoading: WritableSignal<boolean> = signal(true);
-    // protected groupMembershipsOfUser: WritableSignal<SupabaseObjectReturn<'read_groups_of_user'>[]> = signal([]);
-
-    // protected isGroupRequestsLoading: WritableSignal<boolean> = signal(true);
-    // protected groupRequestsOfUser: WritableSignal<SupabaseObjectReturn<'read_group_requests_of_user'>[]> = signal([]);
-
-    // protected isGroupInvitationsLoading: WritableSignal<boolean> = signal(true);
-    // protected groupInvitationsOfUser: WritableSignal<SupabaseObjectReturn<'read_group_member_invitations_of_user'>[]> = signal([]);
 
     protected combinedForm: FormGroup;
     protected showFilter: boolean = true;
@@ -55,20 +43,7 @@ export class ProfileGroupsEditComponent {
     protected showGroupInvitations: boolean = false;
     protected readonly signal = signal;
 
-    constructor(
-        // private readonly groupsOfUserStoreService: GroupsOfUserStoreService,
-        // private readonly groupsOfUserActionService: GroupsOfUserActionService,
-        // private readonly groupMemberActionService: GroupMemberActionService,
-        // private readonly groupRequestsOfUserStoreService: GroupRequestsOfUserStoreService,
-        // private readonly groupRequestsOfUserActionService: GroupRequestsOfUserActionService,
-        // private readonly groupInvitationsOfUserStoreService: GroupInvitationsOfUserStoreService,
-        // private readonly groupInvitationsOfUserActionService: GroupInvitationsOfUserActionService,
-        private readonly formBuilder: FormBuilder
-    ) {
-        // this.isGroupMembershipsLoading = this.groupsOfUserStoreService.groupsOfUser.loading.getLoading();
-        // this.isGroupRequestsLoading = this.groupRequestsOfUserStoreService.groupRequestsOfUser.loading.getLoading();
-        // this.isGroupInvitationsLoading = this.groupInvitationsOfUserStoreService.groupInvitationsOfUser.loading.getLoading();
-
+    constructor(private readonly formBuilder: FormBuilder) {
         this.combinedForm = this.formBuilder.group({
             filterStringForm: this.formBuilder.group({
                 searchString: []
@@ -81,10 +56,6 @@ export class ProfileGroupsEditComponent {
 
     async ngOnInit(): Promise<void> {
         await this.membershipsOfUserStore.read();
-        // await this.groupsOfUserActionService.readGroupsOfUser();
-        // this.groupMembershipsOfUser = this.groupsOfUserStoreService.groupsOfUser.getObjects();
-        // this.groupRequestsOfUser = this.groupRequestsOfUserStoreService.groupRequestsOfUser.getObjects();
-        // this.groupInvitationsOfUser = this.groupInvitationsOfUserStoreService.groupInvitationsOfUser.getObjects();
     }
 
     onCombinedFormChange(): void {
@@ -101,11 +72,6 @@ export class ProfileGroupsEditComponent {
                 stringSearchKeys: ['group_name_', 'group_level_'],
                 searchString: stringFilter
             });
-            // this.groupsOfUserStoreService.groupsOfUser.filterArray(
-            //     filterByString,
-            //     ['group_name_', 'group_level_'],
-            //     stringFilter
-            // );
         } else if (this.showGroupInvitations) {
             this.invitationsOfUserStore.setFilterState({
                 filterByString: filterByString,
@@ -118,17 +84,11 @@ export class ProfileGroupsEditComponent {
                 stringSearchKeys: ['group_name_', 'group_level_'],
                 searchString: stringFilter
             });
-            // this.groupRequestsOfUserStoreService.groupRequestsOfUser.filterArray(
-            //     filterByString,
-            //     ['group_name_', 'group_level_'],
-            //     stringFilter
-            // );
         }
     }
 
     protected showGroupMembershipList(): void {
         this.membershipsOfUserStore.read();
-        // this.groupsOfUserActionService.readGroupsOfUser();
         this.showGroupInvitations = false;
         this.showGroupRequests = false;
         this.showGroupMemberships = true;
@@ -136,7 +96,6 @@ export class ProfileGroupsEditComponent {
 
     protected showGroupRequestList(): void {
         this.requestsOfUserStore.read();
-        // this.groupRequestsOfUserActionService.readGroupRequestsOfUser();
         this.showGroupInvitations = false;
         this.showGroupMemberships = false;
         this.showGroupRequests = true;
@@ -144,7 +103,6 @@ export class ProfileGroupsEditComponent {
 
     protected showGroupInvitationList(): void {
         this.invitationsOfUserStore.read();
-        // this.groupInvitationsOfUserActionService.readGroupInvitationsOfUser();
         this.showGroupMemberships = false;
         this.showGroupRequests = false;
         this.showGroupInvitations = true;
@@ -156,29 +114,24 @@ export class ProfileGroupsEditComponent {
 
     protected async withdrawGroupRequest(requestId: string): Promise<void> {
         await this.requestsOfUserStore.deleteById(requestId);
-        // await this.groupMemberActionService.deleteGroupRequestById(requestId);
     }
 
     protected async acceptGroupInvitation(membership_id: string): Promise<void> {
         await this.invitationsOfUserStore.acceptById(membership_id);
-        // await console.log('accept group invitation', membership_id);
     }
 
     protected async removeGroupInvitation(membership_id: string): Promise<void> {
         await this.invitationsOfUserStore.remove(membership_id);
-        // await console.log('decline group invitation', membership_id);
     }
 
     protected clearFilter(): void {
         this.combinedForm.reset();
         if (this.showGroupMemberships) {
             this.membershipsOfUserStore.resetState();
-            // this.groupsOfUserStoreService.groupsOfUser.resetDisplayedObjects();
         } else if (this.showGroupInvitations) {
             this.invitationsOfUserStore.resetState();
         } else {
             this.requestsOfUserStore.resetState();
-            // this.groupRequestsOfUserStoreService.groupRequestsOfUser.resetDisplayedObjects();
         }
     }
 
