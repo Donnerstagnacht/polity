@@ -13,8 +13,8 @@ import {
 import {Router} from '@angular/router';
 import {supabaseAuthenticatedClient} from '../supabase-authenticated-client';
 import {TuiAlertService} from '@taiga-ui/core';
-import {ErrorStoreService} from '../../store-signal-class/error-store.service';
 import {SessionStore} from './session.store';
+import {ErrorStoreService} from '../../store-signal-functions/error-store.service';
 
 @Injectable({
     providedIn: 'root'

@@ -5,11 +5,11 @@ import {
     TuiInputModule,
     TuiInputPasswordModule,
     TuiIslandModule
-} from "@taiga-ui/kit";
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {AuthenticationService} from "../services/authentication.service";
-import {AsyncPipe} from "@angular/common";
-import {TuiButtonModule, TuiErrorModule, TuiSvgModule, TuiTextfieldControllerModule} from "@taiga-ui/core";
+} from '@taiga-ui/kit';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {AsyncPipe} from '@angular/common';
+import {TuiButtonModule, TuiErrorModule, TuiSvgModule, TuiTextfieldControllerModule} from '@taiga-ui/core';
+import {AuthenticationService} from '../store/authentication.service';
 
 @Component({
     selector: 'polity-update-email',
@@ -44,11 +44,12 @@ export class UpdateEmailComponent {
     }> = new FormGroup({
         email: new FormControl(
             '',
-            [Validators.required, Validators.email])
-    })
+            [Validators.required, Validators.email]
+        )
+    });
 
     constructor(
-        private readonly authService: AuthenticationService,
+        private readonly authService: AuthenticationService
     ) {
     }
 

@@ -3,8 +3,8 @@ import {DatabaseAuthenticatedOverwritten} from '../../../../supabase/types/supab
 import {TuiAlertService} from '@taiga-ui/core';
 import {LoadingState} from '../loadingFeature';
 import {SupabaseObjectReturn} from '../../../../supabase/types/supabase.authenticated.shorthand-types';
-import {ErrorStoreService} from '../../store-signal-class/error-store.service';
 import {INITIAL_LOADING_STATE} from '../array/base-array-store.service';
+import {ErrorStoreService} from '../error-store.service';
 
 @Injectable({
     providedIn: 'root'

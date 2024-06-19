@@ -3,7 +3,7 @@ import {DatabaseAuthenticatedOverwritten} from '../../../../supabase/types/supab
 import {TuiAlertService} from '@taiga-ui/core';
 import {LoadingState} from '../loadingFeature';
 import {filterArray, FilterState} from './filterFeature';
-import {ErrorStoreService} from '../../store-signal-class/error-store.service';
+import {ErrorStoreService} from '../error-store.service';
 
 export const INITIAL_LOADING_STATE = new InjectionToken<LoadingState>('LOADING_STATE');
 

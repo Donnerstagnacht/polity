@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {AuthenticationService} from "../services/authentication.service";
-import {AsyncPipe} from "@angular/common";
-import {TuiButtonModule, TuiErrorModule, TuiSvgModule, TuiTextfieldControllerModule} from "@taiga-ui/core";
-import {TUI_VALIDATION_ERRORS, TuiFieldErrorPipeModule, TuiInputModule, TuiIslandModule} from "@taiga-ui/kit";
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {AsyncPipe} from '@angular/common';
+import {TuiButtonModule, TuiErrorModule, TuiSvgModule, TuiTextfieldControllerModule} from '@taiga-ui/core';
+import {TUI_VALIDATION_ERRORS, TuiFieldErrorPipeModule, TuiInputModule, TuiIslandModule} from '@taiga-ui/kit';
+import {AuthenticationService} from '../store/authentication.service';
 
 @Component({
     selector: 'polity-request-reset-password',
@@ -37,11 +37,12 @@ export class RequestResetPasswordComponent {
     }> = new FormGroup({
         email: new FormControl(
             '',
-            [Validators.required, Validators.email])
-    })
+            [Validators.required, Validators.email]
+        )
+    });
 
     constructor(
-        private readonly authService: AuthenticationService,
+        private readonly authService: AuthenticationService
     ) {
     }
 

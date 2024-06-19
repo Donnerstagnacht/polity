@@ -9,7 +9,7 @@ import {showAlert} from '../alertFeature';
 import {TuiAlertService} from '@taiga-ui/core';
 import {updateErrorGlobal} from '../errorFeature';
 import {rpcObject} from './rpcObjectFeature';
-import {ErrorStoreService} from '../../store-signal-class/error-store.service';
+import {ErrorStoreService} from '../error-store.service';
 
 type SupabaseConfig<
     FunctionName extends string & keyof AuthenticatedSchema['Functions'],

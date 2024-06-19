@@ -15,7 +15,7 @@ import {CommonModule} from '@angular/common';
 import {DatabaseHiddenOverwritten} from '../../../../../supabase/types/supabase.hidden.modified';
 import {ProfileStore} from '../../profile/store/profile.store';
 import {AssistantStore} from '../store/assistant.store';
-import {SessionStore} from '../../../auth/services/session.store';
+import {SessionStore} from '../../../auth/store/session.store';
 
 @Component({
     selector: 'polity-assistant-welcome-dialog',

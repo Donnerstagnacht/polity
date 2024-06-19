@@ -5,8 +5,7 @@ import {rpcObjectHandler} from '../../../store-signal-functions/object/rpcObject
 import {RealtimeChannel, RealtimePostgresInsertPayload} from '@supabase/supabase-js';
 import {supabaseAuthenticatedClient} from '../../../auth/supabase-authenticated-client';
 import {SupabaseTable} from '../../../../../supabase/types/supabase.authenticated.shorthand-types';
-import {SessionStore} from '../../../auth/services/session.store';
-
+import {SessionStore} from '../../../auth/store/session.store';
 
 @Injectable({
     providedIn: 'root'

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {AuthenticationService} from "../services/authentication.service";
-import {TuiButtonModule} from "@taiga-ui/core";
+import {TuiButtonModule} from '@taiga-ui/core';
+import {AuthenticationService} from '../store/authentication.service';
 
 @Component({
     selector: 'polity-sign-out',
@@ -12,11 +12,11 @@ import {TuiButtonModule} from "@taiga-ui/core";
 export class SignOutComponent {
 
     constructor(
-        private readonly authService: AuthenticationService,
+        private readonly authService: AuthenticationService
     ) {
     }
 
     protected async signOut(): Promise<void> {
-        this.authService.signOut()
+        this.authService.signOut();
     }
 }

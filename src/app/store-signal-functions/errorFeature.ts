@@ -1,5 +1,5 @@
-import {WritableSignal} from "@angular/core";
-import {ErrorStoreService} from "../store-signal-class/error-store.service";
+import {WritableSignal} from '@angular/core';
+import {ErrorStoreService} from './error-store.service';
 
 export type ErrorState = WritableSignal<{
     error: string
@@ -14,7 +14,7 @@ export function updateErrorLocal(
     errorState.set({
         error: errorMessage,
         showError: newStatus
-    })
+    });
 }
 
 export function updateErrorGlobal(
@@ -25,5 +25,5 @@ export function updateErrorGlobal(
     errorState.updateError(
         errorMessage,
         newStatus
-    )
+    );
 }

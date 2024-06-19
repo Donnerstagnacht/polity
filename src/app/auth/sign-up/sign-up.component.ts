@@ -6,12 +6,12 @@ import {
     TuiInputModule,
     TuiInputPasswordModule,
     tuiInputPasswordOptionsProvider
-} from "@taiga-ui/kit";
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {AuthenticationService} from "../services/authentication.service";
-import {TuiButtonModule, TuiErrorModule, TuiSvgModule, TuiTextfieldControllerModule} from "@taiga-ui/core";
-import {CommonModule} from "@angular/common";
-import {of} from "rxjs";
+} from '@taiga-ui/kit';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {TuiButtonModule, TuiErrorModule, TuiSvgModule, TuiTextfieldControllerModule} from '@taiga-ui/core';
+import {CommonModule} from '@angular/common';
+import {of} from 'rxjs';
+import {AuthenticationService} from '../store/authentication.service';
 
 @Component({
     selector: 'polity-sign-up',
@@ -34,7 +34,7 @@ import {of} from "rxjs";
             icons: {
                 hide: 'tuiIconLockLarge',
                 show: 'tuiIconUnlockLarge'
-            },
+            }
         }),
         {
             provide: TUI_PASSWORD_TEXTS,
@@ -60,11 +60,13 @@ export class SignUpComponent {
     }> = new FormGroup({
         email: new FormControl(
             'test987@gmail.com',
-            [Validators.required, Validators.email]),
+            [Validators.required, Validators.email]
+        ),
         password: new FormControl(
             '12345678',
-            [Validators.required, Validators.minLength(6)]),
-    })
+            [Validators.required, Validators.minLength(6)]
+        )
+    });
 
     constructor(
         private readonly authService: AuthenticationService
@@ -75,7 +77,7 @@ export class SignUpComponent {
         await this.authService.signUp({
             email: this.signUpForm.value.email as string,
             password: this.signUpForm.value.password as string
-        })
+        });
         this.signUpForm.reset();
     }
 }

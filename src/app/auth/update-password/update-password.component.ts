@@ -7,12 +7,12 @@ import {
     TuiInputPasswordModule,
     tuiInputPasswordOptionsProvider,
     TuiIslandModule
-} from "@taiga-ui/kit";
-import {of} from "rxjs";
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {AuthenticationService} from "../services/authentication.service";
-import {AsyncPipe} from "@angular/common";
-import {TuiButtonModule, TuiErrorModule, TuiSvgModule, TuiTextfieldControllerModule} from "@taiga-ui/core";
+} from '@taiga-ui/kit';
+import {of} from 'rxjs';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {AsyncPipe} from '@angular/common';
+import {TuiButtonModule, TuiErrorModule, TuiSvgModule, TuiTextfieldControllerModule} from '@taiga-ui/core';
+import {AuthenticationService} from '../store/authentication.service';
 
 @Component({
     selector: 'polity-update-password',
@@ -34,7 +34,7 @@ import {TuiButtonModule, TuiErrorModule, TuiSvgModule, TuiTextfieldControllerMod
             icons: {
                 hide: 'tuiIconLockLarge',
                 show: 'tuiIconUnlockLarge'
-            },
+            }
         }),
         {
             provide: TUI_PASSWORD_TEXTS,
@@ -60,11 +60,12 @@ export class UpdatePasswordComponent {
     }> = new FormGroup({
         password: new FormControl(
             '',
-            [Validators.required, Validators.minLength(6)]),
-    })
+            [Validators.required, Validators.minLength(6)]
+        )
+    });
 
     constructor(
-        private readonly authService: AuthenticationService,
+        private readonly authService: AuthenticationService
     ) {
     }
 

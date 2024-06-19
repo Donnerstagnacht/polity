@@ -1,13 +1,13 @@
 import {Component, inject, WritableSignal} from '@angular/core';
-import {AuthenticationService} from './auth/services/authentication.service';
 import {AuthChangeEvent, Session} from '@supabase/supabase-js';
 import {RouterOutlet} from '@angular/router';
 import {TuiNotificationModule} from '@taiga-ui/core/components/notification';
 import {TuiRootModule} from '@taiga-ui/core';
 import {PushActionService} from './features/notifications/store/push-action.service';
 import {SwUpdate} from '@angular/service-worker';
-import {ErrorStoreService} from './store-signal-class/error-store.service';
-import {SessionStore} from './auth/services/session.store';
+import {SessionStore} from './auth/store/session.store';
+import {ErrorStoreService} from './store-signal-functions/error-store.service';
+import {AuthenticationService} from './auth/store/authentication.service';
 
 @Component({
     selector: 'polity-root',

@@ -10,7 +10,6 @@ import {SecondBarRightComponent} from '../../../navigation/second-bar-right/seco
 import {NavigationItem} from '../../../navigation/types-and-interfaces/navigationItem';
 import {NAVIGATION_ITEMS_GROUP} from '../group-navigation-signed-in';
 import {NAVIGATION_ITEMS_GROUP_BOARD_MEMBER} from '../group-navigation-board-member';
-import {GroupMemberActionService} from '../../group_member/replaced/group-member.action.service';
 import {GroupCounterStore} from '../../group-follow/store/group-counter.store';
 import {GroupFollowStore} from '../../group-follow/store/group-follow.store';
 import {GroupStore} from '../store/group.store.';
@@ -39,13 +38,7 @@ export class GroupComponent {
     protected groupFollowStore: GroupFollowStore = inject(GroupFollowStore);
     protected menuItemsGroup: NavigationItem[] = NAVIGATION_ITEMS_GROUP;
 
-    // protected isBoardMember: WritableSignal<boolean> = signal(true);
-
     constructor(
-        // private groupActionService: GroupActionService,
-        // private groupStoreService: GroupStoreService,
-        // private groupCountersStoreService: GroupCountersStoreService,
-        private groupMemberActionService: GroupMemberActionService,
         private route: ActivatedRoute
     ) {
 
@@ -53,8 +46,6 @@ export class GroupComponent {
 
     async ngOnInit(): Promise<void> {
         const urlId: string = this.route.snapshot.params['id'];
-        // this.isBoardMember = this.groupStoreService.group.uiFlagStore.getFlag('isBoardMember');
-        // this.groupStoreService.group.setObjectId(urlId);
         this.menuItemsGroup[0].link = '/group/' + urlId;
         this.checkMemberStatus(urlId);
         await Promise.all([
@@ -64,17 +55,8 @@ export class GroupComponent {
         await this.groupFollowStore.checkIfFollowing(urlId);
     }
 
-    ngOnDestroy(): void {
-        // this.groupStoreService.group.resetObject();
-        // this.groupCountersStoreService.groupCounters.resetObject();
-        // this.groupStoreService.groupMemberStatus.set('no_member');
-    }
-
     private async checkMemberStatus(urlId: string): Promise<void> {
-        // TODO
         await this.groupMembershipStatusStore.read(urlId);
-        console.log('group member status', this.groupMembershipStatusStore.data());
-        // await this.groupMemberActionService.checkMemberStatus();
         if (this.groupMembershipStatusStore.isBoardMember()) {
             this.menuItemsGroup = NAVIGATION_ITEMS_GROUP_BOARD_MEMBER;
             this.menuItemsGroup[0].link = '/group/' + urlId;

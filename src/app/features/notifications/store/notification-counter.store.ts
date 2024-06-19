@@ -7,7 +7,7 @@ import {
     SupabaseObjectReturn,
     SupabaseTable
 } from '../../../../../supabase/types/supabase.authenticated.shorthand-types';
-import {SessionStore} from '../../../auth/services/session.store';
+import {SessionStore} from '../../../auth/store/session.store';
 
 @Injectable({
     providedIn: 'root'

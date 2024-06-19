@@ -1,13 +1,13 @@
-import {AuthenticatedSchema} from "../../../../supabase/types/supabase.authenticated.shorthand-types";
-import {PostgrestResponseFailure, PostgrestResponseSuccess} from "@supabase/postgrest-js";
-import {DatabaseAuthenticatedOverwritten} from "../../../../supabase/types/supabase.authenticated.modified";
-import {loadingStarted, LoadingState, loadingStopped} from "../loadingFeature";
-import {signal, WritableSignal} from "@angular/core";
-import {showAlert} from "../alertFeature";
-import {TuiAlertService} from "@taiga-ui/core";
-import {updateErrorGlobal} from "../errorFeature";
-import {rpcArray} from "./rpcArrayFeature";
-import {ErrorStoreService} from "../../store-signal-class/error-store.service";
+import {AuthenticatedSchema} from '../../../../supabase/types/supabase.authenticated.shorthand-types';
+import {PostgrestResponseFailure, PostgrestResponseSuccess} from '@supabase/postgrest-js';
+import {DatabaseAuthenticatedOverwritten} from '../../../../supabase/types/supabase.authenticated.modified';
+import {loadingStarted, LoadingState, loadingStopped} from '../loadingFeature';
+import {signal, WritableSignal} from '@angular/core';
+import {showAlert} from '../alertFeature';
+import {TuiAlertService} from '@taiga-ui/core';
+import {updateErrorGlobal} from '../errorFeature';
+import {rpcArray} from './rpcArrayFeature';
+import {ErrorStoreService} from '../error-store.service';
 
 type SupabaseConfig<
     FunctionName extends string & keyof AuthenticatedSchema['Functions'],
@@ -28,8 +28,8 @@ type LoadingConfig = {
 
 type StoreConfig<FunctionName extends string & keyof AuthenticatedSchema['Functions']> = {
     useStore?: boolean
-    dataState?: WritableSignal<DatabaseAuthenticatedOverwritten["authenticated"]["Functions"][FunctionName]["Returns"]>
-    defaultReturn?: DatabaseAuthenticatedOverwritten["authenticated"]["Functions"][FunctionName]["Returns"] | [] | {}
+    dataState?: WritableSignal<DatabaseAuthenticatedOverwritten['authenticated']['Functions'][FunctionName]['Returns']>
+    defaultReturn?: DatabaseAuthenticatedOverwritten['authenticated']['Functions'][FunctionName]['Returns'] | [] | {}
 }
 
 type SuccessConfig = {
@@ -62,38 +62,38 @@ export async function rpcArrayHandler<
     }
 ) {
     if (loadingConfig.useLoading && loadingConfig.loadingState) {
-        loadingStarted(loadingConfig.loadingState)
+        loadingStarted(loadingConfig.loadingState);
     }
-    const rpcReturn: PostgrestResponseSuccess<DatabaseAuthenticatedOverwritten["authenticated"]["Functions"][FunctionName]["Returns"]> | PostgrestResponseFailure = await rpcArray(
+    const rpcReturn: PostgrestResponseSuccess<DatabaseAuthenticatedOverwritten['authenticated']['Functions'][FunctionName]['Returns']> | PostgrestResponseFailure = await rpcArray(
         supabaseConfig.fn,
         supabaseConfig.args,
         supabaseConfig.options
-    )
+    );
 
     if (errorConfig.useError && errorConfig.errorStoreService && rpcReturn.error) {
         updateErrorGlobal(
             rpcReturn.error.message,
             true,
             errorConfig.errorStoreService
-        )
+        );
     }
 
     if (successConfig.useSuccess && successConfig.alertService && !rpcReturn.error) {
         showAlert(
             successConfig.alertService,
             successConfig.successMessage
-        )
+        );
     }
 
     let returnData = storeConfig.defaultReturn;
     if (rpcReturn.data && storeConfig.useStore && storeConfig.dataState) {
-        returnData = rpcReturn.data
-        storeConfig.dataState.set(returnData)
+        returnData = rpcReturn.data;
+        storeConfig.dataState.set(returnData);
     }
 
 
     if (loadingConfig.useLoading && loadingConfig.loadingState) {
-        loadingStopped(loadingConfig.loadingState)
+        loadingStopped(loadingConfig.loadingState);
     }
     return signal(rpcReturn);
 }

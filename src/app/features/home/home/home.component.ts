@@ -3,7 +3,7 @@ import {ProfileLinkCardComponent} from '../../../ui/cards/profile-link-card/prof
 import {GroupLinkCardComponent} from '../../../ui/cards/group-link-card/group-link-card.component';
 import {MembershipsOfUserStore} from '../../profile-groups/store/memberships-of-user.store';
 import {ProfileStore} from '../../profile/store/profile.store';
-import {SessionStore} from '../../../auth/services/session.store';
+import {SessionStore} from '../../../auth/store/session.store';
 
 @Component({
     selector: 'polity-home',
