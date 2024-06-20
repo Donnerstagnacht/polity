@@ -1,7 +1,6 @@
 import {computed, Injectable} from '@angular/core';
-import {BaseObjectStore} from '../../../store-signal-functions/object/base-object-store.service';
-import {rpcObjectHandler} from '../../../store-signal-functions/object/rpcObjectHandlerFeature';
-
+import {BaseObjectStore} from '@polity-signal-store/object/base-object-store.service';
+import {rpcObjectHandler} from '@polity-signal-store/object/rpcObjectHandlerFeature';
 
 @Injectable({providedIn: 'root'})
 export class GroupMembershipStatusStore extends BaseObjectStore<'check_group_membership_status'> {

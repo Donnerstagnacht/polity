@@ -1,9 +1,9 @@
 import {inject, Injectable} from '@angular/core';
-import {rpcArrayHandler} from '../../../store-signal-functions/array/rpcArrayHandlerFeature';
-import {BaseArrayStore} from '../../../store-signal-functions/array/base-array-store.service';
 import {ProfileCounterStore} from './profile-counter.store';
-import {removeObjectByPropertyValue} from '../../../store-signal-functions/array/removeItemFeatue';
 import {SupabaseObjectReturn} from '../../../../../supabase/types/supabase.authenticated.shorthand-types';
+import {BaseArrayStore} from '@polity-signal-store/array/base-array-store.service';
+import {rpcArrayHandler} from '@polity-signal-store/array/rpcArrayHandlerFeature';
+import {removeObjectByPropertyValue} from '@polity-signal-store/array/removeItemFeatue';
 
 @Injectable({providedIn: 'root'})
 export class FollowingsOfUserGroupStore extends BaseArrayStore<'read_group_followings_of_user'> {

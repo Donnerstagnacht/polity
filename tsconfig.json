@@ -12,9 +12,42 @@
         "noFallthroughCasesInSwitch": true,
         "sourceMap": true,
         "paths": {
-          "my-schematics": [
-            "./dist/my-schematics"
-          ]
+            "my-schematics": [
+                "./dist/my-schematics"
+            ],
+            "@polity-ui/*": [
+                "src/polity-ui/*"
+            ],
+            "@polity-navigation/*": [
+                "src/polity-navigation/*"
+            ],
+            "@polity-signal-store/*": [
+                "src/polity-signal-store/*"
+            ],
+            "@polity-styles-global/*": [
+                "src/polity-styles-global/*"
+            ],
+            "@polity-profile/*": [
+                "src/app/features/profile/*"
+            ],
+            "@polity-groups/*": [
+                "src/app/features/groups/*"
+            ],
+            "@polity-office/*": [
+                "src/app/features/office/*"
+            ],
+            "@polity-assistant/*": [
+                "src/app/features/search/*"
+            ],
+            "@polity-assistant/*": [
+                "src/app/features/assistant/*"
+            ],
+            "@polity-event/*": [
+                "src/app/features/event/*"
+            ],
+            "@polity-amendments/*": [
+                "src/app/features/amendments/*"
+            ]
         },
         "declaration": false,
         "downlevelIteration": true,

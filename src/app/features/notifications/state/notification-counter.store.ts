@@ -1,6 +1,4 @@
 import {inject, Injectable} from '@angular/core';
-import {BaseObjectStore} from '../../../store-signal-functions/object/base-object-store.service';
-import {rpcObjectHandler} from '../../../store-signal-functions/object/rpcObjectHandlerFeature';
 import {supabaseAuthenticatedClient} from '../../../auth/supabase-authenticated-client';
 import {RealtimeChannel, RealtimePostgresUpdatePayload} from '@supabase/supabase-js';
 import {
@@ -8,6 +6,8 @@ import {
     SupabaseTable
 } from '../../../../../supabase/types/supabase.authenticated.shorthand-types';
 import {SessionStore} from '../../../auth/state/session.store';
+import {rpcObjectHandler} from '@polity-signal-store/object/rpcObjectHandlerFeature';
+import {BaseObjectStore} from '@polity-signal-store/object/base-object-store.service';
 
 @Injectable({providedIn: 'root'})
 export class NotificationCounterStore extends BaseObjectStore<'read_unread_notifications_counter'> {

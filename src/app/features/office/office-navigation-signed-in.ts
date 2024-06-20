@@ -1,4 +1,4 @@
-import {NavigationItem} from "../../navigation/types-and-interfaces/navigationItem";
+import {NavigationItem} from '@polity-navigation/types-and-interfaces/navigationItem';
 
 export const NAVIGATION_ITEMS_OFFICE: NavigationItem[] = [
     {
@@ -8,4 +8,4 @@ export const NAVIGATION_ITEMS_OFFICE: NavigationItem[] = [
         dataCy: 'nav-office-news',
         dataCyDesktop: 'nav-office-news-desktop'
     }
-]
+];

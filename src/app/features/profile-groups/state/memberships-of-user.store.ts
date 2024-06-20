@@ -1,8 +1,8 @@
 import {inject, Injectable} from '@angular/core';
-import {BaseArrayStore} from '../../../store-signal-functions/array/base-array-store.service';
-import {rpcArrayHandler} from '../../../store-signal-functions/array/rpcArrayHandlerFeature';
-import {removeObjectByPropertyValue} from '../../../store-signal-functions/array/removeItemFeatue';
 import {ProfileCounterStore} from '../../profile-follow/state/profile-counter.store';
+import {BaseArrayStore} from '@polity-signal-store/array/base-array-store.service';
+import {rpcArrayHandler} from '@polity-signal-store/array/rpcArrayHandlerFeature';
+import {removeObjectByPropertyValue} from '@polity-signal-store/array/removeItemFeatue';
 
 @Injectable({providedIn: 'root'})
 export class MembershipsOfUserStore extends BaseArrayStore<'read_groups_of_user'> {

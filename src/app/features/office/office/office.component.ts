@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
-import {NavigationItem} from '../../../navigation/types-and-interfaces/navigationItem';
-import {SecondBarTopComponent} from '../../../navigation/second-bar/second-bar-top/second-bar-top.component';
 import {RouterOutlet} from '@angular/router';
-import {SecondBarRightComponent} from '../../../navigation/second-bar/second-bar-right/second-bar-right.component';
 import {NAVIGATION_ITEMS_OFFICE} from '../office-navigation-signed-in';
+import {SecondBarTopComponent} from '@polity-navigation/second-bar/second-bar-top/second-bar-top.component';
+import {SecondBarRightComponent} from '@polity-navigation/second-bar/second-bar-right/second-bar-right.component';
+import {NavigationItem} from '@polity-navigation/types-and-interfaces/navigationItem';
 
 @Component({
     selector: 'polity-office',

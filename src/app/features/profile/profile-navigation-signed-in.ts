@@ -1,4 +1,4 @@
-import {NavigationItem} from "../../navigation/types-and-interfaces/navigationItem";
+import {NavigationItem} from '@polity-navigation/types-and-interfaces/navigationItem';
 
 export const NAVIGATION_ITEMS_PROFILE: NavigationItem[] = [
     {
@@ -8,4 +8,4 @@ export const NAVIGATION_ITEMS_PROFILE: NavigationItem[] = [
         dataCy: 'nav-profile-wiki',
         dataCyDesktop: 'nav-profile-wiki-desktop'
     }
-]
+];

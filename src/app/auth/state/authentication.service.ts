@@ -14,7 +14,7 @@ import {Router} from '@angular/router';
 import {supabaseAuthenticatedClient} from '../supabase-authenticated-client';
 import {TuiAlertService} from '@taiga-ui/core';
 import {SessionStore} from './session.store';
-import {ErrorStoreService} from '../../store-signal-functions/error-store.service';
+import {ErrorStoreService} from '@polity-signal-store/error-store.service';
 
 @Injectable({
     providedIn: 'root'

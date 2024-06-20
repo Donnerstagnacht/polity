@@ -1,8 +1,8 @@
 import {inject, Injectable} from '@angular/core';
-import {rpcObjectHandler} from '../../../store-signal-functions/object/rpcObjectHandlerFeature';
-import {BaseObjectStore} from '../../../store-signal-functions/object/base-object-store.service';
 import {GroupNew} from '../types/group-new';
 import {Router} from '@angular/router';
+import {BaseObjectStore} from '@polity-signal-store/object/base-object-store.service';
+import {rpcObjectHandler} from '@polity-signal-store/object/rpcObjectHandlerFeature';
 
 @Injectable({providedIn: 'root'})
 export class CreateGroupStore extends BaseObjectStore<'create_group_transaction'> {

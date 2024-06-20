@@ -1,8 +1,8 @@
 import {Injectable, Signal, signal, WritableSignal} from '@angular/core';
-import {BaseObjectStore} from '../../../store-signal-functions/object/base-object-store.service';
-import {rpcObjectHandler} from '../../../store-signal-functions/object/rpcObjectHandlerFeature';
 import {SupabaseObjectReturn} from '../../../../../supabase/types/supabase.authenticated.shorthand-types';
-import {getSignedUrlFromSupabaseObject} from '../../../store-signal-functions/imageFeature';
+import {BaseObjectStore} from '@polity-signal-store/object/base-object-store.service';
+import {rpcObjectHandler} from '@polity-signal-store/object/rpcObjectHandlerFeature';
+import {getSignedUrlFromSupabaseObject} from '@polity-signal-store/imageFeature';
 
 @Injectable({providedIn: 'root'})
 export class ProfileStore extends BaseObjectStore<'read_profile'> {

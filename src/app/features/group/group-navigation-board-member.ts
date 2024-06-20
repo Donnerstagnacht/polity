@@ -1,4 +1,4 @@
-import {NavigationItem} from "../../navigation/types-and-interfaces/navigationItem";
+import {NavigationItem} from '@polity-navigation/types-and-interfaces/navigationItem';
 
 export const NAVIGATION_ITEMS_GROUP_BOARD_MEMBER: NavigationItem[] = [
     {
@@ -14,7 +14,7 @@ export const NAVIGATION_ITEMS_GROUP_BOARD_MEMBER: NavigationItem[] = [
         link: '/group/:id/edit',
         dataCy: 'nav-group-edit',
         dataCyDesktop: 'nav-group-edit-desktop'
-    },
+    }
     // {
     //     text: 'EDIT',
     //     icon: 'tuiIconUsers',
@@ -22,4 +22,4 @@ export const NAVIGATION_ITEMS_GROUP_BOARD_MEMBER: NavigationItem[] = [
     //     dataCy: 'nav-follower-edit',
     //     dataCyDesktop: 'nav-follower-edit-desktop'
     // }
-]
+];

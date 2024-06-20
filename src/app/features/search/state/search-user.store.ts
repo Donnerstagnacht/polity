@@ -1,7 +1,7 @@
 import {computed, Injectable} from '@angular/core';
-import {rpcArrayHandler} from '../../../store-signal-functions/array/rpcArrayHandlerFeature';
-import {BaseArrayStore} from '../../../store-signal-functions/array/base-array-store.service';
 import {replaceSpacesWithPipe} from './search-utilities';
+import {BaseArrayStore} from '@polity-signal-store/array/base-array-store.service';
+import {rpcArrayHandler} from '@polity-signal-store/array/rpcArrayHandlerFeature';
 
 @Injectable()
 export class SearchUserStore extends BaseArrayStore<'search_user'> {

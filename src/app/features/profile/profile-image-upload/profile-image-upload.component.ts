@@ -4,7 +4,7 @@ import {from, Observable, of, Subject, switchMap} from 'rxjs';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {ProfileStore} from '../state/profile.store';
-import {uploadImage} from '../../../store-signal-functions/imageFeature';
+import {uploadImage} from '@polity-signal-store/imageFeature';
 
 @Component({
     selector: 'polity-profile-image-upload',

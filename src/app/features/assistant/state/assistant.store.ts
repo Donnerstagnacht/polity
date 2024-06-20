@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {rpcObjectHandler} from '../../../store-signal-functions/object/rpcObjectHandlerFeature';
-import {BaseObjectStore} from '../../../store-signal-functions/object/base-object-store.service';
 import {DatabaseHiddenOverwritten} from '../../../../../supabase/types/supabase.hidden.modified';
+import {rpcObjectHandler} from '@polity-signal-store/object/rpcObjectHandlerFeature';
+import {BaseObjectStore} from '@polity-signal-store/object/base-object-store.service';
 
 @Injectable({
     providedIn: 'root'

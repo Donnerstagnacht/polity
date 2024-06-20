@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {BaseArrayStore} from '../../../store-signal-functions/array/base-array-store.service';
-import {rpcArrayHandler} from '../../../store-signal-functions/array/rpcArrayHandlerFeature';
-import {removeObjectByPropertyValue} from '../../../store-signal-functions/array/removeItemFeatue';
+import {BaseArrayStore} from '@polity-signal-store/array/base-array-store.service';
+import {rpcArrayHandler} from '@polity-signal-store/array/rpcArrayHandlerFeature';
+import {removeObjectByPropertyValue} from '@polity-signal-store/array/removeItemFeatue';
 
 @Injectable({providedIn: 'root'})
 export class RequestsOfUserStore extends BaseArrayStore<'read_group_requests_of_user'> {

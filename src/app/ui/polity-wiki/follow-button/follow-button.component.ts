@@ -1,7 +1,7 @@
 import {Component, effect, EventEmitter, Input, Output, Signal, signal, WritableSignal} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {TuiButtonModule} from '@taiga-ui/core';
-import {LoadingState} from '../../../store-signal-functions/types/loadingState.type';
+import {LoadingState} from '../../../../polity-signal-store/types/loadingState.type';
 
 @Component({
     selector: 'polity-follow-button',

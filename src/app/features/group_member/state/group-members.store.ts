@@ -1,10 +1,10 @@
 import {inject, Injectable} from '@angular/core';
-import {BaseArrayStore} from '../../../store-signal-functions/array/base-array-store.service';
-import {rpcArrayHandler} from '../../../store-signal-functions/array/rpcArrayHandlerFeature';
 import {GroupStore} from '../../group/state/group.store.';
 import {GroupMembershipStatusStore} from './group-membership-status.store';
 import {GroupCounterStore} from '../../group-follow/state/group-counter.store';
-import {removeObjectByPropertyValue} from '../../../store-signal-functions/array/removeItemFeatue';
+import {rpcArrayHandler} from '@polity-signal-store/array/rpcArrayHandlerFeature';
+import {BaseArrayStore} from '@polity-signal-store/array/base-array-store.service';
+import {removeObjectByPropertyValue} from '@polity-signal-store/array/removeItemFeatue';
 
 @Injectable({providedIn: 'root'})
 export class GroupMembersStore extends BaseArrayStore<'read_group_members'> {

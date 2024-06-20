@@ -1,11 +1,11 @@
 import {Component, inject} from '@angular/core';
-import {NavigationItem} from '../../navigation/types-and-interfaces/navigationItem';
-import {NAVIGATION_ITEMS} from '../../navigation/navigation-item';
-import {FirstBarBottomComponent} from '../../navigation/first-bar/first-bar-bottom/first-bar-bottom.component';
-import {FirstBarLeftComponent} from '../../navigation/first-bar/first-bar-left/first-bar-left.component';
 import {RouterOutlet} from '@angular/router';
 import {AssistantComponent} from '../assistant/assistant/assistant.component';
 import {NotificationCounterStore} from '../notifications/state/notification-counter.store';
+import {FirstBarBottomComponent} from '@polity-navigation/first-bar/first-bar-bottom/first-bar-bottom.component';
+import {FirstBarLeftComponent} from '@polity-navigation/first-bar/first-bar-left/first-bar-left.component';
+import {NavigationItem} from '@polity-navigation/types-and-interfaces/navigationItem';
+import {NAVIGATION_ITEMS} from '@polity-navigation/navigation-item';
 
 @Component({
     selector: 'polity-app-skeleton',

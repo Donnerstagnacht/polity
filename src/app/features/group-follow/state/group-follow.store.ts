@@ -1,8 +1,8 @@
 import {inject, Injectable} from '@angular/core';
-import {BaseObjectStore} from '../../../store-signal-functions/object/base-object-store.service';
-import {rpcObjectHandler} from '../../../store-signal-functions/object/rpcObjectHandlerFeature';
 import {GroupStore} from '../../group/state/group.store.';
 import {GroupCounterStore} from './group-counter.store';
+import {rpcObjectHandler} from '@polity-signal-store/object/rpcObjectHandlerFeature';
+import {BaseObjectStore} from '@polity-signal-store/object/base-object-store.service';
 
 @Injectable({providedIn: 'root'})
 export class GroupFollowStore extends BaseObjectStore<'check_if_user_follows_group'> {

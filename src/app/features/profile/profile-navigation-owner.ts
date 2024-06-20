@@ -1,4 +1,4 @@
-import {NavigationItem} from "../../navigation/types-and-interfaces/navigationItem";
+import {NavigationItem} from '@polity-navigation/types-and-interfaces/navigationItem';
 
 export const NAVIGATION_ITEMS_PROFILE_OWNER: NavigationItem[] = [
     {
@@ -29,4 +29,4 @@ export const NAVIGATION_ITEMS_PROFILE_OWNER: NavigationItem[] = [
         dataCy: 'nav-follower-edit',
         dataCyDesktop: 'nav-follower-edit-desktop'
     }
-]
+];

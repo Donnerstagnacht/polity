@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
-import {NavigationItem} from '../../navigation/types-and-interfaces/navigationItem';
-import {NAVIGATION_ITEMS_SIGNED_OUT} from '../../navigation/navigation-item';
+import {NavigationItem} from '../../../polity-navigation/types-and-interfaces/navigationItem';
+import {NAVIGATION_ITEMS_SIGNED_OUT} from '../../../polity-navigation/navigation-item';
 import {RouterOutlet} from '@angular/router';
-import {FirstBarLeftComponent} from '../../navigation/first-bar/first-bar-left/first-bar-left.component';
-import {FirstBarBottomComponent} from '../../navigation/first-bar/first-bar-bottom/first-bar-bottom.component';
+import {FirstBarLeftComponent} from '../../../polity-navigation/first-bar/first-bar-left/first-bar-left.component';
+import {FirstBarBottomComponent} from '@polity-navigation/first-bar/first-bar-bottom/first-bar-bottom.component';
 
 @Component({
     selector: 'polity-landing',
@@ -14,7 +14,6 @@ import {FirstBarBottomComponent} from '../../navigation/first-bar/first-bar-bott
         RouterOutlet,
         FirstBarLeftComponent,
         FirstBarBottomComponent
-
     ]
 })
 export class LandingComponent {

@@ -6,8 +6,8 @@ import {TuiRootModule} from '@taiga-ui/core';
 import {PushActionService} from './features/notifications/state/push-action.service';
 import {SwUpdate} from '@angular/service-worker';
 import {SessionStore} from './auth/state/session.store';
-import {ErrorStoreService} from './store-signal-functions/error-store.service';
 import {AuthenticationService} from './auth/state/authentication.service';
+import {ErrorStoreService} from '@polity-signal-store/error-store.service';
 
 @Component({
     selector: 'polity-root',

@@ -1,8 +1,8 @@
 import {inject, Injectable} from '@angular/core';
 import {ProfileStore} from '../../profile/state/profile.store';
 import {ProfileCounterStore} from './profile-counter.store';
-import {rpcArrayHandler} from '../../../store-signal-functions/array/rpcArrayHandlerFeature';
-import {BaseObjectStore} from '../../../store-signal-functions/object/base-object-store.service';
+import {rpcArrayHandler} from '@polity-signal-store/array/rpcArrayHandlerFeature';
+import {BaseObjectStore} from '@polity-signal-store/object/base-object-store.service';
 
 @Injectable({providedIn: 'root'})
 export class ProfileFollowStore extends BaseObjectStore<'check_if_user_follows_profile'> {

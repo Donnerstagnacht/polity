@@ -1,7 +1,4 @@
 import {Component, inject, signal} from '@angular/core';
-import {StepperRightComponent} from '../../../navigation/stepper/stepper-right/stepper-right.component';
-import {StepperTopComponent} from '../../../navigation/stepper/stepper-top/stepper-top.component';
-import {SecondBarTopComponent} from '../../../navigation/second-bar/second-bar-top/second-bar-top.component';
 import {AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {
     TuiComboBoxModule,
@@ -25,17 +22,19 @@ import {
 } from '@taiga-ui/core';
 import {AsyncPipe} from '@angular/common';
 import {NgxPageScrollModule} from 'ngx-page-scroll';
-import {AutoscrollDirective} from '../../../navigation/autoscroll.directive';
-import {StepperItem} from '../../../navigation/types-and-interfaces/stepper-item';
 import {SupabaseObjectReturn} from '../../../../../supabase/types/supabase.authenticated.shorthand-types';
 import {
     TableThreeIconTextDeleteComponent
 } from '../../../ui/polity-table/table-three-icon-text-delete/table-three-icon-text-delete.component';
-import {CREATE_GROUP_STEPPER_ITEMS} from '../../../navigation/create-group-stepper';
 import {GroupNew} from '../../new/types/group-new';
 import {SearchProfilesBarComponent} from '../../search/search-profiles-bar/search-profiles-bar.component';
 import {DatabaseHiddenOverwritten} from '../../../../../supabase/types/supabase.hidden.modified';
 import {CreateGroupStore} from '../../new/state/create-group.store';
+import {StepperRightComponent} from '@polity-navigation/stepper/stepper-right/stepper-right.component';
+import {StepperTopComponent} from '@polity-navigation/stepper/stepper-top/stepper-top.component';
+import {SecondBarTopComponent} from '@polity-navigation/second-bar/second-bar-top/second-bar-top.component';
+import {StepperItem} from '@polity-navigation/types-and-interfaces/stepper-item';
+import {CREATE_GROUP_STEPPER_ITEMS} from '@polity-navigation/create-group-stepper';
 
 @Component({
     selector: 'polity-group-new',
@@ -55,7 +54,6 @@ import {CreateGroupStore} from '../../new/state/create-group.store';
         AsyncPipe,
         TuiButtonModule,
         NgxPageScrollModule,
-        AutoscrollDirective,
         TuiSvgModule,
         TuiRadioBlockModule,
         TuiGroupModule,

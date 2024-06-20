@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
-import {BaseArrayStore} from '../../../store-signal-functions/array/base-array-store.service';
-import {rpcArrayHandler} from '../../../store-signal-functions/array/rpcArrayHandlerFeature';
-import {rpcObjectHandler} from '../../../store-signal-functions/object/rpcObjectHandlerFeature';
+import {BaseArrayStore} from '../../../../polity-signal-store/array/base-array-store.service';
+import {rpcArrayHandler} from '../../../../polity-signal-store/array/rpcArrayHandlerFeature';
+import {rpcObjectHandler} from '../../../../polity-signal-store/object/rpcObjectHandlerFeature';
 import {RealtimeChannel, RealtimePostgresInsertPayload} from '@supabase/supabase-js';
 import {supabaseAuthenticatedClient} from '../../../auth/supabase-authenticated-client';
 import {SupabaseTable} from '../../../../../supabase/types/supabase.authenticated.shorthand-types';

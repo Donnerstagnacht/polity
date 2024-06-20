@@ -1,8 +1,5 @@
 import {Component, inject} from '@angular/core';
 import {ActivatedRoute, RouterOutlet} from '@angular/router';
-import {NavigationItem} from '../../../navigation/types-and-interfaces/navigationItem';
-import {SecondBarTopComponent} from '../../../navigation/second-bar/second-bar-top/second-bar-top.component';
-import {SecondBarRightComponent} from '../../../navigation/second-bar/second-bar-right/second-bar-right.component';
 import {CommonModule} from '@angular/common';
 import {NAVIGATION_ITEMS_PROFILE} from '../profile-navigation-signed-in';
 import {NAVIGATION_ITEMS_PROFILE_OWNER} from '../profile-navigation-owner';
@@ -10,6 +7,9 @@ import {ProfileCounterStore} from '../../profile-follow/state/profile-counter.st
 import {ProfileStore} from '../state/profile.store';
 import {ProfileFollowStore} from '../../profile-follow/state/profile-follow-store.service';
 import {SessionStore} from '../../../auth/state/session.store';
+import {SecondBarTopComponent} from '@polity-navigation/second-bar/second-bar-top/second-bar-top.component';
+import {SecondBarRightComponent} from '@polity-navigation/second-bar/second-bar-right/second-bar-right.component';
+import {NavigationItem} from '@polity-navigation/types-and-interfaces/navigationItem';
 
 @Component({
     selector: 'polity-profile',
