@@ -28,8 +28,10 @@ export class ProfileWikiPage {
 
     async toggleFollow(newIsFollowing: boolean): Promise<void> {
         if (newIsFollowing) {
+            console.log('before follow', newIsFollowing);
             await this.profileFollowStore.follow();
         } else {
+            console.log('before unfollow', newIsFollowing);
             await this.profileFollowStore.unfollow();
         }
     }

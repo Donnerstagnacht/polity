@@ -11,8 +11,8 @@ import {FilterStringComponent} from '@polity-ui/polity-filter/filter-string/filt
 import {FilterDateRangeComponent} from '@polity-ui/polity-filter/filter-date-range/filter-date-range.component';
 import {FilterTagsComponent} from '@polity-ui/polity-filter/filter-tags/filter-tags.component';
 import {FilterClearComponent} from '@polity-ui/polity-filter/filter-clear/filter-clear.component';
-import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {NotificationsStore} from '@polity-office/notification-state/notification-store.service';
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 
 @Component({
     selector: 'polity-notification',

@@ -26,7 +26,7 @@ import {GroupMembersStore} from '@polity-group/group-member-state/group-members.
         WikiHeadlineComponent
     ],
     templateUrl: './group-wiki.page.html',
-    styleUrl: './group-wiki.component.less'
+    styleUrl: './group-wiki.page.less'
 })
 export class GroupWikiPage {
     protected groupStore: GroupStore = inject(GroupStore);

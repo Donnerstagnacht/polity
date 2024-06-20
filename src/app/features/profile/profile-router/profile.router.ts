@@ -42,9 +42,9 @@ export class ProfileRouter {
 
         await Promise.all([
             this.profileStore.read(urlId),
-            this.profileCounterStore.read(urlId)
+            this.profileCounterStore.read(urlId),
+            this.profileFollowStore.checkIfFollowing(urlId)
         ]);
-        await this.profileFollowStore.checkIfFollowing(urlId);
     }
 
     private checkIsOwner(urlId: string, sessionId: string | null): void {

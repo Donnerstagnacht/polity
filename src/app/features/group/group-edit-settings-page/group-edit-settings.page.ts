@@ -4,8 +4,8 @@ import {Component} from '@angular/core';
     selector: 'polity-group-edit',
     standalone: true,
     imports: [],
-    templateUrl: './group-edit-settings-page.component.html',
-    styleUrl: './group-edit-settings.component.less'
+    templateUrl: './group-edit-settings.page.html',
+    styleUrl: './group-edit-settings.page.less'
 })
 export class GroupEditSettingsPage {
 

@@ -3,16 +3,16 @@ import {ProfileStore} from '../state/profile.store';
 import {ProfileCounterStore} from './profile-counter.store';
 import {rpcArrayHandler} from '@polity-signal-store/array/rpcArrayHandlerFeature';
 import {BaseObjectStore} from '@polity-signal-store/object/base-object-store.service';
+import {rpcObjectHandler} from '@polity-signal-store/object/rpcObjectHandlerFeature';
 
-@Injectable({providedIn: 'root'})
+@Injectable()
 export class ProfileFollowStore extends BaseObjectStore<'check_if_user_follows_profile'> {
     private profileStore: ProfileStore = inject(ProfileStore);
     private profileCouterStore: ProfileCounterStore = inject(ProfileCounterStore);
 
     constructor() {
         super(
-            true
-            ,
+            true,
             {
                 loading: false,
                 dataRequested: false
@@ -21,7 +21,7 @@ export class ProfileFollowStore extends BaseObjectStore<'check_if_user_follows_p
     }
 
     public async checkIfFollowing(userId: string): Promise<void> {
-        await rpcArrayHandler(
+        await rpcObjectHandler(
             {
                 fn: 'check_if_user_follows_profile',
                 args:
@@ -49,6 +49,7 @@ export class ProfileFollowStore extends BaseObjectStore<'check_if_user_follows_p
 
     public async follow(): Promise<void> {
         const followingId: string = this.profileStore.data().profile_id_;
+        console.log('followingId: ', followingId);
         await rpcArrayHandler(
             {
                 fn: 'follow_profile_transaction',
@@ -79,6 +80,7 @@ export class ProfileFollowStore extends BaseObjectStore<'check_if_user_follows_p
 
     public async unfollow(): Promise<void> {
         const followingId: string = this.profileStore.data().profile_id_;
+        console.log('followingId: ', followingId);
         await rpcArrayHandler(
             {
                 fn: 'unfollow_profile_transaction',

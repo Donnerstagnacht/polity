@@ -25,8 +25,12 @@ import {FollowingsOfUserGroupStore} from '@polity-profile/profile-follow-state/f
         FilterHeadlineComponent,
         ReactiveFormsModule,
         FilterStringComponent
+    ],
+    providers: [
+        FollowingsOfUserStore,
+        FollowersOfUserStore,
+        FollowingsOfUserGroupStore
     ]
-
 })
 export class ProfileFollowEditPage {
     protected followingsOfUserStore: FollowingsOfUserStore = inject(FollowingsOfUserStore);

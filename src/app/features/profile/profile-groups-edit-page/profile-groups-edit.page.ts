@@ -28,7 +28,12 @@ import {MembershipsOfUserStore} from '@polity-profile/profile-groups-state/membe
         TableThreeIconTextTwoActionsComponent
     ],
     templateUrl: './profile-groups-edit.page.html',
-    styleUrl: './profile-groups-edit.page.less'
+    styleUrl: './profile-groups-edit.page.less',
+    providers: [
+        InvitationsOfUserStore,
+        RequestsOfUserStore,
+        MembershipsOfUserStore
+    ]
 })
 export class ProfileGroupsEditPage {
     protected invitationsOfUserStore: InvitationsOfUserStore = inject(InvitationsOfUserStore);

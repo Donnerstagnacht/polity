@@ -1,4 +1,15 @@
-import {Component, effect, EventEmitter, Input, Output, Signal, signal, WritableSignal} from '@angular/core';
+import {
+    Component,
+    effect,
+    EventEmitter,
+    input,
+    Input,
+    InputSignal,
+    Output,
+    Signal,
+    signal,
+    WritableSignal
+} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {TuiButtonModule} from '@taiga-ui/core';
 import {LoadingState} from '@polity-signal-store/types/loadingState.type';
@@ -17,8 +28,9 @@ export class FollowButton {
     /**
      * If true, a follow button is displayed.
      */
-        // @Input() public isFollowing: boolean | null | undefined;
-    @Input({required: true}) public isFollowing: boolean | undefined | null = true;
+        // @Input() public isFollowing: boolean | null | undefined
+    public isFollowing: InputSignal<boolean> = input.required<boolean>();
+    // @Input({required: true}) public isFollowing: boolean | undefined | null = true;
     @Input() public loadingState: Signal<LoadingState> = signal({
         loading: true,
         dataRequested: false
@@ -42,7 +54,7 @@ export class FollowButton {
     }
 
     protected toggleFollow(): void {
-        this.toggledFollowing.emit(!this.isFollowing);
+        this.toggledFollowing.emit(!this.isFollowing());
     }
 
 }

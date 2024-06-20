@@ -4,7 +4,7 @@ import {rpcArrayHandler} from '@polity-signal-store/array/rpcArrayHandlerFeature
 import {removeObjectByPropertyValue} from '@polity-signal-store/array/removeItemFeatue';
 import {GroupCounterStore} from '@polity-group/group-follow-state/group-counter.store';
 
-@Injectable({providedIn: 'root'})
+@Injectable()
 export class InvitationsOfUserStore extends BaseArrayStore<'read_group_member_invitations_of_user'> {
     private groupCounterStore: GroupCounterStore = inject(GroupCounterStore);
 

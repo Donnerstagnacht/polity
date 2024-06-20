@@ -3,7 +3,7 @@ import {BaseArrayStore} from '@polity-signal-store/array/base-array-store.servic
 import {rpcArrayHandler} from '@polity-signal-store/array/rpcArrayHandlerFeature';
 import {removeObjectByPropertyValue} from '@polity-signal-store/array/removeItemFeatue';
 
-@Injectable({providedIn: 'root'})
+@Injectable()
 export class RequestsOfUserStore extends BaseArrayStore<'read_group_requests_of_user'> {
 
     constructor() {

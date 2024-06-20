@@ -13,6 +13,10 @@ import {MembershipsOfUserStore} from '@polity-profile/profile-groups-state/membe
     imports: [
         ProfileLinkCardComponent,
         GroupLinkCardComponent
+    ],
+    providers: [
+        MembershipsOfUserStore,
+        ProfileStore
     ]
 })
 export class HomeRouter {

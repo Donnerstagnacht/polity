@@ -4,7 +4,7 @@ import {BaseObjectStore} from '@polity-signal-store/object/base-object-store.ser
 import {rpcObjectHandler} from '@polity-signal-store/object/rpcObjectHandlerFeature';
 import {getSignedUrlFromSupabaseObject} from '@polity-signal-store/imageFeature';
 
-@Injectable({providedIn: 'root'})
+@Injectable()
 export class ProfileStore extends BaseObjectStore<'read_profile'> {
     private isOwner_: WritableSignal<boolean> = signal(false);
     public isOwner: Signal<boolean> = this.isOwner_.asReadonly();

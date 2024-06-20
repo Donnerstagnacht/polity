@@ -39,9 +39,11 @@
             [isOwner]="profileStore.isOwner()"
         ></polity-follow-button>
     </div>
+    <p>test{{ this.profileFollowStore.data() }}</p>
 
     <polity-wiki-image
         [isLoading]="signal(profileStore.loadingState().loading)"
         [src]="profileStore.data().profile_image_"
     ></polity-wiki-image>
 </div>
+

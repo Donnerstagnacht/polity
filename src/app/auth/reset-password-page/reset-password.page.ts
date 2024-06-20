@@ -50,7 +50,7 @@ import {AuthenticationService} from '../state/authentication.service';
         }
     ],
     templateUrl: './reset-password.page.html',
-    styleUrl: './reset-password.component.less'
+    styleUrl: './reset-password.page.less'
 })
 export class ResetPasswordPage {
     protected updatePasswordForm: FormGroup<{
