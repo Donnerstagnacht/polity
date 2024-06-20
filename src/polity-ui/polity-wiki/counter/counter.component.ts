@@ -1,5 +1,5 @@
-import {Component, Input, signal, WritableSignal} from '@angular/core';
-import {CommonModule} from "@angular/common";
+import {Component, input, InputSignal} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
 @Component({
     selector: 'polity-counter',
@@ -9,8 +9,8 @@ import {CommonModule} from "@angular/common";
     styleUrls: ['./counter.component.less']
 })
 export class CounterComponent {
-    @Input({required: true}) isLoading: WritableSignal<boolean> = signal(true);
-    @Input({required: true}) counterValue: number | null | undefined = null;
-    @Input({required: true}) counterTitle: string | null = null;
-    @Input() dataCyTag: string = 'counter';
+    public isLoading: InputSignal<boolean> = input.required<boolean>();
+    public counterValue: InputSignal<number | null | undefined> = input.required<number | null | undefined>();
+    public counterTitle: InputSignal<string | null> = input.required<string | null>();
+    public dataCyTag: InputSignal<string> = input<string>('counter');
 }

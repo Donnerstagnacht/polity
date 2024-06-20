@@ -1,4 +1,4 @@
-import {Component, Input, signal, WritableSignal} from '@angular/core';
+import {Component, input, InputSignal} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
 @Component({
@@ -9,7 +9,7 @@ import {CommonModule} from '@angular/common';
     styleUrls: ['./wiki-headline.component.less']
 })
 export class WikiHeadlineComponent {
-    @Input({required: true}) firstName: string | null | undefined = null;
-    @Input() lastName: string | null | undefined = null;
-    @Input({required: true}) isLoading: WritableSignal<boolean> = signal(true);
+    public firstName: InputSignal<string | null | undefined> = input.required<string | null | undefined>();
+    public lastName: InputSignal<string | null | undefined> = input<string | null | undefined>();
+    public isLoading: InputSignal<boolean> = input.required<boolean>();
 }

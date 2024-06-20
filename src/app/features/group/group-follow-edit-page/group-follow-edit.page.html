@@ -44,9 +44,9 @@
         [dataCyTagsHeadline]="['follower_profile_image_headline', 'follower_first_name_headline',
         'follower_remove_headline']"
         [dataKeysForColumns]="['profile_image_', 'first_name_', 'id_']"
-        [data]="followersOfGroupStore.dataFiltered"
+        [data]="followersOfGroupStore.dataFiltered()"
         [headings]="['Foto', 'test', 'Entfernen']"
-        [isLoading]="signal(followersOfGroupStore.loadingState().loading)"
+        [isLoading]="followersOfGroupStore.loadingState().loading"
     >
     </polity-table-three-icon-text-delete>
 }
@@ -59,9 +59,9 @@
         [dataCyTagsHeadline]="['following_profile_image_headline', 'following_first_name_headline',
         'following_remove_headline']"
         [dataKeysForColumns]="['profile_image_', 'first_name_', 'id_']"
-        [data]="followingsOfGroupStore.dataFiltered"
+        [data]="followingsOfGroupStore.dataFiltered()"
         [headings]="['Foto', 'Name', 'Entfernen']"
-        [isLoading]="signal(followingsOfGroupStore.loadingState().loading)"
+        [isLoading]="followingsOfGroupStore.loadingState().loading"
     >
     </polity-table-three-icon-text-delete>
 }

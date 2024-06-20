@@ -7,32 +7,37 @@
     <thead>
     <tr
         class="tui-table__tr"
-        tuiThGroup>
+        tuiThGroup
+    >
         <th
             *tuiHead="transformColumnForTui(0)"
-            [attr.data-cy]="dataCyTagsHeadline[0]"
+            [attr.data-cy]="dataCyTagsHeadline()[0]"
             [sorter]="null"
             class="tui-table__th tui-table__th_first"
-            tuiTh>{{ headings[0] }}
+            tuiTh
+        >{{ headings()[0] }}
         </th>
         <th
             *tuiHead="transformColumnForTui(1)"
-            [attr.data-cy]="dataCyTagsHeadline[1]"
+            [attr.data-cy]="dataCyTagsHeadline()[1]"
             class="tui-table__th"
-            tuiTh>{{ headings[1] }}
+            tuiTh
+        >{{ headings()[1] }}
         </th>
         <th
             *tuiHead="transformColumnForTui(2)"
-            [attr.data-cy]="dataCyTagsHeadline[2]"
+            [attr.data-cy]="dataCyTagsHeadline()[2]"
             class="tui-table__th"
-            tuiTh>{{ headings[2] }}
+            tuiTh
+        >{{ headings()[2] }}
         </th>
     </tr>
     </thead>
     <tbody
         *tuiLet="transformDataForTui() | tuiTableSort as sortedData"
         [data]="sortedData"
-        tuiTbody>
+        tuiTbody
+    >
         @for (item of sortedData;track item) {
             <tr
                 class="tui-table__tr tui-table__tr_border_none"
@@ -44,20 +49,20 @@
                     tuiTd
                 >
                     <tui-avatar
-                        [attr.data-cy]="dataCyTags[0]"
+                        [attr.data-cy]="dataCyTags()[0]"
                         [autoColor]="true"
-                        avatarUrl="{{getTableValueKey(item, dataKeysForColumns[0])}}"
+                        avatarUrl="{{getTableValueKey(item, dataKeysForColumns()[0])}}"
                         size="s"
-                        text="{{getTableValueKey(item, dataKeysForColumns[0])}} {{getTableValueKey(item, bonusKeys[0])}}"
+                        text="{{getTableValueKey(item, dataKeysForColumns()[0])}} {{getTableValueKey(item, bonusKeys()[0])}}"
                     ></tui-avatar>
                 </td>
                 <td
                     *tuiCell="transformColumnForTui(1)"
-                    [attr.data-cy]="dataCyTags[1]"
+                    [attr.data-cy]="dataCyTags()[1]"
                     class="tui-table__td polity-table-column-max-width"
                     tuiTd
                 >
-                    {{ getTableValueKey(item, dataKeysForColumns[1]) }} {{ getTableValueKey(item, bonusKeys[0]) }}
+                    {{ getTableValueKey(item, dataKeysForColumns()[1]) }} {{ getTableValueKey(item, bonusKeys()[0]) }}
                 </td>
                 <td
                     *tuiCell="transformColumnForTui(2)"
@@ -65,8 +70,8 @@
                     tuiTd
                 >
                     <button
-                        (click)="onRemove(getTableValueKey(item, dataKeysForColumns[2]))"
-                        [attr.data-cy]="dataCyTags[2]"
+                        (click)="onRemove(getTableValueKey(item, dataKeysForColumns()[2]))"
+                        [attr.data-cy]="dataCyTags()[2]"
                         appearance="flat"
                         class="remove"
                         icon="tuiIconTrash"

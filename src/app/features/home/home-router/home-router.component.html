@@ -7,8 +7,8 @@
     [attr.data-cy]="'home-to-profile'"
     [class.tui-skeleton]="profileStore.loadingState().loading"
     [dataCyTag]="'home-first-name'"
-    [isLoading]="signal(profileStore.loadingState().loading)"
-    [profile]="profileStore.data"
+    [isLoading]="profileStore.loadingState().loading"
+    [profile]="profileStore.data()"
     [sessionId]="sessionId"
 ></polity-profile-link-card>
 
@@ -19,7 +19,7 @@
             [attr.data-cy]="'to-group-of-user'"
             [class.tui-skeleton]="membershipsOfUserStore.loadingState().loading"
             [dataCyTag]="'group-of-user-first-name'"
-            [isLoading]="signal(membershipsOfUserStore.loadingState().loading)"
+            [isLoading]="membershipsOfUserStore.loadingState().loading"
             [group]="group"
         ></polity-group-link-card>
     </div>

@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, Output, signal, WritableSignal} from '@angular/core';
-import {CommonModule} from "@angular/common";
-import {TuiButtonModule} from "@taiga-ui/core";
+import {Component, input, InputSignal, output, OutputEmitterRef} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {TuiButtonModule} from '@taiga-ui/core';
 
 @Component({
     selector: 'polity-request-button',
@@ -10,37 +10,35 @@ import {TuiButtonModule} from "@taiga-ui/core";
     imports: [
         CommonModule,
         TuiButtonModule
-    ],
+    ]
 })
 export class RequestButton {
     /**
      * If true, a request button is displayed.
      */
-        // @Input() public isRequested: boolean | null | undefined;
-    @Input({required: true}) public isRequested: boolean | undefined | null = true;
+    public isRequested: InputSignal<boolean | undefined | null> = input.required<boolean | undefined | null>();
 
     /**
      * If true, the request button is not displayed.
      */
-    @Input() public requestNotPossible: boolean = false;
+    public requestNotPossible: InputSignal<boolean | undefined> = input<boolean>();
 
     /**
      * If true, a loading skeleton is displayed.
      */
-    @Input({required: true}) public isLoading: WritableSignal<boolean> = signal(true);
+    public isLoading: InputSignal<boolean> = input.required<boolean>();
 
     /**
      * The request title to display.
      */
-    @Input() public requestTitle: WritableSignal<string> = signal('');
-    @Input() public requestTitleString: string = '';
+    public requestTitleString: InputSignal<string> = input<string>('');
 
     /**
      * The title to display when the button is toggled.
      */
-    @Input() public toggledTitle: string = '';
+    public toggledTitle: InputSignal<string> = input<string>('');
 
-    @Output() protected toggledFollowing: EventEmitter<boolean> = new EventEmitter<boolean>();
+    public toggledFollowing: OutputEmitterRef<boolean> = output<boolean>();
 
     protected toggleFollow(): void {
         this.toggledFollowing.emit(!this.isRequested);

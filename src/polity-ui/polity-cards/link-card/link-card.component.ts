@@ -1,6 +1,6 @@
-import {Component, Input, signal, WritableSignal} from '@angular/core';
-import {Router} from "@angular/router";
-import {TuiIslandModule} from "@taiga-ui/kit";
+import {Component, input, InputSignal} from '@angular/core';
+import {Router} from '@angular/router';
+import {TuiIslandModule} from '@taiga-ui/kit';
 
 @Component({
     selector: 'polity-link-card',
@@ -17,20 +17,19 @@ export class LinkCardComponent {
      *
      * @Input linkUrl - string |null.
      */
-    @Input({required: true}) public linkUrl: string | null = null;
+    public linkUrl: InputSignal<string | null | undefined> = input<string | null | undefined>();
     /**
      * Card title which should be displayed.
      *
      * @Input linkUrl - string |null.
      */
-    @Input({required: true}) public cardTitle: string | null = null;
-    @Input() public dataCyTag: string = 'profile-link-card';
+    public cardTitle: InputSignal<string | null | undefined> = input<string | null | undefined>();
+    public dataCyTag: InputSignal<string> = input<string>('profile-link-card');
 
-    @Input() public isLoading: WritableSignal<boolean> = signal(false);
-    protected readonly history = history;
+    public isLoading: InputSignal<boolean> = input(false);
 
     constructor(
-        private readonly router: Router,
+        private readonly router: Router
     ) {
     }
 

@@ -23,9 +23,9 @@
         [dataCyTagsHeadline]="['user_image_title', 'user_first_name_title', 'remove_invitation_title']"
         [dataCyTags]="['user_image', 'user_first_name', 'follower_remove']"
         [dataKeysForColumns]="['last_name_', 'first_name_', 'id_']"
-        [data]="selectedUsers"
+        [data]="selectedUsers()"
         [headings]="['Foto', 'Name', 'Entfernen']"
-        [isLoading]="signal(false)"
+        [isLoading]="false"
     >
     </polity-table-three-icon-text-delete>
 </form>

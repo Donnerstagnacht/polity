@@ -1,11 +1,11 @@
 <polity-main-bar-bottom
     [items]="items"
-    [notificationBadge]="this.notificationCounterStore.data"
+    [notificationBadge]="this.notificationCounterStore.data()"
 >
 </polity-main-bar-bottom>
 <polity-main-bar-side
     [items]="items"
-    [notificationBadge]="this.notificationCounterStore.data"
+    [notificationBadge]="this.notificationCounterStore.data()"
 >
 </polity-main-bar-side>
 <router-outlet></router-outlet>

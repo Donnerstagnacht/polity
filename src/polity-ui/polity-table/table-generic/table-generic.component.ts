@@ -1,4 +1,4 @@
-import {Component, Input, Signal, signal, WritableSignal} from '@angular/core';
+import {Component, input, InputSignal} from '@angular/core';
 
 /**
  * A generic table componen that offers generic functionality for tui tables
@@ -16,16 +16,16 @@ import {Component, Input, Signal, signal, WritableSignal} from '@angular/core';
     templateUrl: './table-generic.component.html',
     styleUrls: ['./table-generic.component.less'],
     standalone: true,
-    imports: [],
+    imports: []
 })
 export class TableGenericComponent<ObjectType> {
-    @Input({required: true}) public dataKeysForColumns: (keyof ObjectType)[] = [];
-    @Input() public bonusKeys: (keyof ObjectType)[] = [];
-    @Input({required: true}) public data: WritableSignal<ObjectType[]> | Signal<ObjectType[]> = signal([]);
-    @Input({required: true}) public isLoading: WritableSignal<boolean> = signal(true);
-    @Input({required: true}) public headings: string[] = [];
-    @Input() dataCyTags: string[] = [];
-    @Input() dataCyTagsHeadline: string[] = [];
+    public dataKeysForColumns: InputSignal<(keyof ObjectType)[]> = input<(keyof ObjectType)[]>([]);
+    public bonusKeys: InputSignal<(keyof ObjectType)[]> = input<(keyof ObjectType)[]>([]);
+    public data: InputSignal<ObjectType[]> = input<ObjectType[]>([]);
+    public isLoading: InputSignal<boolean> = input(true);
+    public headings: InputSignal<string[]> = input<string[]>([]);
+    public dataCyTags: InputSignal<string[]> = input<string[]>([]);
+    public dataCyTagsHeadline: InputSignal<string[]> = input<string[]>([]);
 
     protected getTableValueKey(item: any, key: string | number | symbol): any {
         return item[key];
@@ -36,10 +36,10 @@ export class TableGenericComponent<ObjectType> {
     }
 
     protected transformColumnForTui(index: number): string {
-        return this.dataKeysForColumns[index] as string;
+        return this.dataKeysForColumns()[index] as string;
     }
 
     protected transformColumnsForTui(): readonly string[] {
-        return this.dataKeysForColumns as readonly string[];
+        return this.dataKeysForColumns() as readonly string[];
     }
 }

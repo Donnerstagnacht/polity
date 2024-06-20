@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {TuiSvgModule} from "@taiga-ui/core";
+import {Component, input, InputSignal, output, OutputEmitterRef} from '@angular/core';
+import {TuiSvgModule} from '@taiga-ui/core';
 
 @Component({
     selector: 'polity-filter-headline',
@@ -8,13 +8,12 @@ import {TuiSvgModule} from "@taiga-ui/core";
     standalone: true,
     imports: [
         TuiSvgModule
-
-    ],
+    ]
 })
 export class FilterHeadlineComponent {
-    @Output() showFilter: EventEmitter<void> = new EventEmitter();
-    @Input({required: true}) headline: string = '';
-    @Input() dataCyTag: string = 'headline';
+    public showFilter: OutputEmitterRef<void> = output<void>();
+    public headline: InputSignal<string> = input.required<string>();
+    public dataCyTag: InputSignal<string> = input<string>('headline');
 
     toggleShowFilter(): void {
         this.showFilter.emit();

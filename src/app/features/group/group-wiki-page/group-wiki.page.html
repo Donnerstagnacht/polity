@@ -4,7 +4,7 @@
 <div class="polity-center min-height">
     <polity-wiki-headline
         [firstName]="groupStore.data().name_"
-        [isLoading]="signal(groupStore.loadingState().loading)"
+        [isLoading]="groupStore.loadingState().loading"
     ></polity-wiki-headline>
 
     <div
@@ -14,14 +14,14 @@
             [counterTitle]="'Member'"
             [counterValue]="groupCounterStore.data().group_member_counter_"
             [dataCyTag]="'memberCounter'"
-            [isLoading]="signal(groupCounterStore.loadingState().loading)"
+            [isLoading]="groupCounterStore.loadingState().loading"
             class="polity-flex-item-first"
         ></polity-counter>
         <polity-counter
             [counterTitle]="'Follower'"
             [counterValue]="groupCounterStore.data().follower_counter_"
             [dataCyTag]="'followerCounter'"
-            [isLoading]="signal(groupCounterStore.loadingState().loading)"
+            [isLoading]="groupCounterStore.loadingState().loading"
             class="polity-flex-item-first"
         ></polity-counter>
     </div>
@@ -31,15 +31,15 @@
         <polity-follow-button
             (toggledFollowing)="toggleFollow($event)"
             [isFollowing]="groupFollowStore.data()"
-            [isLoading]="signal(groupFollowStore.loadingState().loading)"
-            [loadingState]="groupFollowStore.loadingState"
+            [isLoading]="groupFollowStore.loadingState().loading"
+            [loadingState]="groupFollowStore.loadingState()"
         ></polity-follow-button>
     </div>
 
     <div class="tui-space_bottom-4">
         <polity-request-button
             (toggledFollowing)="toggleMembership($event)"
-            [isLoading]="signal(groupMembershipStatusStore.loadingState().loading)"
+            [isLoading]="groupMembershipStatusStore.loadingState().loading"
             [isRequested]="groupMembershipStatusStore.isMember()"
             [requestTitleString]="buttonTextString"
             [toggledTitle]="'REQUEST MEMBERSHIP'"

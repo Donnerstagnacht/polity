@@ -1,7 +1,7 @@
 <div class="polity-center min-height">
     <polity-wiki-headline
         [firstName]="profileStore.data().first_name_"
-        [isLoading]="signal(profileStore.loadingState().loading)"
+        [isLoading]="profileStore.loadingState().loading"
         [lastName]="profileStore.data().last_name_"
     ></polity-wiki-headline>
 
@@ -12,21 +12,21 @@
             [counterTitle]="'Follower'"
             [counterValue]="profileCounterStore.data().follower_counter_"
             [dataCyTag]="'followerCounter'"
-            [isLoading]="signal(profileCounterStore.loadingState().loading)"
+            [isLoading]="profileCounterStore.loadingState().loading"
             class="polity-flex-item-first"
         ></polity-counter>
         <polity-counter
             [counterTitle]="'Following'"
             [counterValue]="profileCounterStore.data().following_counter_"
             [dataCyTag]="'followingCounter'"
-            [isLoading]="signal(profileCounterStore.loadingState().loading)"
+            [isLoading]="profileCounterStore.loadingState().loading"
             class="polity-flex-item-last"
         ></polity-counter>
         <polity-counter
             [counterTitle]="'Memberships'"
             [counterValue]="profileCounterStore.data().group_membership_counter_"
             [dataCyTag]="'membershipCounter'"
-            [isLoading]="signal(profileCounterStore.loadingState().loading)"
+            [isLoading]="profileCounterStore.loadingState().loading"
             class="polity-flex-item-last"
         ></polity-counter>
     </div>
@@ -35,14 +35,14 @@
         <polity-follow-button
             (toggledFollowing)="toggleFollow($event)"
             [isFollowing]="profileFollowStore.data()"
-            [isLoading]="signal(profileFollowStore.loadingState().loading)"
+            [isLoading]="profileFollowStore.loadingState().loading"
             [isOwner]="profileStore.isOwner()"
         ></polity-follow-button>
     </div>
     <p>test{{ this.profileFollowStore.data() }}</p>
 
     <polity-wiki-image
-        [isLoading]="signal(profileStore.loadingState().loading)"
+        [isLoading]="profileStore.loadingState().loading"
         [src]="profileStore.data().profile_image_"
     ></polity-wiki-image>
 </div>

@@ -4,9 +4,12 @@
 >
     <p
         [class.tui-skeleton]="isLoading()"
-        class="tui-island__category">GROUP</p>
-    <h3 [class.tui-skeleton]="isLoading()"
-        class="tui-island__title">
-        {{ group?.name_ }} {{ group?.level_ }}
+        class="tui-island__category"
+    >GROUP</p>
+    <h3
+        [class.tui-skeleton]="isLoading()"
+        class="tui-island__title"
+    >
+        {{ group()?.name_ }} {{ group()?.level_ }}
     </h3>
 </tui-island>

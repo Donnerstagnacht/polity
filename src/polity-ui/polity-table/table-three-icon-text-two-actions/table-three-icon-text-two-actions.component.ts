@@ -1,9 +1,9 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {TuiAvatarModule} from "@taiga-ui/kit";
-import {TuiButtonModule} from "@taiga-ui/core";
-import {TuiLetModule} from "@taiga-ui/cdk";
-import {TuiTableModule} from "@taiga-ui/addon-table";
-import {TableGenericComponent} from "../table-generic/table-generic.component";
+import {Component, input, InputSignal, output, OutputEmitterRef} from '@angular/core';
+import {TuiAvatarModule} from '@taiga-ui/kit';
+import {TuiButtonModule} from '@taiga-ui/core';
+import {TuiLetModule} from '@taiga-ui/cdk';
+import {TuiTableModule} from '@taiga-ui/addon-table';
+import {TableGenericComponent} from '../table-generic/table-generic.component';
 
 /**
  * A component to display a table with the following columns
@@ -31,21 +31,21 @@ import {TableGenericComponent} from "../table-generic/table-generic.component";
     styleUrl: './table-three-icon-text-two-actions.component.less'
 })
 export class TableThreeIconTextTwoActionsComponent<ObjectType> extends TableGenericComponent<ObjectType> {
-    @Output() public firstAction: EventEmitter<string> = new EventEmitter<string>();
-    @Output() public secondAction: EventEmitter<string> = new EventEmitter<string>();
-    @Input({required: true}) public secondActionDataCyTag: string = '';
-    @Input({required: true}) public firstActionIcon: string = '';
-    @Input({required: true}) public secondActionIcon: string = '';
-    @Input({required: true}) public firstActionText: string = '';
-    @Input({required: true}) public secondActionText: string = '';
+    public firstAction: OutputEmitterRef<string> = output<string>();
+    public secondAction: OutputEmitterRef<string> = output<string>();
+    public secondActionDataCyTag: InputSignal<string> = input.required<string>();
+    public firstActionIcon: InputSignal<string> = input.required<string>();
+    public secondActionIcon: InputSignal<string> = input.required<string>();
+    public firstActionText: InputSignal<string> = input.required<string>();
+    public secondActionText: InputSignal<string> = input.required<string>();
 
     onFirstAction(id: string): void {
-        console.log('onFirstAction', id)
+        console.log('onFirstAction', id);
         this.firstAction.emit(id);
     }
 
     onSecondAction(id: string): void {
-        console.log('onSecondAction', id)
+        console.log('onSecondAction', id);
         this.secondAction.emit(id);
     }
 }

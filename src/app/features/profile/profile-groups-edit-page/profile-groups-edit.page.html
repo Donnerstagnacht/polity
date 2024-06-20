@@ -50,9 +50,9 @@
         [dataCyTagsHeadline]="['group_membership_image_headline', 'group_membership_name_headline',
         'group_membership_leave_headline']"
         [dataKeysForColumns]="['group_name_', 'group_name_', 'id_']"
-        [data]="membershipsOfUserStore.dataFiltered"
+        [data]="membershipsOfUserStore.dataFiltered()"
         [headings]="['Foto', 'Name', 'Verlassen']"
-        [isLoading]="signal(membershipsOfUserStore.loadingState().loading)"
+        [isLoading]="membershipsOfUserStore.loadingState().loading"
     >
     </polity-table-three-icon-text-delete>
 }
@@ -65,9 +65,9 @@
         [dataCyTagsHeadline]="['group_request_image_headline', 'group_request_name_headline',
         'group_request_withdraw_headline']"
         [dataKeysForColumns]="['group_name_', 'group_name_', 'id_']"
-        [data]="requestsOfUserStore.dataFiltered"
+        [data]="requestsOfUserStore.dataFiltered()"
         [headings]="['Foto', 'Name', 'Entfernen']"
-        [isLoading]="signal(requestsOfUserStore.loadingState().loading)"
+        [isLoading]="requestsOfUserStore.loadingState().loading"
     >
     </polity-table-three-icon-text-delete>
 }
@@ -80,9 +80,9 @@
         [dataCyTagsHeadline]="['group_invitation_image_headline', 'group_invitation_name_headline',
         'group_invitation_accept_headline']"
         [dataKeysForColumns]="['group_name_', 'group_name_', 'id_']"
-        [data]="invitationsOfUserStore.dataFiltered"
+        [data]="invitationsOfUserStore.dataFiltered()"
         [headings]="['Foto', 'Name', 'Entscheiden']"
-        [isLoading]="signal(invitationsOfUserStore.loadingState().loading)"
+        [isLoading]="invitationsOfUserStore.loadingState().loading"
         [firstActionIcon]="'tuiIconCheck'"
         [secondActionIcon]="'tuiIconX'"
         [firstActionText]="'Accept'"

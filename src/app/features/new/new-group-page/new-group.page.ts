@@ -68,7 +68,7 @@ import {CREATE_GROUP_STEPPER_ITEMS} from '@polity-navigation/create-group-steppe
         SearchProfilesBarComponent
     ],
     templateUrl: './new-group.page.html',
-    styleUrl: './group-new.component.less'
+    styleUrl: './new-group.page.less'
 })
 export class NewGroupPage {
     selectedUsers: SupabaseObjectReturn<'search_user'>[] = [];

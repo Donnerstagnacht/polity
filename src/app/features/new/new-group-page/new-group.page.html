@@ -9,8 +9,10 @@
     (ngSubmit)="onCreateGroup()"
     [formGroup]="createGroupForm"
 >
-    <h2 class="tui-text_h2"
-        id="Name">
+    <h2
+        class="tui-text_h2"
+        id="Name"
+    >
         Name
     </h2>
     <div class="tui-form__row">
@@ -20,12 +22,14 @@
             [tuiTextfieldCleaner]="true"
             [tuiTextfieldCustomContent]="createGroupForm.controls.name.valid ? success : ''"
             formControlName="name"
-            tuiHintContent="Bitte einen noch nicht verwendeten Gruppennamen eingeben.">
+            tuiHintContent="Bitte einen noch nicht verwendeten Gruppennamen eingeben."
+        >
             Gebe den Namen deiner Gruppe ein.
         </tui-input>
         <tui-error
             [error]="[] | tuiFieldError | async"
-            formControlName="name">
+            formControlName="name"
+        >
         </tui-error>
     </div>
 
@@ -83,8 +87,10 @@
         </tui-radio-block>
     </div>
 
-    <h2 class="tui-text_h2"
-        id="Description">
+    <h2
+        class="tui-text_h2"
+        id="Description"
+    >
         Description
     </h2>
     <div class="tui-form__row">
@@ -94,12 +100,14 @@
             [tuiTextfieldCleaner]="true"
             [tuiTextfieldCustomContent]="createGroupForm.controls.description.valid ? success : ''"
             formControlName="description"
-            tuiHintContent="Bitte ein Beschreibung deiner Gruppe eingeben.">
+            tuiHintContent="Bitte ein Beschreibung deiner Gruppe eingeben."
+        >
             Gebe eine Beschreibung deiner Gruppe eingeben.
         </tui-input>
         <tui-error
             [error]="[] | tuiFieldError | async"
-            formControlName="description">
+            formControlName="description"
+        >
         </tui-error>
     </div>
 

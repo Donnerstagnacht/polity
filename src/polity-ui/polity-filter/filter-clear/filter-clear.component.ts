@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Output} from '@angular/core';
-import {TuiButtonModule} from "@taiga-ui/core";
+import {Component, output, OutputEmitterRef} from '@angular/core';
+import {TuiButtonModule} from '@taiga-ui/core';
 
 @Component({
     selector: 'polity-filter-clear',
@@ -8,10 +8,10 @@ import {TuiButtonModule} from "@taiga-ui/core";
     standalone: true,
     imports: [
         TuiButtonModule
-    ],
+    ]
 })
 export class FilterClearComponent {
-    @Output() clearFilter: EventEmitter<void> = new EventEmitter();
+    public clearFilter: OutputEmitterRef<void> = output<void>();
 
     onClear(): void {
         this.clearFilter.emit();

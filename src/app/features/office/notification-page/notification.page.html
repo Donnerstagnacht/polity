@@ -33,8 +33,8 @@
 			'created_at_headline']"
     [dataCyTags]="['profile_image', 'first_name', 'type_of_notification', 'created_at']"
     [dataKeysForColumns]="['profile_image_', 'first_name_', 'type_of_notification_', 'created_at_']"
-    [data]="this.notificationsStore.dataFiltered"
+    [data]="this.notificationsStore.dataFiltered()"
     [headings]="['Foto', 'Name', 'Typ', 'Datum']"
-    [isLoading]="signal(this.notificationsStore.loadingState().loading)"
+    [isLoading]="this.notificationsStore.loadingState().loading"
 >
 </polity-table-four-icon-text-tag-date>

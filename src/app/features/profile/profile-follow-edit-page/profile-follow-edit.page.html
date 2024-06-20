@@ -51,9 +51,9 @@
         [dataCyTagsHeadline]="['follower_profile_image_headline', 'follower_first_name_headline',
         'follower_remove_headline']"
         [dataKeysForColumns]="['profile_image_', 'first_name_', 'id_']"
-        [data]="followersOfUserStore.dataFiltered"
+        [data]="followersOfUserStore.dataFiltered()"
         [headings]="['Foto', 'Name', 'Entfernen']"
-        [isLoading]="signal(followersOfUserStore.loadingState().loading)"
+        [isLoading]="followersOfUserStore.loadingState().loading"
     >
     </polity-table-three-icon-text-delete>
 }
@@ -66,9 +66,9 @@
         [dataCyTagsHeadline]="['following_profile_image_headline', 'following_first_name_headline',
         'following_remove_headline']"
         [dataKeysForColumns]="['profile_image_', 'first_name_', 'id_']"
-        [data]="followingsOfUserStore.dataFiltered"
+        [data]="followingsOfUserStore.dataFiltered()"
         [headings]="['Foto', 'Name', 'Entfernen']"
-        [isLoading]="signal(followingsOfUserStore.loadingState().loading)"
+        [isLoading]="followingsOfUserStore.loadingState().loading"
     >
     </polity-table-three-icon-text-delete>
 }
@@ -81,9 +81,9 @@
         [dataCyTagsHeadline]="['following_group_image_headline', 'following_group_name_headline',
         'following_group_remove_headline']"
         [dataKeysForColumns]="['img_url_', 'name_', 'id_']"
-        [data]="followingsOfUserGroupStore.dataFiltered"
+        [data]="followingsOfUserGroupStore.dataFiltered()"
         [headings]="['Foto', 'Name', 'Entfernen']"
-        [isLoading]="signal(followingsOfUserGroupStore.loadingState().loading)"
+        [isLoading]="followingsOfUserGroupStore.loadingState().loading"
     >
     </polity-table-three-icon-text-delete>
 }

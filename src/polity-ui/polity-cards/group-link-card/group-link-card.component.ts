@@ -1,4 +1,4 @@
-import {Component, Input, signal, WritableSignal} from '@angular/core';
+import {Component, input, InputSignal} from '@angular/core';
 import {Router} from '@angular/router';
 import {TuiIslandModule} from '@taiga-ui/kit';
 import {SupabaseObjectReturn} from '../../../../supabase/types/supabase.authenticated.shorthand-types';
@@ -20,16 +20,9 @@ export class GroupLinkCardComponent {
      * @Input group - SupabaseObjectReturn<'read_groups_of_user'> | null - the group data to
      * be displayed
      */
-    @Input({required: true}) public isLoading: WritableSignal<boolean> = signal(true);
-    @Input({required: true}) public group: SupabaseObjectReturn<'read_groups_of_user'> | null = null;
-
-
-    // @Input({required: true}) public group: WritableSignal<
-    //     SupabaseObjectReturn<'read_groups_of_user'> | null | undefined
-    // > = signal(
-    //     null
-    // )
-    @Input() public dataCyTag: string = 'group-link-card';
+    public isLoading: InputSignal<boolean> = input(true);
+    public group: InputSignal<SupabaseObjectReturn<'read_groups_of_user'> | null> = input<SupabaseObjectReturn<'read_groups_of_user'> | null>(null);
+    public dataCyTag: InputSignal<string> = input<string>('group-link-card');
 
     constructor(
         private readonly router: Router
@@ -37,7 +30,7 @@ export class GroupLinkCardComponent {
     }
 
     protected async onClick(): Promise<void> {
-        await this.router.navigate(['/group/', this.group?.group_id_]);
+        await this.router.navigate(['/group/', this.group()?.group_id_]);
     }
 
 }

@@ -5,7 +5,8 @@
     <p
         [attr.data-cy]="'group-paragraph'"
         [class.tui-skeleton]="isLoading()"
-        class="title title_size_s">
-        {{ group?.group_name_ }} {{ group?.group_level_ }}
+        class="title title_size_s"
+    >
+        {{ group()?.group_name_ }} {{ group()?.group_level_ }}
     </p>
 </tui-island>

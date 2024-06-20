@@ -1,4 +1,4 @@
-import {Component, Input, signal, WritableSignal} from '@angular/core';
+import {Component, input, InputSignal} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
 @Component({
@@ -9,6 +9,6 @@ import {CommonModule} from '@angular/common';
     styleUrls: ['./wiki-image.component.less']
 })
 export class WikiImageComponent {
-    @Input({required: true}) public isLoading: WritableSignal<boolean> = signal(true);
-    @Input({required: true}) public src: string | null | undefined = null;
+    public isLoading: InputSignal<boolean> = input.required<boolean>();
+    public src: InputSignal<string | null | undefined> = input.required<string | null | undefined>();
 }

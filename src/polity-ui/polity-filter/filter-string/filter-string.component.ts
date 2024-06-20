@@ -1,6 +1,6 @@
-import {Component, Input} from '@angular/core';
-import {FormGroup, FormGroupDirective, ReactiveFormsModule} from "@angular/forms";
-import {TuiInputModule} from "@taiga-ui/kit";
+import {Component, input, InputSignal} from '@angular/core';
+import {FormGroup, FormGroupDirective, ReactiveFormsModule} from '@angular/forms';
+import {TuiInputModule} from '@taiga-ui/kit';
 
 @Component({
     selector: 'polity-filter-string',
@@ -14,15 +14,15 @@ import {TuiInputModule} from "@taiga-ui/kit";
     ]
 })
 export class FilterStringComponent {
-    @Input() formGroupName!: string;
-    @Input({required: true}) placeholderText: string = '';
-    filterStringForm: FormGroup
+    formGroupName: InputSignal<string> = input.required<string>();
+    placeholderText: InputSignal<string> = input.required<string>();
+    filterStringForm: FormGroup;
 
     constructor(private rootFormGroup: FormGroupDirective) {
-        this.filterStringForm = new FormGroup({})
+        this.filterStringForm = new FormGroup({});
     }
 
     ngOnInit(): void {
-        this.filterStringForm = this.rootFormGroup.control.get(this.formGroupName) as FormGroup;
+        this.filterStringForm = this.rootFormGroup.control.get(this.formGroupName()) as FormGroup;
     }
 }

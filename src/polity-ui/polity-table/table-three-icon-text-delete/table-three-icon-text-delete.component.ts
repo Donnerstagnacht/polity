@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Output} from '@angular/core';
-import {TableGenericComponent} from "../table-generic/table-generic.component";
-import {TuiTableModule} from "@taiga-ui/addon-table";
-import {TuiAvatarModule} from "@taiga-ui/kit";
-import {CommonModule} from "@angular/common";
-import {TuiLetModule} from "@taiga-ui/cdk";
-import {TuiButtonModule} from "@taiga-ui/core";
+import {Component, output, OutputEmitterRef} from '@angular/core';
+import {TableGenericComponent} from '../table-generic/table-generic.component';
+import {TuiTableModule} from '@taiga-ui/addon-table';
+import {TuiAvatarModule} from '@taiga-ui/kit';
+import {CommonModule} from '@angular/common';
+import {TuiLetModule} from '@taiga-ui/cdk';
+import {TuiButtonModule} from '@taiga-ui/core';
 
 /**
  * A component to display a table with the following columns
@@ -33,7 +33,7 @@ import {TuiButtonModule} from "@taiga-ui/core";
     ]
 })
 export class TableThreeIconTextDeleteComponent<ObjectType> extends TableGenericComponent<ObjectType> {
-    @Output() public remove: EventEmitter<string> = new EventEmitter<string>();
+    public remove: OutputEmitterRef<string> = output<string>();
 
     onRemove(id: string): void {
         this.remove.emit(id);

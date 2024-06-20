@@ -1,4 +1,4 @@
-import {Component, Input, Signal, signal} from '@angular/core';
+import {Component, input, InputSignal} from '@angular/core';
 import {Router} from '@angular/router';
 import {SupabaseObjectReturn} from '../../../../../../supabase/types/supabase.authenticated.shorthand-types';
 import {TuiIslandModule} from '@taiga-ui/kit';
@@ -19,8 +19,8 @@ export class SearchProfileResult {
      *
      * @Input profile: Profile | null.
      */
-    @Input({required: true}) public profile: SupabaseObjectReturn<'search_user'> | null = null;
-    @Input({required: true}) public isLoading: Signal<LoadingState> = signal({
+    public profile: InputSignal<SupabaseObjectReturn<'search_user'> | null> = input<SupabaseObjectReturn<'search_user'> | null>(null);
+    public isLoading: InputSignal<LoadingState> = input<LoadingState>({
         dataRequested: false,
         loading: false
     });
@@ -29,6 +29,6 @@ export class SearchProfileResult {
     }
 
     protected async onClick(): Promise<void> {
-        await this.router.navigate([`/profile/`, this.profile?.id_]);
+        await this.router.navigate([`/profile/`, this.profile()?.id_]);
     }
 }

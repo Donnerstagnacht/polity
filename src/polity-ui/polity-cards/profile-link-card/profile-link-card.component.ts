@@ -1,4 +1,4 @@
-import {Component, Input, Signal, signal, WritableSignal} from '@angular/core';
+import {Component, input, InputSignal} from '@angular/core';
 import {Router} from '@angular/router';
 import {TuiIslandModule} from '@taiga-ui/kit';
 import {SupabaseObjectReturn} from '../../../../supabase/types/supabase.authenticated.shorthand-types';
@@ -21,14 +21,10 @@ export class ProfileLinkCardComponent {
      * @Input profile - WritableSignal<SupabaseObjectReturn<'read_user'> | null | undefined> - the profile data to
      * be displayed
      */
-    @Input({required: true}) public sessionId: string | null = null;
-    @Input({required: true}) public isLoading: WritableSignal<boolean> = signal(true);
-    @Input({required: true}) public profile: Signal<
-        SupabaseObjectReturn<'read_profile'> | null | undefined
-    > = signal(
-        null
-    );
-    @Input() public dataCyTag: string = 'profile-link-card';
+    public sessionId: InputSignal<string | null> = input<string | null>('');
+    public isLoading: InputSignal<boolean> = input(true);
+    public profile: InputSignal<SupabaseObjectReturn<'read_profile'> | null | undefined> = input<SupabaseObjectReturn<'read_profile'> | null | undefined>(null);
+    public dataCyTag: InputSignal<string> = input<string>('profile-link-card');
 
     constructor(
         private readonly router: Router

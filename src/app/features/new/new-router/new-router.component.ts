@@ -8,7 +8,7 @@ import {RouterOutlet} from '@angular/router';
         RouterOutlet
     ],
     templateUrl: './new-router.component.html',
-    styleUrl: './new-home.component.less'
+    styleUrl: './new-router.component.less'
 })
 export class NewRouter {
 

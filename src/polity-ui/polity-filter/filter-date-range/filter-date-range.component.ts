@@ -1,6 +1,6 @@
-import {Component, Input} from '@angular/core';
-import {FormGroup, FormGroupDirective, ReactiveFormsModule} from "@angular/forms";
-import {TuiInputDateModule} from "@taiga-ui/kit";
+import {Component, input, InputSignal} from '@angular/core';
+import {FormGroup, FormGroupDirective, ReactiveFormsModule} from '@angular/forms';
+import {TuiInputDateModule} from '@taiga-ui/kit';
 
 @Component({
     selector: 'polity-filter-date-range',
@@ -13,13 +13,13 @@ import {TuiInputDateModule} from "@taiga-ui/kit";
     ]
 })
 export class FilterDateRangeComponent {
-    @Input({required: true}) formGroupName!: string;
-    form!: FormGroup
+    public formGroupName: InputSignal<string> = input.required<string>();
+    form!: FormGroup;
 
     constructor(private rootFormGroup: FormGroupDirective) {
     }
 
     ngOnInit(): void {
-        this.form = this.rootFormGroup.control.get(this.formGroupName) as FormGroup;
+        this.form = this.rootFormGroup.control.get(this.formGroupName()) as FormGroup;
     }
 }

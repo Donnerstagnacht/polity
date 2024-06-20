@@ -1,4 +1,4 @@
-import {Component, EventEmitter, inject, Output, signal, WritableSignal} from '@angular/core';
+import {Component, inject, output, OutputEmitterRef, signal, WritableSignal} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
     TableThreeIconTextDeleteComponent
@@ -35,7 +35,7 @@ import {SearchUserStore} from '../../state/search-user.store';
     ]
 })
 export class SearchProfilesBarComponent {
-    @Output() onUpdateSelectedUsers: EventEmitter<SupabaseObjectReturn<'search_user'>[]> = new EventEmitter<SupabaseObjectReturn<'search_user'>[]>();
+    onUpdateSelectedUsers: OutputEmitterRef<SupabaseObjectReturn<'search_user'>[]> = output<SupabaseObjectReturn<'search_user'>[]>();
     protected searchUserStore: SearchUserStore = inject(SearchUserStore);
     protected readonly signal = signal;
     protected searchUserForm: FormGroup<{
