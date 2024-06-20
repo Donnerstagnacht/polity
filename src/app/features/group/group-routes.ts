@@ -1,34 +1,34 @@
-import {Routes} from "@angular/router";
-import {GroupWikiComponent} from "./group-wiki/group-wiki.component";
-import {GroupEditComponent} from "./group-edit/group-edit.component";
-import {GroupFollowEditComponent} from "../group-follow/group-follow-edit/group-follow-edit.component";
-import {GroupMemberEditComponent} from "../group_member/group-member-edit/group-member-edit.component";
-import {GroupEditSettingsComponent} from "./group-edit-settings/group-edit-settings.component";
-import {isBoardMemberGuard} from "./is-board-member.guard";
+import {Routes} from '@angular/router';
+import {isBoardMemberGuard} from './is-board-member.guard';
+import {GroupWikiPage} from '@polity-group/group-wiki-page/group-wiki.page';
+import {GroupEditPage} from '@polity-group/group-edit-page/group-edit.page';
+import {GroupEditSettingsPage} from '@polity-group/group-edit-settings-page/group-edit-settings-page.component';
+import {GroupFollowEditPage} from '@polity-group/group-follow-edit-page/group-follow-edit.page';
+import {GroupMemberEditPage} from '@polity-group/group-member-edit-page/group-member-edit.page';
 
 export const GROUP_ROUTES: Routes = [
     {
         path: '',
-        component: GroupWikiComponent
+        component: GroupWikiPage
     },
     {
         path: 'edit',
-        component: GroupEditComponent,
+        component: GroupEditPage,
         canActivate: [isBoardMemberGuard]
     },
     {
         path: 'follower/edit',
-        component: GroupFollowEditComponent,
+        component: GroupFollowEditPage,
         canActivate: [isBoardMemberGuard]
     },
     {
         path: 'member/edit',
-        component: GroupMemberEditComponent,
+        component: GroupMemberEditPage,
         canActivate: [isBoardMemberGuard]
     },
     {
         path: 'settings/edit',
-        component: GroupEditSettingsComponent,
+        component: GroupEditSettingsPage,
         canActivate: [isBoardMemberGuard]
     }
-]
+];

@@ -30,13 +30,13 @@
             "@polity-profile/*": [
                 "src/app/features/profile/*"
             ],
-            "@polity-groups/*": [
-                "src/app/features/groups/*"
+            "@polity-group/*": [
+                "src/app/features/group/*"
             ],
             "@polity-office/*": [
                 "src/app/features/office/*"
             ],
-            "@polity-assistant/*": [
+            "@polity-search/*": [
                 "src/app/features/search/*"
             ],
             "@polity-assistant/*": [

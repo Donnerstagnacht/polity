@@ -1,9 +1,9 @@
 import {Routes} from '@angular/router';
-import {SearchUserComponent} from "./search-user/search-user.component";
+import {SearchUserPage} from '@polity-search/search-user-page/search-user.page';
 
 export const SEARCH_ROUTES: Routes = [
     {
         path: '',
-        component: SearchUserComponent
-    },
+        component: SearchUserPage
+    }
 ];

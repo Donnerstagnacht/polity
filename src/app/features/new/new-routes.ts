@@ -1,14 +1,14 @@
 import {Routes} from '@angular/router';
-import {GroupNewComponent} from "../group/group-new/group-new.component";
-import {NewComponent} from "./new/new.component";
+import {NewPage} from './new-page/new.page';
+import {NewGroupPage} from './new-group-page/new-group.page';
 
 export const NEW_ROUTES: Routes = [
     {
         path: '',
-        component: NewComponent
+        component: NewPage
     },
     {
         path: 'group',
-        component: GroupNewComponent
+        component: NewGroupPage
     }
 ];

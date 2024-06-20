@@ -1,28 +1,29 @@
 import {Routes} from '@angular/router';
-import {ProfileWikiComponent} from "./profile-wiki/profile-wiki.component";
-import {ProfileEditComponent} from "./profile-edit/profile-edit.component";
-import {ProfileFollowEditComponent} from "../profile-follow/profile-follow-edit/profile-follow-edit.component";
-import {isOwnerGuard} from "./is-owner.guard";
-import {ProfileGroupsEditComponent} from "../profile-groups/profile-groups-edit/profile-groups-edit.component";
+import {isOwnerGuard} from './is-owner.guard';
+
+import {ProfileEditPage} from '@polity-profile/profile-edit-page/profile-edit.page';
+import {ProfileWikiPage} from '@polity-profile/profile-wiki-page/profile-wiki.page';
+import {ProfileFollowEditPage} from '@polity-profile/profile-follow-edit-page/profile-follow-edit.page';
+import {ProfileGroupsEditPage} from '@polity-profile/profile-groups-edit-page/profile-groups-edit.page';
 
 export const PROFILE_ROUTES: Routes = [
     {
         path: '',
-        component: ProfileWikiComponent
+        component: ProfileWikiPage
     },
     {
         path: 'follower/edit',
-        component: ProfileFollowEditComponent,
+        component: ProfileFollowEditPage,
         canActivate: [isOwnerGuard]
     },
     {
         path: 'groups/edit',
-        component: ProfileGroupsEditComponent,
+        component: ProfileGroupsEditPage,
         canActivate: [isOwnerGuard]
     },
     {
         path: 'edit',
-        component: ProfileEditComponent,
+        component: ProfileEditPage,
         canActivate: [isOwnerGuard]
-    },
+    }
 ];
