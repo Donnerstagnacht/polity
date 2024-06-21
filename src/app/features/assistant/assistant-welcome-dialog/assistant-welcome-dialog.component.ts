@@ -68,7 +68,7 @@ export class AssistantWelcomeDialogComponent {
         }
     }
 
-    protected async step1navigateToProfileStep(delta: number): Promise<void> {
+    protected async step1NavigateToProfileStep(delta: number): Promise<void> {
         await Promise.all([
             this.updateProfileName(),
             this.assistantStore.updateFirstSignIn(false),
@@ -77,7 +77,7 @@ export class AssistantWelcomeDialogComponent {
         this.index = (this.index + delta) % 3;
     }
 
-    protected async step1closeTutorial(): Promise<void> {
+    protected async step1CloseTutorial(): Promise<void> {
         await Promise.all([
             this.updateProfileName(),
             this.assistantStore.updateFirstSignIn(false),
@@ -86,7 +86,7 @@ export class AssistantWelcomeDialogComponent {
         this.closeDialog();
     }
 
-    protected async step2closeAndSkipTutorial(): Promise<void> {
+    protected async step2CloseAndSkipTutorial(): Promise<void> {
         await Promise.all([
             this.setLastTutorial('search'),
             this.assistantStore.skipTutorial(true)
@@ -94,7 +94,7 @@ export class AssistantWelcomeDialogComponent {
         this.closeDialog();
     }
 
-    protected async step2navigateToProfilePage(): Promise<void> {
+    protected async step2NavigateToProfilePage(): Promise<void> {
         await Promise.all([
             await this.router.navigate(['/profile/' + this.sessionId + '/edit']),
             this.setLastTutorial('search')
@@ -102,7 +102,7 @@ export class AssistantWelcomeDialogComponent {
         this.closeDialog();
     }
 
-    protected async step3navigateToSearchPage(): Promise<void> {
+    protected async step3NavigateToSearchPage(): Promise<void> {
         await this.router.navigate(['/search']);
         await Promise.all([
             this.assistantStore.updateLastTutorial('search'),
@@ -111,7 +111,7 @@ export class AssistantWelcomeDialogComponent {
         this.closeDialog();
     }
 
-    protected async step3closeAndSkipTutorial(): Promise<void> {
+    protected async step3CloseAndSkipTutorial(): Promise<void> {
         await Promise.all([
             this.setLastTutorial('search'),
             this.assistantStore.skipTutorial(true)

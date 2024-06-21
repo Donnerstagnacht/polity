@@ -1,12 +1,12 @@
-import {Size, Sizes} from "../fixtures/size";
-import {AUTH_DATA2, AUTH_DATA3, AUTH_DATA7, AuthData} from "../../seed_and_test_data/01_test_auth";
-import {Profile, PROFILE2, PROFILE3, PROFILE7} from "../../seed_and_test_data/02_test_profiles";
+import {Size, Sizes} from '../fixtures/size';
+import {AUTH_DATA2, AUTH_DATA3, AUTH_DATA7, AuthData} from '../../seed_and_test_data/01_test_auth';
+import {Profile, PROFILE2, PROFILE3, PROFILE7} from '../../seed_and_test_data/02_test_profiles';
 import {
     PROFILE_COUNTER2,
     PROFILE_COUNTER3,
     PROFILE_COUNTER7,
     ProfileCounter
-} from "../../seed_and_test_data/04_test_profile_counters";
+} from '../../seed_and_test_data/04_test_profile_counters';
 
 const userWhoFollowsAuth: AuthData = AUTH_DATA7;
 const userWhoFollowsProfile: Profile = PROFILE7;
@@ -27,31 +27,31 @@ const userWhoIsUnFollowedCounter: ProfileCounter = PROFILE_COUNTER3;
 Sizes.forEach((size: Size): void => {
     describe(`Profile follow tests with screen size ${size.width} show that users can `, (): void => {
         before((): void => {
-        })
+        });
 
         beforeEach((): void => {
-            cy.viewport(size.width, size.height)
-            cy.resetSupabase()
+            cy.viewport(size.width, size.height);
+            cy.resetSupabase();
             cy.visit('landing/sign-in');
             cy.signIn(userWhoFollowsAuth);
-        })
+        });
 
         it('view other users followers and followings', (): void => {
             cy.searchUser(userWhoIsFollowedProfile.first_name as string)
-            .click()
+              .click();
 
             cy.getDataCy('first-name')
-            .shouldBeVisible()
-            .contains(userWhoIsFollowedProfile.first_name as string)
+              .shouldBeVisible()
+              .contains(userWhoIsFollowedProfile.first_name as string);
 
-            cy.getDataCy('followerCounter')
-            .shouldBeVisible()
-            .contains(userWhoIsFollowedCounter.follower_counter)
+            cy.getDataCy('follower-counter')
+              .shouldBeVisible()
+              .contains(userWhoIsFollowedCounter.follower_counter);
 
-            cy.getDataCy('followingCounter')
-            .shouldBeVisible()
-            .contains(userWhoIsFollowedCounter.following_counter)
-        })
+            cy.getDataCy('following-counter')
+              .shouldBeVisible()
+              .contains(userWhoIsFollowedCounter.following_counter);
+        });
 
         it('follow other users', (): void => {
             cy.followUser(
@@ -60,145 +60,145 @@ Sizes.forEach((size: Size): void => {
                 userWhoFollowsProfile,
                 userWhoFollowsCounter
             );
-        })
+        });
 
         it('unfollow another user', (): void => {
 
             cy.interceptSupabaseCall('read_profile')
-            .as('readProfile')
+              .as('readProfile');
             cy.interceptSupabaseCall('check_if_user_follows_profile')
-            .as('isFollowing')
+              .as('isFollowing');
             cy.interceptSupabaseCall('read_profile_counters')
-            .as('followingCounter')
+              .as('following-counter');
 
             cy.searchUser(userWhoIsUnFollowedProfile.first_name)
-            .click()
-            cy.wait(['@followingCounter', '@isFollowing', '@readProfile'])
+              .click();
+            cy.wait(['@following-counter', '@isFollowing', '@readProfile']);
 
             cy.getDataCy('first-name')
-            .shouldBeVisible()
-            .contains(userWhoIsUnFollowedProfile.first_name)
+              .shouldBeVisible()
+              .contains(userWhoIsUnFollowedProfile.first_name);
 
             cy.interceptSupabaseCall('unfollow_profile_transaction')
-            .as('unfollowTransaction')
+              .as('unfollowTransaction');
 
             cy.getDataCy('followButton')
-            .shouldBeVisible()
-            .should('have.text', 'UNFOLLOW ')
-            .click()
+              .shouldBeVisible()
+              .should('have.text', 'UNFOLLOW ')
+              .click();
 
-            cy.wait('@unfollowTransaction')
+            cy.wait('@unfollowTransaction');
             cy.contains('Successful unfollowed')
-            .should('be.visible')
+              .should('be.visible');
 
             cy.getDataCy('followButton')
-            .shouldBeVisible()
-            .should('have.text', 'FOLLOW ')
+              .shouldBeVisible()
+              .should('have.text', 'FOLLOW ');
 
-            cy.getDataCy('followerCounter')
-            .shouldBeVisible()
-            .contains(userWhoIsUnFollowedCounter.follower_counter - 1)
+            cy.getDataCy('follower-counter')
+              .shouldBeVisible()
+              .contains(userWhoIsUnFollowedCounter.follower_counter - 1);
 
             cy.searchUser(userWhoFollowsProfile.first_name)
-            .click()
+              .click();
 
             cy.getDataCy('first-name')
-            .shouldBeVisible()
-            .contains(userWhoFollowsProfile.first_name)
+              .shouldBeVisible()
+              .contains(userWhoFollowsProfile.first_name);
 
-            cy.getDataCy('followingCounter')
-            .shouldBeVisible()
-            .contains(userWhoFollowsCounter.following_counter - 1)
-        })
+            cy.getDataCy('following-counter')
+              .shouldBeVisible()
+              .contains(userWhoFollowsCounter.following_counter - 1);
+        });
 
         it('remove a following from management tab', (): void => {
             cy.navigateToHome();
             cy.interceptSupabaseCall('check_if_user_follows_profile')
-            .as('isFollowing')
+              .as('isFollowing');
             cy.interceptSupabaseCall('read_profile_counters')
-            .as('followingCounter')
+              .as('following-counter');
             cy.interceptSupabaseCall('read_profile')
-            .as('user')
+              .as('user');
             cy.contains(userWhoFollowsProfile.first_name)
-            .click();
-            cy.wait(['@isFollowing', '@followingCounter', '@user'])
+              .click();
+            cy.wait(['@isFollowing', '@following-counter', '@user']);
 
-            cy.interceptSupabaseCall('read_followers_of_user').as('loadFollowerOfUser')
+            cy.interceptSupabaseCall('read_followers_of_user').as('loadFollowerOfUser');
 
-            console.log('size width', size.width)
-            console.log('sizes[2] width', Sizes[2].width)
+            console.log('size width', size.width);
+            console.log('sizes[2] width', Sizes[2].width);
 
             if (size.width === Sizes[2].width) {
                 cy.getDataCy('nav-follower-edit-desktop')
-                .shouldBeVisible()
-                .click()
+                  .shouldBeVisible()
+                  .click();
             } else {
                 cy.getDataCy('nav-follower-edit')
-                .shouldBeVisible()
-                .click()
+                  .shouldBeVisible()
+                  .click();
             }
-            cy.wait(['@loadFollowerOfUser'])
+            cy.wait(['@loadFollowerOfUser']);
 
             cy.getDataCy('show-followings')
-            .shouldBeVisible()
-            .click()
+              .shouldBeVisible()
+              .click();
 
-            cy.interceptSupabaseCall('unfollow_profile_transaction').as('unfollowUser')
+            cy.interceptSupabaseCall('unfollow_profile_transaction').as('unfollowUser');
 
             cy.getDataCy('following_first_name')
-            .shouldBeVisible()
-            .contains(userWhoIsUnFollowedProfile.first_name)
-            .next()
-            .children()
-            .first()
-            .click()
-            cy.wait('@unfollowUser')
+              .shouldBeVisible()
+              .contains(userWhoIsUnFollowedProfile.first_name)
+              .next()
+              .children()
+              .first()
+              .click();
+            cy.wait('@unfollowUser');
 
             cy.contains(userWhoIsUnFollowedProfile.first_name)
-            .should('not.exist')
-        })
+              .should('not.exist');
+        });
 
         it('remove a follower from management tab', (): void => {
             cy.navigateToHome();
             cy.interceptSupabaseCall('check_if_user_follows_profile')
-            .as('isFollowing')
+              .as('isFollowing');
             cy.interceptSupabaseCall('read_profile_counters')
-            .as('followingCounter')
+              .as('following-counter');
             cy.interceptSupabaseCall('read_profile')
-            .as('user')
+              .as('user');
             cy.getDataCy('home-to-profile')
-            .shouldBeVisible()
-            .click();
-            cy.wait(['@isFollowing', '@followingCounter', '@user'])
+              .shouldBeVisible()
+              .click();
+            cy.wait(['@isFollowing', '@following-counter', '@user']);
 
-            cy.interceptSupabaseCall('read_followers_of_user').as('loadFollowerOfUser')
+            cy.interceptSupabaseCall('read_followers_of_user').as('loadFollowerOfUser');
             if (size.width === Sizes[2].width) {
                 cy.getDataCy('nav-follower-edit-desktop')
-                .shouldBeVisible()
-                .click()
+                  .shouldBeVisible()
+                  .click();
             } else {
                 cy.getDataCy('nav-follower-edit')
-                .shouldBeVisible()
-                .click()
+                  .shouldBeVisible()
+                  .click();
             }
-            cy.wait(['@loadFollowerOfUser'])
+            cy.wait(['@loadFollowerOfUser']);
 
             cy.getDataCy('show-follower')
-            .shouldBeVisible()
-            .click()
+              .shouldBeVisible()
+              .click();
 
-            cy.interceptSupabaseCall('remove_follower_of_authenticated_user_transaction').as('unfollowUser')
+            cy.interceptSupabaseCall('remove_follower_of_authenticated_user_transaction').as('unfollowUser');
             cy.getDataCy('follower_first_name')
-            .shouldBeVisible()
-            .contains(userWhoIsUnFollowedProfile.first_name)
-            .next()
-            .children()
-            .first()
-            .click()
-            cy.wait(['@unfollowUser'])
+              .shouldBeVisible()
+              .contains(userWhoIsUnFollowedProfile.first_name)
+              .next()
+              .children()
+              .first()
+              .click();
+            cy.wait(['@unfollowUser']);
 
             cy.contains(userWhoIsUnFollowedProfile.first_name)
-            .should('not.exist')
-        })
-    })
-})
+              .should('not.exist');
+        });
+    });
+});

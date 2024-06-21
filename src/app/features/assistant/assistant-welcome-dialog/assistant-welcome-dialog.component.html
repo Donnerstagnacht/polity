@@ -7,11 +7,20 @@
         <tui-carousel [(index)]="index">
             <div
                 *tuiItem
-                class="search-content">
+                class="search-content"
+            >
                 <h3 class="tui-text_h3">Hey, Willkommen bei Polity!</h3>
                 <div class="center-grid">
-                    <img alt="test" class="grid-item" src="assets/assistants/aria.svg">
-                    <img alt="test" class="grid-item" src="assets/assistants/kai.svg">
+                    <img
+                        alt="test"
+                        class="grid-item"
+                        src="assets/assistants/aria.svg"
+                    >
+                    <img
+                        alt="test"
+                        class="grid-item"
+                        src="assets/assistants/kai.svg"
+                    >
                 </div>
                 <div>
                     <P class="tui-text_body-m">Wir sind Vidhi und Tobi - deine persönlichen Assistenten.</P>
@@ -20,7 +29,8 @@
                 </div>
 
                 <form
-                    [formGroup]="welcomeForm">
+                    [formGroup]="welcomeForm"
+                >
 
                     <div class="tui-form__row">
                         <tui-input
@@ -65,8 +75,8 @@
 
                     <div class="tui-form__row">
                         <button
-                            (click)="step1navigateToProfileStep(1)"
-                            [attr.data-cy]="'step1navigateToProfileStep'"
+                            (click)="step1NavigateToProfileStep(1)"
+                            [attr.data-cy]="'step1-navigate-to-profile-step'"
                             [disabled]="!welcomeForm.valid"
                             appearance="primary"
                             class="tui-space_right-3 tui-space_bottom-3"
@@ -76,8 +86,8 @@
                             Gib mir eine Tour.
                         </button>
                         <button
-                            (click)="step1closeTutorial()"
-                            [attr.data-cy]="'step1closeTutorial'"
+                            (click)="step1CloseTutorial()"
+                            [attr.data-cy]="'step1-to-close-tutorial'"
                             [disabled]="!welcomeForm.valid"
                             appearance="flat"
                             class="tui-space_right-3 tui-space_bottom-3"
@@ -94,16 +104,17 @@
             <div *tuiItem>
                 <h3
                     [attr.data-cy]="'welcome-name-headline'"
-                    class="tui-text_h3">Schön dich kennen zu lernen {{this.name}}.</h3>
+                    class="tui-text_h3"
+                >Schön dich kennen zu lernen {{ this.name }}.</h3>
                 <p class="tui-text_body-m">Bei Polity kannst du in Echtzeit politische Entscheidungen weltweit
-                    verfolgen, beeinflussen und gestalten. Von Sendling bis Washington!</p>
+                                           verfolgen, beeinflussen und gestalten. Von Sendling bis Washington!</p>
                 <p class="tui-text_body-m">Fülle dein Profil aus damit andere erkennen, dass du vertrauenswürdig
-                    bist.</p>
+                                           bist.</p>
 
                 <div class="tui-form__row">
                     <button
-                        (click)="step2navigateToProfilePage()"
-                        [attr.data-cy]="'step2navigateToProfilePage'"
+                        (click)="step2NavigateToProfilePage()"
+                        [attr.data-cy]="'step2m-navigate-to-profile-page'"
                         appearance="primary"
                         class="tui-space_right-3 tui-space_bottom-3"
                         tuiButton
@@ -112,8 +123,8 @@
                         Zeig mir mein Profil.
                     </button>
                     <button
-                        (click)="step2closeAndSkipTutorial()"
-                        [attr.data-cy]="'step2closeAndSkipTutorial'"
+                        (click)="step2CloseAndSkipTutorial()"
+                        [attr.data-cy]="'step2-close-and-skip-tutorial'"
                         appearance="flat"
                         class="tui-space_right-3 tui-space_bottom-3"
                         tuiButton
@@ -127,14 +138,15 @@
             <div *tuiItem>
                 <h3
                     [attr.data-cy]="'tutorial-search-headline'"
-                    class="tui-text_h3">Politische Informationen in Echtzeit.</h3>
+                    class="tui-text_h3"
+                >Politische Informationen in Echtzeit.</h3>
                 <p class="tui-text_body-m">Finde die Informationen, die du für deine politische Arbeit brauchst.</p>
                 <p class="tui-text_body-m">Egal ob über Menschen, Themen, Veranstaltungen oder Organisationen.</p>
 
                 <div class="tui-form__row">
                     <button
-                        (click)="step3navigateToSearchPage()"
-                        [attr.data-cy]="'step3navigateToSearchPage'"
+                        (click)="step3NavigateToSearchPage()"
+                        [attr.data-cy]="'step3-navigate-to-search-page'"
                         appearance="primary"
                         class="tui-space_right-3 tui-space_bottom-3"
                         tuiButton
@@ -143,8 +155,8 @@
                         Zeig mir die Suche.
                     </button>
                     <button
-                        (click)="step3closeAndSkipTutorial()"
-                        [attr.data-cy]="'step3closeAndSkipTutorial'"
+                        (click)="step3CloseAndSkipTutorial()"
+                        [attr.data-cy]="'step3-close-and-skip-tutorial'"
 
                         appearance="flat"
                         class="tui-space_right-3 tui-space_bottom-3"

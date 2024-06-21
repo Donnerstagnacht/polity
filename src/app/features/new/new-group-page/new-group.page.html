@@ -17,7 +17,7 @@
     </h2>
     <div class="tui-form__row">
         <tui-input
-            [attr.data-cy]="'groupNameInput'"
+            [attr.data-cy]="'group-name-input'"
             [class.tui-skeleton]="false"
             [tuiTextfieldCleaner]="true"
             [tuiTextfieldCustomContent]="createGroupForm.controls.name.valid ? success : ''"
@@ -44,7 +44,7 @@
         tuiGroup
     >
         <tui-radio-block
-            [attr.data-cy]="'levelLocal'"
+            [attr.data-cy]="'level-local'"
             contentAlign="right"
             formControlName="level"
             item="local"
@@ -58,7 +58,7 @@
             </div>
         </tui-radio-block>
         <tui-radio-block
-            [attr.data-cy]="'levelRegional'"
+            [attr.data-cy]="'level-regional'"
             contentAlign="right"
             formControlName="level"
             item="regional"
@@ -72,7 +72,7 @@
             </div>
         </tui-radio-block>
         <tui-radio-block
-            [attr.data-cy]="'levelNational'"
+            [attr.data-cy]="'level-national'"
             contentAlign="right"
             formControlName="level"
             item="national"
@@ -95,7 +95,7 @@
     </h2>
     <div class="tui-form__row">
         <tui-input
-            [attr.data-cy]="'groupDescriptionInput'"
+            [attr.data-cy]="'group-description-input'"
             [class.tui-skeleton]="false"
             [tuiTextfieldCleaner]="true"
             [tuiTextfieldCustomContent]="createGroupForm.controls.description.valid ? success : ''"
@@ -129,7 +129,7 @@
 
     <div class="tui-form__buttons">
         <button
-            [attr.data-cy]="'createGroupButton'"
+            [attr.data-cy]="'create-group-button'"
             [class.tui-skeleton]="false"
             [disabled]="!createGroupForm.valid"
             class="tui-form__button"

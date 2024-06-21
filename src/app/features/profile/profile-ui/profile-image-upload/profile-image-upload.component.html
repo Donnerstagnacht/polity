@@ -15,7 +15,6 @@
     @if (loadedFiles$ | async;as file) {
         <tui-file
             (removed)="removeFile()"
-            [attr.data-cy]="'test'"
             [file]="file"
             [showDelete]="imageControl.enabled"
         ></tui-file>
@@ -23,7 +22,6 @@
     @if (rejectedFiles$ | async;as file) {
         <tui-file
             (removed)="clearRejected()"
-            [attr.data-cy]="'test'"
             [file]="file"
             [showDelete]="imageControl.enabled"
             state="error"
@@ -31,7 +29,6 @@
     }
     @if (loadingFiles$ | async;as file) {
         <tui-file
-            [attr.data-cy]="'test'"
             [file]="file"
             [showDelete]="imageControl.enabled"
             state="loading"
@@ -41,7 +38,7 @@
 
 <div class="polity-center tui-space_top-5">
     <img
-        [attr.data-cy]="'uploadedImage'"
+        [attr.data-cy]="'uploaded-image'"
         [class.tui-skeleton]="profileStore.loadingState().loading"
         alt="Italian Trulli"
         src="{{profileStore.data().profile_image_}}"

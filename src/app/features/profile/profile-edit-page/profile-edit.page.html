@@ -11,7 +11,7 @@
 
         <div class="tui-form__row">
             <tui-input
-                [attr.data-cy]="'firstName'"
+                [attr.data-cy]="'first-name'"
                 [class.tui-skeleton]="profileStore.loadingState().loading"
                 [tuiTextfieldCleaner]="true"
                 [tuiTextfieldCustomContent]="editProfileForm.controls.firstName.valid ? success : ''"
@@ -28,7 +28,7 @@
         </div>
         <div class="tui-form__row">
             <tui-input
-                [attr.data-cy]="'lastName'"
+                [attr.data-cy]="'last-name'"
                 [class.tui-skeleton]="profileStore.loadingState().loading"
                 [tuiTextfieldCleaner]="true"
                 [tuiTextfieldCustomContent]="editProfileForm.controls.lastName.valid ? success : ''"

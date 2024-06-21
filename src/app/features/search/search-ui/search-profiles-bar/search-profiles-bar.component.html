@@ -3,7 +3,7 @@
 >
     <tui-combo-box
         (searchChange)="onSearchChange($event)"
-        [attr.data-cy]="'searchProfileBar'"
+        [attr.data-cy]="'search-profile-bar'"
         [stringify]="stringify"
         [tuiTextfieldLabelOutside]="true"
         formControlName="members"
@@ -11,7 +11,7 @@
         Lade ein neues Mitglied ein.
         <tui-data-list-wrapper
             *tuiDataList
-            [attr.data-cy]="'searchProfileBarResults'"
+            [attr.data-cy]="'search-profile-barResults'"
             [itemContent]="stringify | tuiStringifyContent"
             [items]="searchUserStore.data() | tuiFilterByInputWith: stringify"
         ></tui-data-list-wrapper>

@@ -11,21 +11,21 @@
         <polity-counter
             [counterTitle]="'Follower'"
             [counterValue]="profileCounterStore.data().follower_counter_"
-            [dataCyTag]="'followerCounter'"
+            [dataCyTag]="'follower-counter'"
             [isLoading]="profileCounterStore.loadingState().loading"
             class="polity-flex-item-first"
         ></polity-counter>
         <polity-counter
             [counterTitle]="'Following'"
             [counterValue]="profileCounterStore.data().following_counter_"
-            [dataCyTag]="'followingCounter'"
+            [dataCyTag]="'following-counter'"
             [isLoading]="profileCounterStore.loadingState().loading"
             class="polity-flex-item-last"
         ></polity-counter>
         <polity-counter
             [counterTitle]="'Memberships'"
             [counterValue]="profileCounterStore.data().group_membership_counter_"
-            [dataCyTag]="'membershipCounter'"
+            [dataCyTag]="'membership-counter'"
             [isLoading]="profileCounterStore.loadingState().loading"
             class="polity-flex-item-last"
         ></polity-counter>

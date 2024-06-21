@@ -20,7 +20,7 @@ Sizes.forEach((size: Size): void => {
         })
 
         const newFirstName: string = userWhoEditsItsProfileProfileData.first_name as string + Math.random();
-        const newLastName: string = userWhoEditsItsProfileProfileData.last_name as string + Math.random();
+        const newlast-name: string = userWhoEditsItsProfileProfileData.last_name as string + Math.random();
 
         it('edit its own profile data.', (): void => {
             cy.getDataCy('nav-profile-edit', 'nav-profile-edit-desktop')
@@ -31,10 +31,10 @@ Sizes.forEach((size: Size): void => {
             .shouldBeVisible()
 
             cy.interceptSupabaseCall('update_profile').as('updateProfile')
-            cy.getDataCy('firstName').clear()
-            cy.getDataCy('firstName').type(newFirstName)
-            cy.getDataCy('lastName').clear()
-            cy.getDataCy('lastName').type(newLastName)
+            cy.getDataCy('first-name').clear()
+            cy.getDataCy('first-name').type(newfirst-name)
+            cy.getDataCy('last-name').clear()
+            cy.getDataCy('last-name').type(newlast-name)
             cy.getDataCy('update').click()
 
             cy.contains('Successful Updated')
@@ -45,8 +45,8 @@ Sizes.forEach((size: Size): void => {
         it('view its own profile.', (): void => {
             cy.getDataCy('first-name')
             .shouldBeVisible()
-            .contains(newFirstName)
-            .contains(newLastName)
+            .contains(newfirst-name)
+            .contains(newlast-name)
         })
 
         it('change its profile image.', (): void => {
@@ -63,7 +63,7 @@ Sizes.forEach((size: Size): void => {
 
             cy.getDataCy('loading')
 
-            cy.getDataCy('uploadedImage')
+            cy.getDataCy('uploaded-image')
             .shouldBeVisible()
 
             cy.getDataCy('nav-profile-wiki', 'nav-profile-wiki-desktop')
