@@ -2,7 +2,7 @@
     <tui-input-files
         (reject)="onReject($event)"
         [attr.data-cy]="'uploadImage'"
-        [class.tui-skeleton]="profileStore.loadingState().loading"
+        [class.tui-skeleton]="loadingState().loading"
         [formControl]="imageControl"
         accept="image/*"
     ></tui-input-files>
@@ -36,12 +36,7 @@
     }
 </tui-files>
 
-<div class="polity-center tui-space_top-5">
-    <img
-        [attr.data-cy]="'uploaded-image'"
-        [class.tui-skeleton]="profileStore.loadingState().loading"
-        alt="Italian Trulli"
-        src="{{profileStore.data().profile_image_}}"
-        width="60%"
-    >
-</div>
+<polity-image
+    [imgSrc]="imgSrc()"
+    [loadingState]="loadingState()"
+></polity-image>

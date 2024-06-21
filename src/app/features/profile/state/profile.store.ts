@@ -57,8 +57,7 @@ export class ProfileStore extends BaseObjectStore<'read_profile'> {
                 }
             },
             {
-                useLoading: true,
-                loadingState: this.loadingState_
+                useLoading: false
             },
             {
                 useStore: true,
@@ -72,7 +71,7 @@ export class ProfileStore extends BaseObjectStore<'read_profile'> {
             {
                 useSuccess: true,
                 alertService: this.tuiAlertService,
-                successMessage: 'Profile loaded!'
+                successMessage: 'Profile updated!'
             }
         );
         getSignedUrlFromSupabaseObject<'update_profile'>(result, 'profile_images', 'profile_image_');

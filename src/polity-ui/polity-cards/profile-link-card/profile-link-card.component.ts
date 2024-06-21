@@ -32,7 +32,7 @@ export class ProfileLinkCardComponent {
     }
 
     protected async onClick(): Promise<void> {
-        await this.router.navigate(['/profile/', this.sessionId]);
+        await this.router.navigate(['/profile/', this.sessionId()]);
     }
 
 }

@@ -9,21 +9,13 @@ import {OfficeRouter} from '@polity-office/office-router/office.router';
 import {GroupRouter} from '@polity-group/group-router/group.router';
 import {NewRouter} from './new/new-router/new-router.component';
 import {ProfileRouter} from '@polity-profile/profile-router/profile.router';
-import {ProfileStore} from '@polity-profile/state/profile.store';
-import {ProfileCounterStore} from '@polity-profile/profile-follow-state/profile-counter.store';
-import {MembershipsOfUserStore} from '@polity-profile/profile-groups-state/memberships-of-user.store';
 
 
 export const FEATURE_ROUTES: Routes = [
     {
         path: '',
         component: HomeRouter,
-        loadChildren: () => import('./home/home-routes').then(m => m.HOME_ROUTES),
-        providers: [
-            MembershipsOfUserStore,
-            ProfileStore,
-            ProfileCounterStore
-        ]
+        loadChildren: () => import('./home/home-routes').then(m => m.HOME_ROUTES)
     },
     {
         path: 'search',

@@ -1,24 +1,30 @@
-import {Component, inject} from '@angular/core';
+import {Component, input, InputSignal, output, OutputEmitterRef} from '@angular/core';
 import {TuiFileLike, TuiInputFilesModule} from '@taiga-ui/kit';
 import {from, Observable, of, Subject, switchMap} from 'rxjs';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
-import {ProfileStore} from '../../state/profile.store';
 import {uploadImage} from '@polity-signal-store/imageFeature';
+import {ImageComponent} from '@polity-ui/polity-image/image/image.component';
+import {LoadingState} from '@polity-signal-store/types/loadingState.type';
 
 @Component({
-    selector: 'polity-profile-image-upload',
-    templateUrl: './profile-image-upload.component.html',
-    styleUrls: ['./profile-image-upload.component.less'],
+    selector: 'polity-image-upload',
+    templateUrl: './image-upload.component.html',
+    styleUrls: ['./image-upload.component.less'],
     imports: [
         TuiInputFilesModule,
         ReactiveFormsModule,
-        CommonModule
+        CommonModule,
+        ImageComponent
     ],
     standalone: true
 })
-export class ProfileImageUploadComponent {
-    protected profileStore: ProfileStore = inject(ProfileStore);
+export class ImageUploadComponent {
+    public bucketName: InputSignal<string> = input.required();
+    public loadingState: InputSignal<LoadingState> = input.required();
+    public imgSrc: InputSignal<string> = input.required();
+    public imgStoragePath: OutputEmitterRef<string> = output();
+
     protected imageControl: FormControl<any> = new FormControl();
     protected rejectedFiles$: Subject<TuiFileLike | null> = new Subject<TuiFileLike | null>();
     protected loadingFiles$: Subject<TuiFileLike | null> = new Subject<TuiFileLike | null>();
@@ -44,12 +50,12 @@ export class ProfileImageUploadComponent {
             } | {
                 data: null;
                 error: Error
-            } = await uploadImage(filePath, 'profile_images', file);
+            } = await uploadImage(filePath, this.bucketName(), file);
 
             if (response.error) {
                 throw Error;
             } else {
-                await this.profileStore.update({profile_image_: response.data.path});
+                this.imgStoragePath.emit(response.data.path);
             }
             return file;
         } catch (error) {

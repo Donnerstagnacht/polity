@@ -1,21 +1,4 @@
-<form
-    [formGroup]="searchForm"
->
-    <div class="tui-form__row">
-        <tui-input
-            [attr.data-cy]="'search'"
-            formControlName="search"
-            tuiHintContent="Bitte einen Suchterm eingeben"
-        >
-            Gebe einen Suchterm ein
-        </tui-input>
-        <tui-error
-            [error]="[] | tuiFieldError | async"
-            formControlName="search"
-        >
-        </tui-error>
-    </div>
-</form>
+<polity-search-form (newSearch)="onKeyUp($event)"></polity-search-form>
 
 <div class="center-grid">
     @if ((!this.searchUserStore.loadingState().dataRequested || !this.searchUserStore.loadingState().dataRequested)

@@ -1,4 +1,4 @@
-import {Component, inject, signal} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {ProfileLinkCardComponent} from '@polity-ui/polity-cards/profile-link-card/profile-link-card.component';
 import {GroupLinkCardComponent} from '@polity-ui/polity-cards/group-link-card/group-link-card.component';
 import {ProfileStore} from '../../profile/state/profile.store';
@@ -24,8 +24,6 @@ export class HomeRouter {
     protected sessionStore: SessionStore = inject(SessionStore);
     protected membershipsOfUserStore: MembershipsOfUserStore = inject(MembershipsOfUserStore);
     protected sessionId: string | null;
-
-    protected readonly signal = signal;
 
     constructor() {
         this.sessionId = this.sessionStore.getSessionId();

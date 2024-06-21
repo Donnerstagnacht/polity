@@ -7,7 +7,7 @@ import {
     TuiTextfieldControllerModule
 } from '@taiga-ui/core';
 import {POLYMORPHEUS_CONTEXT} from '@tinkoff/ng-polymorpheus';
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {ReactiveFormsModule} from '@angular/forms';
 import {Router} from '@angular/router';
 import {SupabaseObjectReturn} from '../../../../../supabase/types/supabase.authenticated.shorthand-types';
 import {TuiCarouselModule, TuiFieldErrorPipeModule, TuiInputModule} from '@taiga-ui/kit';
@@ -16,6 +16,7 @@ import {DatabaseHiddenOverwritten} from '../../../../../supabase/types/supabase.
 import {ProfileStore} from '../../profile/state/profile.store';
 import {AssistantStore} from '../state/assistant.store';
 import {SessionStore} from '../../../auth/state/session.store';
+import {AssistantWelcomeDialogForm} from '@polity-assistant/assistant-welcom-dialog-form/assistant-welcome-dialog.form';
 
 @Component({
     selector: 'polity-assistant-welcome-dialog',
@@ -31,7 +32,8 @@ import {SessionStore} from '../../../auth/state/session.store';
         TuiTextfieldControllerModule,
         TuiErrorModule,
         CommonModule,
-        TuiButtonModule
+        TuiButtonModule,
+        AssistantWelcomeDialogForm
     ],
     providers: [
         ProfileStore
@@ -41,13 +43,6 @@ export class AssistantWelcomeDialogComponent {
     protected assistantStore: AssistantStore = inject(AssistantStore);
     protected profileStore: ProfileStore = inject(ProfileStore);
     protected sessionStore: SessionStore = inject(SessionStore);
-    protected welcomeForm: FormGroup<{
-        firstName: FormControl<string | null>,
-        lastName: FormControl<string | null>,
-    }> = new FormGroup({
-        firstName: new FormControl('', Validators.required),
-        lastName: new FormControl('', Validators.required)
-    });
     protected name: string = '';
     protected index: number = 0;
     private readonly sessionId: string | null = null;
@@ -68,18 +63,21 @@ export class AssistantWelcomeDialogComponent {
         }
     }
 
-    protected async step1NavigateToProfileStep(delta: number): Promise<void> {
+    protected async step1NavigateToProfileStep(data: {
+        profile: SupabaseObjectReturn<'read_profile'>,
+        step: number
+    }): Promise<void> {
         await Promise.all([
-            this.updateProfileName(),
+            this.updateProfileName(data.profile),
             this.assistantStore.updateFirstSignIn(false),
             this.setLastTutorial('profile')
         ]);
-        this.index = (this.index + delta) % 3;
+        this.index = (this.index + data.step) % 3;
     }
 
-    protected async step1CloseTutorial(): Promise<void> {
+    protected async step1CloseTutorial(profile: SupabaseObjectReturn<'read_profile'>): Promise<void> {
         await Promise.all([
-            this.updateProfileName(),
+            this.updateProfileName(profile),
             this.assistantStore.updateFirstSignIn(false),
             this.setLastTutorial('profile')
         ]);
@@ -127,12 +125,7 @@ export class AssistantWelcomeDialogComponent {
         await this.assistantStore.updateLastTutorial(newStatus);
     }
 
-    private async updateProfileName(): Promise<void> {
-        this.name = this.welcomeForm.value.firstName + ' ' + this.welcomeForm.value.lastName;
-        const profile: SupabaseObjectReturn<'read_profile'> = {
-            first_name_: this.welcomeForm.value.firstName,
-            last_name_: this.welcomeForm.value.lastName
-        } as SupabaseObjectReturn<'read_profile'>;
+    private async updateProfileName(profile: SupabaseObjectReturn<'read_profile'>): Promise<void> {
         await Promise.all([
             this.profileStore.update(profile),
             this.assistantStore.updateLastTutorial('profile')

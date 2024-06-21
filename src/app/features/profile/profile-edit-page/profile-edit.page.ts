@@ -1,13 +1,10 @@
-import {Component, effect, inject} from '@angular/core';
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {Component, inject} from '@angular/core';
+import {ReactiveFormsModule} from '@angular/forms';
 import {TUI_VALIDATION_ERRORS, TuiFieldErrorPipeModule, TuiInputModule} from '@taiga-ui/kit';
 import {TuiButtonModule, TuiErrorModule, TuiSvgModule, TuiTextfieldControllerModule} from '@taiga-ui/core';
 import {AssistantToggleComponent} from '../../assistant/assistant-toggle/assistant-toggle.component';
 import {SignOutComponent} from '../../../auth/auth-ui/sign-out/sign-out.component';
 import {CommonModule} from '@angular/common';
-import {
-    ProfileImageUploadComponent
-} from '@polity-profile/profile-ui/profile-image-upload/profile-image-upload.component';
 import {SupabaseObjectReturn} from '../../../../../supabase/types/supabase.authenticated.shorthand-types';
 import {
     NotficationsFromFollowToggleComponent
@@ -15,6 +12,8 @@ import {
 import {UpdateEmailComponent} from '../../../auth/auth-ui/update-email/update-email.component';
 import {ProfileStore} from '../state/profile.store';
 import {UpdatePasswordComponent} from '../../../auth/auth-ui/update-password/update-password.component';
+import {ProfileEditForm} from '@polity-profile/profile-ui/profile-edit/profile-edit.form';
+import {ImageUploadComponent} from '@polity-ui/polity-image/image-upload/image-upload.component';
 
 @Component({
     selector: 'polity-profile-edit',
@@ -31,11 +30,12 @@ import {UpdatePasswordComponent} from '../../../auth/auth-ui/update-password/upd
         SignOutComponent,
         CommonModule,
         TuiSvgModule,
-        ProfileImageUploadComponent,
+        ImageUploadComponent,
         TuiButtonModule,
         NotficationsFromFollowToggleComponent,
         UpdateEmailComponent,
-        UpdatePasswordComponent
+        UpdatePasswordComponent,
+        ProfileEditForm
     ],
     providers: [
         {
@@ -48,30 +48,13 @@ import {UpdatePasswordComponent} from '../../../auth/auth-ui/update-password/upd
 })
 export class ProfileEditPage {
     protected profileStore: ProfileStore = inject(ProfileStore);
-    protected editProfileForm: FormGroup<{
-        firstName: FormControl<string | null>,
-        lastName: FormControl<string | null>
-    }> = new FormGroup({
-        firstName: new FormControl('', Validators.required),
-        lastName: new FormControl('', Validators.required)
-    });
 
-    constructor() {
-        effect((): void => {
-            this.editProfileForm.patchValue({
-                firstName: this.profileStore.data().first_name_,
-                lastName: this.profileStore.data().last_name_
-            });
-        });
+    protected async onEdit(newProfileData: SupabaseObjectReturn<'read_profile'>): Promise<void> {
+        await this.profileStore.update(newProfileData);
     }
 
+    protected async onUpdateProfileImage(imgStoragePath: string): Promise<void> {
+        await this.profileStore.update({profile_image_: imgStoragePath});
 
-    protected async onEdit(): Promise<void> {
-        const profile: SupabaseObjectReturn<'read_profile'> =
-            {
-                first_name_: this.editProfileForm.value.firstName,
-                last_name_: this.editProfileForm.value.lastName
-            } as SupabaseObjectReturn<'read_profile'>;
-        await this.profileStore.update(profile);
     }
 }

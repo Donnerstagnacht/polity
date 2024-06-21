@@ -7,7 +7,6 @@ import {CommonModule} from '@angular/common';
 import {Tutorial, TUTORIALS} from '../constants-stypes-interfaces/tutorial';
 import {AssistantStore} from '../state/assistant.store';
 
-
 @Component({
     selector: 'polity-assistant-icon',
     templateUrl: './assistant-icon.component.html',

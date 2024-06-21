@@ -68,7 +68,6 @@ export class NotificationPage {
         this.notificationsStore.unsubscribeToRealtimeNotifications();
     }
 
-
     protected clearFilter(): void {
         this.combinedForm.reset();
         this.notificationsStore.resetFilterState();
