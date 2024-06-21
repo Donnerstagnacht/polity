@@ -78,7 +78,7 @@ Sizes.forEach((size: Size): void => {
             cy.interceptSupabaseCall('unfollow_group_transaction')
               .as('unfollowGroupTransaction');
 
-            cy.getDataCy('followButton')
+            cy.getDataCy('follow-button')
               .shouldBeVisible()
               .should('have.text', 'UNFOLLOW ')
               .click();
@@ -87,7 +87,7 @@ Sizes.forEach((size: Size): void => {
             cy.contains('Successful unfollowed')
               .should('be.visible');
 
-            cy.getDataCy('followButton')
+            cy.getDataCy('follow-button')
               .shouldBeVisible()
               .should('have.text', 'FOLLOW ');
 

@@ -1,12 +1,12 @@
-@if (!requestNotPossible) {
+@if (!requestNotPossible()) {
     <button
         (click)="toggleFollow()"
-        [attr.data-cy]="'requestButton'"
+        [attr.data-cy]="'request-button'"
         [class.tui-skeleton]="isLoading()"
         class="tui-form__button"
         size="l"
         tuiButton
         type="button"
-    >{{ requestTitleString }}
+    >{{ requestTitleString() }}
     </button>
 }

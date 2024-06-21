@@ -36,6 +36,8 @@
         ></polity-follow-button>
     </div>
 
+    <p>{{ groupFollowStore.data() }}</p>
+
     <div class="tui-space_bottom-4">
         <polity-request-button
             (toggledFollowing)="toggleMembership($event)"
@@ -45,4 +47,9 @@
             [toggledTitle]="'REQUEST MEMBERSHIP'"
         ></polity-request-button>
     </div>
+
+    <p>{{ groupMembershipStatusStore.loadingState().loading }}"</p>
+    <p>{{ groupMembershipStatusStore.isMember() }}</p>
+    <p>{{ buttonTextString }}
+
 </div>

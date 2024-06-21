@@ -21,7 +21,7 @@ export class RequestButton {
     /**
      * If true, the request button is not displayed.
      */
-    public requestNotPossible: InputSignal<boolean | undefined> = input<boolean>();
+    public requestNotPossible: InputSignal<boolean> = input<boolean>(false);
 
     /**
      * If true, a loading skeleton is displayed.

@@ -229,7 +229,7 @@ Sizes.forEach((size: Size): void => {
             cy.interceptSupabaseCall('leave_group_member_transaction')
               .as('leaveGroupMemberTransaction');
 
-            cy.getDataCy('requestButton')
+            cy.getDataCy('request-button')
               .contains('Leave Group')
               .click();
 
@@ -274,13 +274,13 @@ Sizes.forEach((size: Size): void => {
             cy.interceptSupabaseCall('delete_group_member_request')
               .as('deleteGroupMemberRequest');
 
-            cy.getDataCy('requestButton')
+            cy.getDataCy('request-button')
               .contains('Withdraw request')
               .click();
 
             cy.wait('@deleteGroupMemberRequest');
 
-            cy.getDataCy('requestButton')
+            cy.getDataCy('request-button')
               .contains('Request Membership');
 
             cy.navigateToEditGroupMembershipsOfUser(signedInUserProfileForWithdraw.first_name);
@@ -313,7 +313,7 @@ Sizes.forEach((size: Size): void => {
             cy.interceptSupabaseCall('accept_group_invitation_transaction')
               .as('acceptGroupInvitationTransaction');
 
-            cy.getDataCy('requestButton')
+            cy.getDataCy('request-button')
             //TODO
               .contains('Answer invitation')
               .click();
@@ -323,7 +323,7 @@ Sizes.forEach((size: Size): void => {
 
             cy.wait('@acceptGroupInvitationTransaction');
 
-            cy.getDataCy('requestButton')
+            cy.getDataCy('request-button')
               .contains('Leave Group');
 
             cy.getDataCy('member-counter')
@@ -378,7 +378,7 @@ Sizes.forEach((size: Size): void => {
             cy.interceptSupabaseCall('delete_group_member_invitation')
               .as('deleteGroupMemberInvitation');
 
-            cy.getDataCy('requestButton')
+            cy.getDataCy('request-button')
             //TODO
               .contains('Answer invitation')
               .click();
@@ -388,7 +388,7 @@ Sizes.forEach((size: Size): void => {
 
             cy.wait('@deleteGroupMemberInvitation');
 
-            cy.getDataCy('requestButton')
+            cy.getDataCy('request-button')
               .contains('Request Membership');
 
             cy.getDataCy('member-counter')

@@ -108,7 +108,7 @@ Cypress.Commands.add(
         cy.interceptSupabaseCall('follow_profile_transaction')
           .as('followTransaction');
 
-        cy.getDataCy('followButton')
+        cy.getDataCy('follow-button')
           .scrollIntoView()
           .shouldBeVisible()
           .should('have.text', 'FOLLOW ')
@@ -119,7 +119,7 @@ Cypress.Commands.add(
           .should('be.visible');
 
 
-        cy.getDataCy('followButton')
+        cy.getDataCy('follow-button')
           .shouldBeVisible()
           .should('have.text', 'UNFOLLOW ');
 
@@ -167,7 +167,7 @@ Cypress.Commands.add(
         cy.interceptSupabaseCall('follow_group_transaction')
           .as('followGroupTransaction');
 
-        cy.getDataCy('followButton')
+        cy.getDataCy('follow-button')
           .scrollIntoView()
           .shouldBeVisible()
           .should('have.text', 'FOLLOW ')
@@ -178,7 +178,7 @@ Cypress.Commands.add(
           .should('be.visible');
 
 
-        cy.getDataCy('followButton')
+        cy.getDataCy('follow-button')
           .shouldBeVisible()
           .should('have.text', 'UNFOLLOW ');
 

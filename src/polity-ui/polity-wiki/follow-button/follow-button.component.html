@@ -1,7 +1,7 @@
-@if (!isOwner) {
+@if (!isOwner()) {
     <button
         (click)="toggleFollow()"
-        [attr.data-cy]="'followButton'"
+        [attr.data-cy]="'follow-button'"
         [class.tui-skeleton]="isLoading()"
         class="tui-form__button"
         size="l"
