@@ -39,7 +39,9 @@ describe(`Negative api tests for profile_counter table show that `, async (): Pr
 
     it('an authenticated user can only update its own profile', async (): Promise<void> => {
         const response = await supabaseAuthenticatedClient
-        .rpc('profiles_update', {_first_name: TEST_ID});
+        // @ts-ignore
+        .rpc('profiles_update', {_id: TEST_ID});
+        console.log(response.data);
         expect(response.data).to.be.null;
         expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.function_not_existing);
     });
