@@ -5,7 +5,7 @@ import {rpcArrayHandler} from '@polity-signal-store/array/rpcArrayHandlerFeature
 import {BaseObjectStore} from '@polity-signal-store/object/base-object-store.service';
 import {rpcObjectHandler} from '@polity-signal-store/object/rpcObjectHandlerFeature';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class ProfileFollowStore extends BaseObjectStore<'check_if_user_follows_profile'> {
     private profileStore: ProfileStore = inject(ProfileStore);
     private profileCouterStore: ProfileCounterStore = inject(ProfileCounterStore);

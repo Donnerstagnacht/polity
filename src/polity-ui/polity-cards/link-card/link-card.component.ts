@@ -35,6 +35,6 @@ export class LinkCardComponent {
 
     protected async onClick(): Promise<void> {
         console.log(this.linkUrl);
-        await this.router.navigate([this.linkUrl]);
+        await this.router.navigate([this.linkUrl()]);
     }
 }

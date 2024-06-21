@@ -5,7 +5,8 @@
     <p
         [attr.data-cy]="dataCyTag"
         [class.tui-skeleton]="isLoading()"
-        class="title title_size_s">
-        {{ this.cardTitle }}
+        class="title title_size_s"
+    >
+        {{ this.cardTitle() }}
     </p>
 </tui-island>

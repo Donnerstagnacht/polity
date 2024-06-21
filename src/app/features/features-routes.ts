@@ -9,7 +9,6 @@ import {OfficeRouter} from '@polity-office/office-router/office.router';
 import {GroupRouter} from '@polity-group/group-router/group.router';
 import {NewRouter} from './new/new-router/new-router.component';
 import {ProfileRouter} from '@polity-profile/profile-router/profile.router';
-import {ProfileFollowStore} from '@polity-profile/profile-follow-state/profile-follow-store.service';
 import {ProfileStore} from '@polity-profile/state/profile.store';
 import {ProfileCounterStore} from '@polity-profile/profile-follow-state/profile-counter.store';
 import {MembershipsOfUserStore} from '@polity-profile/profile-groups-state/memberships-of-user.store';
@@ -38,12 +37,7 @@ export const FEATURE_ROUTES: Routes = [
     {
         path: 'profile/:id',
         component: ProfileRouter,
-        loadChildren: () => import('./profile/profile-routes').then(m => m.PROFILE_ROUTES),
-        providers: [
-            ProfileStore,
-            ProfileCounterStore,
-            ProfileFollowStore
-        ]
+        loadChildren: () => import('./profile/profile-routes').then(m => m.PROFILE_ROUTES)
     },
     {
         path: 'home',

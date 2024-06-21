@@ -9,7 +9,7 @@ export const isBoardMemberGuard: CanActivateFn = (
     const groupMembershipStatusStore: GroupMembershipStatusStore = inject(GroupMembershipStatusStore);
     const router: Router = inject(Router);
     const isBoardMember: Signal<boolean> = groupMembershipStatusStore.isBoardMember;
-
+    console.log('isBoardMember: ', isBoardMember());
     if (isBoardMember()) {
         return true;
     } else {

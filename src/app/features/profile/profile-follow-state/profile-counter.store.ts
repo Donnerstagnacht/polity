@@ -7,7 +7,7 @@ import {decrement, increment} from '@polity-signal-store/object/counterFeature';
 type Read_profile_key = keyof SupabaseObjectReturn<'read_profile_counters'>;
 type KeysExceptProfileId = Exclude<Read_profile_key, 'profile_id_'>;
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class ProfileCounterStore extends BaseObjectStore<'read_profile_counters'> {
 
     constructor() {
