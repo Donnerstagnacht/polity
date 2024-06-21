@@ -7,7 +7,7 @@ import {removeObjectByPropertyValue} from '@polity-signal-store/array/removeItem
 import {GroupCounterStore} from '@polity-group/group-follow-state/group-counter.store';
 
 @Injectable({providedIn: 'root'})
-export class GroupInvitationsStore extends BaseArrayStore<'read_group_member_invitations'> {
+export class GroupInvitationsStore extends BaseArrayStore<'group_member_invitations_read'> {
     private groupStore: GroupStore = inject(GroupStore);
     private groupCountersStore: GroupCounterStore = inject(GroupCounterStore);
     private groupMembershipStatusStore: GroupMembershipStatusStore = inject(GroupMembershipStatusStore);
@@ -23,7 +23,7 @@ export class GroupInvitationsStore extends BaseArrayStore<'read_group_member_inv
         const groupId: string = this.groupStore.data().id_;
         await rpcArrayHandler(
             {
-                fn: 'read_group_member_invitations',
+                fn: 'group_member_invitations_read',
                 args: {
                     _group_id: groupId
                 }
@@ -50,7 +50,7 @@ export class GroupInvitationsStore extends BaseArrayStore<'read_group_member_inv
         const groupId: string = this.groupStore.data().id_;
         const result = await rpcArrayHandler(
             {
-                fn: 'create_group_member_invitation',
+                fn: 'group_member_invitations_create',
                 args: {
                     _group_id: groupId,
                     _member_id: user_id
@@ -143,7 +143,7 @@ export class GroupInvitationsStore extends BaseArrayStore<'read_group_member_inv
     public async remove(invitation_id: string): Promise<void> {
         const result = await rpcArrayHandler(
             {
-                fn: 'delete_group_member_invitation_by_id',
+                fn: 'group_member_invitations_by_id_delete',
                 args: {
                     _invitation_id: invitation_id
                 }
@@ -177,7 +177,7 @@ export class GroupInvitationsStore extends BaseArrayStore<'read_group_member_inv
         const groupId: string = this.groupStore.data().id_;
         const result = await rpcArrayHandler(
             {
-                fn: 'delete_group_member_invitation',
+                fn: 'group_member_invitations_delete',
                 args: {
                     _group_id: groupId
                 }

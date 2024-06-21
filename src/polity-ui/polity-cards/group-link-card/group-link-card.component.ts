@@ -17,11 +17,11 @@ export class GroupLinkCardComponent {
      * Takes the sessionId as input to display a profile link
      *
      * @Input isLoading - WritableSignal<boolean> - a signal that indicates if the component is loading
-     * @Input group - SupabaseObjectReturn<'read_groups_of_user'> | null - the group data to
+     * @Input group - SupabaseObjectReturn<'groups_of_user_read'> | null - the group data to
      * be displayed
      */
     public isLoading: InputSignal<boolean> = input(true);
-    public group: InputSignal<SupabaseObjectReturn<'read_groups_of_user'> | null> = input<SupabaseObjectReturn<'read_groups_of_user'> | null>(null);
+    public group: InputSignal<SupabaseObjectReturn<'groups_of_user_read'> | null> = input<SupabaseObjectReturn<'groups_of_user_read'> | null>(null);
     public dataCyTag: InputSignal<string> = input<string>('group-link-card');
 
     constructor(

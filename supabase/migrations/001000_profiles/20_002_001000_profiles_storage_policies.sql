@@ -1,19 +1,17 @@
--- Set up access controls for storage.
--- See https://supabase.com/docs/guides/storage/security/access-control#policy-examples for more details.
 DROP POLICY IF EXISTS "Profile images are accessible for authenticated users." ON storage.objects;
 CREATE POLICY "Profile images are accessible for authenticated users."
     ON storage.objects
     FOR SELECT
     TO authenticated
     USING (
-    TRUE
+    bucket_id = 'profile_images'
     );
 
-DROP POLICY IF EXISTS "Authenticated users can upload images" ON storage.objects;
-CREATE POLICY "Authenticated users can upload images"
+DROP POLICY IF EXISTS "Authenticated users can upload a profile wiki image." ON storage.objects;
+CREATE POLICY "Authenticated users can upload a profile wiki image."
     ON storage.objects
     FOR INSERT
     TO authenticated
     WITH CHECK (
-    TRUE
+    bucket_id = 'profile_images'
     );

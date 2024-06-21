@@ -12,11 +12,11 @@ $$
 DECLARE
     membership membership;
 BEGIN
-    membership := authenticated.delete_group_member_invitation(
+    membership := authenticated.group_member_invitations_delete(
         _group_id
                   );
 
-    PERFORM hidden.create_group_member(
+    PERFORM hidden.group_members_create(
         membership.group_id,
         membership.member_id,
         'member'

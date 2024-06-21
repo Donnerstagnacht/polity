@@ -714,110 +714,12 @@ export type Database = {
         }
         Returns: boolean
       }
-      create_group: {
-        Args: {
-          _name: string
-          _description: string
-          _level: Database["hidden"]["Enums"]["group_level"]
-          _created_by: string
-          _created_at?: string
-          _updated_at?: string
-        }
-        Returns: string
-      }
-      create_group_follower_relationship: {
-        Args: {
-          _follower_id: string
-          _following_id: string
-        }
-        Returns: undefined
-      }
-      create_group_hashtag_relationship: {
-        Args: {
-          _group_id: string
-          _hashtag_id: string
-        }
-        Returns: undefined
-      }
-      create_group_member: {
-        Args: {
-          _group_id: string
-          _member_id: string
-          _member_type: Database["hidden"]["Enums"]["group_member"]
-        }
-        Returns: unknown
-      }
-      create_group_relation: {
-        Args: {
-          _group_id: string
-          _related_group_id: string
-          _relation_type: Database["hidden"]["Enums"]["group_relation"]
-          _created_at?: string
-          _updated_at?: string
-          _right_to_inform?: boolean
-          _right_to_speak?: boolean
-          _right_to_amend?: boolean
-          _right_to_vote_active?: boolean
-          _right_to_vote_passive?: boolean
-        }
-        Returns: undefined
-      }
-      create_group_requested_relation: {
-        Args: {
-          _group_id: string
-          _related_group_id: string
-          _relation_type: Database["hidden"]["Enums"]["group_relation"]
-          _created_at?: string
-          _updated_at?: string
-          _right_to_inform?: boolean
-          _right_to_speak?: boolean
-          _right_to_amend?: boolean
-          _right_to_vote_active?: boolean
-          _right_to_vote_passive?: boolean
-        }
-        Returns: undefined
-      }
-      create_hashtag: {
-        Args: {
-          _value: string
-        }
-        Returns: undefined
-      }
-      create_meeting: {
-        Args: {
-          _group_id: string
-          _creator_id: string
-          _name: string
-          _description: string
-          _type: Database["hidden"]["Enums"]["meeting_type"]
-          _date: string
-          _created_at?: string
-          _updated_at?: string
-        }
-        Returns: undefined
-      }
-      create_notification_by_user: {
-        Args: {
-          _sender: string
-          _receiver: string
-          _type_of_notification: Database["hidden"]["Enums"]["notifications_enum"]
-          _read_by_receiver: boolean
-        }
-        Returns: undefined
-      }
       create_notification_from_user_transaction: {
         Args: {
           _sender: string
           _receiver: string
           _type_of_notification: Database["hidden"]["Enums"]["notifications_enum"]
           _read_by_receiver: boolean
-        }
-        Returns: undefined
-      }
-      create_profile_follower_relationship: {
-        Args: {
-          _follower_id: string
-          _following_id: string
         }
         Returns: undefined
       }
@@ -857,39 +759,128 @@ export type Database = {
         }
         Returns: undefined
       }
-      delete_group_follower_relationship: {
+      group_followers_create: {
         Args: {
           _follower_id: string
           _following_id: string
         }
         Returns: undefined
       }
-      delete_group_hashtag_relationship: {
+      group_followers_delete: {
+        Args: {
+          _follower_id: string
+          _following_id: string
+        }
+        Returns: undefined
+      }
+      group_hashtag_relationship_delete: {
         Args: {
           _hashtag_id: string
         }
         Returns: undefined
       }
-      delete_group_member: {
+      group_hashtags_read: {
+        Args: {
+          _group_id: string
+        }
+        Returns: {
+          id_: string
+          value_: string
+        }[]
+      }
+      group_member_delete: {
         Args: {
           _user_id: string
           _group_id: string
         }
         Returns: undefined
       }
-      delete_group_member_by_id: {
+      group_member_invitations_read_one: {
+        Args: {
+          _group_id: string
+          _user_id: string
+        }
+        Returns: {
+          id_: string
+          group_id_: string
+          member_id_: string
+          member_type_: Database["hidden"]["Enums"]["group_member"]
+          created_at_: string
+          updated_at_: string
+        }[]
+      }
+      group_member_request_read_one: {
+        Args: {
+          _group_id: string
+          _user_id: string
+        }
+        Returns: {
+          id_: string
+          group_id_: string
+          member_id_: string
+          member_type_: Database["hidden"]["Enums"]["group_member"]
+          created_at_: string
+          updated_at_: string
+        }[]
+      }
+      group_members_by_id_delete: {
         Args: {
           _membership_id: string
         }
         Returns: unknown
       }
-      delete_group_relation: {
+      group_members_create: {
         Args: {
-          _group_relation_id: string
+          _group_id: string
+          _member_id: string
+          _member_type: Database["hidden"]["Enums"]["group_member"]
+        }
+        Returns: unknown
+      }
+      group_members_read_one: {
+        Args: {
+          _membership_id: string
+        }
+        Returns: {
+          id_: string
+          group_id_: string
+          member_id_: string
+          member_type_: Database["hidden"]["Enums"]["group_member"]
+          created_at_: string
+          updated_at_: string
+        }[]
+      }
+      group_relation_create: {
+        Args: {
+          _group_id: string
+          _related_group_id: string
+          _relation_type: Database["hidden"]["Enums"]["group_relation"]
+          _created_at?: string
+          _updated_at?: string
+          _right_to_inform?: boolean
+          _right_to_speak?: boolean
+          _right_to_amend?: boolean
+          _right_to_vote_active?: boolean
+          _right_to_vote_passive?: boolean
         }
         Returns: undefined
       }
-      delete_group_relation_request: {
+      group_relation_requests_create: {
+        Args: {
+          _group_id: string
+          _related_group_id: string
+          _relation_type: Database["hidden"]["Enums"]["group_relation"]
+          _created_at?: string
+          _updated_at?: string
+          _right_to_inform?: boolean
+          _right_to_speak?: boolean
+          _right_to_amend?: boolean
+          _right_to_vote_active?: boolean
+          _right_to_vote_passive?: boolean
+        }
+        Returns: undefined
+      }
+      group_relation_requests_delete: {
         Args: {
           _group_relation_id: string
         }
@@ -897,10 +888,69 @@ export type Database = {
           deleted_requested_group_relation: Record<string, unknown>
         }[]
       }
-      delete_profile_follower_relationship: {
+      group_relation_requests_read: {
         Args: {
-          _follower_id: string
-          _following_id: string
+          _group_id: string
+        }
+        Returns: {
+          id_: string
+          group_id_: string
+          related_group_id_: string
+          relation_type_: Database["hidden"]["Enums"]["group_relation"]
+          created_at_: string
+          updated_at_: string
+          right_to_inform_: boolean
+          right_to_speak_: boolean
+          right_to_amend_: boolean
+          right_to_vote_active_: boolean
+          right_to_vote_passive_: boolean
+        }[]
+      }
+      group_relations_delete: {
+        Args: {
+          _group_relation_id: string
+        }
+        Returns: undefined
+      }
+      group_relations_read: {
+        Args: {
+          _group_id: string
+        }
+        Returns: {
+          id_: string
+          group_id_: string
+          related_group_id_: string
+          relation_type_: Database["hidden"]["Enums"]["group_relation"]
+          created_at_: string
+          updated_at_: string
+          right_to_inform_: boolean
+          right_to_speak_: boolean
+          right_to_amend_: boolean
+          right_to_vote_active_: boolean
+          right_to_vote_passive_: boolean
+        }[]
+      }
+      groups_create: {
+        Args: {
+          _name: string
+          _description: string
+          _level: Database["hidden"]["Enums"]["group_level"]
+          _created_by: string
+          _created_at?: string
+          _updated_at?: string
+        }
+        Returns: string
+      }
+      groups_hashtag_relationship_create: {
+        Args: {
+          _group_id: string
+          _hashtag_id: string
+        }
+        Returns: undefined
+      }
+      hashtag_create: {
+        Args: {
+          _value: string
         }
         Returns: undefined
       }
@@ -946,127 +996,20 @@ export type Database = {
         }
         Returns: undefined
       }
-      read_group_hashtags: {
+      meetings_create: {
         Args: {
           _group_id: string
+          _creator_id: string
+          _name: string
+          _description: string
+          _type: Database["hidden"]["Enums"]["meeting_type"]
+          _date: string
+          _created_at?: string
+          _updated_at?: string
         }
-        Returns: {
-          id_: string
-          value_: string
-        }[]
+        Returns: undefined
       }
-      read_group_member: {
-        Args: {
-          _membership_id: string
-        }
-        Returns: {
-          id_: string
-          group_id_: string
-          member_id_: string
-          member_type_: Database["hidden"]["Enums"]["group_member"]
-          created_at_: string
-          updated_at_: string
-        }[]
-      }
-      read_group_member_invitation: {
-        Args: {
-          _group_id: string
-          _user_id: string
-        }
-        Returns: {
-          id_: string
-          group_id_: string
-          member_id_: string
-          member_type_: Database["hidden"]["Enums"]["group_member"]
-          created_at_: string
-          updated_at_: string
-        }[]
-      }
-      read_group_member_request: {
-        Args: {
-          _group_id: string
-          _user_id: string
-        }
-        Returns: {
-          id_: string
-          group_id_: string
-          member_id_: string
-          member_type_: Database["hidden"]["Enums"]["group_member"]
-          created_at_: string
-          updated_at_: string
-        }[]
-      }
-      read_group_relation: {
-        Args: {
-          _group_relation_id: string
-        }
-        Returns: {
-          id_: string
-          group_id_: string
-          related_group_id_: string
-          relation_type_: Database["hidden"]["Enums"]["group_relation"]
-          created_at_: string
-          updated_at_: string
-          right_to_inform_: boolean
-          right_to_speak_: boolean
-          right_to_amend_: boolean
-          right_to_vote_active_: boolean
-          right_to_vote_passive_: boolean
-        }[]
-      }
-      read_group_relation_request: {
-        Args: {
-          _group_id: string
-        }
-        Returns: {
-          id_: string
-          group_id_: string
-          related_group_id_: string
-          relation_type_: Database["hidden"]["Enums"]["group_relation"]
-          created_at_: string
-          updated_at_: string
-          right_to_inform_: boolean
-          right_to_speak_: boolean
-          right_to_amend_: boolean
-          right_to_vote_active_: boolean
-          right_to_vote_passive_: boolean
-        }[]
-      }
-      read_group_relations: {
-        Args: {
-          _group_id: string
-        }
-        Returns: {
-          id_: string
-          group_id_: string
-          related_group_id_: string
-          relation_type_: Database["hidden"]["Enums"]["group_relation"]
-          created_at_: string
-          updated_at_: string
-          right_to_inform_: boolean
-          right_to_speak_: boolean
-          right_to_amend_: boolean
-          right_to_vote_active_: boolean
-          right_to_vote_passive_: boolean
-        }[]
-      }
-      read_meeting: {
-        Args: {
-          _meeting_id: string
-        }
-        Returns: {
-          id_: string
-          group_id_: string
-          creator_id_: string
-          name_: string
-          description_: string
-          type_: Database["hidden"]["Enums"]["meeting_type"]
-          date_: string
-          created_at_: string
-          updated_at_: string
-        }[]
-      }
-      read_meetings: {
+      meetings_read: {
         Args: {
           _group_id: string
         }
@@ -1082,7 +1025,46 @@ export type Database = {
           updated_at: string
         }[]
       }
-      read_push_subscriptions_of_user: {
+      meetings_read_one: {
+        Args: {
+          _meeting_id: string
+        }
+        Returns: {
+          id_: string
+          group_id_: string
+          creator_id_: string
+          name_: string
+          description_: string
+          type_: Database["hidden"]["Enums"]["meeting_type"]
+          date_: string
+          created_at_: string
+          updated_at_: string
+        }[]
+      }
+      notifications_by_user_create: {
+        Args: {
+          _sender: string
+          _receiver: string
+          _type_of_notification: Database["hidden"]["Enums"]["notifications_enum"]
+          _read_by_receiver: boolean
+        }
+        Returns: undefined
+      }
+      profile_followers_create: {
+        Args: {
+          _follower_id: string
+          _following_id: string
+        }
+        Returns: undefined
+      }
+      profile_followers_delete: {
+        Args: {
+          _follower_id: string
+          _following_id: string
+        }
+        Returns: undefined
+      }
+      push_subscriptions_of_user_read: {
         Args: {
           _user_to_be_notified: string
         }

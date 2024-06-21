@@ -5,7 +5,7 @@ import {removeObjectByPropertyValue} from '@polity-signal-store/array/removeItem
 import {ProfileCounterStore} from '@polity-profile/profile-follow-state/profile-counter.store';
 
 @Injectable()
-export class MembershipsOfUserStore extends BaseArrayStore<'read_groups_of_user'> {
+export class MembershipsOfUserStore extends BaseArrayStore<'groups_of_user_read'> {
     private profileCounterStore: ProfileCounterStore = inject(ProfileCounterStore);
 
     constructor() {
@@ -18,7 +18,7 @@ export class MembershipsOfUserStore extends BaseArrayStore<'read_groups_of_user'
     public async read(): Promise<void> {
         await rpcArrayHandler(
             {
-                fn: 'read_groups_of_user'
+                fn: 'groups_of_user_read'
             },
             {
                 useLoading: true,

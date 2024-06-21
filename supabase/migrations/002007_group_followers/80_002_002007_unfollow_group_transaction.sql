@@ -13,7 +13,7 @@ DECLARE
     auth_user_id uuid;
 BEGIN
     auth_user_id := auth.uid();
-    PERFORM hidden.delete_group_follower_relationship(
+    PERFORM hidden.group_followers_delete(
         auth_user_id,
         _following_id
             );

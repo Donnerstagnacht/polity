@@ -13,11 +13,11 @@ DECLARE
     membership membership;
 BEGIN
     membership :=
-        authenticated.delete_group_member_request_by_id(
+        authenticated.group_member_requests_delete_by_id(
             _request_id
         );
 
-    PERFORM hidden.create_group_member(
+    PERFORM hidden.group_members_create(
         membership.group_id,
         membership.member_id,
         'member'

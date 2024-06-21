@@ -90,11 +90,11 @@ Cypress.Commands.add(
         userWhoFollowsCounter: ProfileCounter
     ): void => {
 
-        cy.interceptSupabaseCall('read_profile')
+        cy.interceptSupabaseCall('profiles_read')
           .as('readProfile');
         cy.interceptSupabaseCall('check_if_user_follows_profile')
           .as('isFollowing');
-        cy.interceptSupabaseCall('read_profile_counters') //         cy.interceptSupabaseCall('read_following_counter')
+        cy.interceptSupabaseCall('profile_counters_read') //         cy.interceptSupabaseCall('read_following_counter')
           .as('following-counter');
 
         cy.searchUser(userWhoIsFollowedProfile.first_name)
@@ -149,11 +149,11 @@ Cypress.Commands.add(
         userWhoFollowsCounter: ProfileCounter
     ): void => {
 
-        cy.interceptSupabaseCall('read_group')
+        cy.interceptSupabaseCall('group_read')
           .as('readGroupColumns');
         cy.interceptSupabaseCall('check_if_user_follows_group')
           .as('isFollowingGroup');
-        cy.interceptSupabaseCall('read_group_counters') //         cy.interceptSupabaseCall('read_following_counter')
+        cy.interceptSupabaseCall('group_counters_read') //         cy.interceptSupabaseCall('read_following_counter')
           .as('readGroupCounter');
 
         cy.searchGroup(groupWhichIsFollowed.name)
@@ -210,14 +210,14 @@ Cypress.Commands.add('navigateToHome', (): void => {
 });
 
 Cypress.Commands.add('navigateToEditGroupMembershipsOfUser', (userName: string): void => {
-    cy.interceptSupabaseCall('read_profile')
-      .as('read_profile');
+    cy.interceptSupabaseCall('profiles_read')
+      .as('profiles_read');
     cy.navigateToHome();
-    cy.wait('@read_profile');
+    cy.wait('@profiles_read');
 
     cy.contains(userName)
       .click();
-    cy.interceptSupabaseCall('read_groups_of_user')
+    cy.interceptSupabaseCall('groups_of_user_read')
       .as('groupsOfUser');
 
     cy.getDataCy('nav-groups-edit', 'nav-groups-edit-desktop')

@@ -92,13 +92,13 @@ Sizes.forEach((size: Size): void => {
               .click();
             cy.getDataCy('editGroupMember')
               .click();
-            cy.interceptSupabaseCall('read_group_member_invitations')
+            cy.interceptSupabaseCall('group_member_invitations_read')
               .as('readGroupMemberInvitations');
             cy.getDataCy('show-group-invitations')
               .click();
             cy.wait('@readGroupMemberInvitations');
 
-            cy.interceptSupabaseCall('delete_group_member_invitation_by_id')
+            cy.interceptSupabaseCall('group_member_invitations_by_id_delete')
               .as('deleteGroupMemberInvitationById');
             cy.getDataCy('group_invitation_name')
               .shouldBeVisible()
@@ -124,7 +124,7 @@ Sizes.forEach((size: Size): void => {
               .click();
             cy.getDataCy('editGroupMember')
               .click();
-            cy.interceptSupabaseCall('read_group_member_invitations')
+            cy.interceptSupabaseCall('group_member_invitations_read')
               .as('readGroupMemberInvitations');
             cy.getDataCy('show-group-invitations')
               .click();
@@ -146,7 +146,7 @@ Sizes.forEach((size: Size): void => {
 
             cy.getDataCy('show-member')
               .click();
-            cy.interceptSupabaseCall('read_group_member_invitations')
+            cy.interceptSupabaseCall('group_member_invitations_read')
               .as('readGroupMemberInvitations');
             cy.getDataCy('show-group-invitations')
               .click();
@@ -168,7 +168,7 @@ Sizes.forEach((size: Size): void => {
               .click();
             cy.getDataCy('editGroupMember')
               .click();
-            cy.interceptSupabaseCall('read_group_member_requests')
+            cy.interceptSupabaseCall('group_member_request_read_ones')
               .as('readGroupMemberRequests');
             cy.getDataCy('show-group-requests')
               .click();
@@ -206,13 +206,13 @@ Sizes.forEach((size: Size): void => {
               .click();
             cy.getDataCy('editGroupMember')
               .click();
-            cy.interceptSupabaseCall('read_group_member_requests')
+            cy.interceptSupabaseCall('group_member_request_read_ones')
               .as('readGroupMemberRequests');
             cy.getDataCy('show-group-requests')
               .click();
             cy.wait('@readGroupMemberRequests');
 
-            cy.interceptSupabaseCall('delete_group_member_request')
+            cy.interceptSupabaseCall('group_member_requests_delete')
               .as('deleteGroupMemberRequest');
             cy.getDataCy('group_request_name')
               .shouldBeVisible()

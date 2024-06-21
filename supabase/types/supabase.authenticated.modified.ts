@@ -1,5 +1,5 @@
-import {MergeDeep} from "type-fest";
-import {Database as DatabaseGenerated} from './supabase.authenticated'
+import {MergeDeep} from 'type-fest';
+import {Database as DatabaseGenerated} from './supabase.authenticated';
 
 /*
 Supabase automatically generates types which are stored in the file supabase.ts.
@@ -63,25 +63,25 @@ export type DatabaseAuthenticatedOverwritten = MergeDeep<
                     }
                     Returns: any
                 }
-                delete_group_member_invitation: {
+                group_member_invitations_delete: {
                     Args: {
                         _group_id: string
                     }
                     Returns: any
                 }
-                delete_group_member_invitation_by_id: {
+                group_member_invitations_by_id_delete: {
                     Args: {
                         _invitation_id: string
                     }
                     Returns: any
                 }
-                delete_group_member_request: {
+                group_member_requests_delete: {
                     Args: {
                         _group_id: string
                     }
                     Returns: any
                 }
-                delete_group_member_request_by_id: {
+                group_member_requests_delete_by_id: {
                     Args: {
                         _request_id: string
                     }

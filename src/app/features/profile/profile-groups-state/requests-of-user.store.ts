@@ -4,7 +4,7 @@ import {rpcArrayHandler} from '@polity-signal-store/array/rpcArrayHandlerFeature
 import {removeObjectByPropertyValue} from '@polity-signal-store/array/removeItemFeatue';
 
 @Injectable()
-export class RequestsOfUserStore extends BaseArrayStore<'read_group_requests_of_user'> {
+export class RequestsOfUserStore extends BaseArrayStore<'group_member_requests_of_user_read'> {
 
     constructor() {
         super({
@@ -16,7 +16,7 @@ export class RequestsOfUserStore extends BaseArrayStore<'read_group_requests_of_
     public async read(): Promise<void> {
         await rpcArrayHandler(
             {
-                fn: 'read_group_requests_of_user'
+                fn: 'group_member_requests_of_user_read'
             },
             {
                 useLoading: true,
@@ -39,7 +39,7 @@ export class RequestsOfUserStore extends BaseArrayStore<'read_group_requests_of_
     public async deleteById(requestId: string): Promise<void> {
         const result = await rpcArrayHandler(
             {
-                fn: 'delete_group_member_request_by_id',
+                fn: 'group_member_requests_delete_by_id',
                 args: {
                     _request_id: requestId
                 }

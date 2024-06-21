@@ -6,7 +6,7 @@ import {BaseObjectStore} from '@polity-signal-store/object/base-object-store.ser
 @Injectable({
     providedIn: 'root'
 })
-export class AssistantStore extends BaseObjectStore<'read_assistant'> {
+export class AssistantStore extends BaseObjectStore<'assistants_read'> {
 
     constructor() {
         super({
@@ -20,7 +20,7 @@ export class AssistantStore extends BaseObjectStore<'read_assistant'> {
     public async read(): Promise<void> {
         const result = await rpcObjectHandler(
             {
-                fn: 'read_assistant'
+                fn: 'assistants_read'
             },
             {
                 useLoading: true,
@@ -44,7 +44,7 @@ export class AssistantStore extends BaseObjectStore<'read_assistant'> {
     public async updateFirstSignIn(newStatus: boolean): Promise<void> {
         const result = await rpcObjectHandler(
             {
-                fn: 'update_first_sign_in',
+                fn: 'assistants_first_sign_in_update',
                 args: {
                     _new_status: newStatus
                 }
@@ -73,7 +73,7 @@ export class AssistantStore extends BaseObjectStore<'read_assistant'> {
     public async skipTutorial(newStatus: boolean): Promise<void> {
         const result = await rpcObjectHandler(
             {
-                fn: 'update_skip_tutorial',
+                fn: 'assistants_skip_tutorial_update',
                 args: {
                     _new_status: newStatus
                 }
@@ -102,7 +102,7 @@ export class AssistantStore extends BaseObjectStore<'read_assistant'> {
     public async updateLastTutorial(last_tutorial: DatabaseHiddenOverwritten['hidden']['Enums']['tutorial_enum']): Promise<void> {
         const result = await rpcObjectHandler(
             {
-                fn: 'update_last_tutorial',
+                fn: 'assistants_last_tutorial_update',
                 args: {
                     _new_status: last_tutorial
                 }

@@ -10,7 +10,7 @@ import {rpcObjectHandler} from '@polity-signal-store/object/rpcObjectHandlerFeat
 import {BaseObjectStore} from '@polity-signal-store/object/base-object-store.service';
 
 @Injectable({providedIn: 'root'})
-export class NotificationCounterStore extends BaseObjectStore<'read_unread_notifications_counter'> {
+export class NotificationCounterStore extends BaseObjectStore<'unread_notifications_counter_read'> {
     private sessionStore: SessionStore = inject(SessionStore);
     private readonly supabaseClient = supabaseAuthenticatedClient;
 
@@ -24,7 +24,7 @@ export class NotificationCounterStore extends BaseObjectStore<'read_unread_notif
                                                },
                                                (payload: RealtimePostgresUpdatePayload<SupabaseTable<'profiles_counters'>>): void => {
                                                    console.log('payload', payload);
-                                                   const testReturn: SupabaseObjectReturn<'read_unread_notifications_counter'> = {
+                                                   const testReturn: SupabaseObjectReturn<'unread_notifications_counter_read'> = {
                                                        unread_notifications_counter_: payload.new.unread_notifications_counter as number,
                                                        profile_id_: payload.new.id as string
                                                    };
@@ -44,7 +44,7 @@ export class NotificationCounterStore extends BaseObjectStore<'read_unread_notif
     public async read(): Promise<void> {
         const result = await rpcObjectHandler(
             {
-                fn: 'read_unread_notifications_counter'
+                fn: 'unread_notifications_counter_read'
             },
             {
                 useLoading: true,

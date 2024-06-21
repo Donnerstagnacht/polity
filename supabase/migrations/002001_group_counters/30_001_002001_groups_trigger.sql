@@ -1,5 +1,5 @@
 CREATE OR REPLACE FUNCTION
-    postgres.create_groups_counter()
+    postgres.groups_creates_counter()
     RETURNS trigger AS
 $$
 BEGIN
@@ -20,4 +20,4 @@ CREATE OR REPLACE TRIGGER on_auth_user_created_add_groups_counter
     AFTER INSERT
     ON hidden.groups
     FOR EACH ROW
-EXECUTE PROCEDURE postgres.create_groups_counter();
+EXECUTE PROCEDURE postgres.groups_creates_counter();

@@ -89,7 +89,7 @@ Sizes.forEach((size: Size): void => {
               .shouldBeVisible()
               .click();
 
-            cy.interceptSupabaseCall('delete_group_member_request_by_id')
+            cy.interceptSupabaseCall('group_member_requests_delete_by_id')
               .as('deleteGroupMemberRequest');
 
             cy.getDataCy('group_request_name')
@@ -132,7 +132,7 @@ Sizes.forEach((size: Size): void => {
             cy.contains(groupToBeLeft.name)
               .should('not.exist');
 
-            cy.interceptSupabaseCall('read_groups_of_user')
+            cy.interceptSupabaseCall('groups_of_user_read')
               .as('groupsOfUser');
 
             cy.getDataCy('show-group-memberships')
@@ -176,7 +176,7 @@ Sizes.forEach((size: Size): void => {
               .shouldBeVisible()
               .click();
 
-            cy.interceptSupabaseCall('delete_group_member_invitation_by_id')
+            cy.interceptSupabaseCall('group_member_invitations_by_id_delete')
               .as('deleteGroupMemberInvitationById');
 
             cy.getDataCy('group_invitation_name')
@@ -210,7 +210,7 @@ Sizes.forEach((size: Size): void => {
               .shouldBeVisible()
               .should('have.text', '3');
 
-            cy.interceptSupabaseCall('read_group')
+            cy.interceptSupabaseCall('group_read')
               .as('readGroupColumns');
             cy.interceptSupabaseCall('check_group_membership_status')
               .as('checkGroupMembershipStatus');
@@ -258,7 +258,7 @@ Sizes.forEach((size: Size): void => {
 
             cy.searchGroup(groupToWithdrawRequestFrom.name);
 
-            cy.interceptSupabaseCall('read_group')
+            cy.interceptSupabaseCall('group_read')
               .as('groupColumns');
 
             cy.interceptSupabaseCall('check_group_membership_status')
@@ -271,7 +271,7 @@ Sizes.forEach((size: Size): void => {
 
             cy.wait(['@groupColumns', '@groupMembershipStatus']);
 
-            cy.interceptSupabaseCall('delete_group_member_request')
+            cy.interceptSupabaseCall('group_member_requests_delete')
               .as('deleteGroupMemberRequest');
 
             cy.getDataCy('request-button')
@@ -297,7 +297,7 @@ Sizes.forEach((size: Size): void => {
             cy.signIn(signedInUserAuthForInvitation);
             cy.searchGroup(groupWithInvitationToDecide.name);
 
-            cy.interceptSupabaseCall('read_group')
+            cy.interceptSupabaseCall('group_read')
               .as('groupColumns');
 
             cy.interceptSupabaseCall('check_group_membership_status')
@@ -330,7 +330,7 @@ Sizes.forEach((size: Size): void => {
               .shouldBeVisible()
               .should('have.text', '6');
 
-            cy.interceptSupabaseCall('read_groups_of_user')
+            cy.interceptSupabaseCall('groups_of_user_read')
               .as('readGroupsOfUser');
             cy.navigateToEditGroupMembershipsOfUser(signedInUserProfileForInvitation.first_name);
             cy.wait('@readGroupsOfUser');
@@ -340,10 +340,10 @@ Sizes.forEach((size: Size): void => {
 
             cy.searchUser(signedInUserProfileForInvitation.first_name);
 
-            cy.interceptSupabaseCall('read_profile_counters')
+            cy.interceptSupabaseCall('profile_counters_read')
               .as('readProfileCounters');
 
-            cy.interceptSupabaseCall('read_profile')
+            cy.interceptSupabaseCall('profiles_read')
               .as('readProfile');
 
             cy.getDataCy('user-search-results')
@@ -362,7 +362,7 @@ Sizes.forEach((size: Size): void => {
             cy.signIn(signedInUserAuthForInvitation);
             cy.searchGroup(groupWithInvitationToDecide.name);
 
-            cy.interceptSupabaseCall('read_group')
+            cy.interceptSupabaseCall('group_read')
               .as('readGroup');
 
             cy.interceptSupabaseCall('check_group_membership_status')
@@ -375,7 +375,7 @@ Sizes.forEach((size: Size): void => {
 
             cy.wait(['@readGroup', '@groupMembershipStatus']);
 
-            cy.interceptSupabaseCall('delete_group_member_invitation')
+            cy.interceptSupabaseCall('group_member_invitations_delete')
               .as('deleteGroupMemberInvitation');
 
             cy.getDataCy('request-button')
@@ -395,7 +395,7 @@ Sizes.forEach((size: Size): void => {
               .shouldBeVisible()
               .should('have.text', '5');
 
-            cy.interceptSupabaseCall('read_group_member_invitations_of_user')
+            cy.interceptSupabaseCall('group_member_invitations_of_user_read')
               .as('readGroupMemberInvitationsOfUser');
             cy.navigateToEditGroupMembershipsOfUser(signedInUserProfileForInvitation.first_name);
             cy.getDataCy('show-group-invitations')

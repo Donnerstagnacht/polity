@@ -6,7 +6,7 @@ import {rpcArrayHandler} from '@polity-signal-store/array/rpcArrayHandlerFeature
 import {removeObjectByPropertyValue} from '@polity-signal-store/array/removeItemFeatue';
 
 @Injectable({providedIn: 'root'})
-export class FollowersOfUserStore extends BaseArrayStore<'read_followers_of_user'> {
+export class FollowersOfUserStore extends BaseArrayStore<'profile_followers_of_user_read'> {
     private profileCounterStore: ProfileCounterStore = inject(ProfileCounterStore);
 
     constructor() {
@@ -19,7 +19,7 @@ export class FollowersOfUserStore extends BaseArrayStore<'read_followers_of_user
     public async read(): Promise<void> {
         await rpcArrayHandler(
             {
-                fn: 'read_followers_of_user'
+                fn: 'profile_followers_of_user_read'
             },
             {
                 useLoading: true,
@@ -64,7 +64,7 @@ export class FollowersOfUserStore extends BaseArrayStore<'read_followers_of_user
             }
         );
         if (!result().error) {
-            removeObjectByPropertyValue<SupabaseObjectReturn<'read_followers_of_user'>>(
+            removeObjectByPropertyValue<SupabaseObjectReturn<'profile_followers_of_user_read'>>(
                 'id_',
                 userId,
                 this.data_

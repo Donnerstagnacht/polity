@@ -12,7 +12,7 @@ $$
 DECLARE
     membership membership ;
 BEGIN
-    membership := hidden.delete_group_member_by_id(
+    membership := hidden.group_members_by_id_delete(
         _membership_id
                   );
 

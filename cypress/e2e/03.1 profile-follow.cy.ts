@@ -64,11 +64,11 @@ Sizes.forEach((size: Size): void => {
 
         it('unfollow another user', (): void => {
 
-            cy.interceptSupabaseCall('read_profile')
+            cy.interceptSupabaseCall('profiles_read')
               .as('readProfile');
             cy.interceptSupabaseCall('check_if_user_follows_profile')
               .as('isFollowing');
-            cy.interceptSupabaseCall('read_profile_counters')
+            cy.interceptSupabaseCall('profile_counters_read')
               .as('following-counter');
 
             cy.searchUser(userWhoIsUnFollowedProfile.first_name)
@@ -115,15 +115,15 @@ Sizes.forEach((size: Size): void => {
             cy.navigateToHome();
             cy.interceptSupabaseCall('check_if_user_follows_profile')
               .as('isFollowing');
-            cy.interceptSupabaseCall('read_profile_counters')
+            cy.interceptSupabaseCall('profile_counters_read')
               .as('following-counter');
-            cy.interceptSupabaseCall('read_profile')
+            cy.interceptSupabaseCall('profiles_read')
               .as('user');
             cy.contains(userWhoFollowsProfile.first_name)
               .click();
             cy.wait(['@isFollowing', '@following-counter', '@user']);
 
-            cy.interceptSupabaseCall('read_followers_of_user').as('loadFollowerOfUser');
+            cy.interceptSupabaseCall('profile_followers_of_user_read').as('loadFollowerOfUser');
 
             console.log('size width', size.width);
             console.log('sizes[2] width', Sizes[2].width);
@@ -162,16 +162,16 @@ Sizes.forEach((size: Size): void => {
             cy.navigateToHome();
             cy.interceptSupabaseCall('check_if_user_follows_profile')
               .as('isFollowing');
-            cy.interceptSupabaseCall('read_profile_counters')
+            cy.interceptSupabaseCall('profile_counters_read')
               .as('following-counter');
-            cy.interceptSupabaseCall('read_profile')
+            cy.interceptSupabaseCall('profiles_read')
               .as('user');
             cy.getDataCy('home-to-profile')
               .shouldBeVisible()
               .click();
             cy.wait(['@isFollowing', '@following-counter', '@user']);
 
-            cy.interceptSupabaseCall('read_followers_of_user').as('loadFollowerOfUser');
+            cy.interceptSupabaseCall('profile_followers_of_user_read').as('loadFollowerOfUser');
             if (size.width === Sizes[2].width) {
                 cy.getDataCy('nav-follower-edit-desktop')
                   .shouldBeVisible()

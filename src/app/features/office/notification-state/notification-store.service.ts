@@ -8,7 +8,7 @@ import {SupabaseTable} from '../../../../../supabase/types/supabase.authenticate
 import {SessionStore} from '../../../auth/state/session.store';
 
 @Injectable({providedIn: 'root'})
-export class NotificationsStore extends BaseArrayStore<'read_notifications_of_user'> {
+export class NotificationsStore extends BaseArrayStore<'notifications_of_user_read'> {
     private readonly supabaseClient = supabaseAuthenticatedClient;
     private currentNotificationsChannel: RealtimeChannel | null = null;
     private sessionStore: SessionStore = inject(SessionStore);
@@ -24,7 +24,7 @@ export class NotificationsStore extends BaseArrayStore<'read_notifications_of_us
     public async read(): Promise<void> {
         await rpcArrayHandler(
             {
-                fn: 'read_notifications_of_user'
+                fn: 'notifications_of_user_read'
             },
             {
                 useLoading: true,
@@ -68,7 +68,7 @@ export class NotificationsStore extends BaseArrayStore<'read_notifications_of_us
     public async updateReceiveFollowNotificationStatus(): Promise<void> {
         await rpcObjectHandler(
             {
-                fn: 'update_profile_receive_notifications_from_follow'
+                fn: 'profiles_receive_notifications_from_follow_update'
             },
             {
                 useLoading: true,
@@ -114,8 +114,8 @@ export class NotificationsStore extends BaseArrayStore<'read_notifications_of_us
             async (payload: RealtimePostgresInsertPayload<SupabaseTable<any>>): Promise<void> => {
 
                 // WORKING SOLUTION
-                // const response: PostgrestSingleResponse<SupabaseObjectReturn<'read_notifications_of_user'>[]> = await this.supabaseClient
-                //                                                                                                           .rpc('read_notifications_of_user')
+                // const response: PostgrestSingleResponse<SupabaseObjectReturn<'notifications_of_user_read'>[]> = await this.supabaseClient
+                //                                                                                                           .rpc('notifications_of_user_read')
                 //
                 // if (response.data) {
                 //     this.notificationStoreService.notifications.setObjects(response.data)

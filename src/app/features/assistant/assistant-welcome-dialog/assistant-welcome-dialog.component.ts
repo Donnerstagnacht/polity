@@ -64,7 +64,7 @@ export class AssistantWelcomeDialogComponent {
     }
 
     protected async step1NavigateToProfileStep(data: {
-        profile: SupabaseObjectReturn<'read_profile'>,
+        profile: SupabaseObjectReturn<'profiles_read'>,
         step: number
     }): Promise<void> {
         await Promise.all([
@@ -75,7 +75,7 @@ export class AssistantWelcomeDialogComponent {
         this.index = (this.index + data.step) % 3;
     }
 
-    protected async step1CloseTutorial(profile: SupabaseObjectReturn<'read_profile'>): Promise<void> {
+    protected async step1CloseTutorial(profile: SupabaseObjectReturn<'profiles_read'>): Promise<void> {
         await Promise.all([
             this.updateProfileName(profile),
             this.assistantStore.updateFirstSignIn(false),
@@ -125,7 +125,7 @@ export class AssistantWelcomeDialogComponent {
         await this.assistantStore.updateLastTutorial(newStatus);
     }
 
-    private async updateProfileName(profile: SupabaseObjectReturn<'read_profile'>): Promise<void> {
+    private async updateProfileName(profile: SupabaseObjectReturn<'profiles_read'>): Promise<void> {
         await Promise.all([
             this.profileStore.update(profile),
             this.assistantStore.updateLastTutorial('profile')

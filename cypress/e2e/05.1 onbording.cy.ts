@@ -25,9 +25,9 @@ Sizes.forEach((size: Size): void => {
         it('see an assistant-welcome-dialog tutorial if they sign in the first time', (): void => {
             cy.resetSupabase();
             cy.signIn(userFirstLoginDoingWelcomeTutorialAuth);
-            cy.interceptSupabaseCall('read_assistant')
+            cy.interceptSupabaseCall('assistants_read')
               .as('loadAssistant');
-            cy.interceptSupabaseCall('read_profile')
+            cy.interceptSupabaseCall('profiles_read')
               .as('loadUser');
             cy.wait(['@loadAssistant', '@loadUser']);
 
@@ -57,9 +57,9 @@ Sizes.forEach((size: Size): void => {
 
         it('can save their tutorial progress and load their progress', (): void => {
             cy.signIn(userFirstLoginDoingWelcomeTutorialAuth);
-            cy.interceptSupabaseCall('read_assistant')
+            cy.interceptSupabaseCall('assistants_read')
               .as('loadAssistant');
-            cy.interceptSupabaseCall('read_profile')
+            cy.interceptSupabaseCall('profiles_read')
               .as('loadUser');
             cy.wait(['@loadAssistant', '@loadUser']);
 
@@ -74,9 +74,9 @@ Sizes.forEach((size: Size): void => {
         it('do a tutorial about their profile settings', (): void => {
             cy.resetSupabase();
             cy.signIn(userDoingProfileTutorialAuth);
-            cy.interceptSupabaseCall('read_assistant')
+            cy.interceptSupabaseCall('assistants_read')
               .as('loadAssistant');
-            cy.interceptSupabaseCall('read_profile')
+            cy.interceptSupabaseCall('profiles_read')
               .as('loadUser');
             cy.wait(['@loadAssistant', '@loadUser']);
 
@@ -90,7 +90,7 @@ Sizes.forEach((size: Size): void => {
             cy.getDataCy('step2-close-and-skip-tutorial')
               .scrollIntoView();
 
-            cy.interceptSupabaseCall('update_last_tutorial').as('lastTutorial');
+            cy.interceptSupabaseCall('assistants_last_tutorial_update').as('lastTutorial');
             cy.getDataCy('step2m-navigate-to-profile-page')
               .scrollIntoView()
               .click();
@@ -104,9 +104,9 @@ Sizes.forEach((size: Size): void => {
         it('do a tutorial about searching users and follow them', (): void => {
             cy.resetSupabase();
             cy.signIn(userDoingSearchTutorialAuth);
-            cy.interceptSupabaseCall('read_assistant')
+            cy.interceptSupabaseCall('assistants_read')
               .as('loadAssistant');
-            cy.interceptSupabaseCall('read_profile')
+            cy.interceptSupabaseCall('profiles_read')
               .as('loadUser');
             cy.wait(['@loadAssistant', '@loadUser']);
 
@@ -121,8 +121,8 @@ Sizes.forEach((size: Size): void => {
             cy.getDataCy('step3-close-and-skip-tutorial')
               .scrollIntoView();
 
-            cy.interceptSupabaseCall('update_skip_tutorial').as('skipTutorial');
-            cy.interceptSupabaseCall('update_last_tutorial').as('lastTutorial');
+            cy.interceptSupabaseCall('assistants_skip_tutorial_update').as('skipTutorial');
+            cy.interceptSupabaseCall('assistants_last_tutorial_update').as('lastTutorial');
             cy.getDataCy('step3-navigate-to-search-page')
               .scrollIntoView()
               .click();
@@ -135,9 +135,9 @@ Sizes.forEach((size: Size): void => {
         it('can open the tutorial from profile settings again ', (): void => {
             cy.resetSupabase();
             cy.signIn(userRestartingTutorialAuth);
-            cy.interceptSupabaseCall('read_assistant')
+            cy.interceptSupabaseCall('assistants_read')
               .as('loadAssistant');
-            cy.interceptSupabaseCall('read_profile')
+            cy.interceptSupabaseCall('profiles_read')
               .as('loadUser');
             cy.wait(['@loadAssistant', '@loadUser']);
 
@@ -156,8 +156,8 @@ Sizes.forEach((size: Size): void => {
               .shouldBeVisible()
               .contains('Zeige Tutorials');
 
-            cy.interceptSupabaseCall('update_skip_tutorial').as('skipTutorial');
-            cy.interceptSupabaseCall('update_last_tutorial').as('lastTutorial');
+            cy.interceptSupabaseCall('assistants_skip_tutorial_update').as('skipTutorial');
+            cy.interceptSupabaseCall('assistants_last_tutorial_update').as('lastTutorial');
 
             cy.getDataCy('toggle-assistant')
               .shouldBeVisible()
@@ -174,9 +174,9 @@ Sizes.forEach((size: Size): void => {
         it('can reject the tutorial and will not see it again ', (): void => {
             cy.resetSupabase();
             cy.signIn(userDoingProfileTutorialAuth);
-            cy.interceptSupabaseCall('read_assistant')
+            cy.interceptSupabaseCall('assistants_read')
               .as('loadAssistant');
-            cy.interceptSupabaseCall('read_profile')
+            cy.interceptSupabaseCall('profiles_read')
               .as('loadUser');
             cy.wait(['@loadAssistant', '@loadUser']);
 
@@ -190,8 +190,8 @@ Sizes.forEach((size: Size): void => {
             cy.getDataCy('step2m-navigate-to-profile-page')
               .scrollIntoView();
 
-            cy.interceptSupabaseCall('update_skip_tutorial').as('skipTutorial');
-            cy.interceptSupabaseCall('update_last_tutorial').as('lastTutorial');
+            cy.interceptSupabaseCall('assistants_skip_tutorial_update').as('skipTutorial');
+            cy.interceptSupabaseCall('assistants_last_tutorial_update').as('lastTutorial');
 
             cy.getDataCy('step2-close-and-skip-tutorial')
               .scrollIntoView()

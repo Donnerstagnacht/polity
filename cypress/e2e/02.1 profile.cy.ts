@@ -30,7 +30,7 @@ Sizes.forEach((size: Size): void => {
             cy.getDataCy('edit-instruction')
             .shouldBeVisible()
 
-            cy.interceptSupabaseCall('update_profile').as('updateProfile')
+            cy.interceptSupabaseCall('profiles_update').as('updateProfile')
             cy.getDataCy('first-name').clear()
             cy.getDataCy('first-name').type(newfirst-name)
             cy.getDataCy('last-name').clear()

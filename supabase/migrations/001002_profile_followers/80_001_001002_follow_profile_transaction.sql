@@ -15,7 +15,7 @@ DECLARE
 BEGIN
     follow_enum := 'follow_from_user';
     follower_id := auth.uid();
-    PERFORM hidden.create_profile_follower_relationship(
+    PERFORM hidden.profile_followers_create(
         follower_id,
         _following_id
             );

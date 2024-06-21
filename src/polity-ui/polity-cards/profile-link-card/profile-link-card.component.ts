@@ -23,7 +23,7 @@ export class ProfileLinkCardComponent {
      */
     public sessionId: InputSignal<string | null> = input<string | null>('');
     public isLoading: InputSignal<boolean> = input(true);
-    public profile: InputSignal<SupabaseObjectReturn<'read_profile'> | null | undefined> = input<SupabaseObjectReturn<'read_profile'> | null | undefined>(null);
+    public profile: InputSignal<SupabaseObjectReturn<'profiles_read'> | null | undefined> = input<SupabaseObjectReturn<'profiles_read'> | null | undefined>(null);
     public dataCyTag: InputSignal<string> = input<string>('profile-link-card');
 
     constructor(

@@ -60,11 +60,11 @@ Sizes.forEach((size: Size): void => {
         it('that users can unfollow another groups', (): void => {
             cy.signIn(userWhoFollowsAuth);
 
-            cy.interceptSupabaseCall('read_group')
+            cy.interceptSupabaseCall('group_read')
               .as('readGroup');
             cy.interceptSupabaseCall('check_if_user_follows_group')
               .as('checkIfFollowingGroup');
-            cy.interceptSupabaseCall('read_group_counters')
+            cy.interceptSupabaseCall('group_counters_read')
               .as('readGroupCounter');
 
             cy.searchGroup(groupWhichIsUnFollowed.name)
@@ -113,15 +113,15 @@ Sizes.forEach((size: Size): void => {
             cy.navigateToHome();
             cy.interceptSupabaseCall('check_if_user_follows_profile')
               .as('isFollowing');
-            cy.interceptSupabaseCall('read_profile_counters')
+            cy.interceptSupabaseCall('profile_counters_read')
               .as('following-counter');
-            cy.interceptSupabaseCall('read_profile')
+            cy.interceptSupabaseCall('profiles_read')
               .as('user');
             cy.contains(userWhoFollowsProfile.first_name)
               .click();
             cy.wait(['@isFollowing', '@following-counter', '@user']);
 
-            cy.interceptSupabaseCall('read_followings_of_user').as('loadFollowingsOfUser');
+            cy.interceptSupabaseCall('profile_followings_of_user_read').as('loadFollowingsOfUser');
 
             console.log('size width', size.width);
             console.log('sizes[2] width', Sizes[2].width);
@@ -164,7 +164,7 @@ Sizes.forEach((size: Size): void => {
               .first()
               .click();
 
-            cy.interceptSupabaseCall('read_followers_of_group')
+            cy.interceptSupabaseCall('followers_of_group_read')
               .as('readFollowersOfGroup');
 
             cy.getDataCy('editGroupFollower')

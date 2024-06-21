@@ -13,7 +13,7 @@ DECLARE
     authenticated_user uuid;
 BEGIN
     authenticated_user := auth.uid();
-    PERFORM hidden.delete_profile_follower_relationship(
+    PERFORM hidden.profile_followers_delete(
         authenticated_user,
         _following_id
             );

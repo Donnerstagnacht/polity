@@ -13,11 +13,11 @@ DECLARE
     deleted_invitation membership;
     new_membership     membership;
 BEGIN
-    deleted_invitation := authenticated.delete_group_member_invitation_by_id(
+    deleted_invitation := authenticated.group_member_invitations_by_id_delete(
         _invitation_id
                           );
 
-    new_membership := hidden.create_group_member(
+    new_membership := hidden.group_members_create(
         deleted_invitation.group_id,
         deleted_invitation.member_id,
         'member'

@@ -5,7 +5,7 @@ import {BaseObjectStore} from '@polity-signal-store/object/base-object-store.ser
 import {rpcObjectHandler} from '@polity-signal-store/object/rpcObjectHandlerFeature';
 
 @Injectable({providedIn: 'root'})
-export class CreateGroupStore extends BaseObjectStore<'create_group_transaction'> {
+export class CreateGroupStore extends BaseObjectStore<'groups_create_transaction'> {
     private router: Router = inject(Router);
 
     constructor() {
@@ -15,7 +15,7 @@ export class CreateGroupStore extends BaseObjectStore<'create_group_transaction'
     public async create(group: GroupNew): Promise<void> {
         const result = await rpcObjectHandler(
             {
-                fn: 'create_group_transaction',
+                fn: 'groups_create_transaction',
                 args: {
                     _name: group.name,
                     _description: group.description,

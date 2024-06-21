@@ -4,11 +4,11 @@ import {BaseObjectStore} from '@polity-signal-store/object/base-object-store.ser
 import {rpcObjectHandler} from '@polity-signal-store/object/rpcObjectHandlerFeature';
 import {decrement, increment} from '@polity-signal-store/object/counterFeature';
 
-type Read_profile_key = keyof SupabaseObjectReturn<'read_profile_counters'>;
-type KeysExceptProfileId = Exclude<Read_profile_key, 'profile_id_'>;
+type profiles_read_key = keyof SupabaseObjectReturn<'profile_counters_read'>;
+type KeysExceptProfileId = Exclude<profiles_read_key, 'profile_id_'>;
 
 @Injectable({providedIn: 'root'})
-export class ProfileCounterStore extends BaseObjectStore<'read_profile_counters'> {
+export class ProfileCounterStore extends BaseObjectStore<'profile_counters_read'> {
 
     constructor() {
         super({
@@ -22,7 +22,7 @@ export class ProfileCounterStore extends BaseObjectStore<'read_profile_counters'
     public async read(userId: string): Promise<void> {
         const result = await rpcObjectHandler(
             {
-                fn: 'read_profile_counters',
+                fn: 'profile_counters_read',
                 args: {
                     _user_id: userId
                 }
@@ -47,11 +47,11 @@ export class ProfileCounterStore extends BaseObjectStore<'read_profile_counters'
     }
 
     public increment(key: KeysExceptProfileId): void {
-        increment<SupabaseObjectReturn<'read_profile_counters'>>(this.data_, key);
+        increment<SupabaseObjectReturn<'profile_counters_read'>>(this.data_, key);
     }
 
     public decrement(key: KeysExceptProfileId): void {
-        decrement<SupabaseObjectReturn<'read_profile_counters'>>(this.data_, key);
+        decrement<SupabaseObjectReturn<'profile_counters_read'>>(this.data_, key);
     }
 }
 

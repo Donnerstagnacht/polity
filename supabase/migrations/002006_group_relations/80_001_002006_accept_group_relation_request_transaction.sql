@@ -17,13 +17,13 @@ DECLARE
 BEGIN
     SELECT *
     FROM
-        hidden.delete_group_relation_request(
+        hidden.group_relation_requests_delete(
             _group_relation_request_id
         )
     INTO req_record;
 
     IF req_record THEN
-        PERFORM hidden.create_group_relation(
+        PERFORM hidden.group_relation_create(
             req_record.group_id,
             req_record.related_group_id,
             req_record.relation_type,

@@ -3,7 +3,7 @@ import {rpcObjectHandler} from '@polity-signal-store/object/rpcObjectHandlerFeat
 import {BaseObjectStore} from '@polity-signal-store/object/base-object-store.service';
 
 @Injectable({providedIn: 'root'})
-export class NotificationSettingsStore extends BaseObjectStore<'read_profile_notification_settings'> {
+export class NotificationSettingsStore extends BaseObjectStore<'profiles_read_notification_settings'> {
 
     constructor() {
         super({
@@ -14,7 +14,7 @@ export class NotificationSettingsStore extends BaseObjectStore<'read_profile_not
     public async read(): Promise<void> {
         const result = await rpcObjectHandler(
             {
-                fn: 'read_profile_notification_settings'
+                fn: 'profiles_read_notification_settings'
             },
             {
                 useLoading: true,
@@ -38,7 +38,7 @@ export class NotificationSettingsStore extends BaseObjectStore<'read_profile_not
     public async update(newStatus: boolean): Promise<void> {
         const result = await rpcObjectHandler(
             {
-                fn: 'update_profile_receive_notifications_from_follow',
+                fn: 'profiles_receive_notifications_from_follow_update',
                 args: {
                     _new_status: newStatus
                 }

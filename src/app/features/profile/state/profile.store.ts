@@ -5,7 +5,7 @@ import {rpcObjectHandler} from '@polity-signal-store/object/rpcObjectHandlerFeat
 import {getSignedUrlFromSupabaseObject} from '@polity-signal-store/imageFeature';
 
 @Injectable({providedIn: 'root'})
-export class ProfileStore extends BaseObjectStore<'read_profile'> {
+export class ProfileStore extends BaseObjectStore<'profiles_read'> {
     private isOwner_: WritableSignal<boolean> = signal(false);
     public isOwner: Signal<boolean> = this.isOwner_.asReadonly();
 
@@ -21,7 +21,7 @@ export class ProfileStore extends BaseObjectStore<'read_profile'> {
     public async read(userId: string): Promise<void> {
         const result = await rpcObjectHandler(
             {
-                fn: 'read_profile',
+                fn: 'profiles_read',
                 args: {
                     _user_id: userId
                 }
@@ -43,13 +43,13 @@ export class ProfileStore extends BaseObjectStore<'read_profile'> {
                 useSuccess: false
             }
         );
-        getSignedUrlFromSupabaseObject<'update_profile'>(result, 'profile_images', 'profile_image_');
+        getSignedUrlFromSupabaseObject<'profiles_update'>(result, 'profile_images', 'profile_image_');
     }
 
-    public async update(profile: Partial<SupabaseObjectReturn<'update_profile'>>): Promise<void> {
+    public async update(profile: Partial<SupabaseObjectReturn<'profiles_update'>>): Promise<void> {
         const result = await rpcObjectHandler(
             {
-                fn: 'update_profile',
+                fn: 'profiles_update',
                 args: {
                     _first_name: profile.first_name_,
                     _last_name: profile.last_name_,
@@ -74,7 +74,7 @@ export class ProfileStore extends BaseObjectStore<'read_profile'> {
                 successMessage: 'Profile updated!'
             }
         );
-        getSignedUrlFromSupabaseObject<'update_profile'>(result, 'profile_images', 'profile_image_');
+        getSignedUrlFromSupabaseObject<'profiles_update'>(result, 'profile_images', 'profile_image_');
     }
 
     public checkIsOwner(sessionId: string, urlId: string | null): void {

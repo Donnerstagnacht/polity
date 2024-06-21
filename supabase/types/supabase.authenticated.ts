@@ -33,6 +33,48 @@ export type Database = {
         }
         Returns: undefined
       }
+      assistants_first_sign_in_update: {
+        Args: {
+          _new_status: boolean
+        }
+        Returns: {
+          id_: string
+          first_sign_in_: boolean
+          skip_tutorial_: boolean
+          last_tutorial_: string
+        }[]
+      }
+      assistants_last_tutorial_update: {
+        Args: {
+          _new_status: "welcome" | "profile" | "search"
+        }
+        Returns: {
+          id_: string
+          first_sign_in_: boolean
+          skip_tutorial_: boolean
+          last_tutorial_: string
+        }[]
+      }
+      assistants_read: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          id_: string
+          first_sign_in_: boolean
+          skip_tutorial_: boolean
+          last_tutorial_: "welcome" | "profile" | "search"
+        }[]
+      }
+      assistants_skip_tutorial_update: {
+        Args: {
+          _new_status: boolean
+        }
+        Returns: {
+          id_: string
+          first_sign_in_: boolean
+          skip_tutorial_: boolean
+          last_tutorial_: string
+        }[]
+      }
       check_group_membership_status: {
         Args: {
           _group_id: string
@@ -51,52 +93,6 @@ export type Database = {
         }
         Returns: boolean
       }
-      create_group_member_invitation: {
-        Args: {
-          _group_id: string
-          _member_id: string
-        }
-        Returns: undefined
-      }
-      create_group_member_request: {
-        Args: {
-          _group_id: string
-        }
-        Returns: undefined
-      }
-      create_group_transaction: {
-        Args: {
-          _name: string
-          _description: string
-          _level: "local" | "regional" | "national"
-          _invited_members: string[]
-        }
-        Returns: undefined
-      }
-      delete_group_member_invitation: {
-        Args: {
-          _group_id: string
-        }
-        Returns: unknown
-      }
-      delete_group_member_invitation_by_id: {
-        Args: {
-          _invitation_id: string
-        }
-        Returns: unknown
-      }
-      delete_group_member_request: {
-        Args: {
-          _group_id: string
-        }
-        Returns: unknown
-      }
-      delete_group_member_request_by_id: {
-        Args: {
-          _request_id: string
-        }
-        Returns: unknown
-      }
       follow_group_transaction: {
         Args: {
           _following_id: string
@@ -108,6 +104,174 @@ export type Database = {
           _following_id: string
         }
         Returns: undefined
+      }
+      followers_of_group_read: {
+        Args: {
+          _group_id: string
+        }
+        Returns: {
+          id_: string
+          profile_image_: string
+          first_name_: string
+          last_name_: string
+        }[]
+      }
+      followings_of_group_read: {
+        Args: {
+          _group_id: string
+        }
+        Returns: {
+          id_: string
+          profile_image_: string
+          first_name_: string
+          last_name_: string
+        }[]
+      }
+      group_counters_read: {
+        Args: {
+          _group_id: string
+        }
+        Returns: {
+          group_id_: string
+          follower_counter_: number
+          following_counter_: number
+          group_member_counter_: number
+        }[]
+      }
+      group_followings_of_user_read: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          id_: string
+          img_url_: string
+          name_: string
+          level_: "local" | "regional" | "national"
+        }[]
+      }
+      group_member_invitations_by_id_delete: {
+        Args: {
+          _invitation_id: string
+        }
+        Returns: unknown
+      }
+      group_member_invitations_create: {
+        Args: {
+          _group_id: string
+          _member_id: string
+        }
+        Returns: undefined
+      }
+      group_member_invitations_delete: {
+        Args: {
+          _group_id: string
+        }
+        Returns: unknown
+      }
+      group_member_invitations_of_user_read: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          id_: string
+          group_id_: string
+          group_name_: string
+          group_level_: "local" | "regional" | "national"
+        }[]
+      }
+      group_member_invitations_read: {
+        Args: {
+          _group_id: string
+        }
+        Returns: {
+          id_: string
+          group_id_: string
+          member_id_: string
+          member_type_: "member" | "board_member" | "board_president"
+          first_name_: string
+          last_name_: string
+          profile_image_: string
+        }[]
+      }
+      group_member_request_read_ones: {
+        Args: {
+          _group_id: string
+        }
+        Returns: {
+          id_: string
+          group_id_: string
+          member_id_: string
+          member_type_: "member" | "board_member" | "board_president"
+          first_name_: string
+          last_name_: string
+          profile_image_: string
+        }[]
+      }
+      group_member_requests_create: {
+        Args: {
+          _group_id: string
+        }
+        Returns: undefined
+      }
+      group_member_requests_delete: {
+        Args: {
+          _group_id: string
+        }
+        Returns: unknown
+      }
+      group_member_requests_delete_by_id: {
+        Args: {
+          _request_id: string
+        }
+        Returns: unknown
+      }
+      group_member_requests_of_user_read: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          id_: string
+          group_id_: string
+          group_name_: string
+          group_level_: "local" | "regional" | "national"
+        }[]
+      }
+      group_members_read: {
+        Args: {
+          _group_id: string
+        }
+        Returns: {
+          id_: string
+          group_id_: string
+          member_id_: string
+          member_type_: "member" | "board_member" | "board_president"
+          first_name_: string
+          last_name_: string
+          profile_image_: string
+        }[]
+      }
+      group_read: {
+        Args: {
+          _group_id: string
+        }
+        Returns: {
+          id_: string
+          name_: string
+          level_: "local" | "regional" | "national"
+          description_: string
+        }[]
+      }
+      groups_create_transaction: {
+        Args: {
+          _name: string
+          _description: string
+          _level: "local" | "regional" | "national"
+          _invited_members: string[]
+        }
+        Returns: undefined
+      }
+      groups_of_user_read: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          id_: string
+          group_id_: string
+          group_name_: string
+          group_level_: "local" | "regional" | "national"
+        }[]
       }
       leave_group_by_membership_id_transaction: {
         Args: {
@@ -121,156 +285,7 @@ export type Database = {
         }
         Returns: undefined
       }
-      read_assistant: {
-        Args: Record<PropertyKey, never>
-        Returns: {
-          id_: string
-          first_sign_in_: boolean
-          skip_tutorial_: boolean
-          last_tutorial_: "welcome" | "profile" | "search"
-        }[]
-      }
-      read_followers_of_group: {
-        Args: {
-          _group_id: string
-        }
-        Returns: {
-          id_: string
-          profile_image_: string
-          first_name_: string
-          last_name_: string
-        }[]
-      }
-      read_followers_of_user: {
-        Args: Record<PropertyKey, never>
-        Returns: {
-          id_: string
-          profile_image_: string
-          first_name_: string
-          last_name_: string
-        }[]
-      }
-      read_followings_of_group: {
-        Args: {
-          _group_id: string
-        }
-        Returns: {
-          id_: string
-          profile_image_: string
-          first_name_: string
-          last_name_: string
-        }[]
-      }
-      read_followings_of_user: {
-        Args: Record<PropertyKey, never>
-        Returns: {
-          id_: string
-          profile_image_: string
-          first_name_: string
-          last_name_: string
-        }[]
-      }
-      read_group: {
-        Args: {
-          _group_id: string
-        }
-        Returns: {
-          id_: string
-          name_: string
-          level_: "local" | "regional" | "national"
-          description_: string
-        }[]
-      }
-      read_group_counters: {
-        Args: {
-          _group_id: string
-        }
-        Returns: {
-          group_id_: string
-          follower_counter_: number
-          following_counter_: number
-          group_member_counter_: number
-        }[]
-      }
-      read_group_followings_of_user: {
-        Args: Record<PropertyKey, never>
-        Returns: {
-          id_: string
-          img_url_: string
-          name_: string
-          level_: "local" | "regional" | "national"
-        }[]
-      }
-      read_group_member_invitations: {
-        Args: {
-          _group_id: string
-        }
-        Returns: {
-          id_: string
-          group_id_: string
-          member_id_: string
-          member_type_: "member" | "board_member" | "board_president"
-          first_name_: string
-          last_name_: string
-          profile_image_: string
-        }[]
-      }
-      read_group_member_invitations_of_user: {
-        Args: Record<PropertyKey, never>
-        Returns: {
-          id_: string
-          group_id_: string
-          group_name_: string
-          group_level_: "local" | "regional" | "national"
-        }[]
-      }
-      read_group_member_requests: {
-        Args: {
-          _group_id: string
-        }
-        Returns: {
-          id_: string
-          group_id_: string
-          member_id_: string
-          member_type_: "member" | "board_member" | "board_president"
-          first_name_: string
-          last_name_: string
-          profile_image_: string
-        }[]
-      }
-      read_group_members: {
-        Args: {
-          _group_id: string
-        }
-        Returns: {
-          id_: string
-          group_id_: string
-          member_id_: string
-          member_type_: "member" | "board_member" | "board_president"
-          first_name_: string
-          last_name_: string
-          profile_image_: string
-        }[]
-      }
-      read_group_requests_of_user: {
-        Args: Record<PropertyKey, never>
-        Returns: {
-          id_: string
-          group_id_: string
-          group_name_: string
-          group_level_: "local" | "regional" | "national"
-        }[]
-      }
-      read_groups_of_user: {
-        Args: Record<PropertyKey, never>
-        Returns: {
-          id_: string
-          group_id_: string
-          group_name_: string
-          group_level_: "local" | "regional" | "national"
-        }[]
-      }
-      read_notifications_of_user: {
+      notifications_of_user_read: {
         Args: Record<PropertyKey, never>
         Returns: {
           type_of_notification_: "follow_from_user"
@@ -281,18 +296,7 @@ export type Database = {
           profile_image_: string
         }[]
       }
-      read_profile: {
-        Args: {
-          _user_id: string
-        }
-        Returns: {
-          profile_id_: string
-          first_name_: string
-          last_name_: string
-          profile_image_: string
-        }[]
-      }
-      read_profile_counters: {
+      profile_counters_read: {
         Args: {
           _user_id: string
         }
@@ -303,18 +307,73 @@ export type Database = {
           group_membership_counter_: number
         }[]
       }
-      read_profile_notification_settings: {
+      profile_followers_of_user_read: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          id_: string
+          profile_image_: string
+          first_name_: string
+          last_name_: string
+        }[]
+      }
+      profile_followings_of_user_read: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          id_: string
+          profile_image_: string
+          first_name_: string
+          last_name_: string
+        }[]
+      }
+      profiles_read: {
+        Args: {
+          _user_id: string
+        }
+        Returns: {
+          profile_id_: string
+          first_name_: string
+          last_name_: string
+          profile_image_: string
+        }[]
+      }
+      profiles_read_notification_settings: {
         Args: Record<PropertyKey, never>
         Returns: {
           receive_follow_notifications_: boolean
         }[]
       }
-      read_unread_notifications_counter: {
-        Args: Record<PropertyKey, never>
+      profiles_receive_notifications_from_follow_update: {
+        Args: {
+          _new_status: boolean
+        }
+        Returns: {
+          receive_follow_notifications_: boolean
+        }[]
+      }
+      profiles_update: {
+        Args: {
+          _updated_at?: string
+          _username?: string
+          _first_name?: string
+          _last_name?: string
+          _profile_image?: string
+          _receive_follow_notifications?: boolean
+        }
         Returns: {
           profile_id_: string
-          unread_notifications_counter_: number
+          first_name_: string
+          last_name_: string
+          profile_image_: string
         }[]
+      }
+      push_subscription_upsert: {
+        Args: {
+          _endpoint: string
+          _expirationtime: string
+          _auth: string
+          _p256dh: string
+        }
+        Returns: undefined
       }
       remove_follower_of_authenticated_user_transaction: {
         Args: {
@@ -367,71 +426,12 @@ export type Database = {
         }
         Returns: undefined
       }
-      update_first_sign_in: {
-        Args: {
-          _new_status: boolean
-        }
-        Returns: {
-          id_: string
-          first_sign_in_: boolean
-          skip_tutorial_: boolean
-          last_tutorial_: string
-        }[]
-      }
-      update_last_tutorial: {
-        Args: {
-          _new_status: "welcome" | "profile" | "search"
-        }
-        Returns: {
-          id_: string
-          first_sign_in_: boolean
-          skip_tutorial_: boolean
-          last_tutorial_: string
-        }[]
-      }
-      update_profile: {
-        Args: {
-          _updated_at?: string
-          _username?: string
-          _first_name?: string
-          _last_name?: string
-          _profile_image?: string
-          _receive_follow_notifications?: boolean
-        }
+      unread_notifications_counter_read: {
+        Args: Record<PropertyKey, never>
         Returns: {
           profile_id_: string
-          first_name_: string
-          last_name_: string
-          profile_image_: string
+          unread_notifications_counter_: number
         }[]
-      }
-      update_profile_receive_notifications_from_follow: {
-        Args: {
-          _new_status: boolean
-        }
-        Returns: {
-          receive_follow_notifications_: boolean
-        }[]
-      }
-      update_skip_tutorial: {
-        Args: {
-          _new_status: boolean
-        }
-        Returns: {
-          id_: string
-          first_sign_in_: boolean
-          skip_tutorial_: boolean
-          last_tutorial_: string
-        }[]
-      }
-      upsert_push_subscription: {
-        Args: {
-          _endpoint: string
-          _expirationtime: string
-          _auth: string
-          _p256dh: string
-        }
-        Returns: undefined
       }
     }
     Enums: {

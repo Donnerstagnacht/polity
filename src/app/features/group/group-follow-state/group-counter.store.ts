@@ -4,12 +4,12 @@ import {BaseObjectStore} from '@polity-signal-store/object/base-object-store.ser
 import {rpcObjectHandler} from '@polity-signal-store/object/rpcObjectHandlerFeature';
 import {decrement, increment} from '@polity-signal-store/object/counterFeature';
 
-type Read_group_key = keyof SupabaseObjectReturn<'read_group_counters'>;
-type KeysExceptGroupId = Exclude<Read_group_key, 'group_id_'>;
+type group_read_key = keyof SupabaseObjectReturn<'group_counters_read'>;
+type KeysExceptGroupId = Exclude<group_read_key, 'group_id_'>;
 
 
 @Injectable({providedIn: 'root'})
-export class GroupCounterStore extends BaseObjectStore<'read_group_counters'> {
+export class GroupCounterStore extends BaseObjectStore<'group_counters_read'> {
 
     constructor() {
         super({
@@ -23,7 +23,7 @@ export class GroupCounterStore extends BaseObjectStore<'read_group_counters'> {
     public async read(groupId: string): Promise<void> {
         const result = await rpcObjectHandler(
             {
-                fn: 'read_group_counters',
+                fn: 'group_counters_read',
                 args: {
                     _group_id: groupId
                 }
@@ -48,10 +48,10 @@ export class GroupCounterStore extends BaseObjectStore<'read_group_counters'> {
     }
 
     public increment(key: KeysExceptGroupId): void {
-        increment<SupabaseObjectReturn<'read_group_counters'>>(this.data_, key);
+        increment<SupabaseObjectReturn<'group_counters_read'>>(this.data_, key);
     }
 
     public decrement(key: KeysExceptGroupId): void {
-        decrement<SupabaseObjectReturn<'read_group_counters'>>(this.data_, key);
+        decrement<SupabaseObjectReturn<'group_counters_read'>>(this.data_, key);
     }
 }

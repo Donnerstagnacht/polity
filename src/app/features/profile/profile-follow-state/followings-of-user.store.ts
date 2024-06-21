@@ -9,7 +9,7 @@ import {removeObjectByPropertyValue} from '@polity-signal-store/array/removeItem
 
 
 @Injectable({providedIn: 'root'})
-export class FollowingsOfUserStore extends BaseArrayStore<'read_followings_of_user'> {
+export class FollowingsOfUserStore extends BaseArrayStore<'profile_followings_of_user_read'> {
     private profileCounterStore: ProfileCounterStore = inject(ProfileCounterStore);
 
     constructor() {
@@ -22,7 +22,7 @@ export class FollowingsOfUserStore extends BaseArrayStore<'read_followings_of_us
     public async read(): Promise<void> {
         await rpcArrayHandler(
             {
-                fn: 'read_followings_of_user'
+                fn: 'profile_followings_of_user_read'
             },
             {
                 useLoading: true,
@@ -67,7 +67,7 @@ export class FollowingsOfUserStore extends BaseArrayStore<'read_followings_of_us
             }
         );
         if (!result().error) {
-            removeObjectByPropertyValue<SupabaseObjectReturn<'read_followings_of_user'>>(
+            removeObjectByPropertyValue<SupabaseObjectReturn<'profile_followings_of_user_read'>>(
                 'id_',
                 userId,
                 this.data_

@@ -3,7 +3,7 @@ import {BaseObjectStore} from '@polity-signal-store/object/base-object-store.ser
 import {rpcObjectHandler} from '@polity-signal-store/object/rpcObjectHandlerFeature';
 
 @Injectable({providedIn: 'root'})
-export class GroupStore extends BaseObjectStore<'read_group'> {
+export class GroupStore extends BaseObjectStore<'group_read'> {
 
     constructor() {
         super({
@@ -17,7 +17,7 @@ export class GroupStore extends BaseObjectStore<'read_group'> {
     public async read(groupId: string): Promise<void> {
         const result = await rpcObjectHandler(
             {
-                fn: 'read_group',
+                fn: 'group_read',
                 args: {
                     _group_id: groupId
                 }

@@ -7,7 +7,7 @@ import {removeObjectByPropertyValue} from '@polity-signal-store/array/removeItem
 import {GroupCounterStore} from '@polity-group/group-follow-state/group-counter.store';
 
 @Injectable({providedIn: 'root'})
-export class GroupMembersStore extends BaseArrayStore<'read_group_members'> {
+export class GroupMembersStore extends BaseArrayStore<'group_members_read'> {
     private groupStore: GroupStore = inject(GroupStore);
     private groupMembershipStatusStore: GroupMembershipStatusStore = inject(GroupMembershipStatusStore);
     private groupCounterStore: GroupCounterStore = inject(GroupCounterStore);
@@ -23,7 +23,7 @@ export class GroupMembersStore extends BaseArrayStore<'read_group_members'> {
         const groupId: string = this.groupStore.data().id_;
         await rpcArrayHandler(
             {
-                fn: 'read_group_members',
+                fn: 'group_members_read',
                 args: {
                     _group_id: groupId
                 }

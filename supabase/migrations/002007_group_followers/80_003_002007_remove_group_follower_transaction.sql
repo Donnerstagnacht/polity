@@ -12,7 +12,7 @@ CREATE OR REPLACE FUNCTION authenticated.remove_group_follower_transaction(
 AS
 $$
 BEGIN
-    PERFORM hidden.delete_group_follower_relationship(
+    PERFORM hidden.group_followers_delete(
         _follower_id,
         _group_id_in
             );

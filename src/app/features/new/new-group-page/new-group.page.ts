@@ -31,7 +31,7 @@ import {StepperRightComponent} from '@polity-navigation/stepper/stepper-right/st
 import {StepperTopComponent} from '@polity-navigation/stepper/stepper-top/stepper-top.component';
 import {SecondBarTopComponent} from '@polity-navigation/second-bar/second-bar-top/second-bar-top.component';
 import {StepperItem} from '@polity-navigation/types-and-interfaces/stepper-item';
-import {CREATE_GROUP_STEPPER_ITEMS} from '@polity-navigation/create-group-stepper';
+import {groups_create_STEPPER_ITEMS} from '@polity-navigation/create-group-stepper';
 import {NewGroupForm} from '../new-ui/new-group/new-group.form';
 import {GroupNew} from '../types/group-new';
 
@@ -72,7 +72,7 @@ import {GroupNew} from '../types/group-new';
 })
 export class NewGroupPage {
     protected createGroupStore: CreateGroupStore = inject(CreateGroupStore);
-    protected menuItems: StepperItem[] = CREATE_GROUP_STEPPER_ITEMS;
+    protected menuItems: StepperItem[] = groups_create_STEPPER_ITEMS;
 
     protected async onCreateGroup(newGroup: GroupNew): Promise<void> {
         await this.createGroupStore.create(newGroup);

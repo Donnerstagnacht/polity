@@ -13,7 +13,7 @@ DECLARE
     authenticated_user uuid;
 BEGIN
     authenticated_user := auth.uid();
-    PERFORM hidden.delete_group_member(
+    PERFORM hidden.group_member_delete(
         authenticated_user,
         _group_id
             );

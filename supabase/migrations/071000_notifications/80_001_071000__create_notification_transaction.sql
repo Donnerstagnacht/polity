@@ -23,7 +23,7 @@ BEGIN
                                );
 
     IF is_notification_enabled THEN
-        PERFORM hidden.create_notification_by_user(
+        PERFORM hidden.notifications_by_user_create(
             _sender,
             _receiver,
             _type_of_notification,

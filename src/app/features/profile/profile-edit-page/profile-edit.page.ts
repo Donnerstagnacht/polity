@@ -49,7 +49,7 @@ import {ImageUploadComponent} from '@polity-ui/polity-image/image-upload/image-u
 export class ProfileEditPage {
     protected profileStore: ProfileStore = inject(ProfileStore);
 
-    protected async onEdit(newProfileData: SupabaseObjectReturn<'read_profile'>): Promise<void> {
+    protected async onEdit(newProfileData: SupabaseObjectReturn<'profiles_read'>): Promise<void> {
         await this.profileStore.update(newProfileData);
     }
 

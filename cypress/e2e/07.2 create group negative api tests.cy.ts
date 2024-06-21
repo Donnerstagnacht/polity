@@ -1,7 +1,7 @@
-import {supabaseAuthenticatedClient} from "../../src/app/auth/supabase-authenticated-client";
-import {AUTH_DATA1, AUTH_DATA2, AuthData} from "../../seed_and_test_data/01_test_auth";
-import {AuthTokenResponse} from "@supabase/supabase-js";
-import {POSTGRES_ERRORS} from "../fixtures/postgres_errors";
+import {supabaseAuthenticatedClient} from '../../src/app/auth/supabase-authenticated-client';
+import {AUTH_DATA1, AUTH_DATA2, AuthData} from '../../seed_and_test_data/01_test_auth';
+import {AuthTokenResponse} from '@supabase/supabase-js';
+import {POSTGRES_ERRORS} from '../fixtures/postgres_errors';
 
 const signedInUserAuth: AuthData = AUTH_DATA1;
 const otherUser: AuthData = AUTH_DATA2;
@@ -15,29 +15,31 @@ describe(`Negative api tests for profile_counter table show that `, async (): Pr
         const response: AuthTokenResponse = await supabaseAuthenticatedClient.auth.signInWithPassword(
             {
                 email: signedInUserAuth.email,
-                password: signedInUserAuth.password,
+                password: signedInUserAuth.password
             }
-        )
-        user_id = response.data.user?.id
-        token = response.data.session?.access_token
-        expect(user_id).to.be.not.null
-        expect(token).to.be.not.null
-    })
+        );
+        user_id = response.data.user?.id;
+        token = response.data.session?.access_token;
+        expect(user_id).to.be.not.null;
+        expect(token).to.be.not.null;
+    });
 
     it('a non authenticated user calling the create group transaction should return an error.', async (): Promise<void> => {
-        await supabaseAuthenticatedClient.auth.signOut()
+        await supabaseAuthenticatedClient.auth.signOut();
 
         const response = await supabaseAuthenticatedClient
-        .rpc('create_group_transaction',
+        .rpc(
+            'groups_create_transaction',
             {
-                name: "test",
-                description: "test",
-                level: "regional",
+                name: 'test',
+                description: 'test',
+                level: 'regional',
                 invited_members: [TEST_ID]
-            })
-        expect(response.data).to.be.null
-        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.noPermission)
-    })
+            }
+        );
+        expect(response.data).to.be.null;
+        expect(response.error?.code).to.be.equal(POSTGRES_ERRORS.noPermission);
+    });
 
     // it('two calls to the create group transaction with the same payload should return an error on the second' +
     //     ' call.', async (): Promise<void> => {

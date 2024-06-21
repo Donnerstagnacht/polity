@@ -6,7 +6,7 @@ import {rpcArrayHandler} from '@polity-signal-store/array/rpcArrayHandlerFeature
 import {removeObjectByPropertyValue} from '@polity-signal-store/array/removeItemFeatue';
 
 @Injectable({providedIn: 'root'})
-export class GroupRequestsStore extends BaseArrayStore<'read_group_member_requests'> {
+export class GroupRequestsStore extends BaseArrayStore<'group_member_request_read_ones'> {
     private groupStore: GroupStore = inject(GroupStore);
     private groupMembershipStatusStore: GroupMembershipStatusStore = inject(GroupMembershipStatusStore);
 
@@ -21,7 +21,7 @@ export class GroupRequestsStore extends BaseArrayStore<'read_group_member_reques
         const groupId: string = this.groupStore.data().id_;
         await rpcArrayHandler(
             {
-                fn: 'read_group_member_requests',
+                fn: 'group_member_request_read_ones',
                 args: {
                     _group_id: groupId
                 }
@@ -48,7 +48,7 @@ export class GroupRequestsStore extends BaseArrayStore<'read_group_member_reques
         const groupId: string = this.groupStore.data().id_;
         await rpcArrayHandler(
             {
-                fn: 'create_group_member_request',
+                fn: 'group_member_requests_create',
                 args: {
                     _group_id: groupId
                 }
@@ -102,7 +102,7 @@ export class GroupRequestsStore extends BaseArrayStore<'read_group_member_reques
     public async decline(membershipRequestId: string): Promise<void> {
         await rpcArrayHandler(
             {
-                fn: 'delete_group_member_request',
+                fn: 'group_member_requests_delete',
                 args: {
                     _group_id: membershipRequestId
                 }
@@ -130,7 +130,7 @@ export class GroupRequestsStore extends BaseArrayStore<'read_group_member_reques
         const groupId: string = this.groupStore.data().id_;
         await rpcArrayHandler(
             {
-                fn: 'delete_group_member_request',
+                fn: 'group_member_requests_delete',
                 args: {
                     _group_id: groupId
                 }
@@ -157,7 +157,7 @@ export class GroupRequestsStore extends BaseArrayStore<'read_group_member_reques
     public async deleteById(requestId: string): Promise<void> {
         await rpcArrayHandler(
             {
-                fn: 'delete_group_member_request_by_id',
+                fn: 'group_member_requests_delete_by_id',
                 args: {
                     _request_id: requestId
                 }
