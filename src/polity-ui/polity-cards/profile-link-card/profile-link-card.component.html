@@ -3,9 +3,10 @@
     [hoverable]="true"
 >
     <p
-        [attr.data-cy]="dataCyTag"
+        [attr.data-cy]="dataCyTag()"
         [class.tui-skeleton]="isLoading()"
-        class="title title_size_s">
+        class="title title_size_s"
+    >
         {{ profile()?.first_name_ }} {{ profile()?.last_name_ }}
     </p>
 </tui-island>

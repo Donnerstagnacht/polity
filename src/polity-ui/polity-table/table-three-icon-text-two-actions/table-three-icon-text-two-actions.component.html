@@ -74,22 +74,22 @@
                         [attr.data-cy]="dataCyTags()[2]"
                         appearance="flat"
                         class="remove"
-                        icon="{{firstActionIcon}}"
+                        icon="{{firstActionIcon()}}"
                         shape="rounded"
                         size="s"
-                        title="{{firstActionText}}"
+                        title="{{firstActionText()}}"
                         tuiIconButton
                         type="button"
                     ></button>
                     <button
                         (click)="onSecondAction(getTableValueKey(item, dataKeysForColumns()[2]))"
-                        [attr.data-cy]="secondActionDataCyTag"
+                        [attr.data-cy]="secondActionDataCyTag()"
                         appearance="flat"
                         class="remove"
-                        icon="{{secondActionIcon}}"
+                        icon="{{secondActionIcon()}}"
                         shape="rounded"
                         size="s"
-                        title="{{secondActionText}}"
+                        title="{{secondActionText()}}"
                         tuiIconButton
                         type="button"
                     ></button>
