@@ -20,10 +20,10 @@ jobs:
           node-version: 20.9.0
 
       - name: Install Dependencies
-        run: npm install
+        run: npm install --force
 
       - name: Build Angular App
-        run: npm run build --configuration=production  --force
+        run: npm run build --configuration=production
         #run: npm run build:prod
         #run: ng build --configuration=production
 
