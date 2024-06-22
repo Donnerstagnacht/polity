@@ -2,7 +2,6 @@ import {Injectable, Signal, signal, WritableSignal} from '@angular/core';
 import {SupabaseObjectReturn} from '../../../../../supabase/types/supabase.authenticated.shorthand-types';
 import {BaseObjectStore} from '@polity-signal-store/object/base-object-store.service';
 import {rpcObjectHandler} from '@polity-signal-store/object/rpcObjectHandlerFeature';
-import {getSignedUrlFromSupabaseObject} from '@polity-signal-store/imageFeature';
 
 @Injectable({providedIn: 'root'})
 export class ProfileStore extends BaseObjectStore<'profiles_read'> {
@@ -41,10 +40,15 @@ export class ProfileStore extends BaseObjectStore<'profiles_read'> {
             },
             {
                 useSuccess: false
+            },
+            {
+                useExtractImgUrl: true,
+                bucket: 'profile_images',
+                key: 'profile_image_'
             }
         );
-        console.log('result', result().data);
-        await getSignedUrlFromSupabaseObject<'profiles_update'>(result, 'profile_images', 'profile_image_');
+        // console.log('result', result().data);
+        // await getSignedUrlFromSupabaseObject<'profiles_update'>(result, 'profile_images', 'profile_image_');
     }
 
     public async update(profile: Partial<SupabaseObjectReturn<'profiles_update'>>): Promise<void> {
@@ -73,9 +77,13 @@ export class ProfileStore extends BaseObjectStore<'profiles_read'> {
                 useSuccess: true,
                 alertService: this.tuiAlertService,
                 successMessage: 'Profile updated!'
+            },
+            {
+                useExtractImgUrl: true,
+                bucket: 'profile_images',
+                key: 'profile_image_'
             }
         );
-        getSignedUrlFromSupabaseObject<'profiles_update'>(result, 'profile_images', 'profile_image_');
     }
 
     public checkIsOwner(sessionId: string, urlId: string | null): void {

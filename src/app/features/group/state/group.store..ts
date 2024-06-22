@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BaseObjectStore} from '@polity-signal-store/object/base-object-store.service';
 import {rpcObjectHandler} from '@polity-signal-store/object/rpcObjectHandlerFeature';
-import {getSignedUrlFromSupabaseObject} from '@polity-signal-store/imageFeature';
 
 @Injectable({providedIn: 'root'})
 export class GroupStore extends BaseObjectStore<'group_read'> {
@@ -39,10 +38,14 @@ export class GroupStore extends BaseObjectStore<'group_read'> {
             },
             {
                 useSuccess: false
+            },
+
+            {
+                useExtractImgUrl: true,
+                bucket: 'group_images',
+                key: 'img_url_'
             }
         );
-        console.log('result', result().data);
-        await getSignedUrlFromSupabaseObject<'group_read'>(result, 'group_images', 'img_url_');
     }
 
 }

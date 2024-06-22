@@ -31,6 +31,10 @@ export class TableGenericComponent<ObjectType> {
     public linkKey: InputSignal<keyof ObjectType> = input.required<keyof ObjectType>();
 
     protected getTableValueKey(item: any, key: string | number | symbol): any {
+        // if (key === 'profile_image_') {
+        //     console.log('item[key]', item[key]);
+        //
+        // }
         return item[key];
     }
 

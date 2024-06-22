@@ -30,6 +30,7 @@ export class LinkCardComponent {
      * @Input linkUrl - string |null.
      */
     public cardTitle: InputSignal<string | null | undefined> = input<string | null | undefined>();
+    public cardImage: InputSignal<string> = input.required<string>();
     public dataCyTag: InputSignal<string> = input<string>('profile-link-card');
 
     public isLoading: InputSignal<boolean> = input(false);

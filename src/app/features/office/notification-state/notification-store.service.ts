@@ -40,6 +40,11 @@ export class NotificationsStore extends BaseArrayStore<'notifications_of_user_re
             },
             {
                 useSuccess: false
+            },
+            {
+                useExtractImgUrl: true,
+                key: 'profile_image_',
+                bucket: 'profile_images'
             }
         );
     }

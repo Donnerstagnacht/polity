@@ -42,6 +42,11 @@ export class GroupInvitationsStore extends BaseArrayStore<'group_member_invitati
             },
             {
                 useSuccess: false
+            },
+            {
+                useExtractImgUrl: true,
+                key: 'profile_image_',
+                bucket: 'profile_images'
             }
         );
     }

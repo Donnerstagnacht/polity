@@ -173,6 +173,7 @@ export type Database = {
           group_id_: string
           group_name_: string
           group_level_: "local" | "regional" | "national"
+          img_url_: string
         }[]
       }
       group_member_invitations_read: {
@@ -228,6 +229,7 @@ export type Database = {
           group_id_: string
           group_name_: string
           group_level_: "local" | "regional" | "national"
+          img_url_: string
         }[]
       }
       group_members_of_group_read: {
@@ -272,6 +274,7 @@ export type Database = {
           group_id_: string
           group_name_: string
           group_level_: "local" | "regional" | "national"
+          img_url_: string
         }[]
       }
       leave_group_by_membership_id_transaction: {
@@ -404,6 +407,7 @@ export type Database = {
           name_: string
           level_: "local" | "regional" | "national"
           description_: string
+          img_url_: string
         }[]
       }
       search_user: {
@@ -415,6 +419,7 @@ export type Database = {
           first_name_: string
           last_name_: string
           username_: string
+          img_url_: string
         }[]
       }
       unfollow_group_transaction: {

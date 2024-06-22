@@ -9,7 +9,8 @@ CREATE OR REPLACE FUNCTION authenticated.search_user(
                 id_         uuid,
                 first_name_ text,
                 last_name_  text,
-                username_   text
+                username_   text,
+                img_url_    text
             )
     LANGUAGE plpgsql
     SECURITY INVOKER
@@ -21,7 +22,8 @@ BEGIN
             id,
             first_name,
             last_name,
-            username
+            username,
+            profile_image
         FROM
             hidden.profiles
         WHERE

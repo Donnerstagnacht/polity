@@ -38,6 +38,11 @@ export class FollowingsOfUserStore extends BaseArrayStore<'profile_followings_of
             },
             {
                 useSuccess: false
+            },
+            {
+                useExtractImgUrl: true,
+                key: 'profile_image_',
+                bucket: 'profile_images'
             }
         );
     }

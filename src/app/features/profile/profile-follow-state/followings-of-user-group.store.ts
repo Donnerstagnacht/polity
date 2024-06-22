@@ -35,6 +35,11 @@ export class FollowingsOfUserGroupStore extends BaseArrayStore<'group_followings
             },
             {
                 useSuccess: false
+            },
+            {
+                useExtractImgUrl: true,
+                key: 'img_url_',
+                bucket: 'group_images'
             }
         );
     }

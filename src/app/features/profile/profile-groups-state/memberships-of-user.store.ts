@@ -15,8 +15,9 @@ export class MembershipsOfUserStore extends BaseArrayStore<'groups_of_user_read'
         });
     }
 
+
     public async read(): Promise<void> {
-        await rpcArrayHandler(
+        const result = await rpcArrayHandler(
             {
                 fn: 'groups_of_user_read'
             },
@@ -34,6 +35,11 @@ export class MembershipsOfUserStore extends BaseArrayStore<'groups_of_user_read'
             },
             {
                 useSuccess: false
+            },
+            {
+                useExtractImgUrl: true,
+                key: 'img_url_',
+                bucket: 'group_images'
             }
         );
     }

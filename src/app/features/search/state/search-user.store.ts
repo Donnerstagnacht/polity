@@ -45,6 +45,11 @@ export class SearchUserStore extends BaseArrayStore<'search_user'> {
                 useSuccess: true,
                 alertService: this.tuiAlertService,
                 successMessage: 'SearchUser loaded!'
+            },
+            {
+                useExtractImgUrl: true,
+                key: 'img_url_',
+                bucket: 'profile_images'
             }
         );
     }

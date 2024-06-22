@@ -848,6 +848,7 @@ export type Database = {
           member_type_: Database["hidden"]["Enums"]["group_member"]
           created_at_: string
           updated_at_: string
+          profile_image_: string
         }[]
       }
       group_relation_create: {

@@ -42,6 +42,11 @@ export class GroupRequestsStore extends BaseArrayStore<'group_member_requests_of
             },
             {
                 useSuccess: false
+            },
+            {
+                useExtractImgUrl: true,
+                key: 'profile_image_',
+                bucket: 'profile_images'
             }
         );
     }

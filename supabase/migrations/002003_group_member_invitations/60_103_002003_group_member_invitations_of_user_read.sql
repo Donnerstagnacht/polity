@@ -6,7 +6,8 @@ CREATE OR REPLACE FUNCTION authenticated.group_member_invitations_of_user_read()
                 id_          uuid,
                 group_id_    uuid,
                 group_name_  text,
-                group_level_ hidden.group_level
+                group_level_ hidden.group_level,
+                img_url_     text
             )
     LANGUAGE plpgsql
     SECURITY INVOKER
@@ -21,7 +22,8 @@ BEGIN
             group_invited_members.id,
             groups.id,
             groups.name,
-            groups.level
+            groups.level,
+            groups.img_url
         FROM
             hidden.group_invited_members
             JOIN hidden.groups

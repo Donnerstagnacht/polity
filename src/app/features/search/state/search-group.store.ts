@@ -45,6 +45,11 @@ export class SearchGroupStore extends BaseArrayStore<'search_group'> {
                 useSuccess: true,
                 alertService: this.tuiAlertService,
                 successMessage: 'SearchGroup loaded!'
+            },
+            {
+                useExtractImgUrl: true,
+                key: 'img_url_',
+                bucket: 'group_images'
             }
         );
     }

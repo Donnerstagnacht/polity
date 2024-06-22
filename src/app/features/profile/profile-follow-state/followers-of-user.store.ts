@@ -35,8 +35,15 @@ export class FollowersOfUserStore extends BaseArrayStore<'profile_followers_of_u
             },
             {
                 useSuccess: false
+            },
+            {
+                useExtractImgUrl: true,
+                key: 'profile_image_',
+                bucket: 'profile_images'
             }
         );
+        console.log('this.data_', this.data_());
+        console.log('this.data', this.data());
     }
 
     public async remove(userId: string): Promise<void> {

@@ -39,6 +39,11 @@ export class FollowersOfGroupStore extends BaseArrayStore<'followers_of_group_re
             },
             {
                 useSuccess: false
+            },
+            {
+                useExtractImgUrl: true,
+                key: 'profile_image_',
+                bucket: 'profile_images'
             }
         );
     }

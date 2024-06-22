@@ -109,3 +109,5 @@ supabase gen types typescript --project-id "kvfoskstaagtgqvbrwbo" --schema postg
 @REM     ng serve
 @REM    npx cypress run --spec "cypress/e2e/all.cy.ts" --record false
 
+REM Delete all files in destination
+del /q "%destination_folder%\*.*"
