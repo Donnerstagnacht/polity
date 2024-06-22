@@ -179,7 +179,50 @@
 ```
 
 <hr>
+<h1>Schematics</h1>
+<p>Polity includes an angular schematic package which can be used to generate store modules or database elements/features. This can speed up development and ease the implementation of the strict and required naming conventions for PostgreSQL migration files.</p>
+<p>To start with polity schematics run:</p>
 
+1. Switch to schematics directory
+   ```sh
+   src\polity-signal-store\schematics\supabase
+   ```
+2. Build the schematic
+   ```sh
+   npm run build
+   ```
+3. Switch to the root component or open a new terminal
+   ```sh
+   cd ../../../..
+   ```
+
+4. Link the schematic
+   ```sh
+   npm link src\polity-signal-store\schematics\supabase --force
+   ```
+
+5. Use the schematic
+
+   ```sh
+   ng g db:<schematic_name>   <arguments> 
+   ng g db:array profiles   read_profiles   src/app/features
+   ```
+
+<p>Available commands</p>
+
+| Comman   | Description                                                     | Arguments                            |
+|----------|-----------------------------------------------------------------|--------------------------------------|
+| array    | Generating an angular signal array store.                       | name<br/>rpc_name<br/>path           |
+| object   | Generating an angular signal object store.                      | name<br/>rpc_name<br/>path           |
+| enum     | Generates a postgres enum.                                      | name<br/>supabse_feature_id<br/>path |
+| feature  | Generates a postgres feature (table, policies, CRUD functions). | name<br/>supabse_feature_id<br/>path |
+| policies | Generates a postgres policy set.                                | name<br/>supabse_feature_id<br/>path |
+| rpc      | Generates a postgres rpc.                                       | name<br/>supabse_feature_id<br/>path |  
+| storage  | Generates a postgres storage.                                   | name<br/>supabse_feature_id<br/>path |  
+| table    | Generates a postgres table.                                     | name<br/>supabse_feature_id<br/>path |  
+| trigger  | Generates a postgres trigger.                                   | name<br/>supabse_feature_id<br/>path |   
+
+<hr>
 <h1>Naming conventions</h1>
 <p>PostgreSQL code and code or variables that are used to call PostgreSQL functions should be written in lowercase with underscores e.g. <code>a_variable_for_a_postgres functions.</code>. Parameters and return table variables of postgres functions should be prefixed with a "_" (e.g. <code>_parameter</code>) to avoid ambitous naming conflicts. Prefer table returns and table composite type above defining custom types, since custom types do not allow constraints (e.g. not null and supabase type generation adds "| null" to each property.</p> 
 

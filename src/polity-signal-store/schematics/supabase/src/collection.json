@@ -1,0 +1,50 @@
+{
+    "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
+    "schematics": {
+        "array": {
+            "description": "An array signal store.",
+            "factory": "./array-store/index#array",
+            "schema": "./array-store/schema.json"
+        },
+        "object": {
+            "description": "An array signal store.",
+            "factory": "./object-store/index#object",
+            "schema": "./object-store/schema.json"
+        },
+        "enum": {
+            "description": "A supabase enum.",
+            "factory": "./enum/index#enumdb",
+            "schema": "./enum/schema.json"
+        },
+        "feature": {
+            "description": "A supabase feature.",
+            "factory": "./feature/index#feature",
+            "schema": "./feature/schema.json"
+        },
+        "table": {
+            "description": "A supabase table.",
+            "factory": "./table/index#table",
+            "schema": "./table/schema.json"
+        },
+        "policies": {
+            "description": "A supabase policies.",
+            "factory": "./policies/index#policies",
+            "schema": "./policies/schema.json"
+        },
+        "rpc": {
+            "description": "A supabase rpc.",
+            "factory": "./rpc/index#rpc",
+            "schema": "./rpc/schema.json"
+        },
+        "storage": {
+            "description": "A supabase storage.",
+            "factory": "./storage/index#storage",
+            "schema": "./storage/schema.json"
+        },
+        "trigger": {
+            "description": "A supabase trigger.",
+            "factory": "./trigger/index#triggerdb",
+            "schema": "./trigger/schema.json"
+        }
+    }
+}
