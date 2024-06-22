@@ -1,8 +1,8 @@
-DROP FUNCTION IF EXISTS hidden.group_members_read_one(
+DROP FUNCTION IF EXISTS hidden.group_members_of_group_read_one(
     _membership_id uuid
 );
 
-CREATE OR REPLACE FUNCTION hidden.group_members_read_one(
+CREATE OR REPLACE FUNCTION hidden.group_members_of_group_read_one(
     _membership_id uuid
 )
     RETURNS table

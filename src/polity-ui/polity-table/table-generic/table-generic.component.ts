@@ -1,4 +1,4 @@
-import {Component, input, InputSignal} from '@angular/core';
+import {Component, input, InputSignal, output, OutputEmitterRef} from '@angular/core';
 
 /**
  * A generic table componen that offers generic functionality for tui tables
@@ -26,6 +26,9 @@ export class TableGenericComponent<ObjectType> {
     public headings: InputSignal<string[]> = input<string[]>([]);
     public dataCyTags: InputSignal<string[]> = input<string[]>([]);
     public dataCyTagsHeadline: InputSignal<string[]> = input<string[]>([]);
+    public url: InputSignal<string> = input<string>('');
+    public openLink: OutputEmitterRef<string> = output<string>();
+    public linkKey: InputSignal<keyof ObjectType> = input.required<keyof ObjectType>();
 
     protected getTableValueKey(item: any, key: string | number | symbol): any {
         return item[key];
@@ -41,5 +44,9 @@ export class TableGenericComponent<ObjectType> {
 
     protected transformColumnsForTui(): readonly string[] {
         return this.dataKeysForColumns() as readonly string[];
+    }
+
+    protected onOpenLink(id: string): void {
+        this.openLink.emit(id);
     }
 }

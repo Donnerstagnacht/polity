@@ -28,6 +28,7 @@
 </div>
 
 <polity-table-four-icon-text-tag-date
+    (openLink)="onNavigateToProfile($event)"
     [bonusKeys]="['last_name_']"
     [dataCyTagsHeadline]="['profile_image_headline', 'first_name_headline', 'type_of_notification_headline',
 			'created_at_headline']"
@@ -36,5 +37,6 @@
     [data]="this.notificationsStore.dataFiltered()"
     [headings]="['Foto', 'Name', 'Typ', 'Datum']"
     [isLoading]="this.notificationsStore.loadingState().loading"
+    [linkKey]="'profile_id_'"
 >
 </polity-table-four-icon-text-tag-date>

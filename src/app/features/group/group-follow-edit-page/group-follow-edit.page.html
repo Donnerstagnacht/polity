@@ -47,6 +47,8 @@
         [data]="followersOfGroupStore.dataFiltered()"
         [headings]="['Foto', 'test', 'Entfernen']"
         [isLoading]="followersOfGroupStore.loadingState().loading"
+        [linkKey]="'id_'"
+        (openLink)="onNavigateToProfile($event)"
     >
     </polity-table-three-icon-text-delete>
 }
@@ -62,6 +64,8 @@
         [data]="followingsOfGroupStore.dataFiltered()"
         [headings]="['Foto', 'Name', 'Entfernen']"
         [isLoading]="followingsOfGroupStore.loadingState().loading"
+        [linkKey]="'id_'"
+        (openLink)="onNavigateToProfile($event)"
     >
     </polity-table-three-icon-text-delete>
 }

@@ -10,6 +10,8 @@ import {FilterHeadlineComponent} from '@polity-ui/polity-filter/filter-headline/
 import {FilterStringComponent} from '@polity-ui/polity-filter/filter-string/filter-string.component';
 import {FollowingsOfGroupStore} from '@polity-group/group-follow-state/followings-of-group.store';
 import {FollowersOfGroupStore} from '@polity-group/group-follow-state/followers-of-group.store';
+import {ProfileLoadHelperService} from '@polity-profile/state/profile-load-helper.service';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'polity-group-follow-edit',
@@ -28,6 +30,8 @@ import {FollowersOfGroupStore} from '@polity-group/group-follow-state/followers-
 export class GroupFollowEditPage {
     protected followingsOfGroupStore: FollowingsOfGroupStore = inject(FollowingsOfGroupStore);
     protected followersOfGroupStore: FollowersOfGroupStore = inject(FollowersOfGroupStore);
+    protected router: Router = inject(Router);
+    protected profileLoadHelperService: ProfileLoadHelperService = inject(ProfileLoadHelperService);
     protected readonly columns: string[] = ['first_name', 'last_name', 'actions'];
     protected activeItemIndex: number = 0;
     protected showFollowers: boolean = true;
@@ -52,6 +56,11 @@ export class GroupFollowEditPage {
                 this.followingsOfGroupStore.read()
             ]
         );
+    }
+
+    protected onNavigateToProfile(id: string): void {
+        this.profileLoadHelperService.loadData(id);
+        this.router.navigateByUrl('/profile/' + id);
     }
 
     protected onCombinedFormChange(): void {

@@ -168,7 +168,7 @@ Sizes.forEach((size: Size): void => {
               .click();
             cy.getDataCy('editGroupMember')
               .click();
-            cy.interceptSupabaseCall('group_member_request_read_ones')
+            cy.interceptSupabaseCall('group_member_requests_of_group_read')
               .as('readGroupMemberRequests');
             cy.getDataCy('show-group-requests')
               .click();
@@ -206,7 +206,7 @@ Sizes.forEach((size: Size): void => {
               .click();
             cy.getDataCy('editGroupMember')
               .click();
-            cy.interceptSupabaseCall('group_member_request_read_ones')
+            cy.interceptSupabaseCall('group_member_requests_of_group_read')
               .as('readGroupMemberRequests');
             cy.getDataCy('show-group-requests')
               .click();

@@ -11,6 +11,8 @@ import {FilterHeadlineComponent} from '@polity-ui/polity-filter/filter-headline/
 import {FollowingsOfUserStore} from '@polity-profile/profile-follow-state/followings-of-user.store';
 import {FollowersOfUserStore} from '@polity-profile/profile-follow-state/followers-of-user.store';
 import {FollowingsOfUserGroupStore} from '@polity-profile/profile-follow-state/followings-of-user-group.store';
+import {ProfileLoadHelperService} from '@polity-profile/state/profile-load-helper.service';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'polity-follow-button-edit',
@@ -36,16 +38,16 @@ export class ProfileFollowEditPage {
     protected followingsOfUserStore: FollowingsOfUserStore = inject(FollowingsOfUserStore);
     protected followersOfUserStore: FollowersOfUserStore = inject(FollowersOfUserStore);
     protected followingsOfUserGroupStore: FollowingsOfUserGroupStore = inject(FollowingsOfUserGroupStore);
-
+    protected profileLoadHelperService: ProfileLoadHelperService = inject(ProfileLoadHelperService);
     protected readonly columns: string[] = ['first_name', 'last_name', 'actions'];
     protected activeItemIndex: number = 0;
     protected combinedForm: FormGroup;
     protected showFilter: boolean = true;
-
     protected showFollowers: boolean = true;
     protected showFollowings: boolean = false;
     protected showFollowingGroups: boolean = false;
     protected readonly signal = signal;
+    private router: Router = inject(Router);
 
     constructor(private readonly formBuilder: FormBuilder
     ) {
@@ -97,6 +99,16 @@ export class ProfileFollowEditPage {
                 }
             });
         }
+    }
+
+    protected onNavigateToProfile(id: string): void {
+        this.profileLoadHelperService.loadData(id);
+        this.router.navigateByUrl('/profile/' + id);
+    }
+
+    protected onNavigateToGroup(id: string): void {
+        this.profileLoadHelperService.loadData(id);
+        this.router.navigateByUrl('/group/' + id);
     }
 
     protected showFollowerList(): void {

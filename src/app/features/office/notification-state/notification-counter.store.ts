@@ -23,7 +23,6 @@ export class NotificationCounterStore extends BaseObjectStore<'unread_notificati
                                                    filter: 'id=eq.' + this.sessionStore.getSessionId()
                                                },
                                                (payload: RealtimePostgresUpdatePayload<SupabaseTable<'profiles_counters'>>): void => {
-                                                   console.log('payload', payload);
                                                    const testReturn: SupabaseObjectReturn<'unread_notifications_counter_read'> = {
                                                        unread_notifications_counter_: payload.new.unread_notifications_counter as number,
                                                        profile_id_: payload.new.id as string

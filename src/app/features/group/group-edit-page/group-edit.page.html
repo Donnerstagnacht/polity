@@ -1,27 +1,31 @@
 <h1
     [attr.data-cy]="'home-instruction'"
 >
-    Dein Profil und Gruppen.
+    Gruppen Management.
 </h1>
 <div class="tui-space_top-3">
-    <polity-link-card
-        [cardTitle]="'Edit Group settings'"
-        [linkUrl]="this.editGroupUrl">
-    </polity-link-card>
+    <polity-icon-link-card
+        [iconName]="'tuiIconEdit2'"
+        [title]="'Edit Group settings'"
+        [url]="this.editGroupUrl"
+    >
+    </polity-icon-link-card>
 </div>
 
 <div class="tui-space_top-3">
-    <polity-link-card
-        [cardTitle]="'Edit Group Member'"
-        [dataCyTag]="'editGroupMember'"
-        [linkUrl]="this.editGroupMemberUrl">
-    </polity-link-card>
+    <polity-icon-link-card
+        [iconName]="'tuiIconUsers'"
+        [title]="'Edit Group Member'"
+        [url]="this.editGroupMemberUrl"
+    >
+    </polity-icon-link-card>
 </div>
 
 <div class="tui-space_top-3">
-    <polity-link-card
-        [cardTitle]="'Edit Group Follower'"
-        [dataCyTag]="'editGroupFollower'"
-        [linkUrl]="this.editGroupFollowerUrl">
-    </polity-link-card>
+    <polity-icon-link-card
+        [iconName]="'tuiIconUsers'"
+        [title]="'Edit Group Follower'"
+        [url]="this.editGroupFollowerUrl"
+    >
+    </polity-icon-link-card>
 </div>

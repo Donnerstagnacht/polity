@@ -189,20 +189,6 @@ export type Database = {
           profile_image_: string
         }[]
       }
-      group_member_request_read_ones: {
-        Args: {
-          _group_id: string
-        }
-        Returns: {
-          id_: string
-          group_id_: string
-          member_id_: string
-          member_type_: "member" | "board_member" | "board_president"
-          first_name_: string
-          last_name_: string
-          profile_image_: string
-        }[]
-      }
       group_member_requests_create: {
         Args: {
           _group_id: string
@@ -221,6 +207,20 @@ export type Database = {
         }
         Returns: unknown
       }
+      group_member_requests_of_group_read: {
+        Args: {
+          _group_id: string
+        }
+        Returns: {
+          id_: string
+          group_id_: string
+          member_id_: string
+          member_type_: "member" | "board_member" | "board_president"
+          first_name_: string
+          last_name_: string
+          profile_image_: string
+        }[]
+      }
       group_member_requests_of_user_read: {
         Args: Record<PropertyKey, never>
         Returns: {
@@ -230,7 +230,7 @@ export type Database = {
           group_level_: "local" | "regional" | "national"
         }[]
       }
-      group_members_read: {
+      group_members_of_group_read: {
         Args: {
           _group_id: string
         }
@@ -253,6 +253,7 @@ export type Database = {
           name_: string
           level_: "local" | "regional" | "national"
           description_: string
+          img_url_: string
         }[]
       }
       groups_create_transaction: {
@@ -288,9 +289,11 @@ export type Database = {
       notifications_of_user_read: {
         Args: Record<PropertyKey, never>
         Returns: {
+          id_: string
           type_of_notification_: "follow_from_user"
           read_by_receiver_: boolean
           created_at_: string
+          profile_id_: string
           first_name_: string
           last_name_: string
           profile_image_: string

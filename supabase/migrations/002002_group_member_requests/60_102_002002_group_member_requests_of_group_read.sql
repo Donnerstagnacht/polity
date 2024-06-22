@@ -1,7 +1,7 @@
-DROP FUNCTION IF EXISTS authenticated.group_member_request_read_ones(
+DROP FUNCTION IF EXISTS authenticated.group_member_requests_of_group_read(
     _group_id uuid);
 
-CREATE OR REPLACE FUNCTION authenticated.group_member_request_read_ones(
+CREATE OR REPLACE FUNCTION authenticated.group_member_requests_of_group_read(
     _group_id uuid
 )
     RETURNS table

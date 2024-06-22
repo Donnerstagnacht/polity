@@ -5,19 +5,15 @@
     tuiCell
     tuiSurface="elevated"
 >
-    <tui-avatar
-        [attr.data-cy]=""
-        [autoColor]="true"
-        avatarUrl="test"
-        size="m"
-        text="'test'"
-    ></tui-avatar>
+    <tui-icon
+        [style.color]="'var(--tui-primary)'"
+        icon="{{iconName()}}"
+    ></tui-icon>
     <div
         [attr.data-cy]="'group-paragraph'"
         [class.tui-skeleton]="isLoading()"
         tuiTitle
     >
-        {{ group()?.group_name_ }}
-        <div tuiSubtitle>{{ group()?.group_level_ }}</div>
+        {{ title() }}
     </div>
 </button>

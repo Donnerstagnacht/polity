@@ -44,8 +44,9 @@
                 tuiTr
             >
                 <td
+                    (click)="onOpenLink(getTableValueKey(item, linkKey()))"
                     *tuiCell="transformColumnForTui(0)"
-                    class="tui-table__td tui-table__td_first"
+                    class="tui-table__td tui-table__td_first pointer-cursor"
                     tuiTd
                 >
                     <tui-avatar
@@ -57,9 +58,10 @@
                     ></tui-avatar>
                 </td>
                 <td
+                    (click)="onOpenLink(getTableValueKey(item, linkKey()))"
                     *tuiCell="transformColumnForTui(1)"
                     [attr.data-cy]="dataCyTags()[1]"
-                    class="tui-table__td polity-table-column-max-width"
+                    class="tui-table__td polity-table-column-max-width pointer-cursor"
                     tuiTd
                 >
                     {{ getTableValueKey(item, dataKeysForColumns()[1]) }} {{ getTableValueKey(item, bonusKeys()[0]) }}

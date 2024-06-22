@@ -8,7 +8,7 @@ WITH
                     "name": "Rosbach",
                     "description": "Eine lokale Gruppe aus Rosbach",
                     "level": "local",
-                    "img_url": ""
+                    "img_url": "group1.jpg"
                 },
                 {
                     "id": "1fb8eba2-6c5d-4c5d-a603-8eeb5d1214f9",
@@ -16,7 +16,7 @@ WITH
                     "name": "Hessen",
                     "description": "Die regionale Gruppe für Hessen.",
                     "level": "regional",
-                    "img_url": ""
+                    "img_url": "group2.jpg"
                 },
                 {
                     "id": "5ce91eb6-f16b-439a-ab61-d5ffe12e5087",
@@ -24,10 +24,9 @@ WITH
                     "name": "Deutschland",
                     "description": "Eine Gruppe für Deutschland.",
                     "level": "national",
-                    "img_url": ""
+                    "img_url": "group3.jpg"
                 }
-            ]
-            '::json)
+            ]'::json)
     )
 INSERT
 INTO

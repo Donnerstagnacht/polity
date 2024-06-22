@@ -2,9 +2,11 @@ DROP FUNCTION IF EXISTS authenticated.notifications_of_user_read();
 CREATE OR REPLACE FUNCTION authenticated.notifications_of_user_read()
     RETURNS table
             (
+                id_                   uuid,
                 type_of_notification_ hidden.notifications_enum,
                 read_by_receiver_     boolean,
                 created_at_           timestamp WITH TIME ZONE,
+                profile_id_           uuid,
                 first_name_           text,
                 last_name_            text,
                 profile_image_        text
@@ -19,9 +21,11 @@ BEGIN
     auth_user_id := auth.uid();
     RETURN QUERY (
         SELECT
+            hidden.notifications_by_user.id,
             hidden.notifications_by_user.type_of_notification,
             hidden.notifications_by_user.read_by_receiver,
             hidden.notifications_by_user.created_at,
+            profiles.id,
             profiles.first_name,
             profiles.last_name,
             profiles.profile_image

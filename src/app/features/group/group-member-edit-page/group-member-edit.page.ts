@@ -15,6 +15,8 @@ import {FilterHeadlineComponent} from '@polity-ui/polity-filter/filter-headline/
 import {GroupInvitationsStore} from '@polity-group/group-member-state/group-invitations.store';
 import {GroupMembersStore} from '@polity-group/group-member-state/group-members.store';
 import {GroupRequestsStore} from '@polity-group/group-member-state/group-requests.store';
+import {ProfileLoadHelperService} from '@polity-profile/state/profile-load-helper.service';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'polity-group-member-edit',
@@ -36,7 +38,9 @@ import {GroupRequestsStore} from '@polity-group/group-member-state/group-request
 export class GroupMemberEditPage {
     protected groupMemberStore: GroupMembersStore = inject(GroupMembersStore);
     protected groupRequestsStore: GroupRequestsStore = inject(GroupRequestsStore);
+    protected router: Router = inject(Router);
     protected groupInvitationsStore: GroupInvitationsStore = inject(GroupInvitationsStore);
+    protected profileLoadHelperService: ProfileLoadHelperService = inject(ProfileLoadHelperService);
 
     protected readonly columns: string[] = ['first_name', 'last_name', 'actions'];
 
@@ -105,6 +109,11 @@ export class GroupMemberEditPage {
                 }
             );
         }
+    }
+
+    protected onNavigateToProfile(id: string): void {
+        this.profileLoadHelperService.loadData(id);
+        this.router.navigateByUrl('/profile/' + id);
     }
 
     protected async removeGroupMember(id: string): Promise<void> {

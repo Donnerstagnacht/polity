@@ -48,7 +48,7 @@
             class="grid-item tui-space_top-4"
         >
             <polity-search-group-result
-                [isLoading]="this.searchGroupStore.loadingState().loading"
+                [isLoading]="this.searchGroupStore.loadingState()"
                 [group]="group"
             ></polity-search-group-result>
         </div>

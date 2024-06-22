@@ -54,6 +54,8 @@
         [data]="followersOfUserStore.dataFiltered()"
         [headings]="['Foto', 'Name', 'Entfernen']"
         [isLoading]="followersOfUserStore.loadingState().loading"
+        (openLink)="onNavigateToProfile($event)"
+        [linkKey]="'id_'"
     >
     </polity-table-three-icon-text-delete>
 }
@@ -69,6 +71,8 @@
         [data]="followingsOfUserStore.dataFiltered()"
         [headings]="['Foto', 'Name', 'Entfernen']"
         [isLoading]="followingsOfUserStore.loadingState().loading"
+        (openLink)="onNavigateToProfile($event)"
+        [linkKey]="'id_'"
     >
     </polity-table-three-icon-text-delete>
 }
@@ -84,6 +88,8 @@
         [data]="followingsOfUserGroupStore.dataFiltered()"
         [headings]="['Foto', 'Name', 'Entfernen']"
         [isLoading]="followingsOfUserGroupStore.loadingState().loading"
+        (openLink)="onNavigateToGroup($event)"
+        [linkKey]="'id_'"
     >
     </polity-table-three-icon-text-delete>
 }

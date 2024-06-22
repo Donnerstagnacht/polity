@@ -53,6 +53,8 @@
         [data]="membershipsOfUserStore.dataFiltered()"
         [headings]="['Foto', 'Name', 'Verlassen']"
         [isLoading]="membershipsOfUserStore.loadingState().loading"
+        (openLink)="onNavigateToGroup($event)"
+        [linkKey]="'group_id_'"
     >
     </polity-table-three-icon-text-delete>
 }
@@ -68,6 +70,8 @@
         [data]="requestsOfUserStore.dataFiltered()"
         [headings]="['Foto', 'Name', 'Entfernen']"
         [isLoading]="requestsOfUserStore.loadingState().loading"
+        (openLink)="onNavigateToGroup($event)"
+        [linkKey]="'group_id_'"
     >
     </polity-table-three-icon-text-delete>
 }
@@ -88,7 +92,7 @@
         [firstActionText]="'Accept'"
         [secondActionText]="'Decline'"
         [secondActionDataCyTag]="'group_invitation_decline'"
-
+        [linkKey]="'group_id_'"
     >
     </polity-table-three-icon-text-two-actions>
 }

@@ -1,15 +1,24 @@
-<tui-island
+<button
     (click)="onClick()"
-    [hoverable]="true"
+    class="full-width"
+    tuiCardLarge
+    tuiCell
+    tuiSurface="elevated"
 >
-    <p
-        [class.tui-skeleton]="isLoading()"
-        class="tui-island__category"
-    >GROUP</p>
-    <h3
-        [class.tui-skeleton]="isLoading()"
-        class="tui-island__title"
+    <tui-avatar
+        [attr.data-cy]=""
+        [autoColor]="true"
+        [class.tui-skeleton]="isLoading().loading"
+        avatarUrl="test"
+        size="m"
+        text="'test'"
+    ></tui-avatar>
+    <div
+        [attr.data-cy]="'search-result-profile'"
+        [class.tui-skeleton]="isLoading().loading"
+        tuiTitle
     >
-        {{ group()?.name_ }} {{ group()?.level_ }}
-    </h3>
-</tui-island>
+        {{ group()?.name_ }}
+        <div tuiSubtitle>{{ group()?.level_ }}</div>
+    </div>
+</button>

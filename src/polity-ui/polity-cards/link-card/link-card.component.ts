@@ -1,6 +1,7 @@
 import {Component, input, InputSignal} from '@angular/core';
 import {Router} from '@angular/router';
-import {TuiIslandModule} from '@taiga-ui/kit';
+import {TuiAvatarModule, TuiIslandModule} from '@taiga-ui/kit';
+import {TuiCardModule, TuiCellModule, TuiSurfaceModule, TuiTitleModule} from '@taiga-ui/experimental';
 
 @Component({
     selector: 'polity-link-card',
@@ -8,7 +9,12 @@ import {TuiIslandModule} from '@taiga-ui/kit';
     styleUrls: ['./link-card.component.less'],
     standalone: true,
     imports: [
-        TuiIslandModule
+        TuiIslandModule,
+        TuiAvatarModule,
+        TuiCardModule,
+        TuiCellModule,
+        TuiSurfaceModule,
+        TuiTitleModule
     ]
 })
 export class LinkCardComponent {

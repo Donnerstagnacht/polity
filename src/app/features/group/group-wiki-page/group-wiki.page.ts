@@ -15,6 +15,7 @@ import {GroupInvitationsStore} from '@polity-group/group-member-state/group-invi
 import {GroupMembershipStatusStore} from '@polity-group/group-member-state/group-membership-status.store';
 import {GroupRequestsStore} from '@polity-group/group-member-state/group-requests.store';
 import {GroupMembersStore} from '@polity-group/group-member-state/group-members.store';
+import {WikiImageComponent} from '@polity-ui/polity-wiki/wiki-image/wiki-image.component';
 
 @Component({
     selector: 'polity-group-wiki',
@@ -23,7 +24,8 @@ import {GroupMembersStore} from '@polity-group/group-member-state/group-members.
         CounterComponent,
         FollowButton,
         RequestButton,
-        WikiHeadlineComponent
+        WikiHeadlineComponent,
+        WikiImageComponent
     ],
     templateUrl: './group-wiki.page.html',
     styleUrl: './group-wiki.page.less'

@@ -837,7 +837,7 @@ export type Database = {
         }
         Returns: unknown
       }
-      group_members_read_one: {
+      group_members_of_group_read_one: {
         Args: {
           _membership_id: string
         }

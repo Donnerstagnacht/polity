@@ -41,7 +41,7 @@ describe(`Negative api tests for the group membership management of a group show
         expect(token).to.be.not.null;
 
         const response = await supabaseAuthenticatedClient
-        .rpc('group_members_read', {_group_id: nonMemberGroup.id});
+        .rpc('group_members_of_group_read', {_group_id: nonMemberGroup.id});
         expect(response.data).to.be.an('array').empty;
         expect(response.error?.code).to.be.undefined;
     });
@@ -78,7 +78,7 @@ describe(`Negative api tests for the group membership management of a group show
         expect(token).to.be.not.null;
 
         const response = await supabaseAuthenticatedClient
-        .rpc('group_member_request_read_ones', {_group_id: memberGroup.id});
+        .rpc('group_member_requests_of_group_read', {_group_id: memberGroup.id});
         expect(response.data).to.be.an('array').empty;
         expect(response.error?.code).to.be.undefined;
     });

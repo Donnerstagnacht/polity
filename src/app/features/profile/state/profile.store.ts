@@ -43,7 +43,8 @@ export class ProfileStore extends BaseObjectStore<'profiles_read'> {
                 useSuccess: false
             }
         );
-        getSignedUrlFromSupabaseObject<'profiles_update'>(result, 'profile_images', 'profile_image_');
+        console.log('result', result().data);
+        await getSignedUrlFromSupabaseObject<'profiles_update'>(result, 'profile_images', 'profile_image_');
     }
 
     public async update(profile: Partial<SupabaseObjectReturn<'profiles_update'>>): Promise<void> {

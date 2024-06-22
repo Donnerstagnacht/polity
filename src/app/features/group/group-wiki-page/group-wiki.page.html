@@ -1,7 +1,8 @@
-<p>{{ groupStore.loadingState().loading }}</p>
-<p>'isFollower', {{ groupFollowStore.data() }}</p>
-
 <div class="polity-center min-height">
+    <polity-wiki-image
+        [isLoading]="groupStore.loadingState().loading"
+        [src]="groupStore.data().img_url_"
+    ></polity-wiki-image>
     <polity-wiki-headline
         [firstName]="groupStore.data().name_"
         [isLoading]="groupStore.loadingState().loading"

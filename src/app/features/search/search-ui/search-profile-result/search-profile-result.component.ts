@@ -1,15 +1,21 @@
 import {Component, input, InputSignal} from '@angular/core';
 import {Router} from '@angular/router';
 import {SupabaseObjectReturn} from '../../../../../../supabase/types/supabase.authenticated.shorthand-types';
-import {TuiIslandModule} from '@taiga-ui/kit';
+import {TuiAvatarModule, TuiIslandModule} from '@taiga-ui/kit';
 import {LoadingState} from '@polity-signal-store/types/loadingState.type';
+import {TuiCardModule, TuiCellModule, TuiSurfaceModule, TuiTitleModule} from '@taiga-ui/experimental';
 
 @Component({
     selector: 'polity-search-profile-result',
     templateUrl: './search-profile-result.component.html',
     styleUrls: ['./search-profile-result.component.less'],
     imports: [
-        TuiIslandModule
+        TuiIslandModule,
+        TuiAvatarModule,
+        TuiCardModule,
+        TuiCellModule,
+        TuiSurfaceModule,
+        TuiTitleModule
     ],
     standalone: true
 })

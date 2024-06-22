@@ -1,12 +1,22 @@
-<tui-island
+<button
     (click)="onClick()"
-    [hoverable]="true"
+    class="full-width"
+    tuiCardLarge
+    tuiCell
+    tuiSurface="elevated"
 >
-    <p
+    <tui-avatar
+        [attr.data-cy]=""
+        [autoColor]="true"
+        avatarUrl="test"
+        size="m"
+        text="'test'"
+    ></tui-avatar>
+    <div
         [attr.data-cy]="dataCyTag()"
         [class.tui-skeleton]="isLoading()"
-        class="title title_size_s"
+        tuiTitle
     >
         {{ this.cardTitle() }}
-    </p>
-</tui-island>
+    </div>
+</button>

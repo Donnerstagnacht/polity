@@ -5,6 +5,8 @@ import {TuiAvatarModule} from '@taiga-ui/kit';
 import {CommonModule} from '@angular/common';
 import {TuiLetModule} from '@taiga-ui/cdk';
 import {TuiButtonModule} from '@taiga-ui/core';
+import {Router} from '@angular/router';
+import {TuiTabBarModule} from '@taiga-ui/addon-mobile';
 
 /**
  * A component to display a table with the following columns
@@ -29,13 +31,19 @@ import {TuiButtonModule} from '@taiga-ui/core';
         TuiAvatarModule,
         CommonModule,
         TuiLetModule,
-        TuiButtonModule
+        TuiButtonModule,
+        TuiTabBarModule
     ]
 })
 export class TableThreeIconTextDeleteComponent<ObjectType> extends TableGenericComponent<ObjectType> {
     public remove: OutputEmitterRef<string> = output<string>();
 
-    onRemove(id: string): void {
+    constructor(private router: Router) {
+        super();
+    }
+
+    protected onRemove(id: string): void {
         this.remove.emit(id);
     }
+
 }

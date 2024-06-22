@@ -13,6 +13,8 @@ import {FilterStringComponent} from '@polity-ui/polity-filter/filter-string/filt
 import {InvitationsOfUserStore} from '@polity-profile/profile-groups-state/invitations-of-user.store';
 import {RequestsOfUserStore} from '@polity-profile/profile-groups-state/requests-of-user.store';
 import {MembershipsOfUserStore} from '@polity-profile/profile-groups-state/memberships-of-user.store';
+import {Router} from '@angular/router';
+import {GroupLoadHelperService} from '@polity-group/state/group-load-helper.service';
 
 @Component({
     selector: 'polity-profile-groups-edit',
@@ -39,6 +41,7 @@ export class ProfileGroupsEditPage {
     protected invitationsOfUserStore: InvitationsOfUserStore = inject(InvitationsOfUserStore);
     protected requestsOfUserStore: RequestsOfUserStore = inject(RequestsOfUserStore);
     protected membershipsOfUserStore: MembershipsOfUserStore = inject(MembershipsOfUserStore);
+    protected groupLoadHelperService: GroupLoadHelperService = inject(GroupLoadHelperService);
 
     protected combinedForm: FormGroup;
     protected showFilter: boolean = true;
@@ -48,7 +51,10 @@ export class ProfileGroupsEditPage {
     protected showGroupInvitations: boolean = false;
     protected readonly signal = signal;
 
-    constructor(private readonly formBuilder: FormBuilder) {
+    constructor(
+        private readonly router: Router,
+        private readonly formBuilder: FormBuilder
+    ) {
         this.combinedForm = this.formBuilder.group({
             filterStringForm: this.formBuilder.group({
                 searchString: []
@@ -96,6 +102,12 @@ export class ProfileGroupsEditPage {
                 }
             });
         }
+    }
+
+    protected onNavigateToGroup(id: string): void {
+        console.log('emited: ' + id);
+        this.groupLoadHelperService.loadData(id);
+        this.router.navigateByUrl('/group/' + id);
     }
 
     protected showGroupMembershipList(): void {

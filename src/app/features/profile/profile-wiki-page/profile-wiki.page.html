@@ -1,10 +1,13 @@
 <div class="polity-center min-height">
+    <polity-wiki-image
+        [isLoading]="profileStore.loadingState().loading"
+        [src]="profileStore.data().profile_image_"
+    ></polity-wiki-image>
     <polity-wiki-headline
         [firstName]="profileStore.data().first_name_"
         [isLoading]="profileStore.loadingState().loading"
         [lastName]="profileStore.data().last_name_"
     ></polity-wiki-headline>
-
     <div
         class=" polity-flex-container polity-single-item-centered tui-space_right-4 tui-space_left-4"
     >
@@ -39,10 +42,5 @@
             [isOwner]="profileStore.isOwner()"
         ></polity-follow-button>
     </div>
-
-    <polity-wiki-image
-        [isLoading]="profileStore.loadingState().loading"
-        [src]="profileStore.data().profile_image_"
-    ></polity-wiki-image>
 </div>
 

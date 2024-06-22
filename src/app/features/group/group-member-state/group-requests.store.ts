@@ -4,10 +4,12 @@ import {GroupMembershipStatusStore} from './group-membership-status.store';
 import {BaseArrayStore} from '@polity-signal-store/array/base-array-store.service';
 import {rpcArrayHandler} from '@polity-signal-store/array/rpcArrayHandlerFeature';
 import {removeObjectByPropertyValue} from '@polity-signal-store/array/removeItemFeatue';
+import {GroupCounterStore} from '@polity-group/group-follow-state/group-counter.store';
 
 @Injectable({providedIn: 'root'})
-export class GroupRequestsStore extends BaseArrayStore<'group_member_request_read_ones'> {
+export class GroupRequestsStore extends BaseArrayStore<'group_member_requests_of_group_read'> {
     private groupStore: GroupStore = inject(GroupStore);
+    private groupCounterStore: GroupCounterStore = inject(GroupCounterStore);
     private groupMembershipStatusStore: GroupMembershipStatusStore = inject(GroupMembershipStatusStore);
 
     constructor() {
@@ -21,7 +23,7 @@ export class GroupRequestsStore extends BaseArrayStore<'group_member_request_rea
         const groupId: string = this.groupStore.data().id_;
         await rpcArrayHandler(
             {
-                fn: 'group_member_request_read_ones',
+                fn: 'group_member_requests_of_group_read',
                 args: {
                     _group_id: groupId
                 }
@@ -73,7 +75,7 @@ export class GroupRequestsStore extends BaseArrayStore<'group_member_request_rea
     }
 
     public async accept(membershipRequestId: string): Promise<void> {
-        await rpcArrayHandler(
+        const result = await rpcArrayHandler(
             {
                 fn: 'accept_group_membership_request_transaction',
                 args: {
@@ -96,7 +98,14 @@ export class GroupRequestsStore extends BaseArrayStore<'group_member_request_rea
                 successMessage: 'Group membership accepted!'
             }
         );
-        // this.groupMembershipStatusStore.updateGroupMembershipStatus('requested');
+        if (!result().error) {
+            removeObjectByPropertyValue(
+                'id_',
+                membershipRequestId,
+                this.data_
+            );
+            this.groupCounterStore.increment('group_member_counter_');
+        }
     }
 
     public async decline(membershipRequestId: string): Promise<void> {

@@ -12,6 +12,11 @@ import {FilterDateRangeComponent} from '@polity-ui/polity-filter/filter-date-ran
 import {FilterTagsComponent} from '@polity-ui/polity-filter/filter-tags/filter-tags.component';
 import {FilterClearComponent} from '@polity-ui/polity-filter/filter-clear/filter-clear.component';
 import {NotificationsStore} from '@polity-office/notification-state/notification-store.service';
+import {
+    TableThreeIconTextDeleteComponent
+} from '@polity-ui/polity-table/table-three-icon-text-delete/table-three-icon-text-delete.component';
+import {ProfileLoadHelperService} from '@polity-profile/state/profile-load-helper.service';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'polity-notification',
@@ -26,7 +31,8 @@ import {NotificationsStore} from '@polity-office/notification-state/notification
         FilterDateRangeComponent,
         FilterTagsComponent,
         FilterClearComponent,
-        TableFourIconTextTagDateComponent
+        TableFourIconTextTagDateComponent,
+        TableThreeIconTextDeleteComponent
     ]
 })
 export class NotificationPage {
@@ -37,7 +43,9 @@ export class NotificationPage {
     protected notificationsStore: NotificationsStore = inject(NotificationsStore);
 
     constructor(
-        private readonly formBuilder: FormBuilder
+        private readonly formBuilder: FormBuilder,
+        private readonly profileLoadHelperService: ProfileLoadHelperService,
+        private readonly router: Router
     ) {
         this.combinedForm = this.formBuilder.group({
             filterStringForm: this.formBuilder.group({
@@ -65,6 +73,12 @@ export class NotificationPage {
     async ngOnDestroy(): Promise<void> {
         this.notificationsStore.unsubscribeToRealtimeNotifications();
     }
+
+    protected onNavigateToProfile(id: string): void {
+        this.profileLoadHelperService.loadData(id);
+        this.router.navigateByUrl('/profile/' + id);
+    }
+
 
     protected clearFilter(): void {
         this.combinedForm.reset();

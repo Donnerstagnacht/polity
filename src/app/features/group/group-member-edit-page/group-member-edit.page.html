@@ -60,6 +60,8 @@
         [data]="groupMemberStore.dataFiltered()"
         [headings]="['Foto', 'Name', 'Entfernen']"
         [isLoading]="groupMemberStore.loadingState().loading"
+        [linkKey]="'member_id_'"
+        (openLink)="onNavigateToProfile($event)"
     >
     </polity-table-three-icon-text-delete>
 }
@@ -75,6 +77,8 @@
         [data]="groupInvitationsStore.dataFiltered()"
         [headings]="['Foto', 'Name', 'Entfernen']"
         [isLoading]="groupInvitationsStore.loadingState().loading"
+        [linkKey]="'member_id_'"
+        (openLink)="onNavigateToProfile($event)"
     >
     </polity-table-three-icon-text-delete>
 }
@@ -95,6 +99,8 @@
         [firstActionText]="'Accept'"
         [secondActionText]="'Decline'"
         [secondActionDataCyTag]="'group_invitation_decline'"
+        [linkKey]="'member_id_'"
+        (openLink)="onNavigateToProfile($event)"
     >
     </polity-table-three-icon-text-two-actions>
 }
