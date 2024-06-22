@@ -201,26 +201,26 @@
    npm link src\polity-signal-store\schematics\supabase --force
    ```
 
-5Use the schematic
+5. Use the schematic
 
    ```sh
-   ng g db:<schematic_name> <options> 
-   ng g db:array profiles read_profiles
+   ng g db:<schematic_name>   <arguments> 
+   ng g db:array profiles   read_profiles   src/app/features
    ```
 
 <p>Available commands</p>
 
-| Comman   | Description                                                     | Arguments                  |
-|----------|-----------------------------------------------------------------|----------------------------|
-| array    | Generating an angular signal array store.                       | name<br/>rpc_name<br/>path |
-| object   | Generating an angular signal object store.                      | name<br/>rpc_name<br/>path |
-| enum     | Generates a postgres enum.                                      | name<br/>path              |
-| feature  | Generates a postgres feature (table, policies, CRUD functions). | name<br/>path              |
-| policies | Generates a postgres policies.                                  | name<br/>path              |
-| rpc      | Generates a postgres rpc.                                       | name<br/>path              |  
-| storage  | Generates a postgres storage.                                   | name<br/>path              |  
-| table    | Generates a postgres table.                                     | name<br/>path              |  
-| trigger  | Generates a postgres trigger.                                   | name<br/>path              |   
+| Comman   | Description                                                     | Arguments                            |
+|----------|-----------------------------------------------------------------|--------------------------------------|
+| array    | Generating an angular signal array store.                       | name<br/>rpc_name<br/>path           |
+| object   | Generating an angular signal object store.                      | name<br/>rpc_name<br/>path           |
+| enum     | Generates a postgres enum.                                      | name<br/>supabse_feature_id<br/>path |
+| feature  | Generates a postgres feature (table, policies, CRUD functions). | name<br/>supabse_feature_id<br/>path |
+| policies | Generates a postgres policy set.                                | name<br/>supabse_feature_id<br/>path |
+| rpc      | Generates a postgres rpc.                                       | name<br/>supabse_feature_id<br/>path |  
+| storage  | Generates a postgres storage.                                   | name<br/>supabse_feature_id<br/>path |  
+| table    | Generates a postgres table.                                     | name<br/>supabse_feature_id<br/>path |  
+| trigger  | Generates a postgres trigger.                                   | name<br/>supabse_feature_id<br/>path |   
 
 <hr>
 <h1>Naming conventions</h1>
