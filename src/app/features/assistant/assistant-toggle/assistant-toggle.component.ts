@@ -1,9 +1,7 @@
-import {Component, effect, signal, WritableSignal} from '@angular/core';
-import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {FunctionSingleReturn} from "../../../../../supabase/types/supabase.shorthand-types";
-import {TuiToggleModule} from "@taiga-ui/kit";
-import {AssistantActionService} from "../action-stores-services/assistant.action.service";
-import {AssistantStoreService} from "../action-stores-services/assistant.store.service";
+import {Component, effect, inject} from '@angular/core';
+import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {TuiToggleModule} from '@taiga-ui/kit';
+import {AssistantStore} from '../state/assistant.store';
 
 @Component({
     selector: 'polity-assistant-toggle',
@@ -16,33 +14,25 @@ import {AssistantStoreService} from "../action-stores-services/assistant.store.s
     ]
 })
 export class AssistantToggleComponent {
-    isAssistantLoading: WritableSignal<boolean> = signal(true);
+    protected assistantStore: AssistantStore = inject(AssistantStore);
     protected toggleAssistantForm: FormGroup<{
         showAssistant: FormControl<boolean | null>
     }> = new FormGroup({
-        showAssistant: new FormControl(false),
+        showAssistant: new FormControl(false)
     });
-    private assistant: WritableSignal<FunctionSingleReturn<'select_assistant'> | null> = signal(null);
 
-    constructor(
-        private readonly assistantService: AssistantActionService,
-        private readonly assistantStoreService: AssistantStoreService
-    ) {
-        this.assistant = this.assistantStoreService.assistant.getObject()
-        this.isAssistantLoading = this.assistantStoreService.assistant.loading.getLoading()
-        console.log('loading', this.isAssistantLoading())
-
+    constructor() {
         effect((): void => {
             this.toggleAssistantForm.patchValue({
-                showAssistant: !this.assistant()?.skip_tutorial
-            })
-        })
+                showAssistant: !this.assistantStore.data().skip_tutorial_
+            });
+        });
     }
 
     protected async toggleAssistant(): Promise<void> {
-        const newValue: boolean = this.toggleAssistantForm.value.showAssistant as boolean
-        await this.assistantService.skipTutorial(newValue)
-        await this.assistantService.updateLastTutorial('profile')
+        const newValue: boolean = this.toggleAssistantForm.value.showAssistant as boolean;
+        await this.assistantStore.skipTutorial(newValue);
+        await this.assistantStore.updateLastTutorial('profile');
     }
 
 }

@@ -1,0 +1,20 @@
+<form
+    [formGroup]="toggleNotificationsFromFollowForm"
+>
+    <div class="tui-form__row flex-box">
+        <p
+            [attr.data-cy]="'toggle-notifications-headline'"
+            [class.tui-skeleton]="notificationSettingsStore.loadingState().loading"
+            class="tui-text_body-m"
+        >Erhalte Nachrichten, wenn jemand dir folgt</p>
+
+        <tui-toggle
+            (click)="toggleNotifications()"
+            [attr.data-cy]="'toggle-notifications-from-user'"
+            [class.tui-skeleton]="notificationSettingsStore.loadingState().loading"
+            [showIcons]="true"
+            formControlName="showFollowNotifications"
+        ></tui-toggle>
+    </div>
+</form>
+

@@ -1,7 +1,9 @@
-import {FunctionName} from "../../supabase/types/supabase.shorthand-types";
+import {SupabaseAuthenticatedFunctionName} from "../../supabase/types/supabase.authenticated.shorthand-types";
 import {AuthData} from "../../seed_and_test_data/01_test_auth";
 import {Profile} from "../../seed_and_test_data/02_test_profiles";
 import {ProfileCounter} from "../../seed_and_test_data/04_test_profile_counters";
+import {Group} from "../../seed_and_test_data/07_test_groups";
+import {GroupCounter} from "../../seed_and_test_data/11_test_group_counters";
 
 
 declare global {
@@ -19,7 +21,7 @@ declare global {
              *@param {string} value - The value of the data-cy attribute
              *@param {string} value - The value of a second data-cy attribute
              */
-            interceptSupabaseCall(endPoint: FunctionName): Chainable<Element>
+            interceptSupabaseCall(endPoint: SupabaseAuthenticatedFunctionName): Chainable<Element>
 
             /**
              * Custom command to test if selected element is visible.
@@ -53,6 +55,12 @@ declare global {
              */
             searchUser(firstName: string): Chainable<Element>
 
+            /**
+             * Searches a group by a given name.
+             *
+             * @param {string} name - The name of the group.
+             */
+            searchGroup(name: string): Chainable<Element>
 
             /**
              * Follows a user's profile by updating the counters and returning a Chainable element.
@@ -71,9 +79,32 @@ declare global {
             ): Chainable<Element>
 
             /**
+             * Follows a group's profile by updating the counters and returning a Chainable element.
+             *
+             * @param {Group} groupWhichIsFollowed - The group who is being followed.
+             * @param {GroupCounter} groupWhichIsFollowedCounter - The counter of the group who is being followed.
+             * @param {Profile} userWhoFollowsProfile - The profile of the user who is following.
+             * @param {ProfileCounter} userWhoFollowsCounter - The counter of the user who is following.
+             * @return {Chainable<Element>} - A Chainable element.
+             */
+            followGroup(
+                groupWhichIsFollowed: Group,
+                groupWhichIsFollowedCounter: GroupCounter,
+                userWhoFollowsProfile: Profile,
+                userWhoFollowsCounter: ProfileCounter
+            ): Chainable<Element>
+
+
+            /**
              * Navigates to the 'HOME' tab.
              */
             navigateToHome(): Chainable<Element>
+
+            /**
+             * Navigates to the tab to edit group memberships of a user.
+             * @param {string} userName - The name of the user.
+             */
+            navigateToEditGroupMembershipsOfUser(userName: string): Chainable<Element>
 
             /**
              * Signs out a signed-in user.

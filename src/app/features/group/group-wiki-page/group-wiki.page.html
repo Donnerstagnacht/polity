@@ -1,0 +1,56 @@
+<div class="polity-center min-height">
+    <polity-wiki-image
+        [isLoading]="groupStore.loadingState().loading"
+        [src]="groupStore.data().img_url_"
+    ></polity-wiki-image>
+    <polity-wiki-headline
+        [firstName]="groupStore.data().name_"
+        [isLoading]="groupStore.loadingState().loading"
+    ></polity-wiki-headline>
+
+    <div
+        class=" polity-flex-container polity-single-item-centered tui-space_right-4 tui-space_left-4"
+    >
+        <polity-counter
+            [counterTitle]="'Member'"
+            [counterValue]="groupCounterStore.data().group_member_counter_"
+            [dataCyTag]="'member-counter'"
+            [isLoading]="groupCounterStore.loadingState().loading"
+            class="polity-flex-item-first"
+        ></polity-counter>
+        <polity-counter
+            [counterTitle]="'Follower'"
+            [counterValue]="groupCounterStore.data().follower_counter_"
+            [dataCyTag]="'follower-counter'"
+            [isLoading]="groupCounterStore.loadingState().loading"
+            class="polity-flex-item-first"
+        ></polity-counter>
+    </div>
+
+
+    <div class="tui-space_bottom-4">
+        <polity-follow-button
+            (toggledFollowing)="toggleFollow($event)"
+            [isFollowing]="groupFollowStore.data()"
+            [isLoading]="groupFollowStore.loadingState().loading"
+            [loadingState]="groupFollowStore.loadingState()"
+        ></polity-follow-button>
+    </div>
+
+    <p>{{ groupFollowStore.data() }}</p>
+
+    <div class="tui-space_bottom-4">
+        <polity-request-button
+            (toggledFollowing)="toggleMembership($event)"
+            [isLoading]="groupMembershipStatusStore.loadingState().loading"
+            [isRequested]="groupMembershipStatusStore.isMember()"
+            [requestTitleString]="buttonTextString"
+            [toggledTitle]="'REQUEST MEMBERSHIP'"
+        ></polity-request-button>
+    </div>
+
+    <p>{{ groupMembershipStatusStore.loadingState().loading }}"</p>
+    <p>{{ groupMembershipStatusStore.isMember() }}</p>
+    <p>{{ buttonTextString }}
+
+</div>

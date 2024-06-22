@@ -1,0 +1,24 @@
+<button
+    (click)="onClick()"
+    class="full-width"
+    tuiCardLarge
+    tuiCell
+    tuiSurface="elevated"
+>
+    <tui-avatar
+        [attr.data-cy]=""
+        [autoColor]="true"
+        [class.tui-skeleton]="isLoading().loading"
+        avatarUrl="{{group()?.img_url_}}"
+        size="m"
+        text="'test'"
+    ></tui-avatar>
+    <div
+        [attr.data-cy]="'search-result-profile'"
+        [class.tui-skeleton]="isLoading().loading"
+        tuiTitle
+    >
+        {{ group()?.name_ }}
+        <div tuiSubtitle>{{ group()?.level_ }}</div>
+    </div>
+</button>

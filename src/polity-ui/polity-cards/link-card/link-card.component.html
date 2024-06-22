@@ -1,0 +1,22 @@
+<button
+    (click)="onClick()"
+    class="full-width"
+    tuiCardLarge
+    tuiCell
+    tuiSurface="elevated"
+>
+    <tui-avatar
+        [attr.data-cy]=""
+        [autoColor]="true"
+        avatarUrl="{{cardImage()}}"
+        size="m"
+        text="{{ cardTitle() }}"
+    ></tui-avatar>
+    <div
+        [attr.data-cy]="dataCyTag()"
+        [class.tui-skeleton]="isLoading()"
+        tuiTitle
+    >
+        {{ this.cardTitle() }}
+    </div>
+</button>

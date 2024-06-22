@@ -1,0 +1,19 @@
+<button
+    (click)="onClick()"
+    class="full-width"
+    tuiCardLarge
+    tuiCell
+    tuiSurface="elevated"
+>
+    <tui-icon
+        [style.color]="'var(--tui-primary)'"
+        icon="{{iconName()}}"
+    ></tui-icon>
+    <div
+        [attr.data-cy]="'group-paragraph'"
+        [class.tui-skeleton]="isLoading()"
+        tuiTitle
+    >
+        {{ title() }}
+    </div>
+</button>

@@ -1,0 +1,31 @@
+<h1
+    [attr.data-cy]="'home-instruction'"
+>
+    Gruppen Management.
+</h1>
+<div class="tui-space_top-3">
+    <polity-icon-link-card
+        [iconName]="'tuiIconEdit2'"
+        [title]="'Edit Group settings'"
+        [url]="this.editGroupUrl"
+    >
+    </polity-icon-link-card>
+</div>
+
+<div class="tui-space_top-3">
+    <polity-icon-link-card
+        [iconName]="'tuiIconUsers'"
+        [title]="'Edit Group Member'"
+        [url]="this.editGroupMemberUrl"
+    >
+    </polity-icon-link-card>
+</div>
+
+<div class="tui-space_top-3">
+    <polity-icon-link-card
+        [iconName]="'tuiIconUsers'"
+        [title]="'Edit Group Follower'"
+        [url]="this.editGroupFollowerUrl"
+    >
+    </polity-icon-link-card>
+</div>

@@ -1,0 +1,46 @@
+<div class="polity-center min-height">
+    <polity-wiki-image
+        [isLoading]="profileStore.loadingState().loading"
+        [src]="profileStore.data().profile_image_"
+    ></polity-wiki-image>
+    <polity-wiki-headline
+        [firstName]="profileStore.data().first_name_"
+        [isLoading]="profileStore.loadingState().loading"
+        [lastName]="profileStore.data().last_name_"
+    ></polity-wiki-headline>
+    <div
+        class=" polity-flex-container polity-single-item-centered tui-space_right-4 tui-space_left-4"
+    >
+        <polity-counter
+            [counterTitle]="'Follower'"
+            [counterValue]="profileCounterStore.data().follower_counter_"
+            [dataCyTag]="'follower-counter'"
+            [isLoading]="profileCounterStore.loadingState().loading"
+            class="polity-flex-item-first"
+        ></polity-counter>
+        <polity-counter
+            [counterTitle]="'Following'"
+            [counterValue]="profileCounterStore.data().following_counter_"
+            [dataCyTag]="'following-counter'"
+            [isLoading]="profileCounterStore.loadingState().loading"
+            class="polity-flex-item-last"
+        ></polity-counter>
+        <polity-counter
+            [counterTitle]="'Memberships'"
+            [counterValue]="profileCounterStore.data().group_membership_counter_"
+            [dataCyTag]="'membership-counter'"
+            [isLoading]="profileCounterStore.loadingState().loading"
+            class="polity-flex-item-last"
+        ></polity-counter>
+    </div>
+
+    <div class="tui-space_bottom-4">
+        <polity-follow-button
+            (toggledFollowing)="toggleFollow($event)"
+            [isFollowing]="profileFollowStore.data()"
+            [isLoading]="profileFollowStore.loadingState().loading"
+            [isOwner]="profileStore.isOwner()"
+        ></polity-follow-button>
+    </div>
+</div>
+

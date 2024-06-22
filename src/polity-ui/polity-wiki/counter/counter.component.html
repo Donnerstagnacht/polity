@@ -1,0 +1,14 @@
+<div
+    [class.tui-skeleton]="isLoading()"
+    class="tui-space_right-4 tui-space_left-4"
+>
+    <p
+        [attr.data-cy]="dataCyTag()"
+        [class.tui-skeleton]="isLoading()"
+        class="tui-text_h6"
+    >{{ this.counterValue() | number }}</p>
+    <h5
+        [class.tui-skeleton]="isLoading()"
+        class="tui-text_body-m"
+    >{{ this.counterTitle() }}</h5>
+</div>

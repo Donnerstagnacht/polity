@@ -1,0 +1,10 @@
+<div [formGroup]="filterStringForm">
+    <div class="tui-form__row tui-space_top-1">
+        <tui-input
+            [attr.data-cy]="'filterStringInput'"
+            formControlName="searchString"
+        >
+            {{ placeholderText() }}
+        </tui-input>
+    </div>
+</div>

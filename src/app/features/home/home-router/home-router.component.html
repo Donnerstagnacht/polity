@@ -1,0 +1,27 @@
+<h1
+    [attr.data-cy]="'home-instruction'"
+>
+    Dein Profil.
+</h1>
+<polity-profile-link-card
+    [attr.data-cy]="'home-to-profile'"
+    [class.tui-skeleton]="profileStore.loadingState().loading"
+    [dataCyTag]="'home-first-name'"
+    [isLoading]="profileStore.loadingState().loading"
+    [profile]="profileStore.data()"
+    [sessionId]="sessionId"
+></polity-profile-link-card>
+
+<h1 class="tui-space_top-4">Deine Gruppen</h1>
+@for (group of membershipsOfUserStore.data();track group) {
+    <div class="tui-space_top-4">
+        <polity-group-link-card
+            [attr.data-cy]="'to-group-of-user'"
+            [class.tui-skeleton]="membershipsOfUserStore.loadingState().loading"
+            [dataCyTag]="'group-of-user-first-name'"
+            [isLoading]="membershipsOfUserStore.loadingState().loading"
+            [group]="group"
+        ></polity-group-link-card>
+    </div>
+}
+

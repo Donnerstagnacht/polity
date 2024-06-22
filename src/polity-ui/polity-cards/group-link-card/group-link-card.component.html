@@ -1,0 +1,23 @@
+<button
+    (click)="onClick()"
+    class="full-width"
+    tuiCardLarge
+    tuiCell
+    tuiSurface="elevated"
+>
+    <tui-avatar
+        [attr.data-cy]=""
+        [autoColor]="true"
+        avatarUrl="{{group()?.img_url_}}"
+        size="m"
+        text="{{ group()?.group_name_ }} {{ group()?.group_name_ }}"
+    ></tui-avatar>
+    <div
+        [attr.data-cy]="'group-paragraph'"
+        [class.tui-skeleton]="isLoading()"
+        tuiTitle
+    >
+        {{ group()?.group_name_ }}
+        <div tuiSubtitle>{{ group()?.group_level_ }}</div>
+    </div>
+</button>

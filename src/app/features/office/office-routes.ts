@@ -1,9 +1,9 @@
 import {Routes} from '@angular/router';
-import {NotificationComponent} from "../notifications/notification/notification.component";
+import {NotificationPage} from '@polity-office/notification-page/notification.page';
 
 export const OFFICE_ROUTES: Routes = [
     {
         path: '',
-        component: NotificationComponent
+        component: NotificationPage
     }
-]
+];

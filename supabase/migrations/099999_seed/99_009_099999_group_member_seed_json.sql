@@ -1,0 +1,113 @@
+WITH
+    group_members_json (doc) AS (
+        VALUES
+            ('[
+                {
+                    "id": "97d0382f-eb8e-40b5-b19f-e0f87e1f5d4c",
+                    "group_id": "1fb8eba2-6c5d-4c5d-a603-8eeb5d1214f9",
+                    "member_id": "ff6cc644-ec9e-45dc-a98a-1186e091674f",
+                    "member_type": "board_president"
+                },
+                {
+                    "id": "4511e22f-e4f3-4711-80f0-c15f858bc8cc",
+                    "group_id": "1fb8eba2-6c5d-4c5d-a603-8eeb5d1214f9",
+                    "member_id": "b24f9e68-8fac-4525-b001-fffb91704d68",
+                    "member_type": "board_member"
+                },
+                {
+                    "id": "6c5e00cc-c2b6-44fa-8fcc-28b1eaff979e",
+                    "group_id": "1fb8eba2-6c5d-4c5d-a603-8eeb5d1214f9",
+                    "member_id": "71aa5d19-43d8-4063-839d-114a0ad49ed7",
+                    "member_type": "member"
+                },
+                {
+                    "id": "d5b52b63-13ed-4acb-ac9e-e7217122a075",
+                    "group_id": "1fb8eba2-6c5d-4c5d-a603-8eeb5d1214f9",
+                    "member_id": "94875c0e-fa45-4504-828a-6ec9f21a49ca",
+                    "member_type": "member"
+                },
+                {
+                    "id": "d79732b0-9188-4bb2-a737-a95ae8312d0f",
+                    "group_id": "1fb8eba2-6c5d-4c5d-a603-8eeb5d1214f9",
+                    "member_id": "2d196d44-ae7f-4999-b080-e8a0db639c65",
+                    "member_type": "member"
+                },
+                {
+                    "id": "5bb84267-1192-4ac7-88ab-2b72a1e33459",
+                    "group_id": "863a7ec4-0ae5-4622-90ce-c0ffbaaf18f3",
+                    "member_id": "b24f9e68-8fac-4525-b001-fffb91704d68",
+                    "member_type": "board_president"
+                },
+                {
+                    "id": "a43664de-e5eb-4153-9510-d1cc670f7857",
+                    "group_id": "863a7ec4-0ae5-4622-90ce-c0ffbaaf18f3",
+                    "member_id": "71aa5d19-43d8-4063-839d-114a0ad49ed7",
+                    "member_type": "board_member"
+                },
+                {
+                    "id": "7ad13c40-9b33-4761-a479-06c9284ba073",
+                    "group_id": "863a7ec4-0ae5-4622-90ce-c0ffbaaf18f3",
+                    "member_id": "94875c0e-fa45-4504-828a-6ec9f21a49ca",
+                    "member_type": "member"
+                },
+                {
+                    "id": "ca06383e-fc74-427a-962a-dd8209344bdb",
+                    "group_id": "863a7ec4-0ae5-4622-90ce-c0ffbaaf18f3",
+                    "member_id": "2d196d44-ae7f-4999-b080-e8a0db639c65",
+                    "member_type": "member"
+                },
+                {
+                    "id": "75b99339-d004-47ee-adc2-7769233f7289",
+                    "group_id": "863a7ec4-0ae5-4622-90ce-c0ffbaaf18f3",
+                    "member_id": "ff6cc644-ec9e-45dc-a98a-1186e091674f",
+                    "member_type": "member"
+                },
+                {
+                    "id": "0a12e4bd-7f21-49fc-b77c-fe5a6ca0d5e5",
+                    "group_id": "5ce91eb6-f16b-439a-ab61-d5ffe12e5087",
+                    "member_id": "71aa5d19-43d8-4063-839d-114a0ad49ed7",
+                    "member_type": "board_president"
+                },
+                {
+                    "id": "b0f49ec2-d365-4af0-b599-62c34feef118",
+                    "group_id": "5ce91eb6-f16b-439a-ab61-d5ffe12e5087",
+                    "member_id": "94875c0e-fa45-4504-828a-6ec9f21a49ca",
+                    "member_type": "board_member"
+                },
+                {
+                    "id": "b5738e3f-d709-43f5-89c2-2a10a222e77d",
+                    "group_id": "5ce91eb6-f16b-439a-ab61-d5ffe12e5087",
+                    "member_id": "2d196d44-ae7f-4999-b080-e8a0db639c65",
+                    "member_type": "member"
+                },
+                {
+                    "id": "4c786291-9829-4f0b-9035-8804bde0ca49",
+                    "group_id": "5ce91eb6-f16b-439a-ab61-d5ffe12e5087",
+                    "member_id": "ff6cc644-ec9e-45dc-a98a-1186e091674f",
+                    "member_type": "member"
+                },
+                {
+                    "id": "5a94d25b-ccea-42b0-9a5c-936f4c18c904",
+                    "group_id": "5ce91eb6-f16b-439a-ab61-d5ffe12e5087",
+                    "member_id": "b24f9e68-8fac-4525-b001-fffb91704d68",
+                    "member_type": "member"
+                }
+            ]
+            '::json)
+    )
+INSERT
+INTO
+    hidden.group_members (id,
+                          group_id,
+                          member_id,
+                          member_type)
+SELECT
+    id,
+    group_id,
+    member_id,
+    member_type
+FROM
+    group_members_json l
+    CROSS JOIN LATERAL JSON_POPULATE_RECORDSET(
+        NULL::hidden.group_members,
+        doc) AS f;

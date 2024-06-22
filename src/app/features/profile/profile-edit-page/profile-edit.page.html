@@ -1,0 +1,68 @@
+<div class="polity-space_bottom-15">
+    <polity-profile-edit-form
+        (newProfileData)="onEdit($event)"
+        [loadingState]="profileStore.loadingState()"
+        [profile]="profileStore.data()"
+    ></polity-profile-edit-form>
+</div>
+
+<hr>
+
+<div class="">
+    <h3
+        [class.tui-skeleton]="profileStore.loadingState().loading"
+        class="tui-form__header"
+    >Ändere deine Profil Bild</h3>
+    <polity-image-upload
+        (imgStoragePath)="onUpdateProfileImage($event)"
+        [bucketName]="'profile_images'"
+        [imgSrc]="profileStore.data().profile_image_"
+        [loadingState]="profileStore.loadingState()"
+    ></polity-image-upload>
+</div>
+
+<hr>
+
+<div class="polity-space_bottom-15">
+    <h3
+        [class.tui-skeleton]="profileStore.loadingState().loading"
+        class="tui-form__header"
+    >Tutorial</h3>
+    <polity-assistant-toggle></polity-assistant-toggle>
+</div>
+
+<div class="polity-space_bottom-15">
+    <h3
+        [class.tui-skeleton]="profileStore.loadingState().loading"
+        class="tui-form__header"
+    >Benachrichtigungen</h3>
+    <polity-notfications-from-follow-toggle></polity-notfications-from-follow-toggle>
+</div>
+
+<hr>
+
+<div class="">
+    <h3
+        [class.tui-skeleton]="profileStore.loadingState().loading"
+        class="tui-form__header"
+    >Email ändern</h3>
+    <polity-update-email></polity-update-email>
+</div>
+
+<div class="">
+    <h3
+        [class.tui-skeleton]="profileStore.loadingState().loading"
+        class="tui-form__header"
+    >Passwort ändern</h3>
+    <polity-update-password></polity-update-password>
+</div>
+
+<div class="polity-space_bottom-15 extra-margin">
+    <h3
+        [class.tui-skeleton]="profileStore.loadingState().loading"
+        class="tui-form__header"
+    >Logout</h3>
+    <polity-sign-out></polity-sign-out>
+</div>
+
+

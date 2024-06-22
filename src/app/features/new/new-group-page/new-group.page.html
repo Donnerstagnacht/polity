@@ -1,0 +1,15 @@
+<polity-stepper-top
+    [activeIndex]="0"
+    [activeItem]="menuItems[0].title"
+    [steps]="menuItems"
+></polity-stepper-top>
+<h1 class="tui-text_h1">Create a new group</h1>
+
+<polity-new-group-form (newGroup)="onCreateGroup($event)"></polity-new-group-form>
+
+<polity-stepper-right
+    [activeIndex]="0"
+    [activeItem]="menuItems[0].title"
+    [steps]="menuItems"
+></polity-stepper-right>
+

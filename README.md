@@ -170,8 +170,8 @@
 │    │         ├── Database transactions (calling other functions)
 │    │         └── Database seed
 │    └── types
-│         ├── supabase.modified.ts: Overwritten supabase types since generation is not always correct
-│         ├── supabase.shorthand-types.ts: Short-handed supabase types for easier usage in Front End code
+│         ├── supabase.public.modified.ts: Overwritten supabase types since generation is not always correct
+│         ├── supabase.authenticated.shorthand-types.ts: Short-handed supabase types for easier usage in Front End code
 │         └── supabase.ts: Auto-generated supabase types
 │
 ├── copy_sql_files_to_migration_folder: A windows bat file to copy supabase files into the migration directory so that automatic migration can be executed

@@ -1,0 +1,64 @@
+<form
+    (ngSubmit)="onEdit()"
+    [formGroup]="editGroupForm"
+>
+    <h3
+        [attr.data-cy]="'edit-instruction'"
+        [class.tui-skeleton]="loadingState().loading"
+        class="tui-form__header"
+    >Ändere deine Profil Daten</h3>
+
+    <div class="tui-form__row">
+        <tui-input
+            [attr.data-cy]="'name'"
+            [class.tui-skeleton]="loadingState().loading"
+            [tuiTextfieldCleaner]="true"
+            [tuiTextfieldCustomContent]="editGroupForm.controls.name.valid ? success : ''"
+            formControlName="name"
+            tuiHintContent="Enter a new name"
+        >
+            Gebe deinen Vornamen ein
+        </tui-input>
+        <tui-error
+            [error]="[] | tuiFieldError | async"
+            formControlName="name"
+        >
+        </tui-error>
+    </div>
+    <div class="tui-form__row">
+        <tui-input
+            [attr.data-cy]="'description'"
+            [class.tui-skeleton]="loadingState().loading"
+            [tuiTextfieldCleaner]="true"
+            [tuiTextfieldCustomContent]="editGroupForm.controls.description.valid ? success : ''"
+            formControlName="description"
+            tuiHintContent="Enter a description"
+        >
+            Gebe deinen Nachnamen ein
+        </tui-input>
+        <tui-error
+            [error]="[] | tuiFieldError | async"
+            formControlName="description"
+        >
+        </tui-error>
+    </div>
+    <div class="tui-form__buttons">
+        <button
+            [attr.data-cy]="'update'"
+            [class.tui-skeleton]="loadingState().loading"
+            [disabled]="!editGroupForm.valid"
+            class="tui-form__button"
+            size="l"
+            tuiButton
+            type="submit"
+        >
+            ÄNDERN
+        </button>
+    </div>
+    <ng-template #success>
+        <tui-svg
+            class="polity-success tui-space_left-3"
+            src="tuiIconCheck"
+        ></tui-svg>
+    </ng-template>
+</form>

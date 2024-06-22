@@ -18,5 +18,6 @@ export const POSTGRES_ERRORS = {
     column_not_existing: '42703',
     noPermission: '42501',
     function_not_existing: 'PGRST202',
-    undefined_table: '42P01'
+    undefined_table: '42P01',
+    null_value_rls_empty_set: '23502'
 }

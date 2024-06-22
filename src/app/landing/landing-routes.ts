@@ -1,29 +1,30 @@
-import {Routes} from "@angular/router";
-import {FeatureDescriptionComponent} from "./feature-description/feature-description.component";
-import {SignInComponent} from "../auth/sign-in/sign-in.component";
-import {SignUpComponent} from "../auth/sign-up/sign-up.component";
-import {ResetPasswordComponent} from "../auth/reset-password/reset-password.component";
-import {RequestResetPasswordComponent} from "../auth/request-reset-password/request-reset-password.component";
+import {Routes} from '@angular/router';
+import {FeatureDescriptionPage} from './feature-description-page/feature-description.page';
+import {SignInPage} from '../auth/sign-in-page/sign-in.page';
+import {SignUpPage} from '../auth/sign-up-page/sign-up.page';
+import {RequestResetPasswordPage} from '../auth/request-reset-password-page/request-reset-password.page';
+import {ResetPasswordPage} from '../auth/reset-password-page/reset-password.page';
+
 
 export const LANDING_ROUTES: Routes = [
     {
         path: '',
-        component: FeatureDescriptionComponent
+        component: FeatureDescriptionPage
     },
     {
         path: 'sign-in',
-        component: SignInComponent
+        component: SignInPage
     },
     {
         path: 'signup',
-        component: SignUpComponent
+        component: SignUpPage
     },
     {
         path: 'request-reset-password',
-        component: RequestResetPasswordComponent
+        component: RequestResetPasswordPage
     },
     {
         path: 'reset-password',
-        component: ResetPasswordComponent
-    },
-]
+        component: ResetPasswordPage
+    }
+];

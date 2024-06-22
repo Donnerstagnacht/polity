@@ -1,0 +1,42 @@
+@if (!imageControl.value) {
+    <tui-input-files
+        (reject)="onReject($event)"
+        [attr.data-cy]="'uploadImage'"
+        [class.tui-skeleton]="loadingState().loading"
+        [formControl]="imageControl"
+        accept="image/*"
+    ></tui-input-files>
+}
+
+<tui-files
+    [attr.data-cy]="'loading'"
+    class="tui-space_top-1"
+>
+    @if (loadedFiles$ | async;as file) {
+        <tui-file
+            (removed)="removeFile()"
+            [file]="file"
+            [showDelete]="imageControl.enabled"
+        ></tui-file>
+    }
+    @if (rejectedFiles$ | async;as file) {
+        <tui-file
+            (removed)="clearRejected()"
+            [file]="file"
+            [showDelete]="imageControl.enabled"
+            state="error"
+        ></tui-file>
+    }
+    @if (loadingFiles$ | async;as file) {
+        <tui-file
+            [file]="file"
+            [showDelete]="imageControl.enabled"
+            state="loading"
+        ></tui-file>
+    }
+</tui-files>
+
+<polity-image
+    [imgSrc]="imgSrc()"
+    [loadingState]="loadingState()"
+></polity-image>

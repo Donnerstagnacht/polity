@@ -1,0 +1,72 @@
+[
+    {
+        "id": "ff6cc644-ec9e-45dc-a98a-1186e091674f",
+        "follower_counter": 10,
+        "following_counter": 11,
+        "unread_notifications_counter": 0,
+        "group_membership_counter": 0
+    },
+    {
+        "id": "b24f9e68-8fac-4525-b001-fffb91704d68",
+        "follower_counter": 7,
+        "following_counter": 12,
+        "unread_notifications_counter": 0,
+        "group_membership_counter": 0
+    },
+    {
+        "id": "71aa5d19-43d8-4063-839d-114a0ad49ed7",
+        "follower_counter": 9,
+        "following_counter": 9,
+        "unread_notifications_counter": 0,
+        "group_membership_counter": 0
+    },
+    {
+        "id": "94875c0e-fa45-4504-828a-6ec9f21a49ca",
+        "follower_counter": 9,
+        "following_counter": 9,
+        "unread_notifications_counter": 0,
+        "group_membership_counter": 0
+    },
+    {
+        "id": "2d196d44-ae7f-4999-b080-e8a0db639c65",
+        "follower_counter": 9,
+        "following_counter": 9,
+        "unread_notifications_counter": 0,
+        "group_membership_counter": 0
+    },
+    {
+        "id": "393bc641-eaa3-45a2-9a2a-ab16dc62424b",
+        "follower_counter": 9,
+        "following_counter": 9,
+        "unread_notifications_counter": 0,
+        "group_membership_counter": 0
+    },
+    {
+        "id": "fefe27da-66ac-4d08-a8b3-c5adfb9bd5ce",
+        "follower_counter": 9,
+        "following_counter": 8,
+        "unread_notifications_counter": 0,
+        "group_membership_counter": 0
+    },
+    {
+        "id": "437bf909-34c5-4e54-b1eb-799771159cd1",
+        "follower_counter": 9,
+        "following_counter": 9,
+        "unread_notifications_counter": 0,
+        "group_membership_counter": 0
+    },
+    {
+        "id": "eada6e0c-e432-4af8-b238-71394e0866bc",
+        "follower_counter": 9,
+        "following_counter": 9,
+        "unread_notifications_counter": 0,
+        "group_membership_counter": 0
+    },
+    {
+        "id": "1c8171bb-36bd-41ff-b207-a5d219e53740",
+        "follower_counter": 9,
+        "following_counter": 9,
+        "unread_notifications_counter": 0,
+        "group_membership_counter": 0
+    }
+]

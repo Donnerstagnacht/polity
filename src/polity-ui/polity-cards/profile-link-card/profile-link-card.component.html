@@ -1,0 +1,22 @@
+<button
+    (click)="onClick()"
+    class="full-width"
+    tuiCardLarge
+    tuiCell
+    tuiSurface="elevated"
+>
+    <tui-avatar
+        [attr.data-cy]=""
+        [autoColor]="true"
+        avatarUrl="{{profile()?.profile_image_}}"
+        size="m"
+        text="{{ profile()?.first_name_ }} {{ profile()?.last_name_ }}"
+    ></tui-avatar>
+    <div
+        [attr.data-cy]="dataCyTag()"
+        [class.tui-skeleton]="isLoading()"
+        tuiTitle
+    >
+        {{ profile()?.first_name_ }} {{ profile()?.last_name_ }}
+    </div>
+</button>

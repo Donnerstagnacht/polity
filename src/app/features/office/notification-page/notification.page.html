@@ -1,0 +1,42 @@
+<div>
+    <polity-filter-headline
+        (showFilter)="toggleShowFilter()"
+        [dataCyTag]="'notifications-headline'"
+        [headline]="'Benachrichtigungen'"
+    ></polity-filter-headline>
+    @if (showFilter) {
+        <ng-container [formGroup]="combinedForm">
+            <polity-filter-string
+                placeholderText="Suche nach einer Benachrichtigung"
+                formGroupName="filterStringForm"
+            >
+            </polity-filter-string>
+
+            <polity-filter-date-range formGroupName="filterDateRangeForm">
+            </polity-filter-date-range>
+
+            <polity-filter-tags
+                [filterTypes]="filterTypes"
+                formGroupName="filterTypesForm"
+            >
+            </polity-filter-tags>
+
+            <polity-filter-clear (clearFilter)="clearFilter()">
+            </polity-filter-clear>
+        </ng-container>
+    }
+</div>
+
+<polity-table-four-icon-text-tag-date
+    (openLink)="onNavigateToProfile($event)"
+    [bonusKeys]="['last_name_']"
+    [dataCyTagsHeadline]="['profile_image_headline', 'first_name_headline', 'type_of_notification_headline',
+			'created_at_headline']"
+    [dataCyTags]="['profile_image', 'first_name', 'type_of_notification', 'created_at']"
+    [dataKeysForColumns]="['profile_image_', 'first_name_', 'type_of_notification_', 'created_at_']"
+    [data]="this.notificationsStore.dataFiltered()"
+    [headings]="['Foto', 'Name', 'Typ', 'Datum']"
+    [isLoading]="this.notificationsStore.loadingState().loading"
+    [linkKey]="'profile_id_'"
+>
+</polity-table-four-icon-text-tag-date>

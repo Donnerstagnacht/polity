@@ -1,0 +1,12 @@
+@if (!isOwner()) {
+    <button
+        (click)="toggleFollow()"
+        [attr.data-cy]="'follow-button'"
+        [class.tui-skeleton]="isLoading()"
+        class="tui-form__button"
+        size="l"
+        tuiButton
+        type="button"
+    > {{ isFollowing() ? 'UNFOLLOW' : 'FOLLOW' }}
+    </button>
+}

@@ -1,0 +1,10 @@
+<div [class.tui-skeleton]="imgLoading">
+    <img
+        (load)="onLoad()"
+        [attr.data-cy]="'profileImage'"
+        alt="Italian Trulli"
+        class="tui-"
+        src="{{src()}}"
+        width="60%"
+    >
+</div>

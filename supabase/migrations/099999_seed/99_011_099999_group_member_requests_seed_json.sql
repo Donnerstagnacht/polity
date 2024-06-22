@@ -1,0 +1,59 @@
+WITH
+    group_member_requests (doc) AS (
+        VALUES
+            ('[
+                {
+                    "id": "6c5e00cc-c2b6-44fa-8fcc-28b1eaff979e",
+                    "group_id": "1fb8eba2-6c5d-4c5d-a603-8eeb5d1214f9",
+                    "member_id": "eada6e0c-e432-4af8-b238-71394e0866bc",
+                    "member_type": "member"
+                },
+                {
+                    "id": "d5b52b63-13ed-4acb-ac9e-e7217122a075",
+                    "group_id": "1fb8eba2-6c5d-4c5d-a603-8eeb5d1214f9",
+                    "member_id": "1c8171bb-36bd-41ff-b207-a5d219e53740",
+                    "member_type": "member"
+                },
+                {
+                    "id": "7ad13c40-9b33-4761-a479-06c9284ba073",
+                    "group_id": "863a7ec4-0ae5-4622-90ce-c0ffbaaf18f3",
+                    "member_id": "eada6e0c-e432-4af8-b238-71394e0866bc",
+                    "member_type": "member"
+                },
+                {
+                    "id": "ca06383e-fc74-427a-962a-dd8209344bdb",
+                    "group_id": "863a7ec4-0ae5-4622-90ce-c0ffbaaf18f3",
+                    "member_id": "1c8171bb-36bd-41ff-b207-a5d219e53740",
+                    "member_type": "member"
+                },
+                {
+                    "id": "b5738e3f-d709-43f5-89c2-2a10a222e77d",
+                    "group_id": "5ce91eb6-f16b-439a-ab61-d5ffe12e5087",
+                    "member_id": "eada6e0c-e432-4af8-b238-71394e0866bc",
+                    "member_type": "member"
+                },
+                {
+                    "id": "4c786291-9829-4f0b-9035-8804bde0ca49",
+                    "group_id": "5ce91eb6-f16b-439a-ab61-d5ffe12e5087",
+                    "member_id": "1c8171bb-36bd-41ff-b207-a5d219e53740",
+                    "member_type": "member"
+                }
+            ]
+            '::json)
+    )
+INSERT
+INTO
+    hidden.group_member_requests (id,
+                                  group_id,
+                                  member_id,
+                                  member_type)
+SELECT
+    id,
+    group_id,
+    member_id,
+    member_type
+FROM
+    group_member_requests l
+    CROSS JOIN LATERAL JSON_POPULATE_RECORDSET(
+        NULL::hidden.group_member_requests,
+        doc) AS f;
