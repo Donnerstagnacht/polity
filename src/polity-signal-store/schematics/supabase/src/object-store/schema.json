@@ -1,0 +1,46 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "$id": "SupabaseRPCResource",
+    "title": "Supabase RPC Resource",
+    "type": "object",
+    "description": "Service class to perform supabase RPC operations",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "Name of the Supabase Store class.",
+            "$default": {
+                "$source": "argv",
+                "index": 0
+            }
+        },
+        "rpc": {
+            "type": "string",
+            "description": "Name of the connected rpc call",
+            "$default": {
+                "$source": "argv",
+                "index": 1
+            }
+        },
+        "path": {
+            "type": "string",
+            "format": "path",
+            "description": "The path at which to create the service, relative to the workspace root.",
+            "$default": {
+                "$source": "argv",
+                "index": 2
+            }
+        },
+        "project": {
+            "type": "string",
+            "description": "The name of the project.",
+            "$default": {
+                "$source": "projectName"
+            }
+        }
+    },
+    "required": [
+        "name",
+        "rpc",
+        "path"
+    ]
+}
