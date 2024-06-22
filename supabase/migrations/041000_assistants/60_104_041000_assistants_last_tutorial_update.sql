@@ -9,7 +9,7 @@ CREATE OR REPLACE FUNCTION authenticated.assistants_last_tutorial_update(
                 id_            uuid,
                 first_sign_in_ boolean,
                 skip_tutorial_ boolean,
-                last_tutorial_ text
+                last_tutorial_ hidden.tutorial_enum
             )
     LANGUAGE plpgsql
     SECURITY INVOKER

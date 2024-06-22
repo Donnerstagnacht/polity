@@ -94,12 +94,15 @@ export class AssistantStore extends BaseObjectStore<'assistants_read'> {
             {
                 useSuccess: true,
                 alertService: this.tuiAlertService,
-                successMessage: 'Assistant loaded!'
+                successMessage: 'Schau dich gerne selber um. Wir sind da, wenn du uns brauchst!'
             }
         );
     }
 
-    public async updateLastTutorial(last_tutorial: DatabaseHiddenOverwritten['hidden']['Enums']['tutorial_enum']): Promise<void> {
+    public async updateLastTutorial(
+        last_tutorial: DatabaseHiddenOverwritten['hidden']['Enums']['tutorial_enum'],
+        confirmationMessage: string = 'Congratulations. You finished another tutorial!'
+    ): Promise<void> {
         const result = await rpcObjectHandler(
             {
                 fn: 'assistants_last_tutorial_update',
@@ -123,7 +126,7 @@ export class AssistantStore extends BaseObjectStore<'assistants_read'> {
             {
                 useSuccess: true,
                 alertService: this.tuiAlertService,
-                successMessage: 'Congratulations. You finished another tutorial!'
+                successMessage: confirmationMessage
             }
         );
     }

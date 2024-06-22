@@ -32,7 +32,19 @@ export class AssistantToggleComponent {
     protected async toggleAssistant(): Promise<void> {
         const newValue: boolean = this.toggleAssistantForm.value.showAssistant as boolean;
         await this.assistantStore.skipTutorial(newValue);
-        await this.assistantStore.updateLastTutorial('profile');
+        if (newValue) {
+            await this.assistantStore.updateLastTutorial(
+                'profile',
+                'Tutorials will not be shown again but can be restarted.'
+            );
+        } else {
+            await this.assistantStore.updateLastTutorial(
+                'profile',
+                'Tutorials are activated again!'
+            );
+
+        }
+
     }
 
 }
