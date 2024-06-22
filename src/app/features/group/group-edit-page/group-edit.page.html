@@ -1,31 +1,24 @@
-<h1
-    [attr.data-cy]="'home-instruction'"
->
-    Gruppen Management.
-</h1>
-<div class="tui-space_top-3">
-    <polity-icon-link-card
-        [iconName]="'tuiIconEdit2'"
-        [title]="'Edit Group settings'"
-        [url]="this.editGroupUrl"
-    >
-    </polity-icon-link-card>
+<div class="polity-space_bottom-15">
+    <polity-group-edit-form
+        (newGroupData)="onEdit($event)"
+        [group]="groupStore.data()"
+        [loadingState]="groupStore.loadingState()"
+    ></polity-group-edit-form>
 </div>
 
-<div class="tui-space_top-3">
-    <polity-icon-link-card
-        [iconName]="'tuiIconUsers'"
-        [title]="'Edit Group Member'"
-        [url]="this.editGroupMemberUrl"
-    >
-    </polity-icon-link-card>
+<hr>
+
+<div class="">
+    <h3
+        [class.tui-skeleton]="groupStore.loadingState().loading"
+        class="tui-form__header"
+    >Ändere deine Profil Bild</h3>
+    <polity-image-upload
+        (imgStoragePath)="onUpdateGroupImage($event)"
+        [bucketName]="'group_images'"
+        [imgSrc]="groupStore.data().img_url_"
+        [loadingState]="groupStore.loadingState()"
+    ></polity-image-upload>
 </div>
 
-<div class="tui-space_top-3">
-    <polity-icon-link-card
-        [iconName]="'tuiIconUsers'"
-        [title]="'Edit Group Follower'"
-        [url]="this.editGroupFollowerUrl"
-    >
-    </polity-icon-link-card>
-</div>
+<hr>

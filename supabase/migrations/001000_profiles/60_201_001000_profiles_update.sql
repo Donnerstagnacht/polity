@@ -7,7 +7,6 @@ DROP FUNCTION IF EXISTS authenticated.profiles_update(
     _receive_follow_notifications boolean
 );
 CREATE OR REPLACE FUNCTION authenticated.profiles_update(
-    _updated_at timestamp WITH TIME ZONE DEFAULT NULL,
     _username text DEFAULT NULL,
     _first_name text DEFAULT NULL,
     _last_name text DEFAULT NULL,
@@ -36,7 +35,8 @@ BEGIN
                 first_name = COALESCE(_first_name, first_name),
                 last_name = COALESCE(_last_name, last_name),
                 profile_image = COALESCE(_profile_image, profile_image),
-                receive_follow_notifications = COALESCE(_receive_follow_notifications, receive_follow_notifications)
+                receive_follow_notifications = COALESCE(_receive_follow_notifications, receive_follow_notifications),
+                updated_at = NOW()
             WHERE
                 id = auth_user_id
             RETURNING id, first_name, last_name, profile_image;

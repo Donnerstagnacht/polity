@@ -1,10 +1,10 @@
 import {Routes} from '@angular/router';
 import {isBoardMemberGuard} from './is-board-member.guard';
 import {GroupWikiPage} from '@polity-group/group-wiki-page/group-wiki.page';
-import {GroupEditPage} from '@polity-group/group-edit-page/group-edit.page';
-import {GroupEditSettingsPage} from '@polity-group/group-edit-settings-page/group-edit-settings.page';
 import {GroupFollowEditPage} from '@polity-group/group-follow-edit-page/group-follow-edit.page';
 import {GroupMemberEditPage} from '@polity-group/group-member-edit-page/group-member-edit.page';
+import {GroupEditOverviewPage} from '@polity-group/group-edit-overview-page/group-edit-overview.page';
+import {GroupEditPage} from '@polity-group/group-edit-page/group-edit.page';
 
 export const GROUP_ROUTES: Routes = [
     {
@@ -13,7 +13,7 @@ export const GROUP_ROUTES: Routes = [
     },
     {
         path: 'edit',
-        component: GroupEditPage,
+        component: GroupEditOverviewPage,
         canActivate: [isBoardMemberGuard]
     },
     {
@@ -28,7 +28,7 @@ export const GROUP_ROUTES: Routes = [
     },
     {
         path: 'settings/edit',
-        component: GroupEditSettingsPage,
+        component: GroupEditPage,
         canActivate: [isBoardMemberGuard]
     }
 ];

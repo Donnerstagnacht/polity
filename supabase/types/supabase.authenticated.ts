@@ -265,9 +265,11 @@ export type Database = {
         Returns: {
           id_: string
           name_: string
-          level_: "local" | "regional" | "national"
           description_: string
+          level_: "local" | "regional" | "national"
           img_url_: string
+          created_at_: string
+          updated_at_: string
         }[]
       }
       groups_create_transaction: {
@@ -287,6 +289,23 @@ export type Database = {
           group_name_: string
           group_level_: "local" | "regional" | "national"
           img_url_: string
+        }[]
+      }
+      groups_update: {
+        Args: {
+          _id: string
+          _name?: string
+          _description?: string
+          _img_url?: string
+        }
+        Returns: {
+          id_: string
+          name_: string
+          description_: string
+          level_: "local" | "regional" | "national"
+          img_url_: string
+          created_at_: string
+          updated_at_: string
         }[]
       }
       leave_group_by_membership_id_transaction: {
@@ -370,7 +389,6 @@ export type Database = {
       }
       profiles_update: {
         Args: {
-          _updated_at?: string
           _username?: string
           _first_name?: string
           _last_name?: string

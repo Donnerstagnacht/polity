@@ -8,9 +8,11 @@ CREATE OR REPLACE FUNCTION authenticated.group_read(
             (
                 id_          uuid,
                 name_        text,
-                level_       hidden.group_level,
                 description_ text,
-                img_url_     text
+                level_       hidden.group_level,
+                img_url_     text,
+                created_at_  timestamp WITH TIME ZONE,
+                updated_at_  timestamp WITH TIME ZONE
             )
     LANGUAGE plpgsql
     SECURITY INVOKER
@@ -21,9 +23,11 @@ BEGIN
         SELECT
             id,
             name,
-            level,
             description,
-            img_url
+            level,
+            img_url,
+            created_at,
+            updated_at
         FROM
             hidden.groups
         WHERE

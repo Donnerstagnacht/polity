@@ -1,32 +1,28 @@
 import {Component, inject} from '@angular/core';
-import {LinkCardComponent} from '@polity-ui/polity-cards/link-card/link-card.component';
-import {GroupStore} from '../state/group.store.';
-import {IconLinkCardComponent} from '@polity-ui/polity-cards/icon-link-card/icon-link-card.component';
-import {tuiIconHeartLarge} from '@taiga-ui/icons';
-import {TuiIconModule} from '@taiga-ui/experimental';
+import {ImageUploadComponent} from '@polity-ui/polity-image/image-upload/image-upload.component';
+import {ProfileEditForm} from '@polity-profile/profile-ui/profile-edit/profile-edit.form';
+import {GroupStore} from '@polity-group/state/group.store.';
+import {GroupEditForm} from '@polity-group/group-ui/group-edit/group-edit.form';
 
 @Component({
     selector: 'polity-group-edit',
     standalone: true,
     imports: [
-        LinkCardComponent,
-        IconLinkCardComponent,
-        TuiIconModule
+        ImageUploadComponent,
+        ProfileEditForm,
+        GroupEditForm
     ],
     templateUrl: './group-edit.page.html',
     styleUrl: './group-edit.page.less'
 })
 export class GroupEditPage {
-    groupStore: GroupStore = inject(GroupStore);
-    protected editGroupUrl: string = '';
-    protected editGroupFollowerUrl: string = '';
-    protected editGroupMemberUrl: string = '';
-    protected readonly tuiIconHeartLarge = tuiIconHeartLarge;
+    protected groupStore: GroupStore = inject(GroupStore);
 
-    ngOnInit(): void {
-        const urlId: string | undefined = this.groupStore.data().id_;
-        this.editGroupUrl = 'group/' + urlId + '/settings/edit';
-        this.editGroupMemberUrl = 'group/' + urlId + '/member/edit';
-        this.editGroupFollowerUrl = 'group/' + urlId + '/follower/edit';
+    protected async onEdit(newGroupData: any): Promise<void> {
+        await this.groupStore.update(newGroupData);
+    }
+
+    protected async onUpdateGroupImage(imgStoragePath: string): Promise<void> {
+        await this.groupStore.update({img_url_: imgStoragePath});
     }
 }
