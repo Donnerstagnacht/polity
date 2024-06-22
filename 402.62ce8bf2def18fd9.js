@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkpolity=self.webpackChunkpolity||[]).push([[402],{8402:(s,o,n)=>{n.r(o),n.d(o,{NEW_ROUTES:()=>E});const E=[{path:"",component:n(6848).q}]}}]);

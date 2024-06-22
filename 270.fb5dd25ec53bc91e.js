@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkpolity=self.webpackChunkpolity||[]).push([[270],{3270:(E,t,o)=>{o.r(t),o.d(t,{HOME_ROUTES:()=>u});const u=[{path:"",component:o(5735).R}]}}]);
