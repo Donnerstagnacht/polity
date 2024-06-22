@@ -51,3 +51,7 @@ Thumbs.db
 # Ignore changes to the html file so that local in base href differs from remote base href (so github pages
 # deployment works)
 /src/index.html
+
+#ignore schematics node mules
+src/polity-signal-store/schematics/supabase/node_modules/*
+

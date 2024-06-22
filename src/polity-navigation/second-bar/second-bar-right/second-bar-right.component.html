@@ -1,0 +1,19 @@
+<nav
+    [(activeItemIndex)]="activeItemIndex"
+    tuiTabBar
+>
+    @for (item of items();track item) {
+        <button
+            class="pointer-cursor"
+            (click)="onClick(item)"
+            [attr.data-cy]="item.dataCyDesktop"
+            [badge]="item.badge"
+            [icon]="item.icon"
+            [routerLink]="item.link"
+            routerLinkActive
+            tuiHint="{{item.text}}"
+            tuiTabBarItem
+        >
+        </button>
+    }
+</nav>

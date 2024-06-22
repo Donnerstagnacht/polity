@@ -1,0 +1,46 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "$id": "SupabaseRPCTemplate",
+    "title": "Supabase RPC Template",
+    "type": "object",
+    "description": "A template for a rpc",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "Name of the Supabase rpc.",
+            "$default": {
+                "$source": "argv",
+                "index": 0
+            }
+        },
+        "id": {
+            "type": "string",
+            "description": "Id of the supabase feature",
+            "$default": {
+                "$source": "argv",
+                "index": 1
+            }
+        },
+        "path": {
+            "type": "string",
+            "format": "path",
+            "description": "The path at which to create the service, relative to the workspace root.",
+            "$default": {
+                "$source": "argv",
+                "index": 2
+            }
+        },
+        "project": {
+            "type": "string",
+            "description": "The name of the project.",
+            "$default": {
+                "$source": "projectName"
+            }
+        }
+    },
+    "required": [
+        "name",
+        "id",
+        "path"
+    ]
+}

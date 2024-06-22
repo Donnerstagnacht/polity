@@ -1,0 +1,71 @@
+<form
+    [formGroup]="welcomeForm"
+>
+
+    <div class="tui-form__row">
+        <tui-input
+            [attr.data-cy]="'welcome-first-name'"
+            [tuiTextfieldCleaner]="true"
+            [tuiTextfieldCustomContent]="welcomeForm.controls.firstName.valid ? success : ''"
+            formControlName="firstName"
+        >
+            Wie ist dein Vorname?
+        </tui-input>
+    </div>
+    <tui-error
+        [error]="[] | tuiFieldError | async"
+        formControlName="firstName"
+    >
+    </tui-error>
+
+    <div class="tui-form__row">
+        <tui-input
+            [attr.data-cy]="'welcome-last-name'"
+            [tuiTextfieldCleaner]="true"
+            [tuiTextfieldCustomContent]="welcomeForm.controls.lastName.valid ? success : ''"
+            formControlName="lastName"
+        >
+            Wie ist dein Nachname?
+        </tui-input>
+    </div>
+    <tui-error
+        [error]="[] | tuiFieldError | async"
+        formControlName="lastName"
+    >
+    </tui-error>
+
+    <ng-template #success>
+        <tui-svg
+            class="polity-success tui-space_left-3"
+            src="tuiIconCheck"
+        ></tui-svg>
+    </ng-template>
+
+    <P class="tui-text_body-m">Können wir dir eine Tour geben?</P>
+
+    <div class="tui-form__row">
+        <button
+            (click)="step1NavigateToProfileStep(1)"
+            [attr.data-cy]="'step1-navigate-to-profile-step'"
+            [disabled]="!welcomeForm.valid"
+            appearance="primary"
+            class="tui-space_right-3 tui-space_bottom-3"
+            tuiButton
+            type="button"
+        >
+            Gib mir eine Tour.
+        </button>
+        <button
+            (click)="step1CloseTutorial()"
+            [attr.data-cy]="'step1-to-close-tutorial'"
+            [disabled]="!welcomeForm.valid"
+            appearance="flat"
+            class="tui-space_right-3 tui-space_bottom-3"
+            tuiButton
+            type="button"
+        >
+            Ich schaue mich selbst um.
+        </button>
+    </div>
+
+</form>

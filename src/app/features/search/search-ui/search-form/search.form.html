@@ -1,0 +1,18 @@
+<form
+    [formGroup]="searchForm"
+>
+    <div class="tui-form__row">
+        <tui-input
+            [attr.data-cy]="'search'"
+            formControlName="search"
+            tuiHintContent="Bitte einen Suchterm eingeben"
+        >
+            Gebe einen Suchterm ein
+        </tui-input>
+        <tui-error
+            [error]="[] | tuiFieldError | async"
+            formControlName="search"
+        >
+        </tui-error>
+    </div>
+</form>
