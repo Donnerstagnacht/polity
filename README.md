@@ -28,9 +28,8 @@
 
 <hr>
 
-<h1>Weekly Wednesday meeting and collaboration </h1>
-
-<p>We are meeting every Wednesday at 8pm CET on a discord server to work on the project and have a good time in general. To start, you can choose a task from our published projects or suggest your own ideas.</p>
+<h1>Support the project</h1>
+<p>You are heartly welcome to collaborate on the project. I created a few tasks in the project section. In case of any questions reach out to me. Besides that, I am open to any kind of new feature which might benefit public decision making.</p>
 
 <p align="center">
   <strong>Discord server:</strong>
@@ -47,7 +46,7 @@
   <br>
   <strong>👉Projects</strong>
   <br>
-  <a href="https://github.com/Donnerstagnacht/polity/projects"><img src="https://img.shields.io/badge/projects-down-red" /></a>
+  <a href="https://github.com/Donnerstagnacht/polity/projects"><img src="https://img.shields.io/badge/projects-up-brightgreen" /></a>
    <!-- <a href="https://github.com/Donnerstagnacht/polity/projects"><img src="https://img.shields.io/badge/projects-up-brightgreen" /></a>-->
 
   <br>
@@ -188,28 +187,28 @@
 
 <p><code>numbercode = 000 + two digit number implying the postgres object type _ three digit running number _ six digit number determining the featuere.</code></p>
 <p> The two digit number code is mapped to postgres types to ensure that postgres objects are created in the correct order (since objects on lower table lines depend on higher table lines):
-    
-| Code    | Description                                            |
-| ------- | ------------------------------------------------------ |
-| 00      | Pre migration tasks (types, resets, schemas...) |
-| 01      | Enums                                 |
-| 10      | Tables, indexes, row level security settings           |
-| 20      | Row level security policies                            |
-| 30      | Triggers and trigger related functions                 |
-| 60      | Functions                                              |   
-| 80      | Transactions (functions that depend on other functions)|   
-| 98      | Post migration tasks (bug fixes...)                    |   
-| 99      | Database/table seeding                                 |   
+
+| Code | Description                                             |
+|------|---------------------------------------------------------|
+| 00   | Pre migration tasks (types, resets, schemas...)         |
+| 01   | Enums                                                   |
+| 10   | Tables, indexes, row level security settings            |
+| 20   | Row level security policies                             |
+| 30   | Triggers and trigger related functions                  |
+| 60   | Functions                                               |   
+| 80   | Transactions (functions that depend on other functions) |   
+| 98   | Post migration tasks (bug fixes...)                     |   
+| 99   | Database/table seeding                                  |   
 
 <p>The three digit running number is simply a running number except for the Standalone Functions (Code 60). Here, functions should order by Create, read, update, delete and others.</p>
 
-| Code    | Description                                            |
-| ------- | ------------------------------------------------------ |
-| 0xx     | Functions for create operations (insert or upsert)     |
-| 1xx     | Functions for read operations                          |
-| 2xx     | Functions for update operations                        |
-| 3xx     | Functions for delete operations                        |
-| 4xx     | Other functions (checks, increments, decrements...)    |   
+| Code | Description                                         |
+|------|-----------------------------------------------------|
+| 0xx  | Functions for create operations (insert or upsert)  |
+| 1xx  | Functions for read operations                       |
+| 2xx  | Functions for update operations                     |
+| 3xx  | Functions for delete operations                     |
+| 4xx  | Other functions (checks, increments, decrements...) |   
 
 <p>The feature is a unique 6 diigt code. Main features should be "thousand steps" (for example: 001000 = profiles).</p>
 <p>The leading "000" prefix is added by a scipt.</p>
@@ -228,7 +227,7 @@
 <p>Polity applies a database security layer concept with the following layers</p>
 
 | Layername     | Description                                                                                                                                   |
-| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+|---------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
 | public        | A public layer available to all roles. An API is generated automatically.                                                                     |
 | authenticated | A layer available to the "authenticated" role (logged in users). An API is generated automatically.                                           |
 | hidden        | A hidden layer that can only be accessed by functions (e.g. available to "authenticated" role but no API generated. This includes all tables. |
