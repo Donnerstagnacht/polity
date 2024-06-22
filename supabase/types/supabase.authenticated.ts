@@ -166,6 +166,18 @@ export type Database = {
         }
         Returns: unknown
       }
+      group_member_invitations_delete_by_inviter: {
+        Args: {
+          _group_id: string
+          _member_id: string
+        }
+        Returns: {
+          id_: string
+          group_id_: string
+          member_id_: string
+          invited_by_: string
+        }[]
+      }
       group_member_invitations_of_user_read: {
         Args: Record<PropertyKey, never>
         Returns: {

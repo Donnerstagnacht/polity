@@ -21,7 +21,8 @@
 
 @if (showInvitations) {
     <polity-search-profiles-bar
-        (onUpdateSelectedUsers)="onSelectedUserUpdate($event)"
+        (onAddUserEmitter)="onInviteUser($event)"
+        (onCanceledUserIdEmitter)="onCancelUserInvite($event)"
     ></polity-search-profiles-bar>
 }
 

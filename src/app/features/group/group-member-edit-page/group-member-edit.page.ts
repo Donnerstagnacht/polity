@@ -17,6 +17,7 @@ import {GroupMembersStore} from '@polity-group/group-member-state/group-members.
 import {GroupRequestsStore} from '@polity-group/group-member-state/group-requests.store';
 import {ProfileLoadHelperService} from '@polity-profile/state/profile-load-helper.service';
 import {Router} from '@angular/router';
+import {GroupStore} from '@polity-group/state/group.store.';
 
 @Component({
     selector: 'polity-group-member-edit',
@@ -36,6 +37,7 @@ import {Router} from '@angular/router';
     styleUrl: './group-member-edit.page.less'
 })
 export class GroupMemberEditPage {
+    protected groupStore: GroupStore = inject(GroupStore);
     protected groupMemberStore: GroupMembersStore = inject(GroupMembersStore);
     protected groupRequestsStore: GroupRequestsStore = inject(GroupRequestsStore);
     protected router: Router = inject(Router);
@@ -169,9 +171,16 @@ export class GroupMemberEditPage {
         await this.groupRequestsStore.deleteById(requestId);
     }
 
-    protected onSelectedUserUpdate(selectedUsers: SupabaseObjectReturn<'search_user'>[]): void {
+    protected onInviteUser(selectedUsers: SupabaseObjectReturn<'search_user'>[]): void {
         const addedUser: SupabaseObjectReturn<'search_user'> = selectedUsers[selectedUsers.length - 1];
         console.log('userId invite', addedUser.id_);
         this.groupInvitationsStore.invite(addedUser.id_);
+    }
+
+    protected onCancelUserInvite(cancelUser: SupabaseObjectReturn<'search_user'>): void {
+        this.groupInvitationsStore.removeByInviter(
+            cancelUser.id_,
+            this.groupStore.data().id_
+        );
     }
 }

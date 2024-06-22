@@ -18,6 +18,7 @@
     </tui-combo-box>
 
     <polity-table-three-icon-text-delete
+        (openLink)="onNavigateToProfile($event)"
         (remove)="onRemove($event)"
         [bonusKeys]="['last_name_']"
         [dataCyTagsHeadline]="['user_image_title', 'user_first_name_title', 'remove_invitation_title']"

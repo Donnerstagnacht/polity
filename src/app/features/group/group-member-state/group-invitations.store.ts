@@ -5,6 +5,7 @@ import {BaseArrayStore} from '@polity-signal-store/array/base-array-store.servic
 import {rpcArrayHandler} from '@polity-signal-store/array/rpcArrayHandlerFeature';
 import {removeObjectByPropertyValue} from '@polity-signal-store/array/removeItemFeatue';
 import {GroupCounterStore} from '@polity-group/group-follow-state/group-counter.store';
+import {rpcObjectHandler} from '@polity-signal-store/object/rpcObjectHandlerFeature';
 
 @Injectable({providedIn: 'root'})
 export class GroupInvitationsStore extends BaseArrayStore<'group_member_invitations_read'> {
@@ -166,7 +167,7 @@ export class GroupInvitationsStore extends BaseArrayStore<'group_member_invitati
             {
                 useSuccess: true,
                 alertService: this.tuiAlertService,
-                successMessage: 'Group invitation sent!'
+                successMessage: 'Group invitation revoked!'
             }
         );
         if (!result().error) {
@@ -177,6 +178,45 @@ export class GroupInvitationsStore extends BaseArrayStore<'group_member_invitati
             );
         }
     }
+
+    public async removeByInviter(
+        member_id: string,
+        group_id: string
+    ): Promise<void> {
+        const result = await rpcObjectHandler(
+            {
+                fn: 'group_member_invitations_delete_by_inviter',
+                args: {
+                    _group_id: group_id,
+                    _member_id: member_id
+                }
+            },
+            {
+                useLoading: false
+            },
+            {
+                useStore: false
+            },
+            {
+                useError: true,
+                errorStoreService: this.errorStoreService
+            },
+            {
+                useSuccess: true,
+                alertService: this.tuiAlertService,
+                successMessage: 'Group invitation canceled!'
+            }
+        );
+        if (!result().error && result().data?.id_ !== undefined) {
+            const id: string = result().data?.id_ as string;
+            removeObjectByPropertyValue(
+                'id_',
+                id,
+                this.data_
+            );
+        }
+    }
+
 
     public async decline(): Promise<void> {
         const groupId: string = this.groupStore.data().id_;
@@ -200,7 +240,7 @@ export class GroupInvitationsStore extends BaseArrayStore<'group_member_invitati
             {
                 useSuccess: true,
                 alertService: this.tuiAlertService,
-                successMessage: 'Group invitation sent!'
+                successMessage: 'Group invitation rejected!'
             }
         );
         if (!result().error) {

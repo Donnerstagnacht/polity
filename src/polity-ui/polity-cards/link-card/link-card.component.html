@@ -10,7 +10,7 @@
         [autoColor]="true"
         avatarUrl="{{cardImage()}}"
         size="m"
-        text="'test'"
+        text="{{ profile()?.first_name_ }} {{ profile()?.last_name_ }}"
     ></tui-avatar>
     <div
         [attr.data-cy]="dataCyTag()"

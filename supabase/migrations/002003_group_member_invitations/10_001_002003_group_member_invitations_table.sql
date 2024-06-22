@@ -6,12 +6,17 @@ CREATE TABLE IF NOT EXISTS hidden.group_invited_members
     member_type hidden.group_member,
     created_at  timestamp WITH TIME ZONE DEFAULT NOW() NOT NULL,
     updated_at  timestamp WITH TIME ZONE DEFAULT NOW() NOT NULL,
+    invited_by  uuid                                   NOT NULL,
     CONSTRAINT group_invited_member_pkey PRIMARY KEY (id),
     CONSTRAINT group_invited_member_group_id_fkey FOREIGN KEY (group_id)
         REFERENCES hidden.groups (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT group_invited_member_member_id_fkey FOREIGN KEY (member_id)
+        REFERENCES hidden.profiles (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT group_invited_member_invited_by_fkey FOREIGN KEY (member_id)
         REFERENCES hidden.profiles (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

@@ -12,14 +12,19 @@ CREATE OR REPLACE FUNCTION authenticated.group_member_invitations_create(
     SECURITY DEFINER
 AS
 $$
+DECLARE
+    auth_user_id uuid;
 BEGIN
+    auth_user_id = auth.uid();
     INSERT INTO
         hidden.group_invited_members(group_id,
                                      member_id,
-                                     member_type)
+                                     member_type,
+                                     invited_by)
     VALUES
         (_group_id,
          _member_id,
-         'member');
+         'member',
+         auth_user_id);
 END;
 $$;

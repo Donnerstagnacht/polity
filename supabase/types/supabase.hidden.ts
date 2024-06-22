@@ -136,6 +136,7 @@ export type Database = {
           created_at: string
           group_id: string
           id: string
+          invited_by: string
           member_id: string
           member_type: Database["hidden"]["Enums"]["group_member"] | null
           updated_at: string
@@ -144,6 +145,7 @@ export type Database = {
           created_at?: string
           group_id: string
           id?: string
+          invited_by: string
           member_id: string
           member_type?: Database["hidden"]["Enums"]["group_member"] | null
           updated_at?: string
@@ -152,6 +154,7 @@ export type Database = {
           created_at?: string
           group_id?: string
           id?: string
+          invited_by?: string
           member_id?: string
           member_type?: Database["hidden"]["Enums"]["group_member"] | null
           updated_at?: string
@@ -162,6 +165,13 @@ export type Database = {
             columns: ["group_id"]
             isOneToOne: false
             referencedRelation: "groups"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "group_invited_member_invited_by_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
           {
